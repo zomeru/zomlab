@@ -1,12 +1,10 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   },
   "formatter": {
@@ -23,17 +21,23 @@
     }
   },
   "files": {
-    "ignore": [
-      ".agents",
-      ".claude",
-      ".turbo",
-      ".next",
-      "dist",
-      "node_modules",
-      "coverage",
-      "public",
-      "out"
+    "includes": [
+      "**",
+      "!**/.agents",
+      "!**/.claude",
+      "!**/.turbo",
+      "!**/.next",
+      "!**/dist",
+      "!**/node_modules",
+      "!**/coverage",
+      "!**/public",
+      "!**/out"
     ]
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
   },
   "vcs": {
     "enabled": true,

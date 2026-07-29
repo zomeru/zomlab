@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const root = JSON.parse(readFileSync("package.json", "utf-8"));
 const version = root.version as string;

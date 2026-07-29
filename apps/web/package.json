@@ -10,22 +10,28 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "better-auth": "^1.2.9",
+    "better-auth": "^1.6.25",
     "next": "16.2.12",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "@zomlab/auth": "*"
   },
   "devDependencies": {
     "@zomlab/vitest-config": "*",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^22.15.3",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.1.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "babel-plugin-react-compiler": "1.0.0",
-    "tailwindcss": "^4",
-    "typescript": "6.0.2"
+    "tailwindcss": "^4.3.3",
+    "typescript": "7.0.2"
   },
-  "ignoreScripts": ["sharp", "unrs-resolver"],
-  "trustedDependencies": ["sharp", "unrs-resolver"]
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ]
 }
