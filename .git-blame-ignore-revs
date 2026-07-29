@@ -1,0 +1,11 @@
+# .git-blame-ignore-revs
+#
+# Add commit SHAs here to exclude them from `git blame`.
+# Useful for bulk formatting or refactoring commits where
+# the diff is large but functionally meaningless.
+#
+# Usage:
+#   git blame --ignore-revs-file .git-blame-ignore-revs <file>
+#
+# Or set it globally:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
