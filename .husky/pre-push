@@ -1,1 +1,1 @@
-bun audit --production
+# Security audit moved to CI pipeline

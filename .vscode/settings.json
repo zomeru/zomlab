@@ -8,17 +8,19 @@
   "editor.quickSuggestions": {
     "strings": "on"
   },
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "typescript.preferences.autoImportFileExcludePatterns": [
+  "js/ts.experimental.useTsgo": true,
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+  "js/ts.preferences.autoImportFileExcludePatterns": [
     "node_modules/**",
     ".next/**",
-    "dist/**"
+    "dist/**",
+    ".turbo/**"
   ],
-  "typescript.updateImportsOnFileMove.enabled": "always",
+  "js/ts.updateImportsOnFileMove.enabled": "always",
   "files.exclude": {
     "**/.next": true,
-    "**/dist": true,
-    "**/node_modules": true
+    "**/dist": true
+    // "**/node_modules": true
   },
   "search.exclude": {
     "**/.next": true,
