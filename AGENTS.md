@@ -96,9 +96,35 @@ Prefer explicit code over "magic."
 
 ## Tooling
 
-- Biome
-- Husky
-- lint-staged
+- Biome (linter + formatter)
+- Husky + lint-staged
+- commitlint (conventional commits)
+- syncpack (dependency consistency)
+- knip (dead file detection)
+
+## CI / Quality Gates
+
+- **`bun run check:all`** — runs Biome → syncpack → knip → TypeScript → Vitest in sequence. The single command to validate all changes.
+- **`bun run test:e2e`** — Playwright E2E tests (root level)
+
+## Development Scripts
+
+The `scripts/` directory contains:
+
+- `setup.ts` — first-time project setup (install, env, prisma generate)
+- `generate-package.ts` — scaffold a new `@zomlab/*` package with tests
+- `sync-version.ts` — sync version across workspace packages
+
+Use `bun run <name>` from root to invoke them (e.g., `bun run generate:package`).
+
+## Agent Skills
+
+Project-specific skills for AI agents are located in:
+
+- `.agents/skills/` — skills for active development
+- `.claude/skills/` — skills for Claude Code
+
+These contain domain knowledge for framework-specific work (Better Auth, Elysia, Prisma, etc.). Check them when working on those topics.
 
 ---
 
@@ -126,21 +152,15 @@ apps/
 
 packages/
     auth/
-    cache/
-    config/
-    contracts/
     database/
     env/
-    hooks/
-    logger/
-    types/
+    tsconfig/
     ui/
-    utils/
-    validation/
+    vitest-config/
 
-docker/
-
-scripts/
+scripts/             # Dev scripts (setup, generate-package, sync-version)
+.agents/skills/      # Project-specific AI agent skills
+.claude/skills/      # Project-specific Claude skills
 
 .github/
 ```
@@ -176,22 +196,6 @@ Responsible for:
 - Streaming
 - Background APIs
 - Long-running requests
-
----
-
-## packages/contracts
-
-Single source of truth.
-
-Contains:
-
-- Zod schemas
-- DTOs
-- Shared API types
-- Request types
-- Response types
-
-Never duplicate types.
 
 ---
 
@@ -233,6 +237,26 @@ No business logic.
 Pure utility functions only.
 
 Avoid framework-specific utilities.
+
+---
+
+## packages/tsconfig
+
+Shared TypeScript configuration presets.
+
+Contains:
+
+- `base.json` — base config for all packages
+- `nextjs.json` — config for Next.js apps
+- `react-library.json` — config for React component libraries
+
+---
+
+## packages/vitest-config
+
+Shared Vitest test configuration.
+
+Used by all packages and apps that run tests. Provides sensible defaults for timeouts, coverage, and environment.
 
 ---
 
