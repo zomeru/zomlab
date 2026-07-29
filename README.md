@@ -1,10 +1,27 @@
 # ZomLab
 
 > **An interactive full-stack engineering playground and knowledge base.**
->
-> ZomLab is my personal software engineering laboratory where I learn, experiment, document, and showcase modern technologies through real, interactive implementations.
->
-> Instead of creating dozens of isolated demo repositories, everything lives in one monorepo. Every feature includes a working UI, production-like architecture, documentation, and code that explains how it works under the hood.
+
+ZomLab is my personal software engineering laboratory where I learn, experiment, document, and showcase modern technologies through real, interactive implementations.
+
+Instead of creating dozens of isolated demo repositories, everything lives in one monorepo. Every feature includes a working UI, production-like architecture, and code that explains how it works under the hood.
+
+---
+
+## Current State
+
+This project is a **work-in-progress**. The foundation (monorepo, packages, auth, database, tooling) is built. Features are being added progressively.
+
+| Layer | Status |
+|---|---|
+| Monorepo (Turborepo + Bun) | ✅ Built |
+| Environment validation (`@zomlab/env`) | ✅ Built |
+| Database client (`@zomlab/database`, Prisma v7) | ✅ Built |
+| Auth (`@zomlab/auth`, Better Auth) | ✅ Built |
+| UI components (`@zomlab/ui`) | 🟡 Minimal |
+| Web app (`apps/web`, Next.js) | 🟡 Scaffolded |
+| API (`apps/api`, Elysia) | 🟡 Scaffolded |
+| Features | ❌ Planned |
 
 ---
 
@@ -26,686 +43,259 @@ Every feature is implemented as if it were part of a real-world application.
 
 ---
 
-# Goals
+## Tech Stack
 
-- Learn modern software engineering through implementation
-- Create an interactive engineering handbook
-- Keep every experiment in a single repository
-- Document every architecture decision
-- Compare different approaches to solving the same problem
-- Build reusable packages
-- Practice enterprise architecture
-- Have a personal reference whenever I forget how something works
-
----
-
-# Project Structure
-
-Every feature contains:
-
-- Live Demo
-- Source Code
-- Documentation
-- Architecture
-- API Flow
-- Database Schema
-- Performance Notes
-- Security Notes
-- Best Practices
-
-Example:
-
-```
-Payments
-
-├── Live Demo
-├── Source Code
-├── Documentation
-├── Architecture
-├── Request Flow
-├── Database
-├── Webhooks
-├── Security
-├── Performance
-└── Common Mistakes
-```
-
----
-
-# Planned Modules
-
-## Core
-
-- Routing
-- Forms
-- CRUD
-- Pagination
-- Infinite Scroll
-- Search
-- Filtering
-- Sorting
-- File Uploads
-- Downloads
-- CSV Import/Export
-
----
-
-## Authentication
-
-- Better Auth
-- Session Authentication
-- JWT
-- OAuth
-- Magic Links
-- Passkeys
-- RBAC
-- Permission Management
-
----
-
-## Databases
-
-- PostgreSQL
-- Prisma
-- Transactions
-- Indexing
-- Full Text Search
-- JSON Columns
-- Soft Deletes
-- Optimistic Updates
-
----
-
-## Caching
-
-- Redis
-- Cache Invalidation
-- Response Cache
-- Query Cache
-- Distributed Cache
-
----
-
-## Realtime
-
-- WebSockets
-- Elysia WebSocket
-- Socket.IO
-- Presence
-- Notifications
-- Chat
-- Typing Indicators
-
----
-
-## Payments
-
-- Stripe
-- PayPal
-- PayMongo
-- Checkout
-- Subscriptions
-- Webhooks
-- Idempotency
-
----
-
-## Webhooks
-
-- Stripe
-- GitHub
-- Discord
-- Slack
-- Retry Mechanism
-- Signature Validation
-
----
-
-## Generative AI
-
-### Text
-
-- Chat
-- Streaming
-- Structured Output
-- Function Calling
-
-### Image
-
-- Generation
-- Editing
-- Vision
-
-### Audio
-
-- Speech-to-Text
-- Text-to-Speech
-
-### Video
-
-- Generation
-- Processing
-
-### AI Engineering
-
-- Agents
-- RAG
-- Embeddings
-- Vector Database
-- MCP
-- Prompt Engineering
-- AI SDK
-
----
-
-## CMS
-
-- Payload CMS
-- Sanity
-- Strapi
-- Headless CMS
-- MDX
-
----
-
-## Web3
-
-- Wallet Connection
-- Sign In With Ethereum
-- NFT
-- Smart Contracts
-- Tokens
-
----
-
-## Maps
-
-- Leaflet
-- Mapbox
-- Google Maps
-- Clustering
-- Heatmaps
-- Geolocation
-
----
-
-## Performance
-
-- Memoization
-- Virtualization
-- React Compiler
-- Suspense
-- Lazy Loading
-- Streaming
-- Bundle Analysis
-- Image Optimization
-- Code Splitting
-- Partial Prerendering
-
-Every optimization includes:
-
-- Before
-- After
-- FPS
-- Render Time
-- Memory Usage
-
----
-
-## Architecture
-
-- Repository Pattern
-- Service Layer
-- Dependency Injection
-- CQRS
-- Event Driven
-- Modular Design
-- Feature-based Architecture
-
----
-
-## Microfrontends
-
-- Module Federation
-- Independent Deployment
-- Shared Packages
-- Remote Components
-
----
-
-## Security
-
-- XSS
-- CSRF
-- SQL Injection
-- Rate Limiting
-- CSP
-- Secrets Management
-
----
-
-## Testing
-
-- Unit Testing
-- Integration Testing
-- E2E Testing
-- API Testing
-- Component Testing
-- Contract Testing
-
----
-
-## DevOps
-
-- Docker
-- Docker Compose
-- CI/CD
-- GitHub Actions
-- Deployments
-- Monitoring
-- Logging
-
----
-
-## Observability
-
-- Logging
-- Tracing
-- Metrics
-- Health Checks
-
----
-
-# Tech Stack
-
-## Monorepo
+### Monorepo
 
 - Turborepo
 - Bun Workspaces
 
----
+### Frontend
 
-## Frontend
-
-- React
-- Next.js (App Router)
-- TypeScript ^6
-- Tailwind CSS
+- React 19
+- Next.js 16 (App Router)
+- TypeScript 6
+- Tailwind CSS v4
 - TanStack Query
-- React Hook Form
-- MDX
 
----
-
-## Backend
+### Backend
 
 - Elysia
 - Next.js Route Handlers
-- Shared Typed Contracts
-- Zod
-- OpenAPI (optional)
 
----
-
-## Database
+### Database
 
 - PostgreSQL
-- Prisma ORM
+- Prisma ORM v7 (driver adapter)
 
----
+### Authentication
 
-## Authentication
+- Better Auth (reusable across Next.js and Elysia)
 
-- Better Auth
-
-Implemented as a reusable package that can be consumed by:
-
-- Next.js Route Handlers
-- Elysia Server
-
----
-
-## Caching
+### Caching
 
 - Redis
 
----
+### Validation
 
-## Realtime
+- Zod (shared between frontend, backend, API)
 
-Choose whichever best fits the feature:
+### Realtime
 
-- Native WebSockets
+- Native WebSocket
 - Elysia WebSocket
-- Socket.IO
+- Socket.IO (when necessary)
 
----
+### Testing
 
-## Validation
+- Vitest (unit + integration)
+- Playwright (E2E — coming soon)
 
-- Zod
+### Tooling
 
-Shared between:
+- Biome (linter + formatter)
+- Husky + lint-staged
+- commitlint (conventional commits)
+- syncpack (dependency consistency)
+- knip (dead file detection)
+- Storybook (component catalog — coming soon)
 
-- Frontend
-- Backend
-- Database
-- API
-
----
-
-## Data Fetching
-
-- TanStack Query
-
----
-
-## Testing
-
-- Vitest or Bun Test Runner
-- React Testing Library
-- Playwright
-- Cypress
-
----
-
-## Documentation
+### Documentation
 
 - MDX
 - Mermaid
-- Markdown
 
 ---
 
-## Tooling
-
-- Biome (linter and formatter)
-- Husky
-- lint-staged
-- Turbo
-- Bun
-
----
-
-## Deployment
-
-Frontend
-
-- Vercel
-
-Backend
-
-- Fly.io
-- Railway
-- Docker
-
-Database
-
-- PostgreSQL
-
-Cache
-
-- Redis
-
----
-
-# Repository Structure
+## Repository Structure
 
 ```
 .
 ├── apps
 │   ├── web                # Next.js application
-│   ├── api                # Standalone Elysia server
-│   └── docs               # Optional documentation app
+│   └── api                # Standalone Elysia server
 │
 ├── packages
-│   ├── auth
-│   ├── contracts
-│   ├── database
-│   ├── ui
-│   ├── config
-│   ├── env
-│   ├── logger
-│   ├── cache
-│   ├── websocket
-│   ├── validation
-│   ├── hooks
-│   ├── utils
-│   ├── types
-│   ├── biome-config
-│   └── tsconfig
+│   ├── auth               # Better Auth configuration
+│   ├── database           # Prisma client + schema
+│   ├── env                # Zod-validated environment variables
+│   ├── tsconfig           # Shared TypeScript configs
+│   ├── ui                 # Reusable UI components
+│   └── vitest-config      # Shared Vitest configuration
 │
-├── docker
-├── scripts
-├── examples
-└── .github
+├── docker                 # Docker Compose for local services
+├── scripts                # Dev scripts (generate-package, setup, etc.)
+├── docs                   # Plans and design documents
+├── e2e                    # Playwright E2E tests (coming soon)
+└── .github                # CI workflows
 ```
 
 ---
 
-# Feature Structure
-
-```
-feature/
-
-├── components
-├── hooks
-├── services
-├── repositories
-├── api
-├── schemas
-├── validators
-├── types
-├── utils
-├── constants
-├── tests
-├── docs
-└── demo
-```
-
-Every feature follows the same structure.
-
----
-
-# Architecture
+## Architecture
 
 ```
                  Browser
-
-                    │
-
+                     │
+                     ▼
+              Next.js (React)
+                     │
+         TanStack Query / Server Actions
+                     │
+         ┌──────────────────────┐
+         │                      │
+         ▼                      ▼
+ Next.js Route Handlers    Elysia Server
+         │                      │
+         └──────────┬───────────┘
                     ▼
-
-             Next.js (React)
-
+           Shared Contracts
+               (Zod)
+                    ▼
+             Service Layer
+                    ▼
+            Repository Layer
+                    ▼
+                Prisma
+                    ▼
+              PostgreSQL
                     │
-
-        TanStack Query / Server Actions
-
+                  Redis
                     │
-
-        ┌──────────────────────────┐
-        │                          │
-        ▼                          ▼
-
-Next.js Route Handlers       Elysia Server
-
-        │                          │
-
-        └──────────────┬───────────┘
-
-                       ▼
-
-              Shared Contracts
-
-                  (Zod)
-
-                       ▼
-
-                 Service Layer
-
-                       ▼
-
-               Repository Layer
-
-                       ▼
-
-                    Prisma
-
-                       ▼
-
-                 PostgreSQL
-
-                       │
-
-                     Redis
-
-                       │
-
-                  External APIs
+              External APIs
 ```
 
 ---
 
-# Development Modes
+## Feature Organization (Convention)
 
-ZomLab supports multiple development modes.
-
-## Option 1
-
-Only Next.js
+As features are built, they follow this structure:
 
 ```
-bun dev
+feature/
+├── components/
+├── hooks/
+├── services/
+├── repositories/
+├── api/
+├── schemas/
+├── types/
+├── utils/
+├── constants/
+├── tests/
+└── docs/
 ```
-
-Uses:
-
-- Next.js
-- Route Handlers
 
 ---
 
-## Option 2
+## Development
 
-Next.js + Embedded Elysia
+### Prerequisites
 
+- Node.js >=24.18.0
+- Bun (latest stable)
+- Docker (for PostgreSQL + Redis)
+
+### Quick Start
+
+```bash
+# 1. Install dependencies
+bun install
+
+# 2. Set up environment variables
+cp .env.example .env
+# Edit .env with your values
+
+# 3. Start local services (PostgreSQL + Redis)
+bun run dev:db
+
+# 4. Generate Prisma client
+bun run db:generate
+
+# 5. Start development
+bun run dev
 ```
-bun dev:elysia
+
+### Development Modes
+
+| Command | What runs |
+|---|---|
+| `bun run dev` | Next.js (with Elysia embedded under `/api/*`) |
+| `bun run dev:api` | Standalone Elysia server only |
+| `bun run dev:standalone` | Next.js + Standalone Elysia (microservice mode) |
+| `bun run dev:db` | PostgreSQL + Redis via Docker |
+
+### Quality Checks
+
+```bash
+# Run all checks (lint → deps → unused → types → tests)
+bun run check:all
+
+# Watch mode for type checking
+bun run dev:types
+
+# Individual checks
+bun run lint         # Biome
+bun run format       # Biome format
+bun run deps:check   # syncpack
+bun run deps:unused  # knip
+bun run test         # Vitest
 ```
 
-Elysia is mounted inside the Next.js application.
+### Creating a New Package
+
+```bash
+bun run generate:package <name>
+```
+
+Scaffolds a new `@zomlab/<name>` package with TypeScript, tests, and tsconfig pre-configured.
 
 ---
 
-## Option 3
+## Why Elysia?
 
-Standalone API
-
-```
-bun dev:standalone
-```
-
-Runs:
-
-- Next.js
-- Standalone Elysia
-
-Useful for microservice-style development.
-
----
-
-## Option 4
-
-API Only
-
-```
-bun dev:api
-```
-
-Runs only Elysia.
-
----
-
-# Why Elysia?
-
-Some features work perfectly as Route Handlers.
-
-Others benefit from a dedicated API:
+Some features work perfectly as Next.js Route Handlers. Others benefit from a dedicated API server:
 
 - WebSockets
 - AI Streaming
 - Long-running requests
 - Background jobs
 - Webhooks
-- Better performance
 
-This project supports both approaches.
-
----
-
-# Documentation
-
-Each module includes:
-
-- Overview
-- Live Demo
-- Folder Structure
-- Architecture Diagram
-- Request Flow
-- Database Schema
-- API Reference
-- Performance Notes
-- Security Notes
-- Common Pitfalls
-- References
+This project supports both approaches. Routes are defined once in `apps/api/src/app.ts` and shared between standalone and embedded modes.
 
 ---
 
-# Coding Principles
+## Planned Modules
+
+Modules listed in [`ENHANCEMENTS.md`](./ENHANCEMENTS.md) track what's coming. Broad categories include:
+
+- **Core**: CRUD, pagination, search, filtering, file uploads
+- **Authentication**: OAuth, passkeys, RBAC, MFA
+- **Realtime**: WebSockets, presence, chat, notifications
+- **Payments & Webhooks**: Stripe, idempotency, signature validation
+- **AI**: Chat, streaming, agents, RAG, vector search
+- **Performance**: Memoization, virtualization, bundle analysis
+- **Security**: Rate limiting, CSP, secrets management
+- **DevOps**: Docker, CI/CD, monitoring, deployment
+
+---
+
+## Coding Principles
 
 - Feature-first architecture
 - Shared contracts
 - End-to-end type safety
 - Reusable packages
 - Small modules
-- Clean code
-- SOLID
-- DRY
-- KISS
-- Progressive enhancement
+- SOLID, DRY, KISS
 - Accessibility first
 - Performance first
+- Measure before optimizing
 
 ---
 
-# Future Ideas
-
-- Event Bus
-- Kafka
-- RabbitMQ
-- GraphQL
-- tRPC Comparison
-- gRPC
-- Elasticsearch
-- OpenTelemetry
-- AI Agents
-- Vector Databases
-- Terraform
-- Kubernetes
-- CDN
-- Cloud Storage
-- Feature Flags
-- Multi-tenancy
-- Offline Support
-- PWA
-- React Native
-- Electron
-- Browser Extensions
-
----
-
-# License
+## License
 
 MIT
 
