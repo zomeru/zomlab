@@ -14,7 +14,7 @@
     "lint": "biome check .",
     "format": "biome format --write .",
     "format:check": "biome format --check .",
-    "lint:fix": "biome check --apply .",
+    "lint:fix": "biome check --write .",
     "db:generate": "bun run --cwd packages/database generate",
     "db:push": "bun run --cwd packages/database push",
     "db:migrate": "bun run --cwd packages/database migrate",
@@ -55,8 +55,8 @@
     "vitest": "^4.1.10"
   },
   "lint-staged": {
-    "*": "biome check --no-errors-on-unmatched --fix --no-unknown-files",
-    "*.{ts,tsx}": "biome check --no-errors-on-unmatched --fix --no-unknown-files"
+    "*": "biome check --no-errors-on-unmatched --write --files-ignore-unknown=true",
+    "*.{ts,tsx}": "biome check --no-errors-on-unmatched --write --files-ignore-unknown=true"
   },
   "engines": {
     "node": ">=24"
