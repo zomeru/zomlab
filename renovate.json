@@ -16,6 +16,14 @@
     {
       "matchPackagePrefixes": ["@zomlab/"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["postcss"],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
     }
   ]
 }
