@@ -1,20 +1,65 @@
 {
   "name": "zomlab",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "build": "bun run with-env -- turbo run build",
+    "dev": "bun run with-env -- turbo run dev:web",
+    "dev:api": "bun run --cwd apps/api dev",
+    "dev:standalone": "bun run with-env -- turbo run dev",
+    "dev:db": "docker compose up -d postgres redis",
+    "dev:clean": "turbo clean && rm -rf .turbo",
+    "dev:debug": "NODE_OPTIONS='--inspect=9229' bun run dev",
+    "setup": "bun run scripts/setup.ts",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "format:check": "biome format --check .",
+    "lint:fix": "biome check --apply .",
+    "db:generate": "bun run --cwd packages/database generate",
+    "db:push": "bun run --cwd packages/database push",
+    "db:migrate": "bun run --cwd packages/database migrate",
+    "db:studio": "bun run --cwd packages/database studio",
+    "dev:types": "turbo watch check-types",
+    "changeset": "changeset",
+    "check:all": "bun run with-env -- biome check . && syncpack lint && bun run deps:unused && turbo run check-types && vitest run",
+    "check-types": "turbo run check-types",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rimraf node_modules .turbo dist generated apps/*/{node_modules,.turbo,dist,generated} packages/*/{node_modules,.turbo,dist,generated}",
+    "deps:check": "syncpack lint",
+    "deps:fix": "syncpack fix",
+    "deps:unused": "bun run with-env -- knip",
+    "version:packages": "changeset version",
+    "version:sync": "bun run scripts/sync-version.ts",
+    "generate:package": "bun run scripts/generate-package.ts",
+    "with-env": "dotenv",
+    "prepare": "husky",
+    "reset": "bun run clean && bun install"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "turbo": "^2.10.7",
-    "typescript": "5.9.2"
+    "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.31.1",
+    "@commitlint/cli": "^21.2.1",
+    "@commitlint/config-conventional": "^21.2.0",
+    "bun-types": "^1.2.9",
+    "dotenv-cli": "^11.0.0",
+    "husky": "^9.1.7",
+    "jsdom": "^30.0.0",
+    "knip": "^6.29.0",
+    "lint-staged": "^15.5.2",
+    "rimraf": "^6.0.1",
+    "syncpack": "^15.3.2",
+    "tsdown": "^0.22.14",
+    "turbo": "2.10.7",
+    "typescript": "6.0.2",
+    "vitest": "^4.1.10"
+  },
+  "lint-staged": {
+    "*": "biome check --no-errors-on-unmatched --fix --no-unknown-files",
+    "*.{ts,tsx}": "biome check --no-errors-on-unmatched --fix --no-unknown-files"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
   "devEngines": {
     "packageManager": {
@@ -22,8 +67,5 @@
       "version": "1.3.9"
     }
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "workspaces": ["apps/*", "packages/*"]
 }

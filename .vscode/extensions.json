@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "biomejs.biome",
+    "bradlc.vscode-tailwindcss",
+    "Prisma.prisma",
+    "YoavBls.pretty-ts-errors",
+    "christian-kohler.path-intellisense",
+    "github.vscode-github-actions",
+    "ms-vscode.vscode-typescript-next",
+    "unifiedjs.vscode-mdx"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Web (Chrome)",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/apps/web",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Debug Web Server",
+      "type": "node",
+      "request": "attach",
+      "address": "localhost",
+      "port": 9229,
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug API Standalone",
+      "type": "node",
+      "request": "attach",
+      "address": "localhost",
+      "port": 9230,
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true
+    }
+  ]
+}
