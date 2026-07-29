@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 const rootPkg = JSON.parse(readFileSync("package.json", "utf-8")) as {
   devDependencies?: Record<string, string>;
 };
-const defaultTypeScriptVersion = "^6";
+const defaultTypeScriptVersion = "6";
 const typescriptVersion = rootPkg.devDependencies?.typescript ?? defaultTypeScriptVersion;
 
 const name = process.argv[2];

@@ -7,7 +7,8 @@
     "dev:web": "next dev",
     "build": "next build",
     "start": "next start",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "check-types:watch": "tsc --noEmit --watch"
   },
   "dependencies": {
     "better-auth": "^1.6.25",
@@ -24,7 +25,7 @@
     "@types/react-dom": "^19.2.3",
     "babel-plugin-react-compiler": "1.0.0",
     "tailwindcss": "^4.3.3",
-    "typescript": "7.0.2"
+    "typescript": "6"
   },
   "ignoreScripts": [
     "sharp",

@@ -9,7 +9,8 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "check-types:watch": "tsc --noEmit --watch"
   },
   "dependencies": {
     "zod": "^4.4.3"
