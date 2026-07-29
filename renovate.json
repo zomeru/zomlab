@@ -12,6 +12,10 @@
     {
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "non-major updates"
+    },
+    {
+      "matchPackagePrefixes": ["@zomlab/"],
+      "enabled": false
     }
   ]
 }
