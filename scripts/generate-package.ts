@@ -2,9 +2,11 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const rootPkg = JSON.parse(readFileSync("package.json", "utf-8")) as {
+  version: string;
   devDependencies?: Record<string, string>;
 };
 const defaultTypeScriptVersion = "6";
+const projectVersion = rootPkg.version;
 const typescriptVersion = rootPkg.devDependencies?.typescript ?? defaultTypeScriptVersion;
 
 const name = process.argv[2];
@@ -34,7 +36,7 @@ writeFileSync(
   `${JSON.stringify(
     {
       name: `@zomlab/${name}`,
-      version: "0.1.0",
+      version: projectVersion,
       private: true,
       type: "module",
       main: "./src/index.ts",
