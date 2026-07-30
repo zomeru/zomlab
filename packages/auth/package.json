@@ -15,14 +15,14 @@
   "dependencies": {
     "better-auth": "^1.6.25",
     "@better-auth/prisma-adapter": "^1.6.25",
-    "@zomlab/database": "*",
-    "@zomlab/env": "*",
+    "@zomlab/database": "workspace:*",
+    "@zomlab/env": "workspace:*",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",
-    "@zomlab/vitest-config": "*",
-    "@zomlab/tsconfig": "*",
+    "@zomlab/vitest-config": "workspace:*",
+    "@zomlab/tsconfig": "workspace:*",
     "typescript": "6"
   }
 }

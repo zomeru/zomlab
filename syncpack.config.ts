@@ -13,7 +13,7 @@ const config: RcFile = {
     {
       label: "Local workspace packages",
       dependencies: ["@zomlab/*"],
-      pinVersion: "*",
+      pinVersion: "workspace:*",
     },
   ],
 };

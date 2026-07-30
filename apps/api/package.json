@@ -11,12 +11,12 @@
     "check-types:watch": "tsc --noEmit --watch"
   },
   "dependencies": {
-    "@zomlab/env": "*",
+    "@zomlab/env": "workspace:*",
     "elysia": "^1.4.29"
   },
   "devDependencies": {
-    "@zomlab/vitest-config": "*",
-    "@zomlab/tsconfig": "*",
+    "@zomlab/vitest-config": "workspace:*",
+    "@zomlab/tsconfig": "workspace:*",
     "bun-types": "^1.3.14",
     "typescript": "6"
   }

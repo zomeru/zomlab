@@ -13,7 +13,8 @@
   "dependencies": {
     "@elysia/eden": "^1.4.10",
     "@tanstack/react-query": "^5.101.4",
-    "@zomlab/auth": "*",
+    "@zomlab/auth": "workspace:*",
+    "@zomlab/env": "workspace:*",
     "better-auth": "^1.6.25",
     "next": "16.2.12",
     "react": "19.2.8",
@@ -25,7 +26,7 @@
     "@types/node": "^26.1.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@zomlab/vitest-config": "*",
+    "@zomlab/vitest-config": "workspace:*",
     "babel-plugin-react-compiler": "1.0.0",
     "tailwindcss": "^4.3.3",
     "typescript": "6"
