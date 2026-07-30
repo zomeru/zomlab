@@ -6,7 +6,7 @@ const config: RcFile = {
     {
       range: "",
       label: "exact",
-      dependencies: ["typescript", "turbo"],
+      dependencies: ["turbo"],
     },
   ],
   versionGroups: [
