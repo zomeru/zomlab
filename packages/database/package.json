@@ -19,13 +19,13 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
-    "@zomlab/env": "*",
+    "@zomlab/env": "workspace:*",
     "pg": "^8.22.0"
   },
   "devDependencies": {
     "@prisma/config": "^7.9.1",
-    "@zomlab/tsconfig": "*",
-    "@zomlab/vitest-config": "*",
+    "@zomlab/tsconfig": "workspace:*",
+    "@zomlab/vitest-config": "workspace:*",
     "prisma": "^7.9.1"
   }
 }

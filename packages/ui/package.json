@@ -19,8 +19,8 @@
     "@types/node": "^26.1.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@zomlab/tsconfig": "*",
-    "@zomlab/vitest-config": "*",
+    "@zomlab/tsconfig": "workspace:*",
+    "@zomlab/vitest-config": "workspace:*",
     "storybook": "^10.5.5",
     "typescript": "6"
   },
