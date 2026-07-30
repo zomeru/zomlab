@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@prisma/config": "^7.9.1",
+    "@zomlab/tsconfig": "*",
     "@zomlab/vitest-config": "*",
     "prisma": "^7.9.1"
   }
