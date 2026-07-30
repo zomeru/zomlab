@@ -20,6 +20,7 @@
 
     "check:all": "bun run with-env -- biome check . && syncpack lint && bun run deps:unused && turbo run check-types && vitest run",
     "check-types": "turbo run check-types",
+    "check-types:watch": "turbo run check-types:watch",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",

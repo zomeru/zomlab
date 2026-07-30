@@ -23,3 +23,5 @@ export const app = new Elysia()
   .get("/ready", () => ({ ready: true }));
 
 export const elysiaApp = new Elysia({ prefix: "/api" }).use(app);
+
+export type App = typeof elysiaApp;
