@@ -1,6 +1,6 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@prisma/client";
 import { env } from "@zomlab/env";
+import { PrismaClient } from "../generated/prisma/client";
 
 function createPrismaClient() {
   const adapter = new PrismaPg({
@@ -9,7 +9,7 @@ function createPrismaClient() {
 
   const client = new PrismaClient({
     adapter,
-    log: env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
   });
 
   return client;

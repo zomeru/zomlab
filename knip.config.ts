@@ -25,7 +25,7 @@ const config: KnipConfig = {
     "packages/database": {
       entry: ["src/client.ts"],
       project: ["src/**/*.ts"],
-      ignoreDependencies: ["pg"],
+      ignoreDependencies: ["@prisma/client", "pg"],
     },
     "packages/env": {
       project: ["src/**/*.ts"],

@@ -4,13 +4,8 @@
     "lib": ["ESNext"],
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "outDir": "dist",
-    "rootDir": "src",
-    "paths": {
-      ".prisma/client": ["./node_modules/.prisma/client"],
-      ".prisma/client/*": ["./node_modules/.prisma/client/*"]
-    }
+    "outDir": "dist"
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src", "generated"],
   "exclude": ["node_modules", "dist"]
 }
