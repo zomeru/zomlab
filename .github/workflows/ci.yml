@@ -11,14 +11,33 @@ on:
 
 env:
   BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+  BETTER_AUTH_URL: http://localhost:3000
+  NEXT_PUBLIC_SITE_URL: http://localhost:3000
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+  DIRECT_URL: postgresql://postgres:postgres@localhost:5432/test_db
 
 jobs:
-  check:
+  check-test-build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [24.x]
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg18-trixie
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_db
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
 
     steps:
       - name: Checkout repo
@@ -32,6 +51,15 @@ jobs:
 
       - name: Generate Prisma client
         run: bun run --cwd packages/database generate
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+          DIRECT_URL: ${{ env.DIRECT_URL }}
+
+      - name: Apply Prisma migrations
+        run: bun run --cwd packages/database db:migrate
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+          DIRECT_URL: ${{ env.DIRECT_URL }}
 
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
@@ -54,6 +82,14 @@ jobs:
         run: bun run test
         env:
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+
+      - name: Build
+        run: bun run with-env -- turbo run build
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+          DIRECT_URL: ${{ env.DIRECT_URL }}
+          BETTER_AUTH_URL: ${{ env.BETTER_AUTH_URL }}
+          NEXT_PUBLIC_SITE_URL: ${{ env.NEXT_PUBLIC_SITE_URL }}
 
       - name: Audit dependencies
         run: bun audit --production
