@@ -9,7 +9,7 @@
     "setup": "bun run scripts/setup.ts",
 
     "dev": "bun run with-env -- turbo run dev:web",
-    "dev:api": "bun run --cwd apps/api dev",
+    "dev:api": "bun run with-env -- bun run --cwd apps/api dev",
     "dev:standalone": "bun run with-env -- turbo run dev",
     "dev:db": "docker compose up -d postgres redis",
     "dev:types": "turbo watch check-types",
@@ -33,10 +33,10 @@
     "storybook": "turbo run storybook",
     "build-storybook": "turbo run build-storybook",
 
-    "db:generate": "bun run --cwd packages/database generate",
-    "db:push": "bun run --cwd packages/database push",
-    "db:migrate": "bun run --cwd packages/database migrate",
-    "db:studio": "bun run --cwd packages/database studio",
+    "db:generate": "bun run --cwd packages/database db:generate",
+    "db:push": "bun run with-env -- bun run --cwd packages/database db:push",
+    "db:migrate": "bun run with-env -- bun run --cwd packages/database db:migrate",
+    "db:studio": "bun run with-env -- bun run --cwd packages/database db:studio",
 
     "deps:check": "syncpack lint",
     "deps:fix": "syncpack fix",
