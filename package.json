@@ -8,13 +8,14 @@
     "reset": "bun run clean && bun install",
     "setup": "bun run scripts/setup.ts",
 
-    "dev": "bun run with-env -- turbo run dev:web",
-    "dev:api": "bun run with-env -- bun run --cwd apps/api dev",
-    "dev:standalone": "bun run with-env -- turbo run dev",
+    "dev": "bun run kill:ports && bun run with-env -- turbo run web#dev",
+    "dev:api": "bun run kill:ports && bun run with-env -- turbo run api#dev",
+    "dev:standalone": "bun run kill:ports && bun run with-env -- turbo run dev",
     "dev:db": "docker compose up -d postgres redis",
     "dev:types": "turbo watch check-types",
     "dev:clean": "turbo clean && rm -rf .turbo",
     "dev:debug": "NODE_OPTIONS='--inspect=9229' bun run dev",
+    "kill:ports": "kill $(lsof -tiTCP:3000-3005 -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
 
     "build": "bun run with-env -- turbo run build",
 
@@ -28,15 +29,15 @@
 
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test",
+    "test:e2e": "kill $(lsof -tiTCP:${E2E_PORT:-3100} -sTCP:LISTEN 2>/dev/null) 2>/dev/null; playwright test",
 
     "storybook": "turbo run storybook",
     "build-storybook": "turbo run build-storybook",
 
-    "db:generate": "bun run --cwd packages/database db:generate",
-    "db:push": "bun run with-env -- bun run --cwd packages/database db:push",
-    "db:migrate": "bun run with-env -- bun run --cwd packages/database db:migrate",
-    "db:studio": "bun run with-env -- bun run --cwd packages/database db:studio",
+    "db:generate": "bun run with-env -- turbo run db:generate",
+    "db:push": "bun run with-env -- turbo run db:push",
+    "db:migrate": "bun run with-env -- turbo run db:migrate",
+    "db:studio": "bun run with-env -- turbo run db:studio",
 
     "deps:check": "syncpack lint",
     "deps:fix": "syncpack fix",

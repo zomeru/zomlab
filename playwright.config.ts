@@ -1,5 +1,8 @@
 import { defineConfig } from "@playwright/test";
 
+const E2E_PORT = Number(process.env.E2E_PORT ?? 3100);
+const baseURL = `http://localhost:${E2E_PORT}`;
+
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
@@ -7,13 +10,18 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: "list",
+  globalTeardown: "./e2e/teardown.ts",
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL,
   },
   webServer: {
-    command: "bun run dev",
-    url: "http://localhost:3000",
+    command: `PORT=${E2E_PORT} bun run dev`,
+    url: baseURL,
     reuseExistingServer: !process.env.CI,
-    cwd: "apps/web",
+    timeout: 120_000,
+    env: {
+      BETTER_AUTH_URL: baseURL,
+      NEXT_PUBLIC_SITE_URL: baseURL,
+    },
   },
 });

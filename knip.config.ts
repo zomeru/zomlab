@@ -12,19 +12,18 @@ const config: KnipConfig = {
     },
     "apps/web": {
       entry: ["src/**/*.{ts,tsx}"],
-      project: ["src/**/*.{ts,tsx}"],
+      project: ["src/**/*.{ts,tsx,css}", "content/**/*.mdx"],
       next: true,
       tailwind: true,
-      ignoreDependencies: ["tailwindcss"],
     },
     "packages/auth": {
-      entry: ["src/auth.ts", "src/client.ts"],
+      entry: ["src/auth.ts"],
       project: ["src/**/*.ts"],
       ignoreDependencies: ["zod"],
     },
     "packages/database": {
       entry: ["src/client.ts"],
-      project: ["src/**/*.ts"],
+      project: ["src/**/*.ts", "prisma/**/*.prisma"],
       ignoreDependencies: ["@prisma/client", "pg"],
     },
     "packages/env": {
@@ -32,11 +31,7 @@ const config: KnipConfig = {
     },
     "packages/ui": {
       entry: ["src/**/*.{ts,tsx}"],
-      project: ["src/**/*.{ts,tsx}"],
-      ignoreDependencies: ["react-dom", "@types/react-dom"],
-    },
-    "packages/tsconfig": {
-      project: ["**/*.json"],
+      project: ["src/**/*.{ts,tsx,mdx}"],
     },
     "packages/vitest-config": {
       project: ["src/**/*.ts"],
