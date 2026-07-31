@@ -1,100 +1,246 @@
+const QUICK_START = [
+  { label: "Install dependencies", command: "bun install" },
+  { label: "Copy environment", command: "cp .env.example .env" },
+  { label: "First-time setup", command: "bun run setup" },
+  { label: "Start services", command: "bun run dev:db" },
+  { label: "Generate Prisma client", command: "bun run db:generate" },
+  { label: "Start dev server", command: "bun run dev" },
+];
+
+const DEVELOPMENT_MODES = [
+  { label: "Web app", command: "bun run dev" },
+  { label: "API only", command: "bun run dev:api" },
+  { label: "Microservices", command: "bun run dev:standalone" },
+  { label: "Database", command: "bun run dev:db" },
+  { label: "Watch types", command: "bun run dev:types" },
+  { label: "Debug", command: "bun run dev:debug" },
+  { label: "Reset cache", command: "bun run dev:clean" },
+];
+
+const DATABASE_WORKFLOWS = [
+  { label: "Generate client", command: "bun run db:generate" },
+  { label: "Push schema", command: "bun run db:push" },
+  { label: "Create migration", command: "bun run db:migrate" },
+  { label: "Open Studio", command: "bun run db:studio" },
+];
+
+const QUALITY_CHECKS = [
+  { label: "Full pipeline", command: "bun run check:all" },
+  { label: "Lint", command: "bun run lint" },
+  { label: "Lint (fix)", command: "bun run lint:fix" },
+  { label: "Format", command: "bun run format" },
+  { label: "Format (check)", command: "bun run format:check" },
+  { label: "Types", command: "bun run check-types" },
+  { label: "Types (watch)", command: "bun run check-types:watch" },
+  { label: "Unit tests", command: "bun run test" },
+  { label: "Unit tests (watch)", command: "bun run test:watch" },
+  { label: "E2E tests", command: "bun run test:e2e" },
+  { label: "Deps consistency", command: "bun run deps:check" },
+  { label: "Deps (fix)", command: "bun run deps:fix" },
+  { label: "Unused code", command: "bun run deps:unused" },
+];
+
+const SECURITY_CHECKS = [
+  { label: "Production audit", command: "bun run security:audit" },
+  { label: "Full audit", command: "bun run security:check" },
+];
+
+const SCAFFOLDING = [
+  { label: "New package", command: "bun run generate:package <name>" },
+  { label: "Sync versions", command: "bun run version:sync" },
+  { label: "Changesets", command: "bun run changeset" },
+  { label: "Production build", command: "bun run build" },
+  { label: "Storybook", command: "bun run storybook" },
+  { label: "Build storybook", command: "bun run build-storybook" },
+  { label: "Clean workspace", command: "bun run clean" },
+  { label: "Reset install", command: "bun run reset" },
+];
+
+const TECH_STACK = [
+  { label: "Framework", value: "Next.js 16 + Elysia" },
+  { label: "Language", value: "TypeScript 6" },
+  { label: "Styling", value: "Tailwind CSS v4" },
+  { label: "Database", value: "PostgreSQL + Prisma v7" },
+  { label: "Auth", value: "Better Auth" },
+  { label: "Monorepo", value: "Turborepo + Bun" },
+];
+
+const BADGES = ["Next.js 16", "TypeScript 6", "Tailwind v4", "Elysia", "Prisma v7", "Better Auth"];
+
+const HERO_META = {
+  lastUpdated: "July 2026",
+  difficulty: "Beginner",
+  readingTime: "6 min",
+};
+
 export default function GettingStarted() {
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-        Getting Started
-      </h1>
-      <p className="mt-2 text-lg text-zinc-600 dark:text-zinc-400">
-        Welcome to ZomLab — a personal engineering laboratory and interactive knowledge base.
-      </p>
+      <header>
+        <p className="font-mono text-sm text-muted-foreground">docs / getting-started</p>
+        <h1 className="mt-2 text-4xl font-semibold tracking-tight text-balance">Getting Started</h1>
+        <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
+          ZomLab is a personal software engineering laboratory — a single monorepo where every
+          feature is a real, production-quality implementation you can run, read, and learn from.
+        </p>
 
-      <hr className="my-8 border-zinc-200 dark:border-zinc-800" />
+        <ul className="mt-5 flex flex-wrap gap-2" aria-label="Technology badges">
+          {BADGES.map((badge) => (
+            <li
+              key={badge}
+              className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-xs text-foreground"
+            >
+              {badge}
+            </li>
+          ))}
+        </ul>
 
-      <section className="space-y-6">
-        <div>
-          <h2 className="text-xl font-medium text-zinc-900 dark:text-zinc-50">What is ZomLab?</h2>
-          <p className="mt-2 leading-relaxed text-zinc-600 dark:text-zinc-400">
-            ZomLab is where I learn, experiment, document, and showcase modern technologies through
-            real, interactive implementations. Instead of scattered demo repos, everything lives in
-            one monorepo with production-like architecture.
-          </p>
-        </div>
+        <p className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+          <span>Last updated: {HERO_META.lastUpdated}</span>
+          <span aria-hidden="true">·</span>
+          <span>Difficulty: {HERO_META.difficulty}</span>
+          <span aria-hidden="true">·</span>
+          <span>Reading time: {HERO_META.readingTime}</span>
+        </p>
+      </header>
 
-        <div>
-          <h2 className="text-xl font-medium text-zinc-900 dark:text-zinc-50">Quick Start</h2>
-          <div className="mt-3 space-y-2 text-sm">
-            <CodeLine label="Install dependencies" command="bun install" />
-            <CodeLine label="Copy environment" command="cp .env.example .env" />
-            <CodeLine label="Start services" command="bun run dev:db" />
-            <CodeLine label="Generate Prisma client" command="bun run db:generate" />
-            <CodeLine label="Start dev server" command="bun run dev" />
-          </div>
-        </div>
+      <hr className="my-10 border-border" />
 
-        <div>
-          <h2 className="text-xl font-medium text-zinc-900 dark:text-zinc-50">Quality Checks</h2>
-          <p className="mt-2 leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Run the full validation pipeline before committing:
-          </p>
-          <div className="mt-3 text-sm">
-            <CodeLine label="Full check" command="bun run check:all" />
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-medium text-zinc-900 dark:text-zinc-50">Tech Stack</h2>
-          <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-            <TechItem label="Framework" value="Next.js 16 + Elysia" />
-            <TechItem label="Language" value="TypeScript 6" />
-            <TechItem label="Styling" value="Tailwind CSS v4" />
-            <TechItem label="Database" value="PostgreSQL + Prisma v7" />
-            <TechItem label="Auth" value="Better Auth" />
-            <TechItem label="Monorepo" value="Turborepo + Bun" />
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-medium text-zinc-900 dark:text-zinc-50">
-            Creating a New Package
-          </h2>
-          <p className="mt-2 leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Use the package generator to scaffold a new{" "}
-            <code className="rounded bg-zinc-100 px-1.5 py-0.5 text-sm dark:bg-zinc-800">
-              @zomlab/*
-            </code>{" "}
-            package with TypeScript and tests pre-configured:
-          </p>
-          <div className="mt-3 text-sm">
-            <CodeLine label="Scaffold" command="bun run generate:package &lt;name&gt;" />
-          </div>
-        </div>
+      <section>
+        <h2 className="text-2xl font-semibold tracking-tight">What is ZomLab?</h2>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          Instead of scattered demo repos, ZomLab keeps everything in one monorepo. Every module
+          follows the same architecture — UI, hooks, API layer, services, repositories — so patterns
+          learned in one feature transfer to the next. The goal is simple: build once, learn
+          forever.
+        </p>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          The codebase is organized around reusable packages (
+          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
+            @zomlab/*
+          </code>
+          ), with a Next.js app, a standalone Elysia API, and shared packages for auth, database,
+          and UI. Everything is fully typed, tested, and documented as it is built.
+        </p>
       </section>
 
-      <hr className="my-12 border-zinc-200 dark:border-zinc-800" />
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold tracking-tight">Quick Start</h2>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          From a fresh clone to a running dev server in six commands:
+        </p>
+        <TerminalBlock lines={QUICK_START} />
+      </section>
 
-      <footer className="text-center text-sm text-zinc-400">
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold tracking-tight">Development Modes</h2>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          The dev scripts cover every workflow — web, API-only, microservices, and tooling. Ports
+          3000–3005 are freed automatically before starting so stale servers never collide.
+        </p>
+        <TerminalBlock lines={DEVELOPMENT_MODES} />
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold tracking-tight">Database Workflows</h2>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          Prisma v7 with a driver adapter lives in{" "}
+          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
+            @zomlab/database
+          </code>
+          . The generated client is shared by auth, web, and the API.{" "}
+          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
+            db:push
+          </code>{" "}
+          is for rapid prototyping;{" "}
+          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
+            db:migrate
+          </code>{" "}
+          keeps a migration history for production.
+        </p>
+        <TerminalBlock lines={DATABASE_WORKFLOWS} />
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold tracking-tight">Quality Checks</h2>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          Run the full validation pipeline before committing:
+        </p>
+        <TerminalBlock lines={QUALITY_CHECKS} />
+        <p className="mt-3 leading-7 text-muted-foreground">
+          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
+            check:all
+          </code>{" "}
+          runs Biome → syncpack → knip → TypeScript → Vitest in sequence, so the individual commands
+          are there when you want a faster, focused loop.
+        </p>
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold tracking-tight">Security</h2>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          Dependency audits keep the supply chain clean. Run them regularly, not just before
+          release:
+        </p>
+        <TerminalBlock lines={SECURITY_CHECKS} />
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold tracking-tight">Tech Stack</h2>
+        <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {TECH_STACK.map(({ label, value }) => (
+            <div key={label} className="rounded-xl border border-border bg-card p-4">
+              <dt className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                {label}
+              </dt>
+              <dd className="mt-1.5 font-medium text-foreground">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold tracking-tight">Scaffolding & Tooling</h2>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          New packages are scaffolded with TypeScript and tests pre-configured. Versions stay in
+          sync across the workspace via changesets.
+        </p>
+        <TerminalBlock lines={SCAFFOLDING} />
+      </section>
+
+      <hr className="my-12 border-border" />
+
+      <footer className="text-center text-sm text-muted-foreground">
         <em>Build once. Learn forever.</em>
       </footer>
     </div>
   );
 }
 
-function CodeLine({ label, command }: { label: string; command: string }) {
+function TerminalBlock({ lines }: { lines: { label: string; command: string }[] }) {
   return (
-    <div className="flex items-center gap-3">
-      <span className="w-32 shrink-0 text-zinc-500 dark:text-zinc-400">{label}</span>
-      <code className="flex-1 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-1.5 font-mono text-sm text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200">
-        {command}
-      </code>
-    </div>
-  );
-}
-
-function TechItem({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex gap-2">
-      <span className="text-zinc-500 dark:text-zinc-400">{label}:</span>
-      <span className="font-medium text-zinc-800 dark:text-zinc-200">{value}</span>
+    <div className="mt-4 overflow-hidden rounded-xl border border-border bg-muted">
+      <div className="flex items-center gap-2 border-b border-border bg-background/60 px-4 py-2">
+        <span className="font-mono text-xs text-muted-foreground">~/zomlab</span>
+        <span aria-hidden="true" className="ml-auto font-mono text-xs text-muted-foreground">
+          bash
+        </span>
+      </div>
+      <div className="space-y-2 p-3">
+        {lines.map((line) => (
+          <div
+            key={line.label}
+            className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2.5"
+          >
+            <span className="hidden w-36 shrink-0 text-sm text-muted-foreground sm:block">
+              {line.label}
+            </span>
+            <code className="min-w-0 flex-1 overflow-x-auto font-mono text-sm text-foreground">
+              {line.command}
+            </code>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

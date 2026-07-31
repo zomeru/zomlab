@@ -7,46 +7,48 @@ export default function StatusPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-        System Status
-      </h1>
-      <p className="mt-2 text-lg text-zinc-600 dark:text-zinc-400">
+      <h1 className="text-3xl font-semibold tracking-tight text-balance">System Status</h1>
+      <p className="mt-2 text-lg text-muted-foreground">
         Real-time health information from the API server.
       </p>
 
-      <hr className="my-8 border-zinc-200 dark:border-zinc-800" />
-
-      {isLoading && <p className="text-zinc-500 dark:text-zinc-400">Checking server health...</p>}
-
-      {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950">
-          <p className="text-sm font-medium text-red-800 dark:text-red-200">
-            Failed to connect: {error.message}
+      <div className="mt-8">
+        {isLoading && (
+          <p className="text-sm text-muted-foreground" role="status">
+            Checking server health…
           </p>
-        </div>
-      )}
+        )}
 
-      {data && (
-        <dl className="space-y-4">
-          <div className="flex gap-4">
-            <dt className="w-24 text-sm font-medium text-zinc-500 dark:text-zinc-400">Status</dt>
-            <dd className="flex items-center gap-2 text-sm text-zinc-900 dark:text-zinc-50">
-              <span className="inline-block h-2 w-2 rounded-full bg-green-500" />
-              {data.status}
-            </dd>
+        {error && (
+          <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4">
+            <p className="text-sm font-medium text-destructive">
+              Failed to connect: {error.message}
+            </p>
           </div>
-          <div className="flex gap-4">
-            <dt className="w-24 text-sm font-medium text-zinc-500 dark:text-zinc-400">Uptime</dt>
-            <dd className="text-sm text-zinc-900 dark:text-zinc-50">{formatUptime(data.uptime)}</dd>
-          </div>
-          <div className="flex gap-4">
-            <dt className="w-24 text-sm font-medium text-zinc-500 dark:text-zinc-400">Checked</dt>
-            <dd className="text-sm text-zinc-900 dark:text-zinc-50">
-              {new Date(data.timestamp).toLocaleString()}
-            </dd>
-          </div>
-        </dl>
-      )}
+        )}
+
+        {data && (
+          <dl className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-card">
+            <div className="flex items-center gap-4 px-5 py-4">
+              <dt className="w-24 shrink-0 text-sm font-medium text-muted-foreground">Status</dt>
+              <dd className="flex items-center gap-2 text-sm font-medium text-foreground">
+                <span className="size-2 rounded-full bg-green-500" aria-hidden="true" />
+                {data.status}
+              </dd>
+            </div>
+            <div className="flex items-center gap-4 px-5 py-4">
+              <dt className="w-24 shrink-0 text-sm font-medium text-muted-foreground">Uptime</dt>
+              <dd className="text-sm tabular-nums text-foreground">{formatUptime(data.uptime)}</dd>
+            </div>
+            <div className="flex items-center gap-4 px-5 py-4">
+              <dt className="w-24 shrink-0 text-sm font-medium text-muted-foreground">Checked</dt>
+              <dd className="text-sm tabular-nums text-foreground">
+                {new Date(data.timestamp).toLocaleString()}
+              </dd>
+            </div>
+          </dl>
+        )}
+      </div>
     </div>
   );
 }
