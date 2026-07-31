@@ -18,8 +18,8 @@
   ],
   "js/ts.updateImportsOnFileMove.enabled": "always",
   "files.exclude": {
-    "**/.next": true,
-    "**/dist": true
+    "**/.next": true
+    // "**/dist": true
     // "**/node_modules": true
   },
   "search.exclude": {
