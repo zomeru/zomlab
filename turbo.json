@@ -2,6 +2,7 @@
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
   "envMode": "loose",
+  "globalPassThroughEnv": ["E2E_PORT"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -20,10 +21,6 @@
       "cache": false,
       "persistent": true
     },
-    "dev:web": {
-      "cache": false,
-      "persistent": true
-    },
     "storybook": {
       "cache": false,
       "persistent": true
@@ -31,6 +28,21 @@
     "build-storybook": {
       "dependsOn": ["^build"],
       "outputs": ["storybook-static/**"]
+    },
+
+    "db:generate": {
+      "outputs": ["generated/**"]
+    },
+    "db:push": {
+      "cache": false
+    },
+    "db:migrate": {
+      "cache": false,
+      "interactive": true
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true
     }
   }
 }
