@@ -52,7 +52,7 @@
 
     "generate:package": "bun run scripts/generate-package.ts",
 
-    "clean": "rimraf node_modules .turbo dist generated apps/*/{node_modules,.turbo,dist,generated} packages/*/{node_modules,.turbo,dist,generated}"
+    "clean": "rimraf node_modules .turbo dist test-results generated apps/*/{node_modules,.turbo,dist,generated} packages/*/{node_modules,.turbo,dist,generated}"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.6",
