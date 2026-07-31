@@ -35,10 +35,11 @@
     "storybook": "turbo run storybook",
     "build-storybook": "turbo run build-storybook",
 
-    "db:generate": "bun run with-env -- turbo run db:generate",
-    "db:push": "bun run with-env -- turbo run db:push",
-    "db:migrate": "bun run with-env -- turbo run db:migrate",
-    "db:studio": "bun run with-env -- turbo run db:studio",
+    "db:generate": "bun run with-env -- turbo run db:generate --filter=@zomlab/database",
+    "db:migrate": "bun run with-env -- turbo run db:migrate --filter=@zomlab/database",
+    "db:push": "bun run with-env -- turbo run db:push --filter=@zomlab/database",
+    "db:deploy": "bun run with-env -- turbo run db:deploy --filter=@zomlab/database",
+    "db:studio": "bun run with-env -- turbo run db:studio --filter=@zomlab/database",
 
     "deps:check": "syncpack lint",
     "deps:fix": "syncpack fix",

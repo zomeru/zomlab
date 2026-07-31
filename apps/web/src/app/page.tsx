@@ -20,6 +20,7 @@ const DEVELOPMENT_MODES = [
 const DATABASE_WORKFLOWS = [
   { label: "Generate client", command: "bun run db:generate" },
   { label: "Push schema", command: "bun run db:push" },
+  { label: "Deploy migrations", command: "bun run db:deploy" },
   { label: "Create migration", command: "bun run db:migrate" },
   { label: "Open Studio", command: "bun run db:studio" },
 ];

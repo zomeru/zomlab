@@ -30,6 +30,9 @@
       "outputs": ["storybook-static/**"]
     },
 
+    "db:deploy": {
+      "cache": false
+    },
     "db:generate": {
       "outputs": ["generated/**"]
     },
