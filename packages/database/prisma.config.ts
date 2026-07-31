@@ -1,4 +1,5 @@
 import { defineConfig } from "@prisma/config";
+import { env } from "@zomlab/env";
 
 export default defineConfig({
   schema: "prisma/",
@@ -6,6 +7,6 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env.DIRECT_URL ?? process.env.DATABASE_URL ?? "",
+    url: env.DIRECT_URL,
   },
 });

@@ -4,22 +4,25 @@ enum UserRole {
 }
 
 model User {
-  id           String    @id @default("cuid")
+  id           String    @id @default(cuid())
   name         String?
   email        String    @unique
-  emailVerified DateTime?
+  emailVerified Boolean   @default(false)
   image        String?
   role         UserRole  @default(user)
   banned       Boolean   @default(false)
   banReason    String?
   banExpires   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   accounts Account[]
   sessions Session[]
+  notes    Note[]
 }
 
 model Account {
-  id                      String    @id @default("cuid")
+  id                      String    @id @default(cuid())
   accountId               String
   providerId              String
   userId                  String
@@ -39,7 +42,7 @@ model Account {
 }
 
 model Session {
-  id        String   @id @default("cuid")
+  id        String   @id @default(cuid())
   expiresAt DateTime
   token     String   @unique
   createdAt DateTime @default(now())
@@ -54,7 +57,7 @@ model Session {
 }
 
 model Verification {
-  id         String   @id @default("cuid")
+  id         String   @id @default(cuid())
   identifier String
   value      String
   expiresAt  DateTime

@@ -7,10 +7,3 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-
-model SampleTable {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-}
