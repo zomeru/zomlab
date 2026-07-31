@@ -18,6 +18,7 @@
     "kill:ports": "kill $(lsof -tiTCP:3000-3005 -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
 
     "build": "bun run with-env -- turbo run build",
+    "build:web": "bun run with -- turbo run web#build",
 
     "check:all": "bun run with-env -- biome check . && syncpack lint && bun run deps:unused && turbo run check-types && vitest run",
     "check-types": "turbo run check-types",
