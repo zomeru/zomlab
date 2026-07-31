@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "with-env": "dotenv -c",
+    "with-env": "dotenv",
     "prepare": "husky",
     "reset": "bun run clean && bun install",
     "setup": "bun run scripts/setup.ts",
