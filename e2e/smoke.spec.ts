@@ -5,6 +5,6 @@ test("homepage loads and shows ZomLab branding", async ({ page }) => {
 
   await expect(page).toHaveTitle(/ZomLab/);
 
-  await expect(page.getByRole("link", { name: "ZomLab" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "ZomLab", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Getting Started" })).toBeVisible();
 });
