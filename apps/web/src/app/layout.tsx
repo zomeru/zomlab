@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { GitHubLink } from "@/components/layout/github-link";
+import { GlobalSearch } from "@/components/layout/global-search";
+import { ProfileButton } from "@/components/layout/profile-button";
+import { SidebarNav } from "@/components/layout/sidebar-nav";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { ReactQueryProvider } from "@/providers/react-query-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,50 +26,64 @@ export const metadata: Metadata = {
   description: "A personal software engineering laboratory and interactive knowledge base.",
 };
 
-const NAV_ITEMS = [
-  { label: "Getting Started", href: "/" },
-  { label: "Status", href: "/status" },
-];
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
-        <ReactQueryProvider>
-          <header className="flex h-14 items-center border-b border-zinc-200 bg-white px-6 dark:border-zinc-800 dark:bg-zinc-950">
-            <Link
-              href="/"
-              className="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-50"
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col bg-background text-foreground">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <ReactQueryProvider>
+            <a
+              href="#main"
+              className="sr-only rounded-md focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground"
             >
-              ZomLab
-            </Link>
-            <span className="ml-2 text-sm text-zinc-500 dark:text-zinc-400">
-              Interactive Engineering Lab
-            </span>
-          </header>
+              Skip to content
+            </a>
 
-          <div className="flex flex-1">
-            <aside className="hidden w-56 shrink-0 border-r border-zinc-200 bg-zinc-50/50 p-4 md:block dark:border-zinc-800 dark:bg-zinc-900/30">
-              <nav className="flex flex-col gap-1">
-                {NAV_ITEMS.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+            <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <div className="mx-auto flex h-14 w-full max-w-[1400px] items-center gap-3 px-4 sm:px-6 lg:px-8">
+                <Link href="/" className="flex shrink-0 items-center gap-2.5">
+                  <span
+                    aria-hidden="true"
+                    className="grid size-6 place-items-center rounded-md bg-primary font-mono text-xs font-bold text-primary-foreground"
                   >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-            </aside>
+                    Z
+                  </span>
+                  <span className="text-base font-semibold tracking-tight text-foreground">
+                    ZomLab
+                  </span>
+                </Link>
 
-            <main className="flex-1 px-6 py-8 md:px-10">{children}</main>
-          </div>
-        </ReactQueryProvider>
+                <GlobalSearch />
+
+                <div className="ml-auto flex items-center gap-1.5">
+                  <GitHubLink />
+                  <ThemeToggle />
+                  <ProfileButton />
+                </div>
+              </div>
+            </header>
+
+            <div className="mx-auto flex w-full max-w-[1400px] flex-1">
+              <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-60 shrink-0 overflow-y-auto border-r border-border bg-sidebar px-4 py-6 md:block">
+                <SidebarNav />
+              </aside>
+
+              <main id="main" className="min-w-0 flex-1 px-4 py-8 sm:px-8 lg:px-10">
+                {children}
+              </main>
+            </div>
+
+            <SiteFooter />
+          </ReactQueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
