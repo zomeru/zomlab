@@ -264,7 +264,10 @@ bun run db:generate
 # 5. Apply migrations to your database
 bun run db:push
 
-# 6. Start development
+# 6. Deploy migrations (production-safe, applies pending migrations)
+bun run db:deploy
+
+# 7. Start development
 bun run dev
 ```
 
@@ -287,6 +290,7 @@ bun run dev
 |---|---|
 | `bun run db:generate` | Generate the Prisma client from the schema |
 | `bun run db:push` | Push schema changes to the database (no migration history) |
+| `bun run db:deploy` | Apply pending migrations to the database (production-safe) |
 | `bun run db:migrate` | Create and apply a migration (`prisma migrate dev`, interactive) |
 | `bun run db:studio` | Open Prisma Studio (URL printed on start) |
 
