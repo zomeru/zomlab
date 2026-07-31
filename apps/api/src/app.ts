@@ -1,26 +1,24 @@
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
+import { notes } from "./modules/core/crud";
+import { system } from "./modules/system";
+import { authPlugin } from "./plugins/auth";
+import { docsPlugin } from "./plugins/docs";
+import { errorPlugin } from "./plugins/error";
+import { securityPlugin } from "./plugins/security";
 
+/**
+ * Elysia application — single source of truth for the API.
+ *
+ * All plugins and modules are registered here. The exported `App` type
+ * is consumed by Eden on the frontend for end-to-end type safety.
+ */
 export const app = new Elysia()
-  .state("startTime", Date.now())
-  .get("/health", ({ store }) => ({
-    status: "ok" as const,
-    timestamp: new Date().toISOString(),
-    uptime: Date.now() - store.startTime,
-  }))
-  .get(
-    "/version",
-    () => ({
-      name: "zomlab-api",
-      version: "0.1.0",
-    }),
-    {
-      response: t.Object({
-        name: t.String(),
-        version: t.String(),
-      }),
-    },
-  )
-  .get("/ready", () => ({ ready: true }));
+  .use(errorPlugin)
+  .use(securityPlugin)
+  .use(authPlugin)
+  .use(docsPlugin)
+  .use(system)
+  .use(notes);
 
 export const elysiaApp = new Elysia({ prefix: "/api" }).use(app);
 
