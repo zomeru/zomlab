@@ -24,8 +24,10 @@ test("sign up, create, edit, and delete a note", async ({ page }) => {
 
   await expect(page.getByText("My first note")).toBeVisible();
 
-  await page.getByRole("link", { name: "My first note" }).click();
-  await expect(page).toHaveURL(/\/core\/crud\/demo\/\w+/);
+  await Promise.all([
+    page.waitForURL(/\/core\/crud\/demo\/\w+/),
+    page.getByRole("link", { name: "My first note" }).click(),
+  ]);
   await expect(page.getByText("Hello from Playwright")).toBeVisible();
 
   await page.getByRole("button", { name: /edit/i }).click();
