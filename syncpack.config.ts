@@ -15,12 +15,6 @@ const config: RcFile = {
       dependencies: ["@zomlab/*"],
       pinVersion: "workspace:*",
     },
-    {
-      label: "Vite versions follow framework compatibility",
-      dependencies: ["vite"],
-      packages: ["@zomlab/web"],
-      isIgnored: true,
-    },
   ],
 };
 
