@@ -26,7 +26,7 @@ This project is a **work-in-progress**. The foundation (monorepo, packages, auth
 | Docs (MDX + Mermaid) | ✅ Built |
 | Theme system (next-themes, OKLCH tokens) | ✅ Built |
 | Docs shell (search, collapsible sidebar, profile, footer) | ✅ Built |
-| E2E tests (Playwright) | ✅ Built (4 specs) |
+| E2E tests (Playwright) | ✅ Built (7 specs, 12 tests) |
 | UI components (`@zomlab/ui`, Storybook) | 🟡 Minimal |
 | Redis caching | ⏳ Planned |
 
@@ -105,7 +105,7 @@ Every feature is implemented as if it were part of a real-world application.
 ### Testing
 
 - Vitest (unit + integration, per-package projects)
-- Playwright (E2E, 4 specs)
+- Playwright (legacy parity E2E: 7 specs, 12 tests)
 
 ### Tooling
 
@@ -227,7 +227,8 @@ Errors follow a stable shape: `{ error: { code, message, detail? } }` with `VALI
 
 ## Feature Organization (Convention)
 
-Features live in `apps/web/src/features/<area>/<feature>/` (frontend) and `apps/api/src/modules/<area>/<feature>/` (backend), following this shape:
+Implemented legacy features live in `apps/_web/src/features/<area>/<feature>/` (frontend) and
+`apps/_api/src/modules/<area>/<feature>/` (backend), following this shape:
 
 ```
 feature/
@@ -244,7 +245,8 @@ feature/
 └── docs/
 ```
 
-The Notes feature is the reference implementation: `features/core/crud/` (UI + TanStack Query hooks) and `modules/core/crud/` (Elysia model → service → repository).
+The legacy Notes feature is the reference implementation: `features/core/crud/` (UI + TanStack
+Query hooks) and `modules/core/crud/` (Elysia model → service → repository).
 
 ---
 
@@ -379,7 +381,9 @@ Some features work perfectly as Next.js Route Handlers. Others benefit from a de
 - Background jobs
 - Webhooks
 
-This project supports both approaches. Routes are defined once in `apps/api/src/app.ts` and shared between standalone and embedded modes, with full end-to-end type safety through Eden Treaty.
+The legacy application supports both approaches. Routes are defined once in
+`apps/_api/src/app.ts` and shared between standalone and embedded modes, with full end-to-end type
+safety through Eden Treaty.
 
 ---
 
