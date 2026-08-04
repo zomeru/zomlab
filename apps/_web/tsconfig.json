@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@api/*": ["../api/src/*"],
+      "@api/*": ["../_api/src/*"],
       "@content/*": ["./content/*"],
       ".prisma/client": ["../../packages/database/node_modules/.prisma/client"],
       ".prisma/client/*": ["../../packages/database/node_modules/.prisma/client/*"]
