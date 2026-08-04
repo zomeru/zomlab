@@ -69,7 +69,7 @@ jobs:
       - name: Cache Next.js build
         uses: actions/cache@v6
         with:
-          path: apps/web/.next/cache
+          path: apps/_web/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.mjs', 'turbo.json') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-

@@ -8,8 +8,10 @@
     "reset": "pnpm run clean && pnpm install",
     "setup": "tsx scripts/setup.ts",
 
-    "dev": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run web#dev",
-    "dev:api": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run api#dev",
+    "dev": "pnpm run dev:legacy",
+    "dev:api": "pnpm run dev:legacy:api",
+    "dev:legacy": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run dev --filter=@zomlab/legacy-web",
+    "dev:legacy:api": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run dev --filter=@zomlab/legacy-api",
     "dev:standalone": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run dev",
     "dev:db": "docker compose up -d postgres redis",
     "dev:types": "pnpm exec turbo watch check-types",
@@ -18,8 +20,9 @@
     "kill:ports": "kill $(lsof -tiTCP:3000-3005 -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
 
     "build": "pnpm run with-env -- pnpm exec turbo run build",
-    "build:api": "pnpm run with-env -- pnpm exec turbo run api#build",
-    "build:web": "pnpm run with-env -- pnpm exec turbo run web#build",
+    "build:api": "pnpm run with-env -- pnpm exec turbo run build --filter=@zomlab/legacy-api",
+    "build:legacy": "pnpm run with-env -- pnpm exec turbo run build --filter=@zomlab/legacy-web --filter=@zomlab/legacy-api",
+    "build:web": "pnpm run with-env -- pnpm exec turbo run build --filter=@zomlab/legacy-web",
 
     "check:all": "pnpm run with-env -- pnpm exec biome check . && pnpm exec syncpack lint && pnpm run deps:unused && pnpm exec turbo run check-types && pnpm exec vitest run",
     "check-types": "pnpm exec turbo run check-types",

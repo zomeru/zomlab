@@ -7,11 +7,11 @@ const config: KnipConfig = {
       ignoreDependencies: ["tsdown"],
       ignoreFiles: [".agents/**"],
     },
-    "apps/api": {
+    "apps/_api": {
       entry: ["src/index.ts"],
       project: ["src/**/*.ts"],
     },
-    "apps/web": {
+    "apps/_web": {
       entry: ["src/**/*.{ts,tsx}"],
       project: ["src/**/*.{ts,tsx,css}", "content/**/*.mdx"],
       next: true,
