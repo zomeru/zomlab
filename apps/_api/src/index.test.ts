@@ -104,7 +104,7 @@ afterEach(async () => {
 
 describe("standalone Node API", () => {
   it("runs the built Node artifact", async () => {
-    execFileSync("pnpm", ["--filter", "api", "build"], {
+    execFileSync("pnpm", ["--filter", "@zomlab/legacy-api", "build"], {
       cwd: rootDirectory,
       stdio: "pipe",
     });
