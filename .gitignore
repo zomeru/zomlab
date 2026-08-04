@@ -16,9 +16,12 @@ coverage
 .vercel
 
 .next/
+.output/
+.wrangler/
 out/
 build
 dist
+storybook-static/
 
 npm-debug.log*
 yarn-debug.log*
