@@ -18,8 +18,10 @@ This project is a **work-in-progress**. The foundation (monorepo, packages, auth
 | Environment validation (`@zomlab/env`, Zod) | ✅ Built |
 | Database client (`@zomlab/database`, Prisma v7 + driver adapter) | ✅ Built |
 | Auth (`@zomlab/auth`, Better Auth) | ✅ Built |
-| API (`apps/api`, Elysia) | ✅ Built (health + authenticated CRUD) |
-| Web app (`apps/web`, Next.js) | ✅ Built |
+| Legacy API (`apps/_api`, Elysia) | ✅ Built (health + authenticated CRUD) |
+| Legacy web app (`apps/_web`, Next.js) | ✅ Built |
+| Target API (`apps/api`, Hono + Cloudflare Workers) | 🟡 Scaffold only |
+| Target web app (`apps/web`, TanStack Start + Cloudflare Workers) | 🟡 Scaffold only |
 | Notes CRUD (authenticated, full-stack) | ✅ Built |
 | Docs (MDX + Mermaid) | ✅ Built |
 | Theme system (next-themes, OKLCH tokens) | ✅ Built |
@@ -60,7 +62,8 @@ Every feature is implemented as if it were part of a real-world application.
 ### Frontend
 
 - React 19
-- Next.js 16 (App Router)
+- TanStack Start (target scaffold)
+- Next.js 16 App Router (legacy application)
 - TypeScript 6
 - Tailwind CSS v4
 - TanStack Query
@@ -69,7 +72,8 @@ Every feature is implemented as if it were part of a real-world application.
 
 ### Backend
 
-- Elysia (single API app, shared between embedded + standalone modes)
+- Hono on Cloudflare Workers (target scaffold)
+- Elysia (legacy API, shared between embedded + standalone modes)
 - Better Auth route handlers
 
 ### Database
@@ -124,8 +128,10 @@ Every feature is implemented as if it were part of a real-world application.
 ```
 .
 ├── apps
-│   ├── web                # Next.js application (UI, MDX docs, embedded Elysia)
-│   └── api                # Standalone Elysia server
+│   ├── web                # Target TanStack Start Worker scaffold
+│   ├── api                # Target Hono Worker scaffold
+│   ├── _web               # Legacy Next.js application (UI, MDX, embedded Elysia)
+│   └── _api               # Legacy standalone Elysia server
 │
 ├── packages
 │   ├── auth               # Better Auth configuration
@@ -156,12 +162,17 @@ Never place reusable logic inside apps if it belongs in packages.
 
 ## Architecture
 
-The API is defined **once** in `apps/api/src/app.ts` as an Elysia app and consumed in two modes:
+The production-capable legacy API is defined **once** in `apps/_api/src/app.ts` as an Elysia app
+and consumed in two modes:
 
-1. **Embedded** (default): `pnpm dev` serves it inside Next.js at `/api/*` via a catch-all route handler (`apps/web/src/app/api/[[...slugs]]/route.ts`).
-2. **Standalone**: `pnpm dev:api` serves it as its own HTTP server on `API_PORT` (default `8000`, `8080` in `.env.example`).
+1. **Embedded**: `pnpm dev:legacy` serves it inside Next.js at `/api/*` via a catch-all route
+   handler in `apps/_web`.
+2. **Standalone**: `pnpm dev:legacy:api` serves it as its own HTTP server on `API_PORT`.
 
-The frontend talks to it through an Eden Treaty client (`apps/web/src/lib/eden.ts`) whose types are inferred directly from the Elysia app — no hand-written API types.
+The target `apps/web` and `apps/api` applications currently provide migration scaffolds only.
+
+The legacy frontend talks to it through an Eden Treaty client (`apps/_web/src/lib/eden.ts`) whose
+types are inferred directly from the Elysia app — no hand-written API types.
 
 ```
                  Browser
@@ -179,7 +190,7 @@ The frontend talks to it through an Eden Treaty client (`apps/web/src/lib/eden.t
         │                         │
         └────────────┬────────────┘
                      ▼
-               Elysia App (apps/api/src/app.ts)
+               Elysia App (apps/_api/src/app.ts)
                      ▼
          Plugins: error → security → auth → docs
                      ▼
@@ -275,14 +286,20 @@ pnpm dev
 
 | Command | What runs |
 |---|---|
-| `pnpm dev` | Next.js with Elysia embedded under `/api/*` (default) |
-| `pnpm dev:api` | Standalone Elysia server only (`API_PORT`) |
-| `pnpm dev:standalone` | Next.js + standalone Elysia (microservice mode) |
+| `pnpm dev` | Target TanStack Start and Hono migration scaffolds |
+| `pnpm dev:web` | Target TanStack Start migration scaffold only (`:3000`) |
+| `pnpm dev:api` | Target Hono migration scaffold only (`:8787`) |
+| `pnpm dev:legacy` | Legacy Next.js app with embedded Elysia |
+| `pnpm dev:legacy:api` | Legacy standalone Elysia server only (`API_PORT`) |
 | `pnpm dev:db` | PostgreSQL + Redis via Docker Compose |
 | `pnpm dev:types` | Watch-mode TypeScript checking across the monorepo |
-| `pnpm dev:debug` | Next.js with Node inspector on `:9229` |
+| `pnpm dev:debug` | Target scaffold development with the Node inspector enabled |
 | `pnpm dev:clean` | Remove all build caches (turbo + `.turbo`) |
-| `pnpm kill:ports` | Kill anything on ports 3000–3005 |
+| `pnpm kill:ports` | Kill anything on ports 3000–3005 and 8787 |
+
+The target applications are parallel migration scaffolds; they are not yet feature-complete or
+production-ready. Use `pnpm build:web` and `pnpm build:api` to build them independently, and
+`pnpm build:legacy` to build both legacy applications.
 
 ### Database Workflows
 
