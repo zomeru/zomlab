@@ -12,7 +12,7 @@
     "dev:api": "pnpm kill:ports && pnpm with-env -- turbo run dev --filter=@zomlab/api",
     "dev:legacy": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run dev --filter=@zomlab/legacy-web",
     "dev:legacy:api": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run dev --filter=@zomlab/legacy-api",
-    "dev:standalone": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run dev",
+    "dev:standalone": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run dev --filter=@zomlab/legacy-web --filter=@zomlab/legacy-api",
     "dev:db": "docker compose up -d postgres redis",
     "dev:types": "pnpm exec turbo watch check-types",
     "dev:clean": "pnpm exec turbo clean && rm -rf .turbo",

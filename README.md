@@ -293,10 +293,11 @@ pnpm dev
 | `pnpm dev:api` | Target Hono migration scaffold only (`:8787`) |
 | `pnpm dev:legacy` | Legacy Next.js app with embedded Elysia |
 | `pnpm dev:legacy:api` | Legacy standalone Elysia server only (`API_PORT`) |
+| `pnpm dev:standalone` | Legacy Next.js + standalone Elysia (microservice mode) |
 | `pnpm dev:db` | PostgreSQL + Redis via Docker Compose |
 | `pnpm dev:types` | Watch-mode TypeScript checking across the monorepo |
 | `pnpm dev:debug` | Target scaffold development with the Node inspector enabled |
-| `pnpm dev:clean` | Remove all build caches (turbo + `.turbo`) |
+| `pnpm dev:clean` | Clear the root Turbo cache and metadata |
 | `pnpm kill:ports` | Kill anything on ports 3000–3005 and 8787 |
 
 The target applications are parallel migration scaffolds; they are not yet feature-complete or
