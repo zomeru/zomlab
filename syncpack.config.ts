@@ -1,7 +1,7 @@
 import type { RcFile } from "syncpack";
 
 const config: RcFile = {
-  source: ["package.json", "apps/*/package.json", "packages/*/package.json"],
+  source: ["package.json", "{apps,packages}/*/package.json"],
   semverGroups: [
     {
       range: "",
