@@ -1,3 +1,14 @@
+<!-- intent-skills:start -->
+## Skill Loading
+
+Before editing files for a substantial task:
+- Run `pnpm dlx @tanstack/intent@latest list` from the workspace root to see available local skills.
+- If a listed skill matches the task, run `pnpm dlx @tanstack/intent@latest load <package>#<skill>` before changing files.
+- Use the loaded `SKILL.md` guidance while making the change.
+- Monorepos: when working across packages, run the skill check from the workspace root and prefer the local skill for the package being changed.
+- Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
+<!-- intent-skills:end -->
+
 # AGENTS.md
 
 > Instructions for AI coding agents working on **ZomLab**.
@@ -52,15 +63,15 @@ Required versions (do not downgrade unless explicitly requested):
 
 ```
 Node >=24.18.1   (.node-version)
-Bun 1.3.14       (devEngines)
+pnpm 11.20.0     (packageManager)
 TypeScript ^6
 ```
 
 Always prefer the **latest stable** versions of dependencies (Elysia, Next.js, Prisma, etc.). This is an engineering lab — staying current is a feature.
 
-## Package Manager: Bun
+## Package Manager: pnpm
 
-- Use `bun` for everything. Never use `npm`/`yarn`/`pnpm` installs.
+- Use `pnpm` for everything. Never use `npm`/`yarn` installs.
 - Workspaces are `apps/*` and `packages/*`. Internal packages are consumed as `"@zomlab/*": "workspace:*"`.
 
 ## Running Root Commands
@@ -68,19 +79,19 @@ Always prefer the **latest stable** versions of dependencies (Elysia, Next.js, P
 **Never use `--cwd`.** Turbo infers the workspace graph from the root. Run commands from the repository root.
 
 ```bash
-bun run dev            # Next.js with embedded Elysia at /api/*
-bun run dev:api        # Standalone Elysia on API_PORT
-bun run dev:standalone # Both (microservice mode)
-bun run test           # Vitest (unit + integration)
-bun run test:e2e       # Playwright E2E (port 3100, override with E2E_PORT)
-bun run check:all      # Biome → syncpack → knip → tsc → Vitest
+pnpm dev            # Next.js with embedded Elysia at /api/*
+pnpm dev:api        # Standalone Elysia on API_PORT
+pnpm dev:standalone # Both (microservice mode)
+pnpm test           # Vitest (unit + integration)
+pnpm test:e2e       # Playwright E2E (port 3100, override with E2E_PORT)
+pnpm check:all      # Biome → syncpack → knip → tsc → Vitest
 ```
 
 ## Environment Variables
 
 - Source of truth: `.env.example`. Copy to `.env` (gitignored).
 - All variables are validated at runtime by `@zomlab/env` (Zod). Missing/invalid variables **exit the process with a clear message** — never bypass this.
-- Scripts that need env vars must run through `with-env` (dotenv-cli): `bun run with-env -- <command>`.
+- Scripts that need env vars must run through `with-env` (dotenv-cli): `pnpm run with-env -- <command>`.
 - The API port for the standalone server is `API_PORT` (default `8000`, `8080` in `.env.example`).
 
 ---
@@ -431,7 +442,7 @@ Preferred order
 3. E2E
 
 - Vitest runs as workspace projects (root `vitest.config.ts` discovers `apps/*/vitest.config.ts` and `packages/*/vitest.config.ts`). Unit/integration tests sit next to the code (`*.test.ts`).
-- E2E lives in `e2e/` (Playwright, port 3100, `bun run test:e2e`). E2E registers real users against a dev database — keep specs independent (unique emails, teardown kills the server).
+- E2E lives in `e2e/` (Playwright, port 3100, `pnpm test:e2e`). E2E registers real users against a dev database — keep specs independent (unique emails, teardown kills the server).
 - Test behavior, not implementation details.
 
 ---
@@ -444,12 +455,12 @@ Preferred order
 
 ## The `check:all` Pipeline
 
-`bun run check:all` runs in sequence: Biome → syncpack → knip → `turbo check-types` → Vitest. **Run it (or the relevant subset) before claiming work is done.** CI runs the same pipeline plus build and `bun audit`.
+`pnpm check:all` runs in sequence: Biome → syncpack → knip → `turbo check-types` → Vitest. **Run it (or the relevant subset) before claiming work is done.** CI runs the same pipeline plus build and `pnpm audit`.
 
-- `bun run lint:fix` / `bun run format` auto-fix
-- `bun run deps:check` — syncpack (pins `turbo` exact, `@zomlab/*` to `workspace:*`)
-- `bun run deps:unused` — knip (workspace-aware config in `knip.config.ts`; add new entry points there)
-- `bun run security:audit` — `bun audit --production`
+- `pnpm lint:fix` / `pnpm format` auto-fix
+- `pnpm deps:check` — syncpack (pins `turbo` exact, `@zomlab/*` to `workspace:*`)
+- `pnpm deps:unused` — knip (workspace-aware config in `knip.config.ts`; add new entry points there)
+- `pnpm security:audit` — `pnpm audit --prod`
 
 ## Git Hooks
 

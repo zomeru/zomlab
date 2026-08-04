@@ -1,4 +1,3 @@
-#!/usr/bin/env bun
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const root = JSON.parse(readFileSync("package.json", "utf-8"));

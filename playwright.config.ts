@@ -15,7 +15,7 @@ export default defineConfig({
     baseURL,
   },
   webServer: {
-    command: `PORT=${E2E_PORT} bun run dev`,
+    command: `PORT=${E2E_PORT} pnpm dev`,
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

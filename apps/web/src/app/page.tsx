@@ -1,60 +1,60 @@
 const QUICK_START = [
-  { label: "Install dependencies", command: "bun install" },
+  { label: "Install dependencies", command: "pnpm install" },
   { label: "Copy environment", command: "cp .env.example .env" },
-  { label: "First-time setup", command: "bun run setup" },
-  { label: "Start services", command: "bun run dev:db" },
-  { label: "Generate Prisma client", command: "bun run db:generate" },
-  { label: "Start dev server", command: "bun run dev" },
+  { label: "First-time setup", command: "pnpm setup" },
+  { label: "Start services", command: "pnpm dev:db" },
+  { label: "Generate Prisma client", command: "pnpm db:generate" },
+  { label: "Start dev server", command: "pnpm dev" },
 ];
 
 const DEVELOPMENT_MODES = [
-  { label: "Web app", command: "bun run dev" },
-  { label: "API only", command: "bun run dev:api" },
-  { label: "Microservices", command: "bun run dev:standalone" },
-  { label: "Database", command: "bun run dev:db" },
-  { label: "Watch types", command: "bun run dev:types" },
-  { label: "Debug", command: "bun run dev:debug" },
-  { label: "Reset cache", command: "bun run dev:clean" },
+  { label: "Web app", command: "pnpm dev" },
+  { label: "API only", command: "pnpm dev:api" },
+  { label: "Microservices", command: "pnpm dev:standalone" },
+  { label: "Database", command: "pnpm dev:db" },
+  { label: "Watch types", command: "pnpm dev:types" },
+  { label: "Debug", command: "pnpm dev:debug" },
+  { label: "Reset cache", command: "pnpm dev:clean" },
 ];
 
 const DATABASE_WORKFLOWS = [
-  { label: "Generate client", command: "bun run db:generate" },
-  { label: "Push schema", command: "bun run db:push" },
-  { label: "Deploy migrations", command: "bun run db:deploy" },
-  { label: "Create migration", command: "bun run db:migrate" },
-  { label: "Open Studio", command: "bun run db:studio" },
+  { label: "Generate client", command: "pnpm db:generate" },
+  { label: "Push schema", command: "pnpm db:push" },
+  { label: "Deploy migrations", command: "pnpm db:deploy" },
+  { label: "Create migration", command: "pnpm db:migrate" },
+  { label: "Open Studio", command: "pnpm db:studio" },
 ];
 
 const QUALITY_CHECKS = [
-  { label: "Full pipeline", command: "bun run check:all" },
-  { label: "Lint", command: "bun run lint" },
-  { label: "Lint (fix)", command: "bun run lint:fix" },
-  { label: "Format", command: "bun run format" },
-  { label: "Format (check)", command: "bun run format:check" },
-  { label: "Types", command: "bun run check-types" },
-  { label: "Types (watch)", command: "bun run check-types:watch" },
-  { label: "Unit tests", command: "bun run test" },
-  { label: "Unit tests (watch)", command: "bun run test:watch" },
-  { label: "E2E tests", command: "bun run test:e2e" },
-  { label: "Deps consistency", command: "bun run deps:check" },
-  { label: "Deps (fix)", command: "bun run deps:fix" },
-  { label: "Unused code", command: "bun run deps:unused" },
+  { label: "Full pipeline", command: "pnpm check:all" },
+  { label: "Lint", command: "pnpm lint" },
+  { label: "Lint (fix)", command: "pnpm lint:fix" },
+  { label: "Format", command: "pnpm format" },
+  { label: "Format (check)", command: "pnpm format:check" },
+  { label: "Types", command: "pnpm check-types" },
+  { label: "Types (watch)", command: "pnpm check-types:watch" },
+  { label: "Unit tests", command: "pnpm test" },
+  { label: "Unit tests (watch)", command: "pnpm test:watch" },
+  { label: "E2E tests", command: "pnpm test:e2e" },
+  { label: "Deps consistency", command: "pnpm deps:check" },
+  { label: "Deps (fix)", command: "pnpm deps:fix" },
+  { label: "Unused code", command: "pnpm deps:unused" },
 ];
 
 const SECURITY_CHECKS = [
-  { label: "Production audit", command: "bun run security:audit" },
-  { label: "Full audit", command: "bun run security:check" },
+  { label: "Production audit", command: "pnpm security:audit" },
+  { label: "Full audit", command: "pnpm security:check" },
 ];
 
 const SCAFFOLDING = [
-  { label: "New package", command: "bun run generate:package <name>" },
-  { label: "Sync versions", command: "bun run version:sync" },
-  { label: "Changesets", command: "bun run changeset" },
-  { label: "Production build", command: "bun run build" },
-  { label: "Storybook", command: "bun run storybook" },
-  { label: "Build storybook", command: "bun run build-storybook" },
-  { label: "Clean workspace", command: "bun run clean" },
-  { label: "Reset install", command: "bun run reset" },
+  { label: "New package", command: "pnpm generate:package <name>" },
+  { label: "Sync versions", command: "pnpm version:sync" },
+  { label: "Changesets", command: "pnpm changeset" },
+  { label: "Production build", command: "pnpm build" },
+  { label: "Storybook", command: "pnpm storybook" },
+  { label: "Build storybook", command: "pnpm build-storybook" },
+  { label: "Clean workspace", command: "pnpm clean" },
+  { label: "Reset install", command: "pnpm reset" },
 ];
 
 const TECH_STACK = [
@@ -63,7 +63,7 @@ const TECH_STACK = [
   { label: "Styling", value: "Tailwind CSS v4" },
   { label: "Database", value: "PostgreSQL + Prisma v7" },
   { label: "Auth", value: "Better Auth" },
-  { label: "Monorepo", value: "Turborepo + Bun" },
+  { label: "Monorepo", value: "Turborepo + pnpm" },
 ];
 
 const BADGES = ["Next.js 16", "TypeScript 6", "Tailwind v4", "Elysia", "Prisma v7", "Better Auth"];

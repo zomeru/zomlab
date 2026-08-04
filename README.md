@@ -14,7 +14,7 @@ This project is a **work-in-progress**. The foundation (monorepo, packages, auth
 
 | Layer | Status |
 |---|---|
-| Monorepo (Turborepo + Bun) | ✅ Built |
+| Monorepo (Turborepo + pnpm) | ✅ Built |
 | Environment validation (`@zomlab/env`, Zod) | ✅ Built |
 | Database client (`@zomlab/database`, Prisma v7 + driver adapter) | ✅ Built |
 | Auth (`@zomlab/auth`, Better Auth) | ✅ Built |
@@ -53,7 +53,7 @@ Every feature is implemented as if it were part of a real-world application.
 ### Monorepo
 
 - Turborepo
-- Bun Workspaces
+- pnpm Workspaces
 - Changesets (versioning)
 - Renovate (dependency updates)
 
@@ -158,8 +158,8 @@ Never place reusable logic inside apps if it belongs in packages.
 
 The API is defined **once** in `apps/api/src/app.ts` as an Elysia app and consumed in two modes:
 
-1. **Embedded** (default): `bun run dev` serves it inside Next.js at `/api/*` via a catch-all route handler (`apps/web/src/app/api/[[...slugs]]/route.ts`).
-2. **Standalone**: `bun run dev:api` serves it as its own HTTP server on `API_PORT` (default `8000`, `8080` in `.env.example`).
+1. **Embedded** (default): `pnpm dev` serves it inside Next.js at `/api/*` via a catch-all route handler (`apps/web/src/app/api/[[...slugs]]/route.ts`).
+2. **Standalone**: `pnpm dev:api` serves it as its own HTTP server on `API_PORT` (default `8000`, `8080` in `.env.example`).
 
 The frontend talks to it through an Eden Treaty client (`apps/web/src/lib/eden.ts`) whose types are inferred directly from the Elysia app — no hand-written API types.
 
@@ -242,57 +242,57 @@ The Notes feature is the reference implementation: `features/core/crud/` (UI + T
 ### Prerequisites
 
 - Node.js >= 24.18.1 (see `.node-version`)
-- Bun (latest stable, pinned `devEngines` 1.3.14)
-- PostgreSQL (local, or via `bun run dev:db`)
+- pnpm 11.20.0 (pinned in `packageManager`)
+- PostgreSQL (local, or via `pnpm dev:db`)
 
 ### Quick Start
 
 ```bash
 # 1. Install dependencies
-bun install
+pnpm install
 
 # 2. Set up environment variables
 cp .env.example .env
 # Edit .env with your values (generate BETTER_AUTH_SECRET with: openssl rand -base64 32)
 
 # 3. (Optional) Start local services — PostgreSQL + Redis via Docker
-bun run dev:db
+pnpm dev:db
 
 # 4. Generate Prisma client
-bun run db:generate
+pnpm db:generate
 
 # 5. Apply migrations to your database
-bun run db:push
+pnpm db:push
 
 # 6. Deploy migrations (production-safe, applies pending migrations)
-bun run db:deploy
+pnpm db:deploy
 
 # 7. Start development
-bun run dev
+pnpm dev
 ```
 
 ### Development Modes
 
 | Command | What runs |
 |---|---|
-| `bun run dev` | Next.js with Elysia embedded under `/api/*` (default) |
-| `bun run dev:api` | Standalone Elysia server only (`API_PORT`) |
-| `bun run dev:standalone` | Next.js + standalone Elysia (microservice mode) |
-| `bun run dev:db` | PostgreSQL + Redis via Docker Compose |
-| `bun run dev:types` | Watch-mode TypeScript checking across the monorepo |
-| `bun run dev:debug` | Next.js with Node inspector on `:9229` |
-| `bun run dev:clean` | Remove all build caches (turbo + `.turbo`) |
-| `bun run kill:ports` | Kill anything on ports 3000–3005 |
+| `pnpm dev` | Next.js with Elysia embedded under `/api/*` (default) |
+| `pnpm dev:api` | Standalone Elysia server only (`API_PORT`) |
+| `pnpm dev:standalone` | Next.js + standalone Elysia (microservice mode) |
+| `pnpm dev:db` | PostgreSQL + Redis via Docker Compose |
+| `pnpm dev:types` | Watch-mode TypeScript checking across the monorepo |
+| `pnpm dev:debug` | Next.js with Node inspector on `:9229` |
+| `pnpm dev:clean` | Remove all build caches (turbo + `.turbo`) |
+| `pnpm kill:ports` | Kill anything on ports 3000–3005 |
 
 ### Database Workflows
 
 | Command | What it does |
 |---|---|
-| `bun run db:generate` | Generate the Prisma client from the schema |
-| `bun run db:push` | Push schema changes to the database (no migration history) |
-| `bun run db:deploy` | Apply pending migrations to the database (production-safe) |
-| `bun run db:migrate` | Create and apply a migration (`prisma migrate dev`, interactive) |
-| `bun run db:studio` | Open Prisma Studio (URL printed on start) |
+| `pnpm db:generate` | Generate the Prisma client from the schema |
+| `pnpm db:push` | Push schema changes to the database (no migration history) |
+| `pnpm db:deploy` | Apply pending migrations to the database (production-safe) |
+| `pnpm db:migrate` | Create and apply a migration (`prisma migrate dev`, interactive) |
+| `pnpm db:studio` | Open Prisma Studio (URL printed on start) |
 
 Schema lives in `packages/database/prisma/` (split into `schema.prisma`, `models/*.prisma`); the client is generated to `packages/database/generated/prisma` (gitignored).
 
@@ -300,27 +300,27 @@ Schema lives in `packages/database/prisma/` (split into `schema.prisma`, `models
 
 ```bash
 # Run everything: Biome → syncpack → knip → TypeScript → Vitest
-bun run check:all
+pnpm check:all
 
 # Individual checks
-bun run lint           # Biome lint
-bun run format         # Biome format (write)
-bun run format:check   # Biome format (read-only)
-bun run check-types    # tsc across all workspaces
-bun run test           # Vitest (unit + integration)
-bun run test:e2e       # Playwright (port 3100 by default, E2E_PORT to override)
-bun run deps:check     # syncpack
-bun run deps:unused    # knip
-bun run security:audit # bun audit --production
-bun run security:check # bun audit (all)
+pnpm lint           # Biome lint
+pnpm format         # Biome format (write)
+pnpm format:check   # Biome format (read-only)
+pnpm check-types    # tsc across all workspaces
+pnpm test           # Vitest (unit + integration)
+pnpm test:e2e       # Playwright (port 3100 by default, E2E_PORT to override)
+pnpm deps:check     # syncpack
+pnpm deps:unused    # knip
+pnpm security:audit # pnpm audit --prod
+pnpm security:check # pnpm audit (all)
 ```
 
-CI runs the same pipeline (`.github/workflows/ci.yml`): Biome → syncpack → knip → tsc → Vitest → build → `bun audit`.
+CI runs the same pipeline (`.github/workflows/ci.yml`): Biome → syncpack → knip → tsc → Vitest → build → `pnpm audit`.
 
 ### Creating a New Package
 
 ```bash
-bun run generate:package <name>
+pnpm generate:package <name>
 ```
 
 Scaffolds a new `@zomlab/<name>` package with TypeScript, tests, and tsconfig pre-configured.
@@ -328,9 +328,9 @@ Scaffolds a new `@zomlab/<name>` package with TypeScript, tests, and tsconfig pr
 ### Versioning
 
 ```bash
-bun run changeset        # Create a changeset
-bun run version:packages # Apply changesets (bump versions)
-bun run version:sync     # Sync all workspace versions to the root version
+pnpm changeset        # Create a changeset
+pnpm version:packages # Apply changesets (bump versions)
+pnpm version:sync     # Sync all workspace versions to the root version
 ```
 
 ---

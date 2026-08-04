@@ -1,47 +1,83 @@
-#!/usr/bin/env bun
+import { spawn } from "node:child_process";
 import { copyFileSync, existsSync } from "node:fs";
-import { $ } from "bun";
 
-const steps: { label: string; run: () => Promise<unknown> }[] = [];
+type CommandRunner = (command: string, args: readonly string[]) => Promise<void>;
 
-steps.push({
-  label: "Installing dependencies",
-  run: () => $`bun install`,
-});
+export type SetupOptions = {
+  copyEnvironment: () => void;
+  environmentExists: () => boolean;
+  exampleExists: () => boolean;
+  runCommand: CommandRunner;
+  write: (message: string) => void;
+};
 
-steps.push({
-  label: "Setting up environment variables",
-  run: async () => {
-    if (existsSync(".env")) {
-      console.log("  .env already exists, skipping.");
-      return;
-    }
-    if (!existsSync(".env.example")) {
-      console.log("  No .env.example found, skipping.");
-      return;
-    }
-    copyFileSync(".env.example", ".env");
-    console.log("  Created .env from .env.example.");
-  },
-});
+function runCommand(command: string, args: readonly string[]): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, { stdio: "inherit" });
 
-steps.push({
-  label: "Generating Prisma client",
-  run: () => $`bun run --cwd packages/database generate`,
-});
+    child.once("error", reject);
+    child.once("close", (code) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
 
-console.log("Setting up ZomLab...\n");
-
-for (const step of steps) {
-  process.stdout.write(`${step.label}... `);
-  try {
-    await step.run();
-    console.log("✓");
-  } catch (error) {
-    console.log("✗");
-    console.error(`  Failed: ${error}`);
-    process.exit(1);
-  }
+      reject(new Error(`${command} ${args.join(" ")} exited with code ${code ?? "unknown"}.`));
+    });
+  });
 }
 
-console.log("\n✓ Setup complete. Run \x1b[1mbun run dev\x1b[22m to start.");
+export async function runSetup(options: SetupOptions): Promise<void> {
+  const steps: { label: string; run: () => Promise<void> }[] = [
+    {
+      label: "Installing dependencies",
+      run: () => options.runCommand("pnpm", ["install"]),
+    },
+    {
+      label: "Setting up environment variables",
+      run: async () => {
+        if (options.environmentExists()) {
+          options.write("  .env already exists, skipping.");
+          return;
+        }
+        if (!options.exampleExists()) {
+          options.write("  No .env.example found, skipping.");
+          return;
+        }
+        options.copyEnvironment();
+        options.write("  Created .env from .env.example.");
+      },
+    },
+    {
+      label: "Generating Prisma client",
+      run: () => options.runCommand("pnpm", ["db:generate"]),
+    },
+  ];
+
+  options.write("Setting up ZomLab...\n");
+
+  for (const step of steps) {
+    try {
+      await step.run();
+      options.write(`${step.label}... ✓`);
+    } catch (error) {
+      options.write(`${step.label}... ✗`);
+      throw error;
+    }
+  }
+
+  options.write("\n✓ Setup complete. Run \x1b[1mpnpm dev\x1b[22m to start.");
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  runSetup({
+    copyEnvironment: () => copyFileSync(".env.example", ".env"),
+    environmentExists: () => existsSync(".env"),
+    exampleExists: () => existsSync(".env.example"),
+    runCommand,
+    write: (message) => console.log(message),
+  }).catch((error: unknown) => {
+    console.error(`  Failed: ${error instanceof Error ? error.message : String(error)}`);
+    process.exitCode = 1;
+  });
+}
