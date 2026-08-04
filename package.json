@@ -18,6 +18,7 @@
     "kill:ports": "kill $(lsof -tiTCP:3000-3005 -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
 
     "build": "bun run with-env -- turbo run build",
+    "build:api": "pnpm run with-env -- turbo run api#build",
     "build:web": "bun run with-env -- turbo run web#build",
 
     "check:all": "bun run with-env -- biome check . && syncpack lint && bun run deps:unused && turbo run check-types && vitest run",
@@ -71,6 +72,7 @@
     "syncpack": "^15.3.2",
     "tsdown": "^0.22.14",
     "@types/node": "^26.1.2",
+    "tsx": "4.23.5",
     "turbo": "2.10.7",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"
