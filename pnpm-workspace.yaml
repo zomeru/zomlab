@@ -1,0 +1,26 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+sharedWorkspaceLockfile: true
+linkWorkspacePackages: true
+preferWorkspacePackages: true
+saveWorkspaceProtocol: rolling
+strictPeerDependencies: true
+autoInstallPeers: false
+strictDepBuilds: true
+blockExoticSubdeps: true
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - "semver@6.3.1"
+pmOnFail: error
+
+allowBuilds:
+  "@prisma/engines": true
+  esbuild: true
+  prisma: true
+
+overrides:
+  postcss: ^8.5.24
+  sharp: ^0.35.3
+  uuid: ^14.0.1
