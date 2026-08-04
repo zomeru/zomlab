@@ -1,0 +1,18 @@
+{
+  "extends": "@zomlab/tsconfig/react-library.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "target": "ESNext",
+    "types": ["./worker-configuration.d.ts"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "worker-configuration.d.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}
