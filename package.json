@@ -7,7 +7,6 @@
     "prepare": "pnpm exec husky",
     "reset": "pnpm run clean && pnpm install",
     "setup": "tsx scripts/setup.ts",
-
     "dev": "pnpm kill:ports && pnpm with-env -- turbo run dev --filter=@zomlab/web --filter=@zomlab/api",
     "dev:web": "pnpm kill:ports && pnpm with-env -- turbo run dev --filter=@zomlab/web",
     "dev:api": "pnpm kill:ports && pnpm with-env -- turbo run dev --filter=@zomlab/api",
@@ -19,12 +18,10 @@
     "dev:clean": "pnpm exec turbo clean && rm -rf .turbo",
     "dev:debug": "NODE_OPTIONS='--inspect=9229' pnpm run dev",
     "kill:ports": "kill $(lsof -tiTCP:3000-3005 -iTCP:8787 -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
-
     "build": "pnpm run with-env -- pnpm exec turbo run build",
     "build:api": "pnpm with-env -- turbo run build --filter=@zomlab/api",
     "build:legacy": "pnpm run with-env -- pnpm exec turbo run build --filter=@zomlab/legacy-web --filter=@zomlab/legacy-api",
     "build:web": "pnpm with-env -- turbo run build --filter=@zomlab/web",
-
     "check:all": "pnpm run with-env -- pnpm exec biome check . && pnpm exec syncpack lint && pnpm run deps:unused && pnpm exec turbo run check-types && pnpm exec vitest run",
     "check-types": "pnpm exec turbo run check-types",
     "check-types:watch": "pnpm exec turbo run check-types:watch",
@@ -37,10 +34,8 @@
     "test": "pnpm exec vitest run",
     "test:watch": "pnpm exec vitest",
     "test:e2e": "kill $(lsof -tiTCP:${E2E_PORT:-3100} -sTCP:LISTEN 2>/dev/null) 2>/dev/null; pnpm exec playwright test",
-
     "storybook": "pnpm exec turbo run storybook",
     "build-storybook": "pnpm exec turbo run build-storybook",
-
     "db:generate": "pnpm run with-env -- pnpm exec turbo run db:generate --filter=@zomlab/database",
     "db:migrate": "pnpm run with-env -- pnpm exec turbo run db:migrate --filter=@zomlab/database",
     "db:push": "pnpm run with-env -- pnpm exec turbo run db:push --filter=@zomlab/database",
@@ -74,7 +69,7 @@
     "syncpack": "^15.3.2",
     "tsdown": "^0.22.14",
     "tsx": "4.23.5",
-    "turbo": "2.10.7",
+    "turbo": "2.10.8",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"
   },
