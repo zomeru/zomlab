@@ -79,9 +79,11 @@ Always prefer the **latest stable** versions of dependencies (Elysia, Next.js, P
 **Never use `--cwd`.** Turbo infers the workspace graph from the root. Run commands from the repository root.
 
 ```bash
-pnpm dev            # Next.js with embedded Elysia at /api/*
-pnpm dev:api        # Standalone Elysia on API_PORT
-pnpm dev:standalone # Both (microservice mode)
+pnpm dev            # Target TanStack Start web + Hono API Workers
+pnpm dev:web        # Target TanStack Start Worker only
+pnpm dev:api        # Target Hono Worker only
+pnpm dev:legacy     # Legacy Next.js with embedded Elysia at /api/*
+pnpm dev:standalone # Legacy Next.js + standalone Elysia (microservice mode)
 pnpm test           # Vitest (unit + integration)
 pnpm test:e2e       # Playwright E2E (port 3100, override with E2E_PORT)
 pnpm check:all      # Biome → syncpack → knip → tsc → Vitest
@@ -100,8 +102,10 @@ pnpm check:all      # Biome → syncpack → knip → tsc → Vitest
 
 ```
 apps/
-    web/        # Next.js (App Router) — UI, MDX docs, embedded Elysia
-    api/        # Standalone Elysia server
+    web/        # Target TanStack Start Cloudflare Worker scaffold
+    api/        # Target Hono Cloudflare Worker scaffold
+    _web/       # Legacy Next.js App Router application
+    _api/       # Legacy standalone Elysia server
 
 packages/
     auth/           # Better Auth configuration (+ client)
@@ -124,7 +128,17 @@ Never place reusable logic inside apps if it belongs in packages.
 
 # Package Responsibilities
 
-## apps/web
+## apps/web (target)
+
+The target web application is a TanStack Start Cloudflare Worker scaffold. New migration work belongs
+here unless a task explicitly targets the legacy application.
+
+## apps/api (target)
+
+The target API is a Hono Cloudflare Worker scaffold. New migration work belongs here unless a task
+explicitly targets the legacy application.
+
+## apps/_web (legacy)
 
 Contains:
 
@@ -137,12 +151,12 @@ Contains:
 
 Business logic should be minimal. Data access goes through hooks → Eden → API.
 
-## apps/api
+## apps/_api (legacy)
 
 The Elysia app is the single source of truth for the API. Structure:
 
 ```
-apps/api/src/
+apps/_api/src/
 ├── app.ts            # Composes plugins + modules; exports App type
 ├── index.ts          # Standalone entrypoint (app.listen(env.API_PORT))
 ├── errors/           # ApiError base + domain errors (Unauthorized, NotFound, RateLimit)
@@ -173,7 +187,7 @@ Prisma v7 with `@prisma/adapter-pg` driver adapter. Migrations resolve their con
 
 Contains Better Auth configuration. Reusable by:
 
-- Next.js (via `apps/web/src/app/api/auth/[...all]/route.ts`)
+- Next.js (via `apps/_web/src/app/api/auth/[...all]/route.ts`)
 - Elysia (via `plugins/auth.ts` and `auth.api.getSession`)
 
 Never duplicate auth logic. Config details:
@@ -214,10 +228,10 @@ UI (Server Components default, "use client" when interactive)
 Hooks (TanStack Query for client fetching)
 │
 ▼
-Eden Treaty client (apps/web/src/lib/eden.ts — types inferred from the Elysia app)
+Eden Treaty client (apps/_web/src/lib/eden.ts — types inferred from the Elysia app)
 │
 ▼
-Elysia App (apps/api/src/app.ts)
+Elysia App (apps/_api/src/app.ts)
 │  plugins: error → security → auth → docs
 │
 ▼
@@ -239,10 +253,10 @@ Never access Prisma directly from UI. Never perform business logic inside compon
 
 The same Elysia app runs two ways:
 
-1. **Embedded** — served by Next.js at `/api/*` via `apps/web/src/app/api/[[...slugs]]/route.ts` (uses `elysiaApp`, prefixed `/api`).
-2. **Standalone** — `apps/api/src/index.ts` listens on `API_PORT` (uses `app`, no prefix).
+1. **Embedded** — served by Next.js at `/api/*` via `apps/_web/src/app/api/[[...slugs]]/route.ts` (uses `elysiaApp`, prefixed `/api`).
+2. **Standalone** — `apps/_api/src/index.ts` listens on `API_PORT` (uses `app`, no prefix).
 
-`apps/api/src/app.ts` exports both the composed `app` and the `App` type consumed by Eden. **Add routes only in `app.ts`'s dependency graph** so both modes and the type contract stay in sync.
+`apps/_api/src/app.ts` exports both the composed `app` and the `App` type consumed by Eden. **Add legacy routes only in `app.ts`'s dependency graph** so both modes and the type contract stay in sync.
 
 ## API Conventions
 
@@ -259,9 +273,9 @@ The same Elysia app runs two ways:
 
 Each feature follows this structure. **The CRUD feature is the reference implementation:**
 
-- Frontend: `apps/web/src/features/core/crud/` → `components/`, `hooks/`
-- Backend: `apps/api/src/modules/core/crud/` → `model.ts`, `service.ts`, `repository.ts`, `index.ts` (+ tests)
-- Docs: `apps/web/content/core/crud/*.mdx`
+- Frontend: `apps/_web/src/features/core/crud/` → `components/`, `hooks/`
+- Backend: `apps/_api/src/modules/core/crud/` → `model.ts`, `service.ts`, `repository.ts`, `index.ts` (+ tests)
+- Docs: `apps/_web/content/core/crud/*.mdx`
 
 ```
 feature/
@@ -286,10 +300,10 @@ Avoid dumping unrelated files together.
 
 ## Pages & Routing
 
-- Pages live under `apps/web/src/app/`, one folder per route (`/core/crud`, `/core/crud/demo`, `/core/crud/demo/[id]`).
-- The sidebar tree is defined in `apps/web/src/lib/nav.ts`. **When adding a page, update `nav.ts`** so it appears in the sidebar and global search (`⌘K`).
+- Legacy pages live under `apps/_web/src/app/`, one folder per route (`/core/crud`, `/core/crud/demo`, `/core/crud/demo/[id]`).
+- The legacy sidebar tree is defined in `apps/_web/src/lib/nav.ts`. **When adding a legacy page, update `nav.ts`** so it appears in the sidebar and global search (`⌘K`).
 - Planned topics without pages stay in `nav.ts` without an `href` — rendered muted.
-- MDX doc pages import content from `apps/web/content/` via the `@content/*` alias.
+- Legacy MDX doc pages import content from `apps/_web/content/` via the `@content/*` alias.
 
 ## Components
 
@@ -299,7 +313,7 @@ Prefer Server Components whenever possible. Use Client Components ("use client")
 - Extract reusable hooks (~150 lines max)
 - Avoid prop drilling
 - Reuse `@zomlab/ui` components before writing new ones
-- MDX styling is centralized in `apps/web/src/mdx-components.tsx` — add doc-level styles there
+- Legacy MDX styling is centralized in `apps/_web/src/mdx-components.tsx` — add doc-level styles there
 
 ## Forms
 
@@ -318,16 +332,16 @@ Avoid global state unless necessary.
 
 ## Data Fetching
 
-- TanStack Query for client fetching (query keys centralized in `apps/web/src/lib/query-keys.ts`)
+- TanStack Query for legacy client fetching (query keys centralized in `apps/_web/src/lib/query-keys.ts`)
 - Server Components for initial rendering whenever possible
-- All API calls go through the Eden client (`apps/web/src/lib/eden.ts`) — never `fetch` raw endpoints
-- Map API errors with `apps/web/src/lib/api-error.ts` before surfacing to users
+- All legacy API calls go through the Eden client (`apps/_web/src/lib/eden.ts`) — never `fetch` raw endpoints
+- Map legacy API errors with `apps/_web/src/lib/api-error.ts` before surfacing to users
 
 ---
 
 # Styling
 
-- Tailwind CSS v4 (tokens defined in `apps/web/src/app/globals.css`, OKLCH color space)
+- Tailwind CSS v4 (legacy tokens defined in `apps/_web/src/app/globals.css`, OKLCH color space)
 - Do not introduce another CSS framework
 - Prefer utility classes; extract repeated patterns into components
 - Theme-aware: use semantic tokens (`bg-background`, `text-foreground`, `border-border`, `text-muted-foreground`, `bg-card`, `bg-muted`, `bg-sidebar`, `text-link`, `bg-destructive`, `bg-primary`) instead of raw colors
@@ -337,7 +351,10 @@ Avoid global state unless necessary.
 
 # Backend Conventions
 
-Prefer Elysia. Next.js Route Handlers are acceptable for:
+Use Hono for new target API work in `apps/api`. The following Elysia and Next.js conventions apply
+only to the preserved legacy applications under `apps/_api` and `apps/_web`.
+
+Next.js Route Handlers are acceptable for:
 
 - Authentication (`/api/auth/[...all]`)
 - Small APIs
@@ -429,7 +446,7 @@ Always infer types whenever possible. Avoid unnecessary type aliases.
 
 Never use `as any`, `@ts-ignore`, or `@ts-expect-error` to suppress errors.
 
-Type-safety contract: the `App` type from `apps/api/src/app.ts` flows through Eden into the frontend — keep it precise.
+Legacy type-safety contract: the `App` type from `apps/_api/src/app.ts` flows through Eden into the legacy frontend — keep it precise.
 
 ---
 
