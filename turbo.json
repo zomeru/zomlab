@@ -18,6 +18,9 @@
       "cache": false,
       "persistent": true
     },
+    "cf:typegen": {
+      "outputs": ["worker-configuration.d.ts"]
+    },
     "dev": {
       "cache": false,
       "persistent": true

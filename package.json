@@ -27,6 +27,7 @@
     "check:all": "pnpm run with-env -- pnpm exec biome check . && pnpm exec syncpack lint && pnpm run deps:unused && pnpm exec turbo run check-types && pnpm exec vitest run",
     "check-types": "pnpm exec turbo run check-types",
     "check-types:watch": "pnpm exec turbo run check-types:watch",
+    "cf:typegen": "turbo run cf:typegen",
     "lint": "pnpm exec biome check .",
     "lint:fix": "pnpm exec biome check --write .",
     "lint:workflows": "pnpm exec tsx scripts/actionlint.ts .github/workflows/ci.yml .github/workflows/e2e.yml",
