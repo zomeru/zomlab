@@ -1,27 +1,124 @@
-import { expect, test } from "@playwright/test";
+import { randomUUID } from "node:crypto";
+import { expect, type Page, test } from "@playwright/test";
 
-test("visual pass: signup, crud overview, and demo pages", async ({ page }) => {
-  await page.goto("/signup");
-  await page.screenshot({ path: "test-results/visual-signup.png", fullPage: true });
+type ColorScheme = "dark" | "light";
 
-  await page.goto("/core/crud");
-  await expect(page.getByRole("heading", { name: /Notes/i }).first()).toBeVisible();
-  await page.screenshot({ path: "test-results/visual-crud-overview.png", fullPage: true });
-});
+const COLOR_SCHEMES: ColorScheme[] = ["dark", "light"];
 
-test("visual pass: crud demo after signup", async ({ page }) => {
-  const email = `visual-${Date.now()}@test.local`;
+async function captureTheme(
+  page: Page,
+  options: {
+    colorScheme: ColorScheme;
+    filename: string;
+    route: string;
+    ready?: () => Promise<void>;
+  },
+) {
+  await page.emulateMedia({ colorScheme: options.colorScheme });
+  await page.goto(options.route);
+
+  const root = page.locator("html");
+  const hasExpectedTheme = await root.evaluate(
+    (element, theme) => element.classList.contains(theme),
+    options.colorScheme,
+  );
+
+  if (!hasExpectedTheme) {
+    await page.getByRole("button", { name: `Switch to ${options.colorScheme} theme` }).click();
+  }
+
+  await expect(root).toHaveClass(new RegExp(`(^|\\s)${options.colorScheme}(\\s|$)`));
+  await options.ready?.();
+  await page.screenshot({ path: `test-results/${options.filename}`, fullPage: true });
+}
+
+async function signUpAndCreateVisualNote(page: Page) {
   await page.goto("/signup");
   await page.getByLabel("Name").fill("Visual User");
-  await page.getByLabel("Email").fill(email);
+  await page.getByLabel("Email").fill(`visual-${randomUUID()}@test.local`);
   await page.getByLabel("Password").fill("password123");
   await page.getByRole("button", { name: /sign up/i }).click();
-  await expect(page).toHaveURL(/\/core\/crud\/demo/);
+  await expect(page).toHaveURL(/\/core\/crud\/demo$/);
 
   await page.getByLabel("Title").fill("A beautifully styled note");
   await page.getByLabel("Content").fill("Rendered with care.");
   await page.getByRole("button", { name: /create note/i }).click();
-  await expect(page.getByText("A beautifully styled note")).toBeVisible({ timeout: 10_000 });
 
-  await page.screenshot({ path: "test-results/visual-crud-demo.png", fullPage: true });
+  const noteLink = page.getByRole("link", { name: "A beautifully styled note" });
+  await expect(noteLink).toBeVisible();
+  return noteLink;
+}
+
+test("captures the legacy homepage in both themes", async ({ page }) => {
+  for (const colorScheme of COLOR_SCHEMES) {
+    await captureTheme(page, {
+      colorScheme,
+      filename: `legacy-home-${colorScheme}.png`,
+      route: "/",
+      ready: async () => {
+        await expect(page.getByRole("main")).toBeVisible();
+      },
+    });
+  }
+});
+
+test("captures the legacy signup page in both themes", async ({ page }) => {
+  for (const colorScheme of COLOR_SCHEMES) {
+    await captureTheme(page, {
+      colorScheme,
+      filename: `legacy-signup-${colorScheme}.png`,
+      route: "/signup",
+      ready: async () => {
+        await expect(page.getByRole("heading", { name: "Sign up" })).toBeVisible();
+      },
+    });
+  }
+});
+
+test("captures the legacy CRUD documentation in both themes", async ({ page }) => {
+  for (const colorScheme of COLOR_SCHEMES) {
+    await captureTheme(page, {
+      colorScheme,
+      filename: `legacy-crud-docs-${colorScheme}.png`,
+      route: "/core/crud",
+      ready: async () => {
+        await expect(page.getByRole("main").locator("div.my-6 svg").first()).toBeVisible();
+      },
+    });
+  }
+});
+
+test("captures the authenticated legacy notes list in both themes", async ({ page }) => {
+  await signUpAndCreateVisualNote(page);
+
+  for (const colorScheme of COLOR_SCHEMES) {
+    await captureTheme(page, {
+      colorScheme,
+      filename: `legacy-notes-list-${colorScheme}.png`,
+      route: "/core/crud/demo",
+      ready: async () => {
+        await expect(page.getByRole("link", { name: "A beautifully styled note" })).toBeVisible();
+      },
+    });
+  }
+});
+
+test("captures an authenticated legacy note detail in both themes", async ({ page }) => {
+  const noteLink = await signUpAndCreateVisualNote(page);
+  const detailPath = await noteLink.getAttribute("href");
+  expect(detailPath).toMatch(/^\/core\/crud\/demo\/[^/]+$/);
+  if (!detailPath) throw new Error("Created note link is missing its href");
+
+  for (const colorScheme of COLOR_SCHEMES) {
+    await captureTheme(page, {
+      colorScheme,
+      filename: `legacy-note-detail-${colorScheme}.png`,
+      route: detailPath,
+      ready: async () => {
+        await expect(
+          page.getByRole("heading", { name: "A beautifully styled note" }),
+        ).toBeVisible();
+      },
+    });
+  }
 });
