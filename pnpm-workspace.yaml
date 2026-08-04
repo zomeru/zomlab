@@ -19,8 +19,12 @@ allowBuilds:
   "@prisma/engines": true
   esbuild: true
   prisma: true
+  workerd: true
 
 overrides:
   postcss: ^8.5.24
   sharp: ^0.35.3
   uuid: ^14.0.1
+
+minimumReleaseAgeExclude:
+  - hono@4.13.0
