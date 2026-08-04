@@ -3,7 +3,8 @@ import type { KnipConfig } from "knip";
 const config: KnipConfig = {
   workspaces: {
     ".": {
-      ignoreDependencies: ["tsdown", "bun-types"],
+      entry: ["scripts/package-manager-policy.test.ts", "scripts/vitest.config.ts"],
+      ignoreDependencies: ["tsdown"],
       ignoreFiles: [".agents/**"],
     },
     "apps/api": {
