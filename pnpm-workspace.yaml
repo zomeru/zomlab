@@ -1,13 +1,14 @@
 packages:
   - "apps/*"
   - "packages/*"
+  - "scripts"
 
 sharedWorkspaceLockfile: true
 linkWorkspacePackages: true
 preferWorkspacePackages: true
 saveWorkspaceProtocol: rolling
 strictPeerDependencies: true
-autoInstallPeers: false
+autoInstallPeers: true
 strictDepBuilds: true
 blockExoticSubdeps: true
 trustPolicy: no-downgrade

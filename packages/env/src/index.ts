@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  API_PORT: z.coerce.number().default(8000),
-  NEXT_PUBLIC_SITE_URL: z.url(),
+  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+  VITE_SITE_URL: z.url(),
   DATABASE_URL: z.url(),
-  DIRECT_URL: z.url(),
+  E2E_PORT: z.coerce.number().default(3100),
   BETTER_AUTH_SECRET: z.string().min(32),
   BETTER_AUTH_URL: z.url(),
   GITHUB_CLIENT_ID: z.string().default(""),
@@ -15,8 +15,26 @@ const envSchema = z.object({
 
 type Env = z.infer<typeof envSchema>;
 
+function getCloudflareEnv(): Record<string, unknown> | undefined {
+  try {
+    // cloudflare:workers is available in Workers runtime (including local dev via Vite plugin)
+    const { env } = require("cloudflare:workers") as { env: Record<string, unknown> };
+    return env;
+  } catch {
+    return undefined;
+  }
+}
+
 function createEnv(): Env {
-  const result = envSchema.safeParse(process.env);
+  const cloudflareEnv = getCloudflareEnv();
+
+  const envSource = {
+    ...process.env,
+    ...(cloudflareEnv ?? {}),
+    NODE_ENV: process.env.NODE_ENV ?? "development",
+  };
+
+  const result = envSchema.safeParse(envSource);
 
   if (!result.success) {
     console.error("❌ Invalid environment variables:");

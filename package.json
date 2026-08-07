@@ -5,33 +5,28 @@
   "scripts": {
     "with-env": "pnpm exec dotenv",
     "prepare": "pnpm exec husky",
-    "reset": "pnpm run clean && pnpm install",
+    "reset": "pnpm run clean && pnpm install && pnpm run db:generate",
     "setup": "tsx scripts/setup.ts",
-    "dev": "pnpm kill:ports && pnpm with-env -- turbo run dev --filter=@zomlab/web --filter=@zomlab/api",
-    "dev:web": "pnpm kill:ports && pnpm with-env -- turbo run dev --filter=@zomlab/web",
-    "dev:api": "pnpm kill:ports && pnpm with-env -- turbo run dev --filter=@zomlab/api",
+    "dev": "pnpm kill:ports && pnpm with-env -- pnpm exec turbo run dev --filter=@zomlab/web",
     "dev:legacy": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run dev --filter=@zomlab/legacy-web",
-    "dev:legacy:api": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run dev --filter=@zomlab/legacy-api",
-    "dev:standalone": "pnpm run kill:ports && pnpm run with-env -- pnpm exec turbo run dev --filter=@zomlab/legacy-web --filter=@zomlab/legacy-api",
     "dev:db": "docker compose up -d postgres redis",
     "dev:types": "pnpm exec turbo watch check-types",
     "dev:clean": "pnpm exec turbo clean && rm -rf .turbo",
     "dev:debug": "NODE_OPTIONS='--inspect=9229' pnpm run dev",
     "kill:ports": "kill $(lsof -tiTCP:3000-3005 -iTCP:8787 -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
     "build": "pnpm run with-env -- pnpm exec turbo run build",
-    "build:api": "pnpm with-env -- turbo run build --filter=@zomlab/api",
-    "build:legacy": "pnpm run with-env -- pnpm exec turbo run build --filter=@zomlab/legacy-web --filter=@zomlab/legacy-api",
-    "build:web": "pnpm with-env -- turbo run build --filter=@zomlab/web",
-    "check:all": "pnpm run with-env -- pnpm exec biome check . && pnpm exec syncpack lint && pnpm run deps:unused && pnpm exec turbo run check-types && pnpm exec vitest run",
+    "build:legacy": "pnpm run with-env -- pnpm exec turbo run build --filter=@zomlab/legacy-web",
+    "check:all": "pnpm run lint && pnpm run deps:check && pnpm run deps:unused && pnpm run check-types && pnpm run test",
     "check-types": "pnpm exec turbo run check-types",
     "check-types:watch": "pnpm exec turbo run check-types:watch",
-    "cf:typegen": "turbo run cf:typegen",
+    "cf:typegen": "pnpm exec turbo run cf:typegen",
     "lint": "pnpm exec biome check .",
     "lint:fix": "pnpm exec biome check --write .",
     "lint:workflows": "pnpm exec tsx scripts/actionlint.ts .github/workflows/ci.yml .github/workflows/e2e.yml",
     "format": "pnpm exec biome format --write .",
     "format:check": "pnpm exec biome format --check .",
-    "test": "pnpm exec vitest run",
+    "test": "pnpm run with-env -- pnpm exec vitest run",
+    "test:turbo": "pnpm run with-env -- pnpm exec turbo run test",
     "test:watch": "pnpm exec vitest",
     "test:e2e": "kill $(lsof -tiTCP:${E2E_PORT:-3100} -sTCP:LISTEN 2>/dev/null) 2>/dev/null; pnpm exec playwright test",
     "storybook": "pnpm exec turbo run storybook",
@@ -50,7 +45,7 @@
     "version:sync": "tsx scripts/sync-version.ts",
     "changeset": "pnpm exec changeset",
     "generate:package": "tsx scripts/generate-package.ts",
-    "clean": "pnpm exec rimraf node_modules .turbo dist test-results generated apps/*/{node_modules,.turbo,dist,generated,.output,.wrangler,storybook-static} packages/*/{node_modules,.turbo,dist,generated,.output,.wrangler,storybook-static}"
+    "clean": "pnpm exec rimraf node_modules .pnpm-store .turbo dist test-results apps/*/{node_modules,.turbo,dist,.output,.wrangler,storybook-static} packages/*/{node_modules,.turbo,dist,.output,.wrangler,storybook-static}"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.6",
@@ -84,7 +79,7 @@
     "packageManager": {
       "name": "pnpm",
       "version": "11.20.0",
-      "onFail": "error"
+      "onFail": "warn"
     }
   },
   "packageManager": "pnpm@11.20.0"

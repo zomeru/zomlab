@@ -10,33 +10,88 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as ApiSplatRouteImport } from './routes/api/$'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as AuthenticatedCoreCrudDemoIndexRouteImport } from './routes/_authenticated.core.crud.demo.index'
+import { Route as AuthenticatedCoreCrudDemoIdRouteImport } from './routes/_authenticated.core.crud.demo.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSplatRoute = ApiSplatRouteImport.update({
+  id: '/api/$',
+  path: '/api/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedCoreCrudDemoIndexRoute =
+  AuthenticatedCoreCrudDemoIndexRouteImport.update({
+    id: '/core/crud/demo/',
+    path: '/core/crud/demo/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreCrudDemoIdRoute =
+  AuthenticatedCoreCrudDemoIdRouteImport.update({
+    id: '/core/crud/demo/$id',
+    path: '/core/crud/demo/$id',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/$': typeof ApiSplatRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/core/crud/demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
+  '/core/crud/demo/': typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/$': typeof ApiSplatRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/core/crud/demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
+  '/core/crud/demo': typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/api/$': typeof ApiSplatRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/_authenticated/core/crud/demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
+  '/_authenticated/core/crud/demo/': typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/api/$' | '/api/auth/$' | '/core/crud/demo/$id' | '/core/crud/demo/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/$' | '/api/auth/$' | '/core/crud/demo/$id' | '/core/crud/demo'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/api/$'
+    | '/api/auth/$'
+    | '/_authenticated/core/crud/demo/$id'
+    | '/_authenticated/core/crud/demo/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  ApiSplatRoute: typeof ApiSplatRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +103,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/$': {
+      id: '/api/$'
+      path: '/api/$'
+      fullPath: '/api/$'
+      preLoaderRoute: typeof ApiSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/core/crud/demo/': {
+      id: '/_authenticated/core/crud/demo/'
+      path: '/core/crud/demo'
+      fullPath: '/core/crud/demo/'
+      preLoaderRoute: typeof AuthenticatedCoreCrudDemoIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/crud/demo/$id': {
+      id: '/_authenticated/core/crud/demo/$id'
+      path: '/core/crud/demo/$id'
+      fullPath: '/core/crud/demo/$id'
+      preLoaderRoute: typeof AuthenticatedCoreCrudDemoIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedCoreCrudDemoIdRoute: typeof AuthenticatedCoreCrudDemoIdRoute
+  AuthenticatedCoreCrudDemoIndexRoute: typeof AuthenticatedCoreCrudDemoIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedCoreCrudDemoIdRoute: AuthenticatedCoreCrudDemoIdRoute,
+  AuthenticatedCoreCrudDemoIndexRoute: AuthenticatedCoreCrudDemoIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  ApiSplatRoute: ApiSplatRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

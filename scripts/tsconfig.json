@@ -1,12 +1,10 @@
 {
+  "extends": "@zomlab/tsconfig/base.json",
   "compilerOptions": {
-    "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "moduleDetection": "force",
     "types": ["node"],
-    "skipLibCheck": true,
-    "strict": true
+    "lib": ["es2022"]
   },
   "include": ["**/*.ts"]
 }

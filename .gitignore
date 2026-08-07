@@ -31,7 +31,10 @@ yarn-error.log*
 *.pem
 
 /docs
-.opencode
+
+# Wrangler local dev secrets (never commit)
+**/.dev.vars*
+scripts/worker-probes/.*.env
 
 *.tsbuildinfo
 
@@ -40,5 +43,10 @@ yarn-error.log*
 *.log
 
 playwright-report/
+.playwright-mcp
 test-results/
 generated/
+.serena
+
+graphify-out/cost.json 
+graphify-out/cache/

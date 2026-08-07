@@ -1,34 +1,10 @@
 # ZomLab
 
 > **An interactive full-stack engineering playground and knowledge base.**
-
-ZomLab is my personal software engineering laboratory where I learn, experiment, document, and showcase modern technologies through real, interactive implementations.
-
-Instead of creating dozens of isolated demo repositories, everything lives in one monorepo. Every feature includes a working UI, production-like architecture, and code that explains how it works under the hood.
-
----
-
-## Current State
-
-This project is a **work-in-progress**. The foundation (monorepo, packages, auth, database, tooling, CI) is built, and features are being added progressively.
-
-| Layer | Status |
-|---|---|
-| Monorepo (Turborepo + pnpm) | ✅ Built |
-| Environment validation (`@zomlab/env`, Zod) | ✅ Built |
-| Database client (`@zomlab/database`, Prisma v7 + driver adapter) | ✅ Built |
-| Auth (`@zomlab/auth`, Better Auth) | ✅ Built |
-| Legacy API (`apps/_api`, Elysia) | ✅ Built (health + authenticated CRUD) |
-| Legacy web app (`apps/_web`, Next.js) | ✅ Built |
-| Target API (`apps/api`, Hono + Cloudflare Workers) | 🟡 Scaffold only |
-| Target web app (`apps/web`, TanStack Start + Cloudflare Workers) | 🟡 Scaffold only |
-| Notes CRUD (authenticated, full-stack) | ✅ Built |
-| Docs (MDX + Mermaid) | ✅ Built |
-| Theme system (next-themes, OKLCH tokens) | ✅ Built |
-| Docs shell (search, collapsible sidebar, profile, footer) | ✅ Built |
-| E2E tests (Playwright) | ✅ Built (7 specs, 12 tests) |
-| UI components (`@zomlab/ui`, Storybook) | 🟡 Minimal |
-| Redis caching | ⏳ Planned |
+>
+> ZomLab is my personal software engineering laboratory where I learn, experiment, document, and showcase modern technologies through real, interactive implementations.
+>
+> Instead of creating dozens of isolated demo repositories, everything lives in one monorepo. Every feature includes a working UI, production-like architecture, documentation, and code that explains how it works under the hood.
 
 ---
 
@@ -50,376 +26,686 @@ Every feature is implemented as if it were part of a real-world application.
 
 ---
 
-## Tech Stack
+# Goals
 
-### Monorepo
-
-- Turborepo
-- pnpm Workspaces
-- Changesets (versioning)
-- Renovate (dependency updates)
-
-### Frontend
-
-- React 19
-- TanStack Start (target scaffold)
-- Next.js 16 App Router (legacy application)
-- TypeScript 6
-- Tailwind CSS v4
-- TanStack Query
-- next-themes
-- Eden Treaty (end-to-end typed API client)
-
-### Backend
-
-- Hono on Cloudflare Workers (target scaffold)
-- Elysia (legacy API, shared between embedded + standalone modes)
-- Better Auth route handlers
-
-### Database
-
-- PostgreSQL
-- Prisma ORM v7 (driver adapter, `@prisma/adapter-pg`)
-
-### Authentication
-
-- Better Auth (reusable across Next.js and Elysia)
-- Argon2id password hashing (`@node-rs/argon2`)
-- Email/password + magic link + GitHub/Google OAuth
-
-### Validation
-
-- Zod (environment variables, shared)
-- Elysia models (request/response schemas)
-
-### Realtime (planned)
-
-- Native WebSocket
-- Elysia WebSocket
-- Socket.IO (when necessary)
-
-### Caching (planned)
-
-- Redis
-
-### Testing
-
-- Vitest (unit + integration, per-package projects)
-- Playwright (legacy parity E2E: 7 specs, 12 tests)
-
-### Tooling
-
-- Biome (linter + formatter)
-- Husky + lint-staged
-- commitlint (conventional commits)
-- syncpack (dependency consistency)
-- knip (dead file detection)
-- Storybook (component catalog)
-
-### Documentation
-
-- MDX
-- Mermaid
+- Learn modern software engineering through implementation
+- Create an interactive engineering handbook
+- Keep every experiment in a single repository
+- Document every architecture decision
+- Compare different approaches to solving the same problem
+- Build reusable packages
+- Practice enterprise architecture
+- Have a personal reference whenever I forget how something works
 
 ---
 
-## Repository Structure
+# Project Structure
+
+Every feature contains:
+
+- Live Demo
+- Source Code
+- Documentation
+- Architecture
+- API Flow
+- Database Schema
+- Performance Notes
+- Security Notes
+- Best Practices
+
+Example:
 
 ```
-.
-├── apps
-│   ├── web                # Target TanStack Start Worker scaffold
-│   ├── api                # Target Hono Worker scaffold
-│   ├── _web               # Legacy Next.js application (UI, MDX, embedded Elysia)
-│   └── _api               # Legacy standalone Elysia server
-│
-├── packages
-│   ├── auth               # Better Auth configuration
-│   ├── database           # Prisma client + schema + migrations
-│   ├── env                # Zod-validated environment variables
-│   ├── tsconfig           # Shared TypeScript configs
-│   ├── ui                 # Reusable UI components (+ Storybook)
-│   └── vitest-config      # Shared Vitest configuration
-│
-├── e2e                    # Playwright E2E tests
-├── scripts                # Dev scripts (setup, generate-package, sync-version)
-├── docs                   # Local plans & design documents (gitignored)
-├── .github                # CI workflows
-│
-├── docker-compose.yml     # PostgreSQL + Redis for local services
-├── turbo.json
-├── biome.jsonc
-├── knip.config.ts
-├── syncpack.config.ts
-├── playwright.config.ts
-├── vitest.config.ts
-└── .env.example
+Payments
+
+├── Live Demo
+├── Source Code
+├── Documentation
+├── Architecture
+├── Request Flow
+├── Database
+├── Webhooks
+├── Security
+├── Performance
+└── Common Mistakes
 ```
 
-Never place reusable logic inside apps if it belongs in packages.
+---
+
+# Planned Modules
+
+## Core
+
+- Routing
+- Forms
+- CRUD
+- Pagination
+- Infinite Scroll
+- Search
+- Filtering
+- Sorting
+- File Uploads
+- Downloads
+- CSV Import/Export
+
+---
+
+## Authentication
+
+- Better Auth
+- Session Authentication
+- JWT
+- OAuth
+- Magic Links
+- Passkeys
+- RBAC
+- Permission Management
+
+---
+
+## Databases
+
+- PostgreSQL
+- Prisma
+- Transactions
+- Indexing
+- Full Text Search
+- JSON Columns
+- Soft Deletes
+- Optimistic Updates
+
+---
+
+## Caching
+
+- Redis
+- Cache Invalidation
+- Response Cache
+- Query Cache
+- Distributed Cache
+
+---
+
+## Realtime
+
+- WebSockets
+- Elysia WebSocket
+- Socket.IO
+- Presence
+- Notifications
+- Chat
+- Typing Indicators
+
+---
+
+## Payments
+
+- Stripe
+- PayPal
+- PayMongo
+- Checkout
+- Subscriptions
+- Webhooks
+- Idempotency
+
+---
+
+## Webhooks
+
+- Stripe
+- GitHub
+- Discord
+- Slack
+- Retry Mechanism
+- Signature Validation
+
+---
+
+## Generative AI
+
+### Text
+
+- Chat
+- Streaming
+- Structured Output
+- Function Calling
+
+### Image
+
+- Generation
+- Editing
+- Vision
+
+### Audio
+
+- Speech-to-Text
+- Text-to-Speech
+
+### Video
+
+- Generation
+- Processing
+
+### AI Engineering
+
+- Agents
+- RAG
+- Embeddings
+- Vector Database
+- MCP
+- Prompt Engineering
+- AI SDK
+
+---
+
+## CMS
+
+- Payload CMS
+- Sanity
+- Strapi
+- Headless CMS
+- MDX
+
+---
+
+## Web3
+
+- Wallet Connection
+- Sign In With Ethereum
+- NFT
+- Smart Contracts
+- Tokens
+
+---
+
+## Maps
+
+- Leaflet
+- Mapbox
+- Google Maps
+- Clustering
+- Heatmaps
+- Geolocation
+
+---
+
+## Performance
+
+- Memoization
+- Virtualization
+- React Compiler
+- Suspense
+- Lazy Loading
+- Streaming
+- Bundle Analysis
+- Image Optimization
+- Code Splitting
+- Partial Prerendering
+
+Every optimization includes:
+
+- Before
+- After
+- FPS
+- Render Time
+- Memory Usage
 
 ---
 
 ## Architecture
 
-The production-capable legacy API is defined **once** in `apps/_api/src/app.ts` as an Elysia app
-and consumed in two modes:
-
-1. **Embedded**: `pnpm dev:legacy` serves it inside Next.js at `/api/*` via a catch-all route
-   handler in `apps/_web`.
-2. **Standalone**: `pnpm dev:legacy:api` serves it as its own HTTP server on `API_PORT`.
-
-The target `apps/web` and `apps/api` applications currently provide migration scaffolds only.
-
-The legacy frontend talks to it through an Eden Treaty client (`apps/_web/src/lib/eden.ts`) whose
-types are inferred directly from the Elysia app — no hand-written API types.
-
-```
-                 Browser
-                     │
-                     ▼
-              Next.js (React)
-                     │
-         TanStack Query (client) / Server Components
-                     │
-             Eden Treaty (typed)
-                     │
-        ┌────────────┴────────────┐
-        ▼                         ▼
-/api/* (embedded Elysia)    Standalone Elysia (:8080)
-        │                         │
-        └────────────┬────────────┘
-                     ▼
-               Elysia App (apps/_api/src/app.ts)
-                     ▼
-         Plugins: error → security → auth → docs
-                     ▼
-               Modules: system, core/crud
-                     ▼
-              Service Layer
-                     ▼
-             Repository Layer
-                     ▼
-                 Prisma (v7, pg adapter)
-                     ▼
-               PostgreSQL (local)
-```
-
-### API Surface
-
-Standalone mode serves these at the root; embedded mode prefixes them with `/api`.
-
-| Method | Path | Auth | Description |
-|---|---|---|---|
-| GET | `/health` | — | Liveness (status, timestamp, uptime) |
-| GET | `/ready` | — | Readiness probe |
-| GET | `/version` | — | API name + version |
-| GET | `/notes` | ✅ | List current user's notes |
-| POST | `/notes` | ✅ | Create a note |
-| GET | `/notes/:id` | ✅ | Get one owned note |
-| PATCH | `/notes/:id` | ✅ | Update an owned note |
-| DELETE | `/notes/:id` | ✅ | Delete an owned note |
-| GET | `/docs` | — | Swagger UI + OpenAPI (development only) |
-
-Errors follow a stable shape: `{ error: { code, message, detail? } }` with `VALIDATION` (422), `UNAUTHORIZED` (401), `NOTE_NOT_FOUND` (404), `NOT_FOUND` (404), `RATE_LIMITED` (429), and `INTERNAL_SERVER_ERROR` (500).
+- Repository Pattern
+- Service Layer
+- Dependency Injection
+- CQRS
+- Event Driven
+- Modular Design
+- Feature-based Architecture
 
 ---
 
-## Feature Organization (Convention)
+## Microfrontends
 
-Implemented legacy features live in `apps/_web/src/features/<area>/<feature>/` (frontend) and
-`apps/_api/src/modules/<area>/<feature>/` (backend), following this shape:
+- Module Federation
+- Independent Deployment
+- Shared Packages
+- Remote Components
+
+---
+
+## Security
+
+- XSS
+- CSRF
+- SQL Injection
+- Rate Limiting
+- CSP
+- Secrets Management
+
+---
+
+## Testing
+
+- Unit Testing
+- Integration Testing
+- E2E Testing
+- API Testing
+- Component Testing
+- Contract Testing
+
+---
+
+## DevOps
+
+- Docker
+- Docker Compose
+- CI/CD
+- GitHub Actions
+- Deployments
+- Monitoring
+- Logging
+
+---
+
+## Observability
+
+- Logging
+- Tracing
+- Metrics
+- Health Checks
+
+---
+
+# Tech Stack
+
+## Monorepo
+
+- Turborepo
+- Bun Workspaces
+
+---
+
+## Frontend
+
+- React
+- Next.js (App Router)
+- TypeScript ^6
+- Tailwind CSS
+- TanStack Query
+- React Hook Form
+- MDX
+
+---
+
+## Backend
+
+- Elysia
+- Next.js Route Handlers
+- Shared Typed Contracts
+- Zod
+- OpenAPI (optional)
+
+---
+
+## Database
+
+- PostgreSQL
+- Prisma ORM
+
+---
+
+## Authentication
+
+- Better Auth
+
+Implemented as a reusable package that can be consumed by:
+
+- Next.js Route Handlers
+- Elysia Server
+
+---
+
+## Caching
+
+- Redis
+
+---
+
+## Realtime
+
+Choose whichever best fits the feature:
+
+- Native WebSockets
+- Elysia WebSocket
+- Socket.IO
+
+---
+
+## Validation
+
+- Zod
+
+Shared between:
+
+- Frontend
+- Backend
+- Database
+- API
+
+---
+
+## Data Fetching
+
+- TanStack Query
+
+---
+
+## Testing
+
+- Vitest or Bun Test Runner
+- React Testing Library
+- Playwright
+- Cypress
+
+---
+
+## Documentation
+
+- MDX
+- Mermaid
+- Markdown
+
+---
+
+## Tooling
+
+- Biome (linter and formatter)
+- Husky
+- lint-staged
+- Turbo
+- Bun
+
+---
+
+## Deployment
+
+Frontend
+
+- Vercel
+
+Backend
+
+- Fly.io
+- Railway
+- Docker
+
+Database
+
+- PostgreSQL
+
+Cache
+
+- Redis
+
+---
+
+# Repository Structure
+
+```
+.
+├── apps
+│   ├── web                # Next.js application
+│   ├── api                # Standalone Elysia server
+│   └── docs               # Optional documentation app
+│
+├── packages
+│   ├── auth
+│   ├── contracts
+│   ├── database
+│   ├── ui
+│   ├── config
+│   ├── env
+│   ├── logger
+│   ├── cache
+│   ├── websocket
+│   ├── validation
+│   ├── hooks
+│   ├── utils
+│   ├── types
+│   ├── biome-config
+│   └── tsconfig
+│
+├── docker
+├── scripts
+├── examples
+└── .github
+```
+
+---
+
+# Feature Structure
 
 ```
 feature/
-├── components/
-├── hooks/
-├── services/
-├── repositories/
-├── api/
-├── schemas/
-├── types/
-├── utils/
-├── constants/
-├── tests/
-└── docs/
+
+├── components
+├── hooks
+├── services
+├── repositories
+├── api
+├── schemas
+├── validators
+├── types
+├── utils
+├── constants
+├── tests
+├── docs
+└── demo
 ```
 
-The legacy Notes feature is the reference implementation: `features/core/crud/` (UI + TanStack
-Query hooks) and `modules/core/crud/` (Elysia model → service → repository).
+Every feature follows the same structure.
 
 ---
 
-## Development
+# Architecture
 
-### Prerequisites
-
-- Node.js >= 24.18.1 (see `.node-version`)
-- pnpm 11.20.0 (pinned in `packageManager`)
-- PostgreSQL (local, or via `pnpm dev:db`)
-
-### Quick Start
-
-```bash
-# 1. Install dependencies
-pnpm install
-
-# 2. Set up environment variables
-cp .env.example .env
-# Edit .env with your values (generate BETTER_AUTH_SECRET with: openssl rand -base64 32)
-
-# 3. (Optional) Start local services — PostgreSQL + Redis via Docker
-pnpm dev:db
-
-# 4. Generate Prisma client
-pnpm db:generate
-
-# 5. Apply migrations to your database
-pnpm db:push
-
-# 6. Deploy migrations (production-safe, applies pending migrations)
-pnpm db:deploy
-
-# 7. Start development
-pnpm dev
 ```
+                 Browser
 
-### Development Modes
+                    │
 
-| Command | What runs |
-|---|---|
-| `pnpm dev` | Target TanStack Start and Hono migration scaffolds |
-| `pnpm dev:web` | Target TanStack Start migration scaffold only (`:3000`) |
-| `pnpm dev:api` | Target Hono migration scaffold only (`:8787`) |
-| `pnpm dev:legacy` | Legacy Next.js app with embedded Elysia |
-| `pnpm dev:legacy:api` | Legacy standalone Elysia server only (`API_PORT`) |
-| `pnpm dev:standalone` | Legacy Next.js + standalone Elysia (microservice mode) |
-| `pnpm dev:db` | PostgreSQL + Redis via Docker Compose |
-| `pnpm dev:types` | Watch-mode TypeScript checking across the monorepo |
-| `pnpm dev:debug` | Target scaffold development with the Node inspector enabled |
-| `pnpm dev:clean` | Clear the root Turbo cache and metadata |
-| `pnpm kill:ports` | Kill anything on ports 3000–3005 and 8787 |
+                    ▼
 
-The target applications are parallel migration scaffolds; they are not yet feature-complete or
-production-ready. Use `pnpm build:web` and `pnpm build:api` to build them independently, and
-`pnpm build:legacy` to build both legacy applications.
+             Next.js (React)
 
-### Database Workflows
+                    │
 
-| Command | What it does |
-|---|---|
-| `pnpm db:generate` | Generate the Prisma client from the schema |
-| `pnpm db:push` | Push schema changes to the database (no migration history) |
-| `pnpm db:deploy` | Apply pending migrations to the database (production-safe) |
-| `pnpm db:migrate` | Create and apply a migration (`prisma migrate dev`, interactive) |
-| `pnpm db:studio` | Open Prisma Studio (URL printed on start) |
+        TanStack Query / Server Actions
 
-Schema lives in `packages/database/prisma/` (split into `schema.prisma`, `models/*.prisma`); the client is generated to `packages/database/generated/prisma` (gitignored).
+                    │
 
-### Quality Checks
+        ┌──────────────────────────┐
+        │                          │
+        ▼                          ▼
 
-```bash
-# Run everything: Biome → syncpack → knip → TypeScript → Vitest
-pnpm check:all
+Next.js Route Handlers       Elysia Server
 
-# Individual checks
-pnpm lint           # Biome lint
-pnpm format         # Biome format (write)
-pnpm format:check   # Biome format (read-only)
-pnpm check-types    # tsc across all workspaces
-pnpm test           # Vitest (unit + integration)
-pnpm test:e2e       # Playwright (port 3100 by default, E2E_PORT to override)
-pnpm deps:check     # syncpack
-pnpm deps:unused    # knip
-pnpm security:audit # pnpm audit --prod
-pnpm security:check # pnpm audit (all)
-```
+        │                          │
 
-CI runs the same pipeline (`.github/workflows/ci.yml`): Biome → syncpack → knip → tsc → Vitest → build → `pnpm audit`.
+        └──────────────┬───────────┘
 
-### Creating a New Package
+                       ▼
 
-```bash
-pnpm generate:package <name>
-```
+              Shared Contracts
 
-Scaffolds a new `@zomlab/<name>` package with TypeScript, tests, and tsconfig pre-configured.
+                  (Zod)
 
-### Versioning
+                       ▼
 
-```bash
-pnpm changeset        # Create a changeset
-pnpm version:packages # Apply changesets (bump versions)
-pnpm version:sync     # Sync all workspace versions to the root version
+                 Service Layer
+
+                       ▼
+
+               Repository Layer
+
+                       ▼
+
+                    Prisma
+
+                       ▼
+
+                 PostgreSQL
+
+                       │
+
+                     Redis
+
+                       │
+
+                  External APIs
 ```
 
 ---
 
-## Environment Variables
+# Development Modes
 
-Validated at runtime by `@zomlab/env` (Zod). See `.env.example`.
+ZomLab supports multiple development modes.
 
-| Variable | Required | Description |
-|---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | ✅ | Public site origin (e.g. `http://localhost:3000`) |
-| `API_PORT` | — | Standalone API port (default `8000`) |
-| `DATABASE_URL` | ✅ | PostgreSQL connection string (Prisma client) |
-| `DIRECT_URL` | ✅ | PostgreSQL connection string (migrations) |
-| `BETTER_AUTH_SECRET` | ✅ | ≥ 32 chars; also encrypts OAuth tokens |
-| `BETTER_AUTH_URL` | ✅ | Auth base URL |
-| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | — | Enable GitHub OAuth (both set → provider active) |
-| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | — | Enable Google OAuth (both set → provider active) |
+## Option 1
+
+Only Next.js
+
+```
+bun dev
+```
+
+Uses:
+
+- Next.js
+- Route Handlers
 
 ---
 
-## Why Elysia?
+## Option 2
 
-Some features work perfectly as Next.js Route Handlers. Others benefit from a dedicated API server:
+Next.js + Embedded Elysia
+
+```
+bun dev:elysia
+```
+
+Elysia is mounted inside the Next.js application.
+
+---
+
+## Option 3
+
+Standalone API
+
+```
+bun dev:standalone
+```
+
+Runs:
+
+- Next.js
+- Standalone Elysia
+
+Useful for microservice-style development.
+
+---
+
+## Option 4
+
+API Only
+
+```
+bun dev:api
+```
+
+Runs only Elysia.
+
+---
+
+# Why Elysia?
+
+Some features work perfectly as Route Handlers.
+
+Others benefit from a dedicated API:
 
 - WebSockets
 - AI Streaming
 - Long-running requests
 - Background jobs
 - Webhooks
+- Better performance
 
-The legacy application supports both approaches. Routes are defined once in
-`apps/_api/src/app.ts` and shared between standalone and embedded modes, with full end-to-end type
-safety through Eden Treaty.
-
----
-
-## Planned Modules
-
-Broad categories include:
-
-- **Core**: CRUD (built), pagination, search & filtering, tables, file uploads
-- **Authentication**: OAuth (built), passkeys, RBAC, MFA
-- **Realtime**: WebSockets, presence, chat, notifications
-- **Payments & Webhooks**: Stripe, idempotency, signature validation
-- **AI**: Chat, streaming, agents, RAG, vector search
-- **Performance**: Memoization, virtualization, bundle analysis
-- **Security**: Rate limiting (built), CSP, secrets management
-- **DevOps**: Docker, CI/CD (built), monitoring, deployment
-
-Planned topics appear muted in the sidebar until their pages exist.
+This project supports both approaches.
 
 ---
 
-## Coding Principles
+# Documentation
+
+Each module includes:
+
+- Overview
+- Live Demo
+- Folder Structure
+- Architecture Diagram
+- Request Flow
+- Database Schema
+- API Reference
+- Performance Notes
+- Security Notes
+- Common Pitfalls
+- References
+
+---
+
+# Coding Principles
 
 - Feature-first architecture
 - Shared contracts
 - End-to-end type safety
 - Reusable packages
-- Small modules (components ≤ ~200 lines, hooks ≤ ~150, services ≤ ~250)
-- SOLID, DRY, KISS
+- Small modules
+- Clean code
+- SOLID
+- DRY
+- KISS
+- Progressive enhancement
 - Accessibility first
 - Performance first
-- Measure before optimizing
 
 ---
 
-## License
+# Future Ideas
+
+- Event Bus
+- Kafka
+- RabbitMQ
+- GraphQL
+- tRPC Comparison
+- gRPC
+- Elasticsearch
+- OpenTelemetry
+- AI Agents
+- Vector Databases
+- Terraform
+- Kubernetes
+- CDN
+- Cloud Storage
+- Feature Flags
+- Multi-tenancy
+- Offline Support
+- PWA
+- React Native
+- Electron
+- Browser Extensions
+
+---
+
+# License
 
 MIT
 
