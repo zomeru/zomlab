@@ -3,12 +3,18 @@ import type { KnipConfig } from "knip";
 const config: KnipConfig = {
   workspaces: {
     ".": {
-      entry: ["scripts/package-manager-policy.test.ts", "scripts/vitest.config.ts"],
-      ignoreDependencies: ["tsdown"],
-      ignoreFiles: [".agents/**"],
+      ignoreFiles: [".agents/**", ".claude/**", ".codex/**", ".graphify-out/**", ".opencode/**"],
+    },
+    scripts: {
+      entry: [
+        "verify-worker-probes.ts",
+        "verify-auth-worker.ts",
+        "worker-probes/index.ts",
+        "worker-probes/authorize.ts",
+      ],
+      project: ["**/*.ts"],
     },
     "apps/_api": {
-      entry: ["src/index.ts"],
       project: ["src/**/*.ts"],
     },
     "apps/_web": {
@@ -18,29 +24,31 @@ const config: KnipConfig = {
       tailwind: true,
     },
     "apps/api": {
-      entry: ["src/index.ts"],
+      entry: ["src/compatibility/argon2-probe.ts"],
       project: ["src/**/*.ts"],
     },
     "apps/web": {
-      entry: ["vite.config.ts", "src/router.tsx", "src/routes/**/*.{ts,tsx}"],
-      project: ["src/**/*.{ts,tsx,css}"],
+      entry: ["src/routes/**/*.{ts,tsx}"],
+      project: ["src/**/*.{ts,tsx}"],
     },
     "packages/auth": {
-      entry: ["src/auth.ts"],
-      project: ["src/**/*.ts"],
+      entry: ["src/auth.ts", "scripts/verify-auth-worker.ts"],
+      project: ["src/**/*.ts", "scripts/**/*.ts"],
       ignoreDependencies: ["zod"],
     },
     "packages/database": {
-      entry: ["src/client.ts"],
       project: ["src/**/*.ts", "prisma/**/*.prisma"],
-      ignoreDependencies: ["@prisma/client", "pg"],
+      ignoreDependencies: ["@prisma/client"],
     },
     "packages/env": {
       project: ["src/**/*.ts"],
     },
+    "packages/contracts": {
+      project: ["src/**/*.ts"],
+    },
     "packages/ui": {
       entry: ["src/**/*.{ts,tsx}"],
-      project: ["src/**/*.{ts,tsx,mdx}"],
+      project: ["src/**/*.{ts,tsx}"],
     },
     "packages/vitest-config": {
       project: ["src/**/*.ts"],

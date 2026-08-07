@@ -25,6 +25,8 @@
       "**",
       "!**/.agents",
       "!**/.claude",
+      "!**/.opencode",
+      "!**/.codex",
       "!**/.turbo",
       "!**/.next",
       "!**/dist",
@@ -32,6 +34,7 @@
       "!**/coverage",
       "!**/public",
       "!**/out",
+      "!**/graphify-out",
       "!**/routeTree.gen.ts",
       "!**/worker-configuration.d.ts"
     ]

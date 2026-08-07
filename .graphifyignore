@@ -1,0 +1,15 @@
+node_modules
+.turbo
+.vercel
+.next/
+.output/
+.wrangler/
+out/
+build
+dist
+storybook-static/
+/docs
+playwright-report/
+test-results/
+generated/
+.serena

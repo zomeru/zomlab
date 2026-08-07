@@ -1,15 +1,12 @@
 {
   "extends": "@zomlab/tsconfig/base.json",
   "compilerOptions": {
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "outDir": "dist",
-    "rootDir": "src",
-    "paths": {
-      ".prisma/client": ["../database/node_modules/.prisma/client"],
-      ".prisma/client/*": ["../database/node_modules/.prisma/client/*"]
-    }
+    "rootDir": "../..",
+    "types": ["node"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

@@ -1,34 +1,27 @@
-import { prismaAdapter } from "@better-auth/prisma-adapter";
-import { hash, type Options, verify } from "@node-rs/argon2";
-import { db } from "@zomlab/database";
+import { drizzleAdapter } from "@better-auth/drizzle-adapter";
+
+import { db, schema } from "@zomlab/database";
 import { env } from "@zomlab/env";
-import { betterAuth } from "better-auth";
+import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { magicLink } from "better-auth/plugins";
 
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 128;
 
-/**
- * Argon2id parameters tuned for interactive login.
- * 64 MiB memory, 3 iterations, 4 parallel lanes, 32-byte output.
- */
-const argon2Options: Options = {
-  memoryCost: 65536,
-  timeCost: 3,
-  parallelism: 4,
-  outputLen: 32,
-  algorithm: 2, // Argon2id
-};
-
-// Inferred type — do NOT add an explicit `ReturnType<typeof betterAuth>` annotation.
-// betterAuth({...specific config...}) returns Auth<SpecificConfig>, not Auth<BetterAuthOptions>,
-// and the explicit annotation causes a TS2322 incompatibility.
-export const auth = betterAuth({
+const options: BetterAuthOptions = {
+  appName: "Zomlab",
   basePath: "/api/auth",
   baseURL: env.BETTER_AUTH_URL,
   secret: env.BETTER_AUTH_SECRET,
-  database: prismaAdapter(db, {
-    provider: "postgresql",
+  database: drizzleAdapter(db, {
+    provider: "pg",
+    usePlural: true,
+    schema: {
+      users: schema.users,
+      accounts: schema.accounts,
+      sessions: schema.sessions,
+      verification: schema.verification,
+    },
   }),
 
   account: {
@@ -39,10 +32,6 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: PASSWORD_MIN_LENGTH,
     maxPasswordLength: PASSWORD_MAX_LENGTH,
-    password: {
-      hash: (password) => hash(password, argon2Options),
-      verify: ({ password, hash: storedHash }) => verify(storedHash, password, argon2Options),
-    },
   },
   socialProviders: {
     ...(env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET
@@ -69,4 +58,10 @@ export const auth = betterAuth({
       },
     }),
   ],
-});
+};
+
+export const auth = betterAuth(options);
+
+export type Auth = typeof auth;
+export type AuthSession = typeof auth.$Infer.Session;
+export type AuthUser = AuthSession["user"];

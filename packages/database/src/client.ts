@@ -1,33 +1,16 @@
-import { PrismaPg } from "@prisma/adapter-pg";
+import { neon } from "@neondatabase/serverless";
 import { env } from "@zomlab/env";
-import { PrismaClient } from "../generated/prisma/client";
+import { drizzle } from "drizzle-orm/neon-http";
 
-function createPrismaClient() {
-  const adapter = new PrismaPg({
-    connectionString: env.DATABASE_URL,
+export function createDatabase() {
+  const sql = neon(env.DATABASE_URL);
+
+  return drizzle({
+    client: sql,
+    logger: env.NODE_ENV === "development",
   });
-
-  const client = new PrismaClient({
-    adapter,
-    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
-  });
-
-  return client;
 }
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
+export const db = createDatabase();
 
-function getDb() {
-  if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = createPrismaClient();
-  }
-  return globalForPrisma.prisma;
-}
-
-export const db = new Proxy<PrismaClient>({} as PrismaClient, {
-  get(_target, key: string) {
-    return getDb()[key as keyof PrismaClient];
-  },
-});
+export type Database = typeof db;

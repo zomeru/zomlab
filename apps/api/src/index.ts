@@ -1,7 +1,10 @@
-import { Hono } from "hono";
+import { Elysia } from "elysia";
+import { env } from "@zomlab/env";
 
-const app = new Hono();
+const app = new Elysia()
+  .get("/", () => "Hello from Elysia!")
+  .listen(env.API_PORT);
 
-app.get("/api/health", (context) => context.json({ status: "scaffold" }));
-
-export default app;
+console.log(
+  `🦊 Server is running at ${app.server?.hostname}:${app.server?.port}`,
+);

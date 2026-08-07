@@ -1,2 +1,3 @@
-pnpm exec lint-staged
-pnpm run deps:check
+bun run lint-staged
+bun run deps:check
+bun audit --production

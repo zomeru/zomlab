@@ -63,14 +63,17 @@ function isExcluded(file: string): boolean {
 
 function isGeneratedArtifact(file: string): boolean {
   const generatedDirectory =
-    /(^|\/)(?:\.next|coverage|dist|generated|playwright-report|test-results)(?:\/|$)/;
+    /(^|\/)(?:\.next|coverage|dist|generated|graphify-out|playwright-report|test-results)(?:\/|$)/;
   const binaryExtension = /\.(?:gif|ico|jpeg|jpg|node|pdf|png|webp)$/i;
 
   return file === "pnpm-lock.yaml" || generatedDirectory.test(file) || binaryExtension.test(file);
 }
 
 function textFile(file: string): string | undefined {
-  const contents = readFileSync(join(REPOSITORY_ROOT, file));
+  const filePath = join(REPOSITORY_ROOT, file);
+  if (!existsSync(filePath)) return undefined;
+
+  const contents = readFileSync(filePath);
 
   return contents.includes(0) ? undefined : contents.toString("utf8");
 }
@@ -88,7 +91,9 @@ function packageManagerVersion(packageManager: string): string | undefined {
 function workspacePackageGlobs(workspace: string): string[] {
   const packagesBlock = /^packages:\s*\n((?:^[ \t]+.*(?:\n|$))*)/m.exec(workspace)?.[1] ?? "";
 
-  return [...packagesBlock.matchAll(/^\s*-\s*["']?([^"'\s]+)["']?\s*$/gm)].map(([, glob]) => glob);
+  return [...packagesBlock.matchAll(/^\s*-\s*["']?([^"'\s]+)["']?\s*$/gm)]
+    .map(([, glob]) => glob)
+    .filter((glob): glob is string => glob !== undefined);
 }
 
 function uncommentedYamlLines(workflow: string): string[] {
@@ -156,7 +161,7 @@ function hasFrozenPnpmInstall(step: string): boolean {
       continue;
     }
 
-    const [, indentation, command] = run;
+    const [, indentation, command] = run as unknown as [string, string, string];
 
     if (command === "pnpm install --frozen-lockfile") {
       return true;
@@ -231,7 +236,7 @@ describe("package-manager policy", () => {
 
     const workspace = readFileSync(workspaceFile, "utf8");
 
-    expect(workspacePackageGlobs(workspace)).toEqual(["apps/*", "packages/*"]);
+    expect(workspacePackageGlobs(workspace)).toEqual(["apps/*", "packages/*", "scripts"]);
   });
 
   it("owns the dependency graph with the pnpm lockfile", () => {
