@@ -55,3 +55,44 @@ export const NAV: NavEntry[] = [
 ] as const;
 
 export type NavigableItem = { label: string; href: string; section: string };
+
+export function getNavigableItems(): NavigableItem[] {
+  const items: NavigableItem[] = [];
+
+  for (const entry of NAV) {
+    if (entry.type === "link") {
+      items.push({ label: entry.label, href: entry.href, section: "Getting Started" });
+    } else {
+      for (const item of entry.items) {
+        if ("href" in item) {
+          items.push({ label: item.label, href: item.href, section: entry.label });
+        }
+        if ("children" in item) {
+          for (const child of item.children) {
+            items.push({ label: child.label, href: child.href, section: entry.label });
+          }
+        }
+      }
+    }
+  }
+
+  return items;
+}
+
+export function isNavActive(pathname: string, href: string): boolean {
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export function isSectionActive(pathname: string, entry: NavEntry): boolean {
+  if (entry.type !== "section") return false;
+
+  return entry.items.some((item) => {
+    if ("href" in item) {
+      return isNavActive(pathname, item.href);
+    }
+    if ("children" in item) {
+      return item.children.some((child) => isNavActive(pathname, child.href));
+    }
+    return false;
+  });
+}

@@ -1,17 +1,26 @@
+/// <reference types="vite/client" />
+
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { createRootRoute, HeadContent, Link, Outlet, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { getRouter } from "~/router";
 import { GitHubLink } from "../components/layout/github-link";
 import { GlobalSearch } from "../components/layout/global-search";
 import { ProfileButton } from "../components/layout/profile-button";
 import { SidebarNav } from "../components/layout/sidebar-nav";
 import { ThemeToggle } from "../components/theme/theme-toggle";
 
-import "../styles/globals.css";
-import { getRouter } from "~/router";
+import appCss from "../styles/globals.css?url";
 
 export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      // your meta tags and site config
+    ],
+    links: [{ rel: "stylesheet", href: appCss }],
+    // other head config
+  }),
   component: RootDocument,
 });
 

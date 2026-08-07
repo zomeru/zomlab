@@ -23,7 +23,7 @@
     "@tanstack/react-router": "^1.170.18",
     "@tanstack/react-start": "^1.168.35",
     "@zomlab/auth": "workspace:*",
-    "@zomlab/contracts": "workspace:*",
+    "@zomlab/contracts": "workspace:^",
     "@zomlab/database": "workspace:*",
     "@zomlab/env": "workspace:*",
     "hono": "^4.13.0",

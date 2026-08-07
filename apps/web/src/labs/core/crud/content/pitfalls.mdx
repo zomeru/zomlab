@@ -1,0 +1,31 @@
+# Common Pitfalls
+
+## Leaking Drizzle into services
+
+Never `import { db } from "@zomlab/database"` inside a service. Services depend on
+the `NoteRepository` interface, which keeps them unit-testable and storage-agnostic.
+
+## Missing ownership checks
+
+Every read, update, and delete must verify `note.authorId === user.id`. Skipping the
+check on update is the classic authorization bug: an attacker can overwrite any note
+they know the id of.
+
+## Trusting `user` without narrowing
+
+The `requireAuth` middleware throws `UnauthorizedError` when there is no session, which
+narrows `user` to a defined value in route handlers. If you change the middleware to
+return `{ user: undefined }` instead, every handler must re-check — easy to miss.
+
+## Forgetting cookie forwarding
+
+The Hono client (`hc`) is configured with `credentials: "include"` so the session
+cookie is sent with every request. If you later run the standalone API server on a
+different origin, you must ensure CORS allows credentials and the client still sends
+cookies — otherwise `getSession` always returns `null` and every request 401s.
+
+## 422 vs 400 for validation
+
+Hono validates request bodies with `@hono/zod-validator` using schemas from `@zomlab/contracts`
+and rejects invalid payloads with `422 Unprocessable Entity`, not `400`. Tests asserting
+`400` will fail — assert `422` or map the error explicitly.
