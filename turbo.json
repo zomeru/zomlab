@@ -11,6 +11,10 @@
       "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**", ".output/**", "dist/**"]
     },
 
+    "test": {
+      "dependsOn": ["^test"],
+      "outputs": []
+    },
     "check-types": {
       "dependsOn": ["^check-types"]
     },

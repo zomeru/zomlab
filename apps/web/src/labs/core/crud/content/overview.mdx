@@ -1,0 +1,35 @@
+# Notes Overview
+
+Notes is a full vertical slice of the architecture: UI → Hooks → API → Service →
+Repository → Database — end to end.
+
+## Why Notes
+
+It is small enough to finish, yet touches every layer of the stack:
+
+- A real Drizzle model with a relation to `User`
+- Authenticated routes behind a reusable `requireAuth` guard
+- A service layer that enforces ownership
+- A repository layer that isolates Drizzle
+- TanStack Query hooks feeding typed React components
+- MDX + Mermaid documentation, like this page
+
+Notes is private by default: every note belongs to exactly one user, and the service
+layer returns `404` for notes that do not belong to the caller.
+
+## Feature folders
+
+The feature is split across the monorepo following the project convention, mirroring
+the sidebar structure (`Core → CRUD`):
+
+```
+apps/web/src/integration/hono/  # routes → services
+apps/web/src/labs/core/crud/    # hooks → components → content
+packages/database/              # schema → repositories
+packages/contracts/             # shared Zod schemas
+```
+
+Types flow from the contracts package to both the API and the UI, so a schema change
+surfaces as a type error in every layer that uses it.
+
+<br />

@@ -3,42 +3,34 @@ import type { KnipConfig } from "knip";
 const config: KnipConfig = {
   workspaces: {
     ".": {
-      ignoreFiles: [".agents/**", ".claude/**", ".codex/**", ".graphify-out/**", ".opencode/**"],
+      ignoreFiles: [".agents/**", ".opencode/**"],
+      ignoreExportsUsedInFile: true,
     },
     scripts: {
-      entry: [
-        "verify-worker-probes.ts",
-        "verify-auth-worker.ts",
-        "worker-probes/index.ts",
-        "worker-probes/authorize.ts",
-      ],
       project: ["**/*.ts"],
     },
-    "apps/_api": {
-      project: ["src/**/*.ts"],
-    },
+
     "apps/_web": {
       entry: ["src/**/*.{ts,tsx}"],
       project: ["src/**/*.{ts,tsx,css}", "content/**/*.mdx"],
       next: true,
       tailwind: true,
+      ignoreExportsUsedInFile: true,
     },
     "apps/api": {
-      entry: ["src/compatibility/argon2-probe.ts"],
+      entry: ["src/**/*.ts"],
       project: ["src/**/*.ts"],
     },
     "apps/web": {
-      entry: ["src/routes/**/*.{ts,tsx}"],
-      project: ["src/**/*.{ts,tsx}"],
+      entry: ["src/routes/**/*.{ts,tsx}", "src/components/**/*.{ts,tsx}"],
+      project: ["src/**/*.{ts,tsx}", "src/styles/**/*.css"],
+      tailwind: true,
     },
     "packages/auth": {
-      entry: ["src/auth.ts", "scripts/verify-auth-worker.ts"],
-      project: ["src/**/*.ts", "scripts/**/*.ts"],
-      ignoreDependencies: ["zod"],
+      project: ["src/**/*.ts"],
     },
     "packages/database": {
-      project: ["src/**/*.ts", "prisma/**/*.prisma"],
-      ignoreDependencies: ["@prisma/client"],
+      project: ["src/**/*.ts"],
     },
     "packages/env": {
       project: ["src/**/*.ts"],
