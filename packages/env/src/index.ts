@@ -1,8 +1,7 @@
 import { z } from "zod";
 
-const serverEnvSchema = z.object({
+const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-  VITE_SITE_URL: z.url(),
   DATABASE_URL: z.url(),
   E2E_PORT: z.coerce.number().default(3100),
   BETTER_AUTH_SECRET: z.string().min(32),
@@ -15,10 +14,10 @@ const serverEnvSchema = z.object({
 
 const clientEnvSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-  VITE_SITE_URL: z.string().min(1).optional(),
+  VITE_SITE_URL: z.url(),
 });
 
-type ServerEnv = z.infer<typeof serverEnvSchema>;
+type ServerEnv = z.infer<typeof envSchema>;
 type ClientEnv = z.infer<typeof clientEnvSchema>;
 
 const isBrowser = typeof globalThis !== "undefined" && "window" in globalThis;
@@ -47,7 +46,7 @@ function getEnvSource(): Record<string, unknown> {
 
 function parseEnv() {
   const envSource = getEnvSource();
-  const schema = isBrowser ? clientEnvSchema : serverEnvSchema;
+  const schema = isBrowser ? clientEnvSchema : envSchema;
   const result = schema.safeParse(envSource);
 
   if (!result.success) {

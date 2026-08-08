@@ -197,6 +197,10 @@ export function getNavigableItems(): NavigableItem[] {
 }
 
 export function isNavActive(pathname: string, href: string): boolean {
+  return pathname === href;
+}
+
+export function isPathWithin(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -205,10 +209,10 @@ export function isSectionActive(pathname: string, entry: NavEntry): boolean {
 
   return entry.items.some((item) => {
     if ("href" in item) {
-      return isNavActive(pathname, item.href);
+      return isPathWithin(pathname, item.href);
     }
     if ("children" in item) {
-      return item.children.some((child) => isNavActive(pathname, child.href));
+      return item.children.some((child) => isPathWithin(pathname, child.href));
     }
     return false;
   });
