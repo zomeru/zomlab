@@ -11,6 +11,21 @@ export function createDatabase() {
   });
 }
 
-export const db = createDatabase();
+type Db = ReturnType<typeof createDatabase>;
 
-export type Database = typeof db;
+let _db: Db | undefined;
+
+function getDatabase(): Db {
+  if (!_db) {
+    _db = createDatabase();
+  }
+  return _db;
+}
+
+export const db = new Proxy({} as Db, {
+  get(_target, key: string) {
+    return getDatabase()[key as keyof Db];
+  },
+});
+
+export type Database = Db;
