@@ -15,6 +15,7 @@ import appCss from "../styles/globals.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
+    title: "ZomLab",
     meta: [
       // your meta tags and site config
     ],

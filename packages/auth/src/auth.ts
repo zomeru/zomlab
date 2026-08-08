@@ -4,6 +4,7 @@ import { db, schema } from "@zomlab/database";
 import { env } from "@zomlab/env";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { magicLink } from "better-auth/plugins";
+import { tanstackStartCookies } from "better-auth/tanstack-start";
 
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 32;
@@ -13,6 +14,10 @@ function createAuth() {
     appName: "ZomLab",
     basePath: "/api/auth",
     baseURL: env.BETTER_AUTH_URL,
+    // Trust whichever origin the request itself arrives on. Better Auth
+    // validates the Origin header against this list; on a Worker the app can
+    // be served from multiple hosts (local dev ports, preview URLs).
+    trustedOrigins: (request) => (request ? [new URL(request.url).origin] : []),
     secret: env.BETTER_AUTH_SECRET,
     database: drizzleAdapter(db, {
       provider: "pg",
@@ -57,6 +62,7 @@ function createAuth() {
           console.log(`[magic-link] Send to ${email}: ${url}`);
         },
       }),
+      tanstackStartCookies(),
     ],
   };
 

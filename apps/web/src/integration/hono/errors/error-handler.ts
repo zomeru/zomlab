@@ -58,16 +58,3 @@ export const notFoundHandler = (c: Context) => {
   const envelope = createErrorEnvelope(new NotFoundError());
   return c.json(envelope, 404);
 };
-
-export const createZodErrorEnvelope = (error: unknown, c: Context) => {
-  return c.json(
-    {
-      error: {
-        code: "VALIDATION",
-        message: "Validation failed",
-        error: normalizeDetail(error),
-      },
-    },
-    422,
-  );
-};

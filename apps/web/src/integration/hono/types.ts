@@ -1,16 +1,16 @@
 import type { AuthSession, AuthUser } from "@zomlab/auth";
 import type { NoteService } from "~/integration/hono/service/core/notes.service";
 
-export type AuthVariables = {
+type AuthVariables = {
   session: AuthSession;
   user: AuthUser;
 };
 
-export interface AppVariables extends AuthVariables {
+interface AppVariables extends AuthVariables {
   noteService: NoteService;
 }
 
-export type AppBindings = {
+type AppBindings = {
   VITE_SITE_URL: string;
   DATABASE_URL: string;
   BETTER_AUTH_SECRET: string;

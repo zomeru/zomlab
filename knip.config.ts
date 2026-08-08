@@ -3,28 +3,19 @@ import type { KnipConfig } from "knip";
 const config: KnipConfig = {
   workspaces: {
     ".": {
-      ignoreFiles: [".agents/**", ".opencode/**"],
       ignoreExportsUsedInFile: true,
+      ignoreDependencies: ["cloudflare"],
     },
     scripts: {
       project: ["**/*.ts"],
+      ignoreFiles: ["tmp-db-probe.ts"],
     },
 
-    "apps/_web": {
-      entry: ["src/**/*.{ts,tsx}"],
-      project: ["src/**/*.{ts,tsx,css}", "content/**/*.mdx"],
-      next: true,
-      tailwind: true,
-      ignoreExportsUsedInFile: true,
-    },
-    "apps/api": {
-      entry: ["src/**/*.ts"],
-      project: ["src/**/*.ts"],
-    },
     "apps/web": {
       entry: ["src/routes/**/*.{ts,tsx}", "src/components/**/*.{ts,tsx}"],
-      project: ["src/**/*.{ts,tsx}", "src/styles/**/*.css"],
+      project: ["src/**/*.{ts,tsx}", "src/**/*.mdx", "src/styles/**/*.css"],
       tailwind: true,
+      ignoreDependencies: ["hono-idempotency"],
     },
     "packages/auth": {
       project: ["src/**/*.ts"],

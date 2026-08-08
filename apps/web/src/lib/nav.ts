@@ -1,8 +1,3 @@
-export type NavSection = {
-  label: string;
-  items: NavItem[];
-};
-
 export type NavItem =
   | { label: string; href: string }
   | { label: string; children: { label: string; href: string }[] }
@@ -204,7 +199,7 @@ export function isNavActive(pathname: string, href: string): boolean {
   return pathname === href;
 }
 
-export function isPathWithin(pathname: string, href: string): boolean {
+function isPathWithin(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
