@@ -15,7 +15,7 @@ const serverEnvSchema = z.object({
 
 const clientEnvSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-  VITE_SITE_URL: z.url(),
+  VITE_SITE_URL: z.string().min(1).optional(),
 });
 
 type ServerEnv = z.infer<typeof serverEnvSchema>;
@@ -51,11 +51,13 @@ function parseEnv() {
   const result = schema.safeParse(envSource);
 
   if (!result.success) {
+    if (isBrowser) {
+      return envSource as ClientEnv;
+    }
     const message = [
       "Invalid environment variables:",
       ...result.error.issues.map((issue) => `  - ${issue.path.join(".")}: ${issue.message}`),
     ].join("\n");
-
     throw new Error(message);
   }
 

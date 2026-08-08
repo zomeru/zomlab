@@ -1,6 +1,7 @@
 import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
 import {
   createNoteBodySchema,
+  deleteNoteResponseSchema,
   noteListResponseSchema,
   noteParamsSchema,
   noteSchema,
@@ -153,8 +154,13 @@ const app = new OpenAPIHono<HonoEnv>({
         params: noteParamsSchema,
       },
       responses: {
-        204: {
+        200: {
           description: "Note deleted",
+          content: {
+            "application/json": {
+              schema: deleteNoteResponseSchema,
+            },
+          },
         },
       },
     }),
