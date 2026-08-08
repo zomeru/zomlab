@@ -1,7 +1,7 @@
 "use client";
 
-import { Link } from "@tanstack/react-router";
 import { authClient } from "@zomlab/auth";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { UserMenu } from "./user-menu";
 
@@ -19,10 +19,14 @@ export function ProfileButton() {
     authClient
       .getSession()
       .then((result) => {
-        const session = result?.data ?? null;
-        setUser(session?.user ?? null);
+        setUser(result?.data?.user ?? null);
       })
-      .finally(() => setLoading(false));
+      .catch(() => {
+        setUser(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   if (loading) {

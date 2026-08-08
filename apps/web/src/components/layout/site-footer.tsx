@@ -1,11 +1,18 @@
 import { Link } from "@tanstack/react-router";
 
-const TECH_STACK = ["TanStack Start", "TypeScript 6", "Tailwind v4", "Hono", "Drizzle", "Better Auth"];
+const TECH_STACK = [
+  "TanStack Start",
+  "TypeScript 6",
+  "Tailwind v4",
+  "Hono",
+  "Drizzle",
+  "Better Auth",
+];
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-background">
-      <div className="mx-auto w-full max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-350 px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-sm font-semibold text-foreground">ZomLab</p>

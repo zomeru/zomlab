@@ -1,3 +1,3 @@
+export * from "./core/crud/notes";
 export * from "./errors";
-export * from "./notes";
 export * from "./system";

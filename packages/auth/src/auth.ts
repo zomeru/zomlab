@@ -6,10 +6,10 @@ import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { magicLink } from "better-auth/plugins";
 
 export const PASSWORD_MIN_LENGTH = 8;
-export const PASSWORD_MAX_LENGTH = 128;
+export const PASSWORD_MAX_LENGTH = 32;
 
 const options: BetterAuthOptions = {
-  appName: "Zomlab",
+  appName: "ZomLab",
   basePath: "/api/auth",
   baseURL: env.BETTER_AUTH_URL,
   secret: env.BETTER_AUTH_SECRET,

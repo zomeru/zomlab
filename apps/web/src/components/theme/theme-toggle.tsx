@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function SunIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -37,19 +37,13 @@ function MoonIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+function getTheme(): "light" | "dark" {
+  if (typeof document === "undefined") return "dark";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof window === "undefined") return "dark";
-    const stored = localStorage.getItem("theme") as "light" | "dark" | null;
-    if (stored) return stored;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-  });
-
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [theme, setThemeState] = useState<"light" | "dark">(getTheme);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -57,7 +51,11 @@ export function ThemeToggle() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const isDark = mounted && theme === "dark";
+  const toggle = useCallback(() => {
+    setThemeState((prev) => (prev === "dark" ? "light" : "dark"));
+  }, []);
+
+  const isDark = theme === "dark";
   const label = isDark ? "Switch to light theme" : "Switch to dark theme";
 
   return (
@@ -65,7 +63,7 @@ export function ThemeToggle() {
       type="button"
       aria-label={label}
       title={label}
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={toggle}
       className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
     >
       <span className="relative block size-4" aria-hidden="true">

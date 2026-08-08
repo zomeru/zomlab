@@ -1,12 +1,12 @@
 "use client";
 
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { useState } from "react";
 import { isNavActive, isSectionActive, NAV, type NavEntry, type NavItem } from "../../lib/nav";
 
 export function SidebarNav() {
-  const router = useRouter();
-  const pathname = router.state.location.pathname;
+  const location = useLocation();
+  const pathname = location.pathname;
   const activeSection = NAV.find((entry) => isSectionActive(pathname, entry))?.label;
   const [openSections, setOpenSections] = useState<Set<string>>(
     () => new Set(activeSection ? [activeSection] : []),
