@@ -9,23 +9,13 @@ export function SidebarNav() {
   return (
     <nav aria-label="Sidebar" className="flex flex-col gap-4">
       {NAV.map((entry) => (
-        <NavEntryView
-          key={entry.label}
-          entry={entry}
-          pathname={pathname}
-        />
+        <NavEntryView key={entry.label} entry={entry} pathname={pathname} />
       ))}
     </nav>
   );
 }
 
-function NavEntryView({
-  entry,
-  pathname,
-}: {
-  entry: NavEntry;
-  pathname: string;
-}) {
+function NavEntryView({ entry, pathname }: { entry: NavEntry; pathname: string }) {
   if (entry.type === "link") {
     return (
       <ul className="space-y-0.5">
@@ -40,14 +30,11 @@ function NavEntryView({
     );
   }
 
-  const sectionId = `nav-section-${entry.label.toLowerCase().replace(/\s+/g, "-")}`;
   const isActive = isSectionActive(pathname, entry);
 
   return (
     <details open={isActive} className="group">
-      <summary
-        className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring list-none"
-      >
+      <summary className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring list-none">
         <span className="min-w-0 flex-1">{entry.label}</span>
         <ChevronIcon />
       </summary>

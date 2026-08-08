@@ -2,7 +2,7 @@
   "$schema": "./node_modules/turbo/schema.json",
   "ui": "tui",
   "envMode": "loose",
-  "globalDependencies": ["pnpm-lock.yaml", "pnpm-workspace.yaml"],
+  "globalDependencies": ["pnpm-lock.yaml", "pnpm-workspace.yaml", ".env"],
   "globalPassThroughEnv": ["E2E_PORT"],
   "tasks": {
     "build": {
