@@ -7,6 +7,7 @@
     "prepare": "pnpm exec husky",
     "reset": "pnpm run clean && pnpm install && pnpm run db:generate",
     "setup": "tsx scripts/setup.ts",
+
     "dev": "pnpm kill:ports && pnpm with-env -- pnpm exec turbo run dev --filter=@zomlab/web",
     "dev:db": "docker compose up -d postgres redis",
     "dev:types": "pnpm exec turbo watch check-types",
@@ -14,6 +15,7 @@
     "dev:debug": "NODE_OPTIONS='--inspect=9229' pnpm run dev",
     "kill:ports": "kill $(lsof -tiTCP:3000-3005 -iTCP:8787 -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
     "build": "pnpm run with-env -- pnpm exec turbo run build",
+
     "check:all": "pnpm run lint && pnpm run deps:check && pnpm run deps:unused && pnpm run check-types && pnpm run test",
     "check-types": "pnpm exec turbo run check-types",
     "check-types:watch": "pnpm exec turbo run check-types:watch",
@@ -27,13 +29,16 @@
     "test:turbo": "pnpm run with-env -- pnpm exec turbo run test",
     "test:watch": "pnpm exec vitest",
     "test:e2e": "kill $(lsof -tiTCP:${E2E_PORT:-3100} -sTCP:LISTEN 2>/dev/null) 2>/dev/null; pnpm exec playwright test",
+
     "storybook": "pnpm exec turbo run storybook",
     "build-storybook": "pnpm exec turbo run build-storybook",
+
     "db:generate": "pnpm run with-env -- pnpm exec turbo run db:generate --filter=@zomlab/database",
     "db:migrate": "pnpm run with-env -- pnpm exec turbo run db:migrate --filter=@zomlab/database",
     "db:push": "pnpm run with-env -- pnpm exec turbo run db:push --filter=@zomlab/database",
     "db:deploy": "pnpm run with-env -- pnpm exec turbo run db:deploy --filter=@zomlab/database",
     "db:studio": "pnpm run with-env -- pnpm exec turbo run db:studio --filter=@zomlab/database",
+
     "deps:check": "pnpm exec syncpack lint",
     "deps:fix": "pnpm exec syncpack fix",
     "deps:unused": "pnpm run with-env -- pnpm exec knip",

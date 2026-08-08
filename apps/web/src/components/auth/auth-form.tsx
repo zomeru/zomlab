@@ -1,7 +1,7 @@
 "use client";
 
-import { authClient } from "@zomlab/auth";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { authClient } from "@zomlab/auth";
 import { useState } from "react";
 
 type AuthFormProps = {
@@ -21,9 +21,7 @@ export function AuthForm({ mode }: AuthFormProps) {
 
   const isLogin = mode === "login";
   const title = isLogin ? "Sign in" : "Sign up";
-  const description = isLogin
-    ? "Access your notes."
-    : "Create an account to start writing notes.";
+  const description = isLogin ? "Access your notes." : "Create an account to start writing notes.";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
