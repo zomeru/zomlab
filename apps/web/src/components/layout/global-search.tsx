@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, useRouter } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { getNavigableItems } from "~/lib/nav";
 
@@ -14,7 +14,9 @@ export function GlobalSearch() {
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return [];
-    return getNavigableItems().filter((item) => item.label.toLowerCase().includes(q));
+    return getNavigableItems().filter((item) =>
+      `${item.label} ${item.path}`.toLowerCase().includes(q),
+    );
   }, [query]);
 
   useEffect(() => {
@@ -101,7 +103,9 @@ export function GlobalSearch() {
                     className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
                   >
                     <span className="min-w-0 flex-1 truncate">{item.label}</span>
-                    <span className="shrink-0 text-xs text-muted-foreground">{item.section}</span>
+                    {item.path && (
+                      <span className="shrink-0 text-xs text-muted-foreground">{item.path}</span>
+                    )}
                   </button>
                 </li>
               ))}

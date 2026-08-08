@@ -171,22 +171,26 @@ export const NAV: NavEntry[] = [
   },
 ] as const;
 
-export type NavigableItem = { label: string; href: string; section: string };
+export type NavigableItem = { label: string; href: string; path: string };
 
 export function getNavigableItems(): NavigableItem[] {
   const items: NavigableItem[] = [];
 
   for (const entry of NAV) {
     if (entry.type === "link") {
-      items.push({ label: entry.label, href: entry.href, section: "Getting Started" });
+      items.push({ label: entry.label, href: entry.href, path: "" });
     } else {
       for (const item of entry.items) {
         if ("href" in item) {
-          items.push({ label: item.label, href: item.href, section: entry.label });
+          items.push({ label: item.label, href: item.href, path: entry.label });
         }
         if ("children" in item) {
           for (const child of item.children) {
-            items.push({ label: child.label, href: child.href, section: entry.label });
+            items.push({
+              label: child.label,
+              href: child.href,
+              path: `${entry.label} / ${item.label}`,
+            });
           }
         }
       }

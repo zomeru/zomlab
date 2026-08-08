@@ -1,7 +1,7 @@
 "use client";
 
-import { authClient } from "@zomlab/auth";
 import { Link } from "@tanstack/react-router";
+import { authClient } from "@zomlab/auth";
 import { useEffect, useState } from "react";
 import { UserMenu } from "./user-menu";
 

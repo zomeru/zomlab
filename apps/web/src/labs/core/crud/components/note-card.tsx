@@ -1,7 +1,7 @@
 "use client";
 
-import type { Note } from "@zomlab/contracts";
 import { Link } from "@tanstack/react-router";
+import type { Note } from "@zomlab/contracts";
 
 export function NoteCard({ note }: { note: Note }) {
   const date = new Date(note.updatedAt);
