@@ -10,7 +10,14 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**", ".output/**", "dist/**"]
     },
-
+    "deploy": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "versions:upload": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
     "test": {
       "dependsOn": ["^test"],
       "outputs": []

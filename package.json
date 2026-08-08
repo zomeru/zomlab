@@ -17,6 +17,7 @@
     "build": "pnpm run with-env -- pnpm exec turbo run build",
 
     "deploy": "pnpm run with-env -- pnpm exec turbo deploy --filter=@zomlab/web",
+    "versions:upload": "pnpm run with-env -- pnpm exec turbo versions:upload --filter=@zomlab/web",
 
     "check:all": "pnpm run lint && pnpm run deps:check && pnpm run deps:unused && pnpm run check-types && pnpm run test",
     "check-types": "pnpm exec turbo run check-types",
