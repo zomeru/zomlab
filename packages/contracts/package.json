@@ -14,8 +14,7 @@
   "devDependencies": {
     "@types/node": "^26.1.2",
     "@zomlab/tsconfig": "workspace:*",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "typescript": "^6.0.3"
   },
   "scripts": {
     "check-types": "tsc --noEmit",

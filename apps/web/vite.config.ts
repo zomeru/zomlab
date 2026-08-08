@@ -23,7 +23,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
+    port: Number(process.env.E2E_PORT ?? 3000),
     strictPort: true,
   },
 });

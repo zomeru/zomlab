@@ -40,13 +40,6 @@ export class NotFoundError extends ApiError {
   }
 }
 
-export class RateLimitedError extends ApiError {
-  constructor(message = "Rate limit exceeded") {
-    super("RATE_LIMITED", message, 429);
-    this.name = "RateLimitedError";
-  }
-}
-
 export class InternalError extends ApiError {
   constructor(message = "Internal server error") {
     super("INTERNAL_SERVER_ERROR", message, 500);

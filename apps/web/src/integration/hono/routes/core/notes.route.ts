@@ -23,7 +23,7 @@ const app = new OpenAPIHono<HonoEnv>({
     createRoute({
       method: "get",
       middleware: [requireAuth] as const,
-      path: "/notes/{id}",
+      path: "/{id}",
       request: {
         params: noteParamsSchema,
       },
@@ -54,7 +54,7 @@ const app = new OpenAPIHono<HonoEnv>({
     createRoute({
       method: "get",
       middleware: [requireAuth] as const,
-      path: "/notes",
+      path: "/",
       responses: {
         200: {
           description: "List of notes",
@@ -76,7 +76,7 @@ const app = new OpenAPIHono<HonoEnv>({
   .openapi(
     createRoute({
       method: "post",
-      path: "/notes",
+      path: "/",
       middleware: [requireAuth] as const,
       request: {
         body: {
@@ -109,7 +109,7 @@ const app = new OpenAPIHono<HonoEnv>({
   .openapi(
     createRoute({
       method: "patch",
-      path: "/notes/{id}",
+      path: "/{id}",
       middleware: [requireAuth] as const,
       request: {
         params: noteParamsSchema,
@@ -148,7 +148,7 @@ const app = new OpenAPIHono<HonoEnv>({
   .openapi(
     createRoute({
       method: "delete",
-      path: "/notes/{id}",
+      path: "/{id}",
       middleware: [requireAuth] as const,
       request: {
         params: noteParamsSchema,
@@ -176,7 +176,7 @@ const app = new OpenAPIHono<HonoEnv>({
       }
     },
   )
-  .doc31("/notes/docs", {
+  .doc31("/docs", {
     openapi: "3.1.0",
     info: {
       title: "Notes",

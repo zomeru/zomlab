@@ -1,8 +1,9 @@
-// apps/web/src/api/hono/middleware/auth.middleware.ts
+// apps/web/src/integration/hono/middleware/auth.middleware.ts
 
 import { auth } from "@zomlab/auth";
 import { createMiddleware } from "hono/factory";
 
+import { UnauthorizedError } from "../errors/api-error";
 import type { HonoEnv } from "../types";
 
 export const requireAuth = createMiddleware<HonoEnv>(async (c, next) => {
@@ -11,15 +12,7 @@ export const requireAuth = createMiddleware<HonoEnv>(async (c, next) => {
   });
 
   if (!session) {
-    return c.json(
-      {
-        error: {
-          code: "UNAUTHORIZED",
-          message: "Authentication is required.",
-        },
-      },
-      401,
-    );
+    throw new UnauthorizedError("Authentication is required.");
   }
 
   c.set("session", session);

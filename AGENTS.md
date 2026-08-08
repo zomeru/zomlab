@@ -377,7 +377,7 @@ Current pattern: controlled inputs with `useState` + TanStack Query mutations; v
 
 Return meaningful errors via `ApiError` subclasses (stable `code` + HTTP `status`). Never swallow exceptions. Never expose sensitive information.
 
-Error classes: `ValidationError` (422), `UnauthorizedError` (401), `NoteNotFoundError` (404), `NotFoundError` (404), `RateLimitedError` (429), `InternalError` (500).
+Error classes: `ValidationError` (422), `UnauthorizedError` (401), `NoteNotFoundError` (404), `NotFoundError` (404), `InternalError` (500).
 
 Error handler validates envelopes against `apiErrorSchema` from `@zomlab/contracts` before returning.
 

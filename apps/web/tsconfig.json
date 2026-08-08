@@ -17,7 +17,8 @@
     "src/**/*.tsx",
     "vite.config.ts",
     "vitest.config.ts",
-    "worker-configuration.d.ts"
+    "worker-configuration.d.ts",
+    "env.d.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

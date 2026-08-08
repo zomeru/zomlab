@@ -6,7 +6,7 @@ const password = "password123";
 test("unauthenticated users are redirected to login", async ({ baseURL, page }) => {
   await page.goto("/core/crud/demo");
 
-  await expect(page).toHaveURL(`${baseURL}/login`);
+  await expect(page).toHaveURL(new RegExp(`${baseURL}/login(\\?redirect=.+)?`));
   await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
 });
 

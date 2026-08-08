@@ -31,13 +31,17 @@ function expectNoteContract(
   expectIsoTimestamp(note.updatedAt);
 }
 
-async function signUpContractUser(request: APIRequestContext, label: string) {
+async function signUpContractUser(request: APIRequestContext, label: string, origin: string) {
   const email = `notes-contract-${label}-${randomUUID()}@test.local`;
-  const response = await signUpThroughApi(request, {
-    name: `Notes Contract ${label}`,
-    email,
-    password: "contract-password-123",
-  });
+  const response = await signUpThroughApi(
+    request,
+    {
+      name: `Notes Contract ${label}`,
+      email,
+      password: "contract-password-123",
+    },
+    { Origin: origin },
+  );
 
   expect(response.status()).toBe(200);
 }
@@ -55,8 +59,8 @@ test("notes API preserves authentication, validation, ownership, and CRUD contra
   const userB = await playwright.request.newContext({ baseURL });
 
   try {
-    await signUpContractUser(userA, "A");
-    await signUpContractUser(userB, "B");
+    await signUpContractUser(userA, "A", baseURL as string);
+    await signUpContractUser(userB, "B", baseURL as string);
 
     const invalidCreate = await userA.post("/api/notes", {
       data: { title: "", content: "Invalid note" },
@@ -76,7 +80,7 @@ test("notes API preserves authentication, validation, ownership, and CRUD contra
     const create = await userA.post("/api/notes", {
       data: { title: "Contract note", content: "Original content" },
     });
-    expect(create.status()).toBe(200);
+    expect(create.status()).toBe(201);
     const created = (await create.json()) as NoteContract;
     expectNoteContract(created, { title: "Contract note", content: "Original content" });
 
