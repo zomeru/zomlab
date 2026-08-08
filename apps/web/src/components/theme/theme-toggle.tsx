@@ -43,27 +43,27 @@ function getTheme(): "light" | "dark" {
 }
 
 export function ThemeToggle() {
-  const [theme, setThemeState] = useState<"light" | "dark">(getTheme);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.toggle("dark", theme === "dark");
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggle = useCallback(() => {
-    setThemeState((prev) => (prev === "dark" ? "light" : "dark"));
+    setIsDark(getTheme() === "dark");
   }, []);
 
-  const isDark = theme === "dark";
+  const toggle = useCallback(() => {
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("theme", next ? "dark" : "light");
+  }, [isDark]);
+
   const label = isDark ? "Switch to light theme" : "Switch to dark theme";
 
   return (
     <button
       type="button"
+      onClick={toggle}
       aria-label={label}
       title={label}
-      onClick={toggle}
       className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
     >
       <span className="relative block size-4" aria-hidden="true">
