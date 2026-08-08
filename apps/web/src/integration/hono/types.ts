@@ -6,11 +6,11 @@ type AuthVariables = {
   user: AuthUser;
 };
 
-interface AppVariables extends AuthVariables {
+export interface AppVariables extends AuthVariables {
   noteService: NoteService;
 }
 
-type AppBindings = {
+export type AppBindings = {
   VITE_SITE_URL: string;
   DATABASE_URL: string;
   BETTER_AUTH_SECRET: string;
@@ -19,6 +19,7 @@ type AppBindings = {
   GITHUB_CLIENT_SECRET: string;
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
+  MY_RATE_LIMITER: RateLimit;
 };
 
 export interface HonoEnv {

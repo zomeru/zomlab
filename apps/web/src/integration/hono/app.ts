@@ -11,7 +11,7 @@ import { apiErrorHandler, notFoundHandler } from "~/integration/hono/errors/erro
 import { noteServiceMiddleware } from "~/integration/hono/middleware/note-service.middleware";
 import noteRoutes from "~/integration/hono/routes/core/notes.route";
 import systemRoutes from "~/integration/hono/routes/system/system.route";
-import type { HonoEnv } from "~/integration/hono/types";
+import type { AppBindings, HonoEnv } from "~/integration/hono/types";
 
 export const apiApp = new OpenAPIHono<HonoEnv>()
   .basePath("/api")
@@ -42,10 +42,13 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
 
   // Traffic protection
   .use(
-    rateLimiter({
-      windowMs: 15 * 60 * 1000,
-      limit: 100,
-      keyGenerator: (c) => c.req.header("x-forwarded-for") ?? "",
+    rateLimiter<{ Bindings: AppBindings }>({
+      binding: (c) => c.env.MY_RATE_LIMITER,
+      keyGenerator: (c) => c.req.header("cf-connecting-ip") ?? "",
+      message: {
+        error: "Rate limit exceeded",
+        retryAfter: "60s",
+      },
     }),
   )
 

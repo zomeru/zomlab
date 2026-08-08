@@ -15,14 +15,12 @@ export default defineConfig({
     baseURL,
   },
   webServer: {
-    command: "pnpm run dev",
+    command: `pnpm run dev --port=${E2E_PORT}`,
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
     env: {
       E2E_PORT: String(E2E_PORT),
-      VITE_SITE_URL: baseURL,
-      BETTER_AUTH_URL: baseURL,
     },
   },
 });
