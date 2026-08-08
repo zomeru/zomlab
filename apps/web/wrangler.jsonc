@@ -5,6 +5,9 @@
   "compatibility_date": "2026-08-04",
   "compatibility_flags": ["nodejs_compat"],
   "preview_urls": true,
+  "cache": {
+    "enabled": true
+  },
   "observability": {
     "enabled": true
   },

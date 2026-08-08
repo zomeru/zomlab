@@ -7,17 +7,11 @@ import { prettyJSON } from "hono/pretty-json";
 import { timing } from "hono/timing";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { rateLimiter } from "hono-rate-limiter";
-import { getServerEnv } from "~/config/env";
 import { apiErrorHandler, notFoundHandler } from "~/integration/hono/errors/error-handler";
 import { noteServiceMiddleware } from "~/integration/hono/middleware/note-service.middleware";
 import noteRoutes from "~/integration/hono/routes/core/notes.route";
 import systemRoutes from "~/integration/hono/routes/system/system.route";
 import type { HonoEnv } from "~/integration/hono/types";
-
-const serverEnv = getServerEnv();
-const ORIGINS = serverEnv.E2E_PORT
-  ? [`http://localhost:${serverEnv.E2E_PORT}`, serverEnv.BETTER_AUTH_URL]
-  : serverEnv.BETTER_AUTH_URL;
 
 export const apiApp = new OpenAPIHono<HonoEnv>()
   .basePath("/api")
@@ -35,7 +29,7 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
   // Security
   .use(
     cors({
-      origin: ORIGINS,
+      origin: (origin) => origin,
       credentials: true,
       allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
       allowHeaders: ["Content-Type", "Authorization", "Cookie"],
