@@ -12,15 +12,7 @@ const envSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string().default(""),
 });
 
-const clientEnvSchema = z.object({
-  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-  VITE_SITE_URL: z.url(),
-});
-
 type ServerEnv = z.infer<typeof envSchema>;
-type ClientEnv = z.infer<typeof clientEnvSchema>;
-
-const isBrowser = typeof globalThis !== "undefined" && "window" in globalThis;
 
 function getCloudflareEnv(): Record<string, unknown> | undefined {
   try {
@@ -32,11 +24,6 @@ function getCloudflareEnv(): Record<string, unknown> | undefined {
 }
 
 function getEnvSource(): Record<string, unknown> {
-  if (isBrowser) {
-    const importMeta = import.meta as unknown as { env: Record<string, unknown> };
-    return { ...importMeta.env };
-  }
-
   return {
     ...process.env,
     ...(getCloudflareEnv() ?? {}),
@@ -46,13 +33,9 @@ function getEnvSource(): Record<string, unknown> {
 
 function parseEnv() {
   const envSource = getEnvSource();
-  const schema = isBrowser ? clientEnvSchema : envSchema;
-  const result = schema.safeParse(envSource);
+  const result = envSchema.safeParse(envSource);
 
   if (!result.success) {
-    if (isBrowser) {
-      return envSource as ClientEnv;
-    }
     const message = [
       "Invalid environment variables:",
       ...result.error.issues.map((issue) => `  - ${issue.path.join(".")}: ${issue.message}`),
@@ -64,7 +47,6 @@ function parseEnv() {
 }
 
 let _serverEnv: ServerEnv | undefined;
-let _clientEnv: ClientEnv | undefined;
 
 export const env = new Proxy<ServerEnv>({} as ServerEnv, {
   get(_target, key: string) {
@@ -72,14 +54,5 @@ export const env = new Proxy<ServerEnv>({} as ServerEnv, {
       _serverEnv = parseEnv() as ServerEnv;
     }
     return _serverEnv[key as keyof ServerEnv];
-  },
-});
-
-export const clientEnv = new Proxy<ClientEnv>({} as ClientEnv, {
-  get(_target, key: string) {
-    if (!_clientEnv) {
-      _clientEnv = parseEnv() as ClientEnv;
-    }
-    return _clientEnv[key as keyof ClientEnv];
   },
 });

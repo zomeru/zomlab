@@ -1,3 +1,4 @@
+import { env } from "cloudflare:workers";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { contextStorage } from "hono/context-storage";
 import { cors } from "hono/cors";
@@ -11,7 +12,7 @@ import { apiErrorHandler, notFoundHandler } from "~/integration/hono/errors/erro
 import { noteServiceMiddleware } from "~/integration/hono/middleware/note-service.middleware";
 import noteRoutes from "~/integration/hono/routes/core/notes.route";
 import systemRoutes from "~/integration/hono/routes/system/system.route";
-import type { AppBindings, HonoEnv } from "~/integration/hono/types";
+import type { HonoEnv } from "~/integration/hono/types";
 
 export const apiApp = new OpenAPIHono<HonoEnv>()
   .basePath("/api")
@@ -42,8 +43,9 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
 
   // Traffic protection
   .use(
-    rateLimiter<{ Bindings: AppBindings }>({
-      binding: (c) => c.env.MY_RATE_LIMITER,
+    rateLimiter({
+      // biome-ignore lint/style/noNonNullAssertion: RateLimiter Binding from Cloudflare
+      binding: () => env.MY_RATE_LIMITER!,
       keyGenerator: (c) => c.req.header("cf-connecting-ip") ?? "",
       message: {
         error: "Rate limit exceeded",
