@@ -30,7 +30,6 @@ export const notesRelations = relations(notes, ({ one }) => ({
 }));
 
 export type Note = typeof notes.$inferSelect;
-export type NewNote = typeof notes.$inferInsert;
 export type SerializedNote = Omit<Note, "createdAt" | "updatedAt"> & {
   createdAt: string;
   updatedAt: string;

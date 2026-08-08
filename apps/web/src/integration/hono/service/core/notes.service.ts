@@ -1,30 +1,12 @@
+import type { CreateNoteBody, DeleteNoteResponse, Note, UpdateNoteBody } from "@zomlab/contracts";
 import { createNoteRepository } from "@zomlab/database";
-import type { CreateNoteBody, Note, UpdateNoteBody } from "@zomlab/contracts";
 
 export interface NoteService {
   getById(userId: string, id: string): Promise<Note>;
   listByAuthor(userId: string): Promise<Note[]>;
   create(userId: string, data: CreateNoteBody): Promise<Note>;
   update(userId: string, id: string, data: UpdateNoteBody): Promise<Note>;
-  delete(userId: string, id: string): Promise<{ success: boolean }>;
-}
-
-function serializeNote(note: {
-  id: string;
-  title: string;
-  content: string | null;
-  authorId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}): Note {
-  return {
-    id: note.id,
-    title: note.title,
-    content: note.content,
-    authorId: note.authorId,
-    createdAt: note.createdAt.toISOString(),
-    updatedAt: note.updatedAt.toISOString(),
-  };
+  delete(userId: string, id: string): Promise<DeleteNoteResponse>;
 }
 
 export function createNoteService(): NoteService {
@@ -36,12 +18,12 @@ export function createNoteService(): NoteService {
       if (!note) {
         throw new Error("Note not found");
       }
-      return serializeNote(note);
+      return note;
     },
 
     async listByAuthor(userId: string) {
       const notes = await repository.findByAuthor(userId);
-      return notes.map(serializeNote);
+      return notes;
     },
 
     async create(userId: string, data: CreateNoteBody) {
@@ -52,7 +34,7 @@ export function createNoteService(): NoteService {
         content: data.content ?? null,
         authorId: userId,
       });
-      return serializeNote(note);
+      return note;
     },
 
     async update(userId: string, id: string, data: UpdateNoteBody) {
@@ -63,7 +45,7 @@ export function createNoteService(): NoteService {
       if (!note) {
         throw new Error("Note not found");
       }
-      return serializeNote(note);
+      return note;
     },
 
     async delete(userId: string, id: string) {

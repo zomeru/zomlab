@@ -1,67 +1,32 @@
 "use client";
 
-import { useState } from "react";
-
 interface TerminalBlockProps {
   lines: { label: string; command?: string; value?: string }[];
 }
 
 export function TerminalBlock({ lines }: TerminalBlockProps) {
-  const [copied, setCopied] = useState(false);
-
-  const commands = lines
-    .filter((line) => line.command)
-    .map((line) => line.command)
-    .join("\n");
-
-  async function copyAll() {
-    if (!commands) return;
-    await navigator.clipboard.writeText(commands);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
-
   return (
-    <div className="mt-4 overflow-hidden rounded-xl border border-border bg-card">
-      <div className="flex items-center justify-between border-b border-border px-4 py-2">
-        <div className="flex items-center gap-1.5">
-          <span className="size-3 rounded-full bg-destructive/80" aria-hidden="true" />
-          <span className="size-3 rounded-full bg-yellow-500/80" aria-hidden="true" />
-          <span className="size-3 rounded-full bg-green-500/80" aria-hidden="true" />
-        </div>
-        <button
-          type="button"
-          onClick={copyAll}
-          className="rounded-md px-2 py-1 font-mono text-xs text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        >
-          {copied ? "Copied!" : "Copy"}
-        </button>
+    <div className="mt-4 overflow-hidden rounded-xl border border-border bg-muted">
+      <div className="flex items-center gap-2 border-b border-border bg-background/60 px-4 py-2">
+        <span className="font-mono text-xs text-muted-foreground">~/zomlab</span>
+        <span aria-hidden="true" className="ml-auto font-mono text-xs text-muted-foreground">
+          bash
+        </span>
       </div>
-      <div className="overflow-x-auto p-4">
-        <pre className="font-mono text-sm">
-          {lines.map((line, i) => (
-            <div key={`${line.label}-${i}`} className="flex items-start gap-3">
-              {line.command ? (
-                <>
-                  <span className="select-none text-muted-foreground" aria-hidden="true">
-                    $
-                  </span>
-                  <code className="text-foreground">{line.command}</code>
-                  <span className="ml-auto text-muted-foreground/50">{line.label}</span>
-                </>
-              ) : (
-                <>
-                  <span className="select-none text-muted-foreground" aria-hidden="true">
-                    ·
-                  </span>
-                  <span className="text-muted-foreground">
-                    {line.label}: {line.value}
-                  </span>
-                </>
-              )}
-            </div>
-          ))}
-        </pre>
+      <div className="space-y-2 p-3">
+        {lines.map((line) => (
+          <div
+            key={line.label}
+            className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2.5"
+          >
+            <span className="hidden w-36 shrink-0 text-sm text-muted-foreground sm:block">
+              {line.label}
+            </span>
+            <code className="min-w-0 flex-1 overflow-x-auto font-mono text-sm text-foreground">
+              {line.command}
+            </code>
+          </div>
+        ))}
       </div>
     </div>
   );
