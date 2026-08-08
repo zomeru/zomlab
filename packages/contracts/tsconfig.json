@@ -1,0 +1,10 @@
+{
+  "extends": "@zomlab/tsconfig/base.json",
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "bundler"
+  },
+  "include": ["src", "generated"],
+  "exclude": ["node_modules", "dist"]
+}

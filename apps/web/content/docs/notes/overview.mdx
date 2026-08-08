@@ -1,0 +1,33 @@
+# Notes Overview
+
+Notes is a full vertical slice of the architecture: UI → Hooks → API → Service →
+Repository → Database — end to end.
+
+## Why Notes
+
+It is small enough to finish, yet touches every layer of the stack:
+
+- A real Prisma model with a relation to `User`
+- Authenticated routes behind a reusable `requireAuth` guard
+- A service layer that enforces ownership
+- A repository layer that isolates Prisma
+- TanStack Query hooks feeding typed React components
+- MDX + Mermaid documentation, like this page
+
+Notes is private by default: every note belongs to exactly one user, and the service
+layer returns `404` for notes that do not belong to the caller.
+
+## Feature folders
+
+The feature is split across the monorepo following the project convention, mirroring
+the sidebar structure (`Core → CRUD`):
+
+```
+apps/api/src/modules/notes/       # model → repository → service → routes
+apps/web/src/features/core/crud/  # hooks → components
+```
+
+Types flow from the API to the web app for free via the Eden treaty client
+(`treaty<App>`), so a route change surfaces as a type error in the UI layer.
+
+<br />

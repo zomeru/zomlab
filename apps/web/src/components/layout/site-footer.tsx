@@ -1,21 +1,27 @@
-import Link from "next/link";
-import { GITHUB_URL, SITE_TAGLINE, SITE_VERSION } from "@/lib/site";
+import { Link } from "@tanstack/react-router";
 
-const TECH_STACK = ["Next.js", "Elysia", "Prisma", "Better Auth", "Tailwind CSS"];
+const TECH_STACK = [
+  "TanStack Start",
+  "TypeScript 6",
+  "Tailwind v4",
+  "Hono",
+  "Drizzle",
+  "Better Auth",
+];
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-background">
-      <div className="mx-auto w-full max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-350 px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-sm font-semibold text-foreground">ZomLab</p>
-            <p className="mt-1 text-sm text-muted-foreground">{SITE_TAGLINE}</p>
+            <p className="mt-1 text-sm text-muted-foreground">Interactive Engineering Lab</p>
           </div>
 
           <nav aria-label="Footer" className="flex flex-col gap-2 text-sm">
             <a
-              href={GITHUB_URL}
+              href="https://github.com/zomeru/zomlab"
               target="_blank"
               rel="noreferrer"
               className="text-muted-foreground transition-colors hover:text-foreground"
@@ -23,7 +29,7 @@ export function SiteFooter() {
               GitHub
             </a>
             <a
-              href={`${GITHUB_URL}/releases`}
+              href="https://github.com/zomeru/zomlab/releases"
               target="_blank"
               rel="noreferrer"
               className="text-muted-foreground transition-colors hover:text-foreground"
@@ -31,7 +37,7 @@ export function SiteFooter() {
               Changelog
             </a>
             <Link
-              href="/status"
+              to="/status"
               className="text-muted-foreground transition-colors hover:text-foreground"
             >
               Tech Stack
@@ -44,7 +50,7 @@ export function SiteFooter() {
         <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-border pt-4 sm:flex-row">
           <p className="text-xs text-muted-foreground">{TECH_STACK.join(" · ")}</p>
           <span className="rounded-md border border-border bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground">
-            v{SITE_VERSION}
+            v0.1.0
           </span>
         </div>
       </div>

@@ -1,8 +1,7 @@
 "use client";
 
-import { authClient } from "@zomlab/auth/client";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { authClient } from "@zomlab/auth";
 import { useState } from "react";
 
 type AuthFormProps = {
@@ -13,7 +12,7 @@ const INPUT_CLASSES =
   "mt-1.5 h-10 w-full rounded-md border border-input bg-background px-3 text-base text-foreground placeholder:text-muted-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:text-sm";
 
 export function AuthForm({ mode }: AuthFormProps) {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,8 +38,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       return;
     }
 
-    router.push("/core/crud/demo");
-    router.refresh();
+    navigate({ to: "/core/crud/demo" });
   }
 
   return (
@@ -109,7 +107,7 @@ export function AuthForm({ mode }: AuthFormProps) {
           <>
             No account?{" "}
             <Link
-              href="/signup"
+              to="/signup"
               className="font-medium text-link underline underline-offset-4 hover:opacity-80"
             >
               Sign up
@@ -119,7 +117,7 @@ export function AuthForm({ mode }: AuthFormProps) {
           <>
             Already have an account?{" "}
             <Link
-              href="/login"
+              to="/login"
               className="font-medium text-link underline underline-offset-4 hover:opacity-80"
             >
               Sign in

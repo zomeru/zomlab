@@ -3,35 +3,35 @@ import type { KnipConfig } from "knip";
 const config: KnipConfig = {
   workspaces: {
     ".": {
-      ignoreDependencies: ["tsdown", "bun-types"],
-      ignoreFiles: [".agents/**"],
+      ignoreExportsUsedInFile: true,
+      ignoreDependencies: ["cloudflare"],
     },
-    "apps/api": {
-      entry: ["src/index.ts"],
-      project: ["src/**/*.ts"],
+    scripts: {
+      project: ["**/*.ts"],
+      ignoreFiles: ["tmp-db-probe.ts"],
     },
+
     "apps/web": {
-      entry: ["src/**/*.{ts,tsx}"],
-      project: ["src/**/*.{ts,tsx,css}", "content/**/*.mdx"],
-      next: true,
+      entry: ["src/routes/**/*.{ts,tsx}", "src/components/**/*.{ts,tsx}"],
+      project: ["src/**/*.{ts,tsx}", "src/**/*.mdx", "src/styles/**/*.css"],
       tailwind: true,
+      ignoreDependencies: ["hono-idempotency"],
     },
     "packages/auth": {
-      entry: ["src/auth.ts"],
       project: ["src/**/*.ts"],
-      ignoreDependencies: ["zod"],
     },
     "packages/database": {
-      entry: ["src/client.ts"],
-      project: ["src/**/*.ts", "prisma/**/*.prisma"],
-      ignoreDependencies: ["@prisma/client", "pg"],
+      project: ["src/**/*.ts"],
     },
     "packages/env": {
       project: ["src/**/*.ts"],
     },
+    "packages/contracts": {
+      project: ["src/**/*.ts"],
+    },
     "packages/ui": {
       entry: ["src/**/*.{ts,tsx}"],
-      project: ["src/**/*.{ts,tsx,mdx}"],
+      project: ["src/**/*.{ts,tsx}"],
     },
     "packages/vitest-config": {
       project: ["src/**/*.ts"],

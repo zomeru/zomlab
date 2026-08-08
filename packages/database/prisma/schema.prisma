@@ -1,9 +1,0 @@
-generator client {
-  provider            = "prisma-client"
-  output              = "../generated/prisma"
-  importFileExtension = ""
-}
-
-datasource db {
-  provider = "postgresql"
-}

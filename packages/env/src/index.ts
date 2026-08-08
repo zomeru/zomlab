@@ -1,10 +1,9 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  API_PORT: z.coerce.number().default(8000),
-  NEXT_PUBLIC_SITE_URL: z.url(),
+  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   DATABASE_URL: z.url(),
-  DIRECT_URL: z.url(),
+  E2E_PORT: z.coerce.number().default(3100),
   BETTER_AUTH_SECRET: z.string().min(32),
   BETTER_AUTH_URL: z.url(),
   GITHUB_CLIENT_ID: z.string().default(""),
@@ -13,31 +12,74 @@ const envSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string().default(""),
 });
 
-type Env = z.infer<typeof envSchema>;
+const clientEnvSchema = z.object({
+  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+  VITE_SITE_URL: z.url(),
+});
 
-function createEnv(): Env {
-  const result = envSchema.safeParse(process.env);
+type ServerEnv = z.infer<typeof envSchema>;
+type ClientEnv = z.infer<typeof clientEnvSchema>;
+
+const isBrowser = typeof globalThis !== "undefined" && "window" in globalThis;
+
+function getCloudflareEnv(): Record<string, unknown> | undefined {
+  try {
+    const { env } = require("cloudflare:workers") as { env: Record<string, unknown> };
+    return env;
+  } catch {
+    return undefined;
+  }
+}
+
+function getEnvSource(): Record<string, unknown> {
+  if (isBrowser) {
+    const importMeta = import.meta as unknown as { env: Record<string, unknown> };
+    return { ...importMeta.env };
+  }
+
+  return {
+    ...process.env,
+    ...(getCloudflareEnv() ?? {}),
+    NODE_ENV: process.env.NODE_ENV ?? "development",
+  };
+}
+
+function parseEnv() {
+  const envSource = getEnvSource();
+  const schema = isBrowser ? clientEnvSchema : envSchema;
+  const result = schema.safeParse(envSource);
 
   if (!result.success) {
-    console.error("❌ Invalid environment variables:");
-
-    for (const issue of result.error.issues) {
-      console.error(`  - ${issue.path.join(".")}: ${issue.message}`);
+    if (isBrowser) {
+      return envSource as ClientEnv;
     }
-
-    process.exit(1);
+    const message = [
+      "Invalid environment variables:",
+      ...result.error.issues.map((issue) => `  - ${issue.path.join(".")}: ${issue.message}`),
+    ].join("\n");
+    throw new Error(message);
   }
 
   return result.data;
 }
 
-let _env: Env | undefined;
+let _serverEnv: ServerEnv | undefined;
+let _clientEnv: ClientEnv | undefined;
 
-export const env = new Proxy<Env>({} as Env, {
+export const env = new Proxy<ServerEnv>({} as ServerEnv, {
   get(_target, key: string) {
-    if (!_env) {
-      _env = createEnv();
+    if (!_serverEnv) {
+      _serverEnv = parseEnv() as ServerEnv;
     }
-    return _env[key as keyof Env];
+    return _serverEnv[key as keyof ServerEnv];
+  },
+});
+
+export const clientEnv = new Proxy<ClientEnv>({} as ClientEnv, {
+  get(_target, key: string) {
+    if (!_clientEnv) {
+      _clientEnv = parseEnv() as ClientEnv;
+    }
+    return _clientEnv[key as keyof ClientEnv];
   },
 });

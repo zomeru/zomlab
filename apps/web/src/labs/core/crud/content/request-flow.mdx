@@ -1,0 +1,55 @@
+# Request Flow
+
+## Create a note
+
+<Mermaid
+  chart={`
+sequenceDiagram
+  participant Browser
+  participant Routes as TanStack Start Routes
+  participant Hono
+  participant Service
+  participant DB
+
+  Browser->>Routes: Submit note form
+  Routes->>Hono: POST /api/notes (hc client)
+  Hono->>Hono: requireAuth (getSession)
+  Hono->>Service: create(user.id, payload)
+  Service->>DB: repository.create
+  DB-->>Service: Note
+  Service-->>Hono: Note
+  Hono-->>Browser: 200 Note
+`}
+/>
+
+## Ownership check on update
+
+<Mermaid
+  chart={`
+sequenceDiagram
+  participant Browser
+  participant Hono
+  participant Service
+  participant DB
+
+  Browser->>Hono: PATCH /api/notes/:id
+  Hono->>Service: update(user.id, id, payload)
+  Service->>DB: repository.findByAuthorAndId(user.id, id)
+  DB-->>Service: Note (or null)
+  alt note missing OR authorId != user.id
+    Service-->>Hono: throw NoteNotFoundError
+    Hono-->>Browser: 404 Note not found
+  else owned
+    Service->>DB: repository.update(id, payload)
+    DB-->>Service: Note
+    Service-->>Hono: Note
+    Hono-->>Browser: 200 Note
+  end
+`}
+/>
+
+## Why 404 and not 403
+
+Returning `404` for another user's note hides whether the resource exists at all.
+`403` would leak that a note exists but is forbidden; `404` keeps the API surface
+uninformative to outsiders.

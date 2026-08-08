@@ -1,15 +1,3 @@
-/**
- * Documentation tree as specified in docs/ZomerLab-UI-Design.md.
- *
- * Sections without an `href` (or `children`) are planned topics — rendered
- * muted in the sidebar until their pages exist.
- */
-
-export type NavSection = {
-  label: string;
-  items: NavItem[];
-};
-
 export type NavItem =
   | { label: string; href: string }
   | { label: string; children: { label: string; href: string }[] }
@@ -178,32 +166,40 @@ export const NAV: NavEntry[] = [
   },
 ] as const;
 
-export type NavigableItem = { label: string; href: string; section: string };
+export type NavigableItem = { label: string; href: string; path: string };
 
 export function getNavigableItems(): NavigableItem[] {
-  return NAV.flatMap((entry) => {
-    if (entry.type === "link") {
-      return [{ label: entry.label, href: entry.href, section: entry.label }];
-    }
+  const items: NavigableItem[] = [];
 
-    return entry.items.flatMap((item) => {
-      if ("children" in item) {
-        return item.children.map((child) => ({
-          label: child.label,
-          href: child.href,
-          section: entry.label,
-        }));
+  for (const entry of NAV) {
+    if (entry.type === "link") {
+      items.push({ label: entry.label, href: entry.href, path: "" });
+    } else {
+      for (const item of entry.items) {
+        if ("href" in item) {
+          items.push({ label: item.label, href: item.href, path: entry.label });
+        }
+        if ("children" in item) {
+          for (const child of item.children) {
+            items.push({
+              label: child.label,
+              href: child.href,
+              path: `${entry.label} / ${item.label}`,
+            });
+          }
+        }
       }
-      if ("href" in item) {
-        return [{ label: item.label, href: item.href, section: entry.label }];
-      }
-      return [];
-    });
-  });
+    }
+  }
+
+  return items;
 }
 
 export function isNavActive(pathname: string, href: string): boolean {
-  if (href === "/") return pathname === "/";
+  return pathname === href;
+}
+
+function isPathWithin(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -211,11 +207,11 @@ export function isSectionActive(pathname: string, entry: NavEntry): boolean {
   if (entry.type !== "section") return false;
 
   return entry.items.some((item) => {
-    if ("children" in item) {
-      return item.children.some((child) => isNavActive(pathname, child.href));
-    }
     if ("href" in item) {
-      return isNavActive(pathname, item.href);
+      return isPathWithin(pathname, item.href);
+    }
+    if ("children" in item) {
+      return item.children.some((child) => isPathWithin(pathname, child.href));
     }
     return false;
   });

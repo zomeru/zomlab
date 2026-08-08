@@ -1,0 +1,16 @@
+{
+  "name": "@zomlab/scripts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "@zomlab/tsconfig": "workspace:*",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "check-types:watch": "tsc --noEmit --watch"
+  }
+}

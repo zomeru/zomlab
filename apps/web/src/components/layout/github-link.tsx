@@ -1,4 +1,4 @@
-import { GITHUB_URL } from "@/lib/site";
+import { GITHUB_URL } from "~/lib/site";
 
 export function GitHubLink() {
   return (

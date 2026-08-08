@@ -1,7 +1,6 @@
 "use client";
 
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function SunIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -38,23 +37,34 @@ function MoonIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+function getTheme(): "light" | "dark" {
+  if (typeof document === "undefined") return "dark";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
 export function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    setMounted(true);
+    setIsDark(getTheme() === "dark");
   }, []);
 
-  const isDark = mounted && resolvedTheme === "dark";
+  const toggle = useCallback(() => {
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    document.documentElement.classList.toggle("light", !next);
+    localStorage.setItem("theme", next ? "dark" : "light");
+  }, [isDark]);
+
   const label = isDark ? "Switch to light theme" : "Switch to dark theme";
 
   return (
     <button
       type="button"
+      onClick={toggle}
       aria-label={label}
       title={label}
-      onClick={() => setTheme(isDark ? "light" : "dark")}
       className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
     >
       <span className="relative block size-4" aria-hidden="true">

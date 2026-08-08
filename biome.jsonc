@@ -25,13 +25,18 @@
       "**",
       "!**/.agents",
       "!**/.claude",
+      "!**/.opencode",
+      "!**/.codex",
       "!**/.turbo",
       "!**/.next",
       "!**/dist",
       "!**/node_modules",
       "!**/coverage",
       "!**/public",
-      "!**/out"
+      "!**/out",
+      "!**/graphify-out",
+      "!**/routeTree.gen.ts",
+      "!**/worker-configuration.d.ts"
     ]
   },
   "css": {

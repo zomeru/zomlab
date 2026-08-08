@@ -1,3 +1,14 @@
+<!-- intent-skills:start -->
+## Skill Loading
+
+Before editing files for a substantial task:
+- Run `pnpm dlx @tanstack/intent@latest list` from the workspace root to see available local skills.
+- If a listed skill matches the task, run `pnpm dlx @tanstack/intent@latest load <package>#<skill>` before changing files.
+- Use the loaded `SKILL.md` guidance while making the change.
+- Monorepos: when working across packages, run the skill check from the workspace root and prefer the local skill for the package being changed.
+- Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
+<!-- intent-skills:end -->
+
 # AGENTS.md
 
 > Instructions for AI coding agents working on **ZomLab**.
@@ -52,15 +63,15 @@ Required versions (do not downgrade unless explicitly requested):
 
 ```
 Node >=24.18.1   (.node-version)
-Bun 1.3.14       (devEngines)
+pnpm 11.20.0     (packageManager)
 TypeScript ^6
 ```
 
-Always prefer the **latest stable** versions of dependencies (Elysia, Next.js, Prisma, etc.). This is an engineering lab — staying current is a feature.
+Always prefer the **latest stable** versions of dependencies. This is an engineering lab — staying current is a feature.
 
-## Package Manager: Bun
+## Package Manager: pnpm
 
-- Use `bun` for everything. Never use `npm`/`yarn`/`pnpm` installs.
+- Use `pnpm` for everything. Never use `npm`/`yarn` installs.
 - Workspaces are `apps/*` and `packages/*`. Internal packages are consumed as `"@zomlab/*": "workspace:*"`.
 
 ## Running Root Commands
@@ -68,20 +79,18 @@ Always prefer the **latest stable** versions of dependencies (Elysia, Next.js, P
 **Never use `--cwd`.** Turbo infers the workspace graph from the root. Run commands from the repository root.
 
 ```bash
-bun run dev            # Next.js with embedded Elysia at /api/*
-bun run dev:api        # Standalone Elysia on API_PORT
-bun run dev:standalone # Both (microservice mode)
-bun run test           # Vitest (unit + integration)
-bun run test:e2e       # Playwright E2E (port 3100, override with E2E_PORT)
-bun run check:all      # Biome → syncpack → knip → tsc → Vitest
+pnpm dev            # TanStack Start web app (port 3000)
+pnpm dev:db         # Start PostgreSQL + Redis via Docker
+pnpm test           # Vitest (unit + integration)
+pnpm test:e2e       # Playwright E2E (port 3100, override with E2E_PORT)
+pnpm check:all      # Biome → syncpack → knip → tsc → Vitest
 ```
 
 ## Environment Variables
 
 - Source of truth: `.env.example`. Copy to `.env` (gitignored).
 - All variables are validated at runtime by `@zomlab/env` (Zod). Missing/invalid variables **exit the process with a clear message** — never bypass this.
-- Scripts that need env vars must run through `with-env` (dotenv-cli): `bun run with-env -- <command>`.
-- The API port for the standalone server is `API_PORT` (default `8000`, `8080` in `.env.example`).
+- Scripts that need env vars must run through `with-env` (dotenv-cli): `pnpm run with-env -- <command>`.
 
 ---
 
@@ -89,22 +98,23 @@ bun run check:all      # Biome → syncpack → knip → tsc → Vitest
 
 ```
 apps/
-    web/        # Next.js (App Router) — UI, MDX docs, embedded Elysia
-    api/        # Standalone Elysia server
+    web/            # TanStack Start + Hono on Cloudflare Workers
+                    # Single app: UI, API, auth, docs, labs
 
 packages/
-    auth/           # Better Auth configuration (+ client)
-    database/       # Prisma schema, migrations, client
+    auth/           # Better Auth configuration (Drizzle adapter)
+    contracts/      # Shared Zod schemas (errors, notes, system)
+    database/       # Drizzle ORM schema + client + repositories
     env/            # Zod-validated environment variables
-    tsconfig/       # base.json, nextjs.json, react-library.json
+    tsconfig/       # Shared TypeScript configs
     ui/             # Reusable UI components (+ Storybook)
     vitest-config/  # Shared Vitest base config
 
-e2e/                 # Playwright E2E specs
-scripts/             # setup.ts, generate-package.ts, sync-version.ts
-docs/                # Local plans & design documents (gitignored)
-.github/workflows/   # CI pipeline
-docker-compose.yml   # PostgreSQL + Redis for local services
+e2e/                # Playwright E2E tests + contract specs
+scripts/            # setup.ts, generate-package.ts, sync-version.ts
+docs/               # Local plans & design documents (gitignored)
+.github/workflows/  # CI pipeline
+docker-compose.yml  # PostgreSQL + Redis for local services
 ```
 
 Never place reusable logic inside apps if it belongs in packages.
@@ -115,66 +125,77 @@ Never place reusable logic inside apps if it belongs in packages.
 
 ## apps/web
 
-Contains:
+The single application. Contains:
 
-- UI
-- Pages
-- Layouts
-- Client Components
-- Server Components
-- MDX documentation content (`content/`)
+- **Frontend**: TanStack Router file-based routes, React components, hooks, MDX content
+- **Backend**: Hono API (`src/integration/hono/`), served via TanStack Start server handlers at `/api/*`
+- **Auth**: Better Auth route handlers at `/api/auth/*`
+- **Labs**: Feature implementations (`src/labs/`)
 
-Business logic should be minimal. Data access goes through hooks → Eden → API.
-
-## apps/api
-
-The Elysia app is the single source of truth for the API. Structure:
+Structure:
 
 ```
-apps/api/src/
-├── app.ts            # Composes plugins + modules; exports App type
-├── index.ts          # Standalone entrypoint (app.listen(env.API_PORT))
-├── errors/           # ApiError base + domain errors (Unauthorized, NotFound, RateLimit)
-├── plugins/          # error, security, auth, docs
-└── modules/          # system, core/crud (feature modules)
+apps/web/src/
+├── api/                # Better Auth catch-all handler
+├── components/         # Layout, auth, theme, mdx, terminal
+├── hooks/              # Shared hooks (use-health)
+├── integration/hono/   # Hono API: app, routes, services, middleware, errors
+│   ├── errors/         # ApiError base + domain errors + error handler
+│   ├── middleware/     # Auth middleware (requireAuth)
+│   ├── routes/         # Feature routes (core/notes, system)
+│   └── service/        # Business logic (notes service)
+├── labs/               # Feature implementations (core/crud)
+├── lib/                # Nav tree, API client (hono/client), auth server functions
+├── routes/             # TanStack Router file-based routes + routeTree.gen.ts
+└── styles/             # Tailwind globals (OKLCH color space)
 ```
 
-Responsible for:
-
-- WebSockets (planned)
-- Webhooks (planned)
-- Streaming (planned)
-- Background APIs
-- Long-running requests
-
-## packages/database
-
-Contains:
-
-- Prisma schema (`prisma/schema.prisma` + `prisma/models/*.prisma`)
-- Migrations (`prisma/migrations/`)
-- Prisma client (`src/client.ts`, generated client in `generated/prisma/`)
-- Database helpers
-
-Prisma v7 with `@prisma/adapter-pg` driver adapter. Migrations resolve their connection from `DIRECT_URL` via `prisma.config.ts`; the client uses `DATABASE_URL`. The client is a lazy singleton behind a Proxy.
+The Hono API is created in `integration/hono/app.ts` and served via `routes/api/$.ts` using TanStack Start's server handler pattern.
 
 ## packages/auth
 
-Contains Better Auth configuration. Reusable by:
+Better Auth configuration. Uses Drizzle adapter (`@better-auth/drizzle-adapter`).
 
-- Next.js (via `apps/web/src/app/api/auth/[...all]/route.ts`)
-- Elysia (via `plugins/auth.ts` and `auth.api.getSession`)
+Config details:
 
-Never duplicate auth logic. Config details:
-
-- Email/password with Argon2id hashing (`@node-rs/argon2`, 64 MiB / 3 iterations / 4 lanes)
-- Magic link plugin (dev log only)
+- Email/password authentication
+- Magic link plugin (logs link in dev only)
 - GitHub/Google OAuth — **conditionally enabled** only when both ID and secret env vars are set
 - OAuth tokens encrypted at rest (AES-256-GCM)
+
+Exports:
+
+- `auth` — the Better Auth instance
+- `authClient` — the React client (`createAuthClient()`)
+- `AuthSession`, `AuthUser` — inferred session/user types
+
+## packages/contracts
+
+Shared Zod schemas for API contracts. Used by both the API and E2E tests.
+
+Exports:
+
+- `./errors` — `apiErrorSchema`, `validationIssueSchema`
+- `./notes` — note CRUD schemas (`noteSchema`, `createNoteBodySchema`, etc.)
+- `./system` — `healthResponseSchema`, `readyResponseSchema`, `versionResponseSchema`
+
+## packages/database
+
+Drizzle ORM with Neon PostgreSQL serverless driver.
+
+Contains:
+
+- Schema (`src/db/schema/` — split into `auth.ts`, `core/crud.ts`)
+- Client (`src/client.ts` — `createDatabase()` factory using `drizzle(neon(...))`)
+- Repositories (`src/repositories/` — CRUD data access)
+
+The database URL comes from `DATABASE_URL` env var. No separate migration URL is needed (migrations use the same connection).
 
 ## packages/env
 
 Zod-validated environment variables via a lazy Proxy (parses once on first access). Validation failures print every issue and exit. Add new vars to the schema **and** `.env.example` together.
+
+Schema: `NODE_ENV`, `VITE_SITE_URL`, `DATABASE_URL`, `E2E_PORT`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `GITHUB_CLIENT_ID/SECRET`, `GOOGLE_CLIENT_ID/SECRET`.
 
 ## packages/ui
 
@@ -182,65 +203,67 @@ Reusable UI components (button, card, code). No business logic. Includes Storybo
 
 ## packages/tsconfig
 
-Shared TypeScript configuration presets:
-
-- `base.json` — strict, NodeNext, `noUncheckedIndexedAccess`
-- `nextjs.json` — Next.js apps
-- `react-library.json` — React component libraries
+Shared TypeScript configuration presets for the monorepo.
 
 ## packages/vitest-config
 
-Shared Vitest base config (thread pool, 30s test timeout, CJS fallback). Apps/packages merge it with their own `vitest.config.ts` (e.g. web adds `jsdom`).
+Shared Vitest base config. Apps/packages merge it with their own `vitest.config.ts`.
 
 ---
 
 # Architecture
 
 ```
-UI (Server Components default, "use client" when interactive)
-│
-▼
-Hooks (TanStack Query for client fetching)
-│
-▼
-Eden Treaty client (apps/web/src/lib/eden.ts — types inferred from the Elysia app)
-│
-▼
-Elysia App (apps/api/src/app.ts)
-│  plugins: error → security → auth → docs
-│
-▼
-Module (Elysia with .model / .prefix / routes)
-│
-▼
-Service (business logic)
-│
-▼
-Repository (Prisma access)
-│
-▼
-Database (PostgreSQL)
+Browser
+  │
+  ▼
+TanStack Start (apps/web)
+  │
+  ├── Routes (TanStack Router, file-based)
+  │     └── React components (Server Components default)
+  │
+  ├── API (routes/api/$.ts → Hono app.fetch)
+  │     ├── /api/auth/*  → Better Auth handler
+  │     ├── /api/health, /ready, /version  → system routes (OpenAPI)
+  │     └── /api/notes/*  → CRUD routes (auth required)
+  │               │
+  │               ▼
+  │          NoteService (business logic)
+  │               │
+  │               ▼
+  │          NoteRepository (Drizzle queries)
+  │               │
+  │               ▼
+  │          Drizzle ORM → Neon PostgreSQL
+  │
+  └── Auth (packages/auth → Better Auth with Drizzle adapter)
 ```
 
-Never access Prisma directly from UI. Never perform business logic inside components.
+## API Pattern
 
-## Dual-Mode API
+The Hono app is created in `integration/hono/app.ts` and exported as `apiApp`. It is served by `routes/api/$.ts` using TanStack Start's server handlers:
 
-The same Elysia app runs two ways:
+```typescript
+export const Route = createFileRoute("/api/$")({
+  server: {
+    handlers: {
+      GET: ({ request }) => apiApp.fetch(request),
+      POST: ({ request }) => apiApp.fetch(request),
+      // ...
+    },
+  },
+});
+```
 
-1. **Embedded** — served by Next.js at `/api/*` via `apps/web/src/app/api/[[...slugs]]/route.ts` (uses `elysiaApp`, prefixed `/api`).
-2. **Standalone** — `apps/api/src/index.ts` listens on `API_PORT` (uses `app`, no prefix).
-
-`apps/api/src/app.ts` exports both the composed `app` and the `App` type consumed by Eden. **Add routes only in `app.ts`'s dependency graph** so both modes and the type contract stay in sync.
+The `apiApp` uses `basePath("/api")`, so routes defined as `/notes` in Hono are served at `/api/notes`.
 
 ## API Conventions
 
-- REST nouns: `GET /notes`, `POST /notes`, `DELETE /notes/:id`
-- Requests/responses validated with Elysia models (`t.Object`) registered via `.model()` — never hand-parse
-- Authenticated routes opt in with the `auth: true` macro (from `plugins/auth.ts`); unauthenticated access → 401
-- Error shape is always `{ error: { code, message, detail? } }` (see `plugins/error.ts`)
-- Swagger + OpenAPI are development-only (`plugins/docs.ts`)
-- Rate limiting (100 req/min/IP) and helmet/CORS in `plugins/security.ts` — rate limit disabled in dev
+- REST nouns: `GET /api/notes`, `POST /api/notes`, `PATCH /api/notes/:id`
+- Validation via `@hono/zod-validator` using schemas from `@zomlab/contracts`
+- Authenticated routes use `requireAuth` middleware (sets `c.var.user` and `c.var.session` from Better Auth)
+- Error shape is always `{ error: { code, message, detail? } }` (see `errors/error-handler.ts`)
+- System routes use `@hono/zod-openapi` for OpenAPI spec
 
 ---
 
@@ -248,23 +271,20 @@ The same Elysia app runs two ways:
 
 Each feature follows this structure. **The CRUD feature is the reference implementation:**
 
-- Frontend: `apps/web/src/features/core/crud/` → `components/`, `hooks/`
-- Backend: `apps/api/src/modules/core/crud/` → `model.ts`, `service.ts`, `repository.ts`, `index.ts` (+ tests)
-- Docs: `apps/web/content/core/crud/*.mdx`
+- Frontend: `apps/web/src/labs/core/crud/` → `components/`, `hooks/`, `content/`
+- Backend routes: `apps/web/src/integration/hono/routes/core/notes.route.ts`
+- Service: `apps/web/src/integration/hono/service/core/notes.service.ts`
+- Repository: `packages/database/src/repositories/core/crud.ts`
+- Contracts: `packages/contracts/src/notes.ts`
 
 ```
 feature/
-├── components/
-├── hooks/
-├── services/
-├── repositories/
-├── api/
-├── schemas/
-├── types/
-├── utils/
-├── constants/
-├── tests/
-└── docs/
+├── components/       # React components
+├── hooks/            # TanStack Query hooks
+├── content/          # MDX documentation
+├── services/         # Business logic (in integration/hono/service/)
+├── repositories/     # Database access (in packages/database/src/repositories/)
+└── routes/           # Hono route definitions (in integration/hono/routes/)
 ```
 
 Avoid dumping unrelated files together.
@@ -273,30 +293,33 @@ Avoid dumping unrelated files together.
 
 # Frontend Conventions
 
-## Pages & Routing
+## Routing
 
-- Pages live under `apps/web/src/app/`, one folder per route (`/core/crud`, `/core/crud/demo`, `/core/crud/demo/[id]`).
-- The sidebar tree is defined in `apps/web/src/lib/nav.ts`. **When adding a page, update `nav.ts`** so it appears in the sidebar and global search (`⌘K`).
-- Planned topics without pages stay in `nav.ts` without an `href` — rendered muted.
-- MDX doc pages import content from `apps/web/content/` via the `@content/*` alias.
+- Routes use TanStack Router file-based convention in `apps/web/src/routes/`.
+- Route groups use parentheses: `_authenticated.tsx` for layout/auth guard.
+- Dynamic segments use `$`: `_authenticated.core.crud.demo.$id.tsx`.
+- The generated `routeTree.gen.ts` is auto-generated — never edit it manually.
+
+## Authentication Guard
+
+Protected routes use the `_authenticated` layout route which calls `getSession()` (a TanStack Start server function) and redirects to `/login` if unauthenticated.
 
 ## Components
 
-Prefer Server Components whenever possible. Use Client Components ("use client") only when needed — interactivity, hooks, event handlers.
-
+- Prefer Server Components. Use Client Components ("use client") only when needed.
 - Keep components small (~200 lines max)
 - Extract reusable hooks (~150 lines max)
-- Avoid prop drilling
 - Reuse `@zomlab/ui` components before writing new ones
-- MDX styling is centralized in `apps/web/src/mdx-components.tsx` — add doc-level styles there
 
-## Forms
+## Data Fetching
 
-Current pattern (no form library installed): controlled inputs with `useState` + TanStack Query mutations; validation lives on the API (Elysia models). If a form library is introduced, prefer React Hook Form + Zod — never hand-roll validation twice.
+- TanStack Query for client fetching (query client configured in `router.tsx`)
+- Server functions (`createServerFn`) for server-side data access
+- API calls go through `hono/client` (`hc<ApiApp>(...)` in `lib/api.ts`) — never `fetch` raw endpoints directly
 
 ## State Management
 
-Priority
+Priority:
 
 1. React State
 2. URL State
@@ -305,95 +328,62 @@ Priority
 
 Avoid global state unless necessary.
 
-## Data Fetching
+## Forms
 
-- TanStack Query for client fetching (query keys centralized in `apps/web/src/lib/query-keys.ts`)
-- Server Components for initial rendering whenever possible
-- All API calls go through the Eden client (`apps/web/src/lib/eden.ts`) — never `fetch` raw endpoints
-- Map API errors with `apps/web/src/lib/api-error.ts` before surfacing to users
+Current pattern: controlled inputs with `useState` + TanStack Query mutations; validation lives on the API (Zod schemas via `@hono/zod-validator`). The auth forms use Better Auth's `authClient`.
 
 ---
 
 # Styling
 
-- Tailwind CSS v4 (tokens defined in `apps/web/src/app/globals.css`, OKLCH color space)
+- Tailwind CSS v4 (tokens defined in `apps/web/src/styles/globals.css`, OKLCH color space)
 - Do not introduce another CSS framework
 - Prefer utility classes; extract repeated patterns into components
 - Theme-aware: use semantic tokens (`bg-background`, `text-foreground`, `border-border`, `text-muted-foreground`, `bg-card`, `bg-muted`, `bg-sidebar`, `text-link`, `bg-destructive`, `bg-primary`) instead of raw colors
 - Respect `prefers-reduced-motion` (e.g. `motion-reduce:` variants) for animations
+- Dark mode uses class-based switching (`.dark` on `<html>`)
 
 ---
 
 # Backend Conventions
 
-Prefer Elysia. Next.js Route Handlers are acceptable for:
+## Hono API Structure
 
-- Authentication (`/api/auth/[...all]`)
-- Small APIs
-- Server Actions
-
-Prefer Elysia for:
-
-- Streaming
-- WebSockets
-- Webhooks
-- Long-running APIs
+- App composition: `integration/hono/app.ts`
+- Route registration: `integration/hono/routes/` (one file per feature)
+- Business logic: `integration/hono/service/`
+- Middleware: `integration/hono/middleware/`
+- Error handling: `integration/hono/errors/`
 
 ## Validation
 
-Always validate:
-
-- Request (Elysia models)
-- Response (Elysia models, `response` in route config)
-- Environment variables (`@zomlab/env`)
-
-Never trust user input.
+- Request validation: `@hono/zod-validator` with schemas from `@zomlab/contracts`
+- Response validation: `@hono/zod-openapi` for system routes
+- Environment variables: `@zomlab/env` (Zod)
 
 ## Database
 
-Never expose Prisma directly. Always use repositories. Business logic belongs in services.
+- Never expose Drizzle directly from routes/services — always use repositories
+- Business logic belongs in services
+- Schema is defined in `packages/database/src/db/schema/` using Drizzle's `pg-core`
 
 ## Authentication
 
-All authentication must go through `packages/auth`. Do not duplicate auth implementations. The Elysia `auth` plugin macro is the standard way to protect API routes.
+- All authentication goes through `packages/auth` (Better Auth)
+- Protect API routes with `requireAuth` middleware (checks session via `auth.api.getSession`)
+- Auth handlers are served at `/api/auth/*` via `routes/api/auth/$.ts`
 
 ## Error Handling
 
 Return meaningful errors via `ApiError` subclasses (stable `code` + HTTP `status`). Never swallow exceptions. Never expose sensitive information.
 
+Error classes: `ValidationError` (422), `UnauthorizedError` (401), `NoteNotFoundError` (404), `NotFoundError` (404), `InternalError` (500).
+
+Error handler validates envelopes against `apiErrorSchema` from `@zomlab/contracts` before returning.
+
 ## Logging
 
-Log important events. Avoid noisy logs. Never log:
-
-- Passwords
-- Secrets
-- Tokens
-- API keys
-
-## Security
-
-Always consider:
-
-- XSS
-- CSRF
-- SQL Injection
-- Rate Limiting
-- Input Validation
-- Output Encoding
-
-Security should not be optional.
-
-## Performance
-
-Prefer:
-
-- Memoization
-- Lazy Loading
-- Dynamic Imports
-- Virtualization
-- Image Optimization
-
-Measure before optimizing. Do not prematurely optimize.
+Log important events. Avoid noisy logs. Never log passwords, secrets, tokens, or API keys.
 
 ---
 
@@ -418,20 +408,19 @@ Always infer types whenever possible. Avoid unnecessary type aliases.
 
 Never use `as any`, `@ts-ignore`, or `@ts-expect-error` to suppress errors.
 
-Type-safety contract: the `App` type from `apps/api/src/app.ts` flows through Eden into the frontend — keep it precise.
-
 ---
 
 # Testing
 
-Preferred order
+Preferred order:
 
 1. Unit
 2. Integration
 3. E2E
 
 - Vitest runs as workspace projects (root `vitest.config.ts` discovers `apps/*/vitest.config.ts` and `packages/*/vitest.config.ts`). Unit/integration tests sit next to the code (`*.test.ts`).
-- E2E lives in `e2e/` (Playwright, port 3100, `bun run test:e2e`). E2E registers real users against a dev database — keep specs independent (unique emails, teardown kills the server).
+- Contract tests live in `e2e/contracts/` and validate API schemas against `@zomlab/contracts`.
+- E2E lives in `e2e/` (Playwright, port 3100, `pnpm test:e2e`). E2E registers real users against a dev database — keep specs independent (unique emails, teardown kills the server).
 - Test behavior, not implementation details.
 
 ---
@@ -444,12 +433,12 @@ Preferred order
 
 ## The `check:all` Pipeline
 
-`bun run check:all` runs in sequence: Biome → syncpack → knip → `turbo check-types` → Vitest. **Run it (or the relevant subset) before claiming work is done.** CI runs the same pipeline plus build and `bun audit`.
+`pnpm check:all` runs in sequence: Biome → syncpack → knip → `turbo check-types` → Vitest. **Run it (or the relevant subset) before claiming work is done.** CI runs the same pipeline plus build and `pnpm audit`.
 
-- `bun run lint:fix` / `bun run format` auto-fix
-- `bun run deps:check` — syncpack (pins `turbo` exact, `@zomlab/*` to `workspace:*`)
-- `bun run deps:unused` — knip (workspace-aware config in `knip.config.ts`; add new entry points there)
-- `bun run security:audit` — `bun audit --production`
+- `pnpm lint:fix` / `pnpm format` auto-fix
+- `pnpm deps:check` — syncpack (pins `turbo` exact, `@zomlab/*` to `workspace:*`)
+- `pnpm deps:unused` — knip (workspace-aware config in `knip.config.ts`; add new entry points there)
+- `pnpm security:audit` — `pnpm audit --prod`
 
 ## Git Hooks
 
@@ -478,6 +467,8 @@ create-payment.ts
 
 use-auth.ts
 ```
+
+Auto-generated files: `routeTree.gen.ts`
 
 Components
 
@@ -521,11 +512,13 @@ Order imports:
 
 1. Node
 2. External packages
-3. Internal packages (`@zomlab/*`, `@api/*`)
+3. Internal packages (`@zomlab/*`)
 4. Relative imports
 5. Styles
 
 Keep imports organized.
+
+The `~` alias maps to `apps/web/src/`.
 
 ---
 
@@ -547,10 +540,6 @@ Good
 
 ```ts
 // Prevent duplicate webhook processing.
-```
-
-```ts
-// Rate limiting is disabled in development to avoid throttling local work.
 ```
 
 Bad
@@ -601,13 +590,13 @@ Examples
 ```
 feat(auth): add OAuth login
 
-fix(payments): prevent duplicate webhook
+fix(notes): prevent duplicate titles
 
-refactor(ai): simplify streaming logic
+refactor(crud): simplify note service
 
 docs(readme): update installation
 
-test(chat): add websocket tests
+test(contracts): add note schema tests
 ```
 
 ---
@@ -639,7 +628,7 @@ When making changes:
 - Favor readability over cleverness.
 - Follow the project's established patterns.
 - If introducing a new pattern, ensure it has a clear long-term benefit and is applied consistently.
-- Check `.agents/skills/` for framework-specific guidance (Better Auth, Elysia, Prisma, UI) before working in those domains.
+- Check `.agents/skills/` for framework-specific guidance (Better Auth, Drizzle, Hono, UI) before working in those domains.
 
 The goal is to make ZomLab feel like a cohesive, production-quality engineering handbook rather than a collection of disconnected demos.
 
@@ -647,10 +636,31 @@ The goal is to make ZomLab feel like a cohesive, production-quality engineering 
 
 # Other Instructions
 
-<!-- BEGIN:nextjs-agent-rules -->
+## Generated Files
 
-## Next.js: ALWAYS read docs before coding
+Do NOT manually edit these files (they are auto-generated):
 
-Before any Next.js work, find and read the relevant doc in `node_modules/next/dist/docs/`. Your training data is outdated — the docs are the source of truth.
+- `apps/web/src/routeTree.gen.ts` — generated by TanStack Router
+- `apps/web/worker-configuration.d.ts` — generated by `wrangler types`
+- `packages/database/drizzle/*.sql` — generated by `drizzle-kit generate`
 
-<!-- END:nextjs-agent-rules -->
+## Migration Notes
+
+- The project previously used Prisma ORM and Elysia for the API. These have been fully replaced by Drizzle ORM and Hono respectively.
+- The project previously used Next.js for the frontend. This has been fully replaced by TanStack Start + TanStack Router.
+- The project previously used Eden Treaty for the typed API client. This has been replaced by `hono/client` (`hc`).
+- The legacy `apps/_web`, `apps/_api`, and `apps/api` directories have been removed.
+- Skills referencing Elysia or Prisma in `.agents/skills/` are stale and should be disregarded or removed.
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.
+
+Rules:
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts.
+- Dirty graphify-out/ files are expected after hooks or incremental updates; dirty graph files are not a reason to skip graphify.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).

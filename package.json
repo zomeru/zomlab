@@ -3,58 +3,55 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "with-env": "dotenv",
-    "prepare": "husky",
-    "reset": "bun run clean && bun install",
-    "setup": "bun run scripts/setup.ts",
+    "with-env": "pnpm exec dotenv",
+    "prepare": "pnpm exec husky",
+    "reset": "pnpm run clean && pnpm install && pnpm run db:generate",
+    "setup": "tsx scripts/setup.ts",
 
-    "dev": "bun run kill:ports && bun run with-env -- turbo run web#dev",
-    "dev:api": "bun run kill:ports && bun run with-env -- turbo run api#dev",
-    "dev:standalone": "bun run kill:ports && bun run with-env -- turbo run dev",
+    "dev": "pnpm kill:ports && pnpm with-env -- pnpm exec turbo run dev --filter=@zomlab/web",
     "dev:db": "docker compose up -d postgres redis",
-    "dev:types": "turbo watch check-types",
-    "dev:clean": "turbo clean && rm -rf .turbo",
-    "dev:debug": "NODE_OPTIONS='--inspect=9229' bun run dev",
-    "kill:ports": "kill $(lsof -tiTCP:3000-3005 -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
+    "dev:types": "pnpm exec turbo watch check-types",
+    "dev:clean": "pnpm exec turbo clean && rm -rf .turbo",
+    "dev:debug": "NODE_OPTIONS='--inspect=9229' pnpm run dev",
+    "kill:ports": "kill $(lsof -tiTCP:3000-3005 -iTCP:8787 -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
+    "build": "pnpm run with-env -- pnpm exec turbo run build",
 
-    "build": "bun run with-env -- turbo run build",
-    "build:web": "bun run with-env -- turbo run web#build",
+    "deploy": "pnpm run with-env -- pnpm exec turbo deploy --filter=@zomlab/web",
+    "versions:upload": "pnpm run with-env -- pnpm exec turbo versions:upload --filter=@zomlab/web",
 
-    "check:all": "bun run with-env -- biome check . && syncpack lint && bun run deps:unused && turbo run check-types && vitest run",
-    "check-types": "turbo run check-types",
-    "check-types:watch": "turbo run check-types:watch",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write .",
-    "format": "biome format --write .",
-    "format:check": "biome format --check .",
+    "check:all": "pnpm run lint && pnpm run deps:check && pnpm run deps:unused && pnpm run check-types && pnpm run test",
+    "check-types": "pnpm exec turbo run check-types",
+    "check-types:watch": "pnpm exec turbo run check-types:watch",
+    "cf:typegen": "pnpm exec turbo run cf:typegen",
+    "lint": "pnpm exec biome check .",
+    "lint:fix": "pnpm exec biome check --write .",
+    "lint:workflows": "pnpm exec tsx scripts/actionlint.ts .github/workflows/ci.yml .github/workflows/e2e.yml",
+    "format": "pnpm exec biome format --write .",
+    "format:check": "pnpm exec biome format --check .",
+    "test": "pnpm run with-env -- pnpm exec vitest run",
+    "test:turbo": "pnpm run with-env -- pnpm exec turbo run test",
+    "test:watch": "pnpm exec vitest",
+    "test:e2e": "kill $(lsof -tiTCP:${E2E_PORT:-3100} -sTCP:LISTEN 2>/dev/null) 2>/dev/null; pnpm exec playwright test",
 
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:e2e": "kill $(lsof -tiTCP:${E2E_PORT:-3100} -sTCP:LISTEN 2>/dev/null) 2>/dev/null; playwright test",
+    "storybook": "pnpm exec turbo run storybook",
+    "build-storybook": "pnpm exec turbo run build-storybook",
 
-    "storybook": "turbo run storybook",
-    "build-storybook": "turbo run build-storybook",
+    "db:generate": "pnpm run with-env -- pnpm exec turbo run db:generate --filter=@zomlab/database",
+    "db:migrate": "pnpm run with-env -- pnpm exec turbo run db:migrate --filter=@zomlab/database",
+    "db:push": "pnpm run with-env -- pnpm exec turbo run db:push --filter=@zomlab/database",
+    "db:deploy": "pnpm run with-env -- pnpm exec turbo run db:deploy --filter=@zomlab/database",
+    "db:studio": "pnpm run with-env -- pnpm exec turbo run db:studio --filter=@zomlab/database",
 
-    "db:generate": "bun run with-env -- turbo run db:generate --filter=@zomlab/database",
-    "db:migrate": "bun run with-env -- turbo run db:migrate --filter=@zomlab/database",
-    "db:push": "bun run with-env -- turbo run db:push --filter=@zomlab/database",
-    "db:deploy": "bun run with-env -- turbo run db:deploy --filter=@zomlab/database",
-    "db:studio": "bun run with-env -- turbo run db:studio --filter=@zomlab/database",
-
-    "deps:check": "syncpack lint",
-    "deps:fix": "syncpack fix",
-    "deps:unused": "bun run with-env -- knip",
-
-    "security:audit": "bun audit --production",
-    "security:check": "bun audit",
-
-    "version:packages": "changeset version",
-    "version:sync": "bun run scripts/sync-version.ts",
-    "changeset": "changeset",
-
-    "generate:package": "bun run scripts/generate-package.ts",
-
-    "clean": "rimraf node_modules .turbo dist test-results generated apps/*/{node_modules,.turbo,dist,generated} packages/*/{node_modules,.turbo,dist,generated}"
+    "deps:check": "pnpm exec syncpack lint",
+    "deps:fix": "pnpm exec syncpack fix",
+    "deps:unused": "pnpm run with-env -- pnpm exec knip",
+    "security:audit": "pnpm audit --prod",
+    "security:check": "pnpm audit",
+    "version:packages": "pnpm exec changeset version",
+    "version:sync": "tsx scripts/sync-version.ts",
+    "changeset": "pnpm exec changeset",
+    "generate:package": "tsx scripts/generate-package.ts",
+    "clean": "pnpm exec rimraf node_modules .pnpm-store .turbo dist test-results apps/*/{node_modules,.turbo,dist,.output,.wrangler,storybook-static} packages/*/{node_modules,.turbo,dist,.output,.wrangler,storybook-static}"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.6",
@@ -62,7 +59,8 @@
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^21.2.0",
     "@playwright/test": "^1.62.0",
-    "bun-types": "^1.3.14",
+    "@types/node": "^26.1.2",
+    "actionlint": "2.0.6",
     "dotenv-cli": "^11.0.0",
     "husky": "^9.1.7",
     "jsdom": "^30.0.1",
@@ -70,9 +68,8 @@
     "lint-staged": "^17.2.0",
     "rimraf": "^6.1.3",
     "syncpack": "^15.3.2",
-    "tsdown": "^0.22.14",
-    "@types/node": "^26.1.2",
-    "turbo": "2.10.7",
+    "tsx": "4.23.5",
+    "turbo": "2.10.8",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"
   },
@@ -85,17 +82,10 @@
   },
   "devEngines": {
     "packageManager": {
-      "name": "bun",
-      "version": "1.3.14"
+      "name": "pnpm",
+      "version": "11.20.0",
+      "onFail": "warn"
     }
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "overrides": {
-    "postcss": "^8.5.24",
-    "sharp": "^0.35.3",
-    "uuid": "^14.0.1"
-  }
+  "packageManager": "pnpm@11.20.0"
 }

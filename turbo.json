@@ -1,21 +1,36 @@
 {
-  "$schema": "https://turborepo.dev/schema.json",
+  "$schema": "./node_modules/turbo/schema.json",
   "ui": "tui",
   "envMode": "loose",
+  "globalDependencies": ["pnpm-lock.yaml", "pnpm-workspace.yaml", ".env"],
   "globalPassThroughEnv": ["E2E_PORT"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**", "dist/**"]
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**", ".output/**", "dist/**"]
     },
-
+    "deploy": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "versions:upload": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "test": {
+      "dependsOn": ["^test"],
+      "outputs": []
+    },
     "check-types": {
       "dependsOn": ["^check-types"]
     },
     "check-types:watch": {
       "cache": false,
       "persistent": true
+    },
+    "cf:typegen": {
+      "outputs": ["worker-configuration.d.ts"]
     },
     "dev": {
       "cache": false,

@@ -4,7 +4,7 @@
     "lib": ["ESNext"],
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "outDir": "dist"
+    "types": ["node"]
   },
   "include": ["src", "generated"],
   "exclude": ["node_modules", "dist"]

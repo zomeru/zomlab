@@ -1,25 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
-import { getApiErrorMessage } from "@/lib/api-error";
-import { api } from "@/lib/eden";
-import { queryKeys } from "@/lib/query-keys";
+import { client } from "~/lib/api";
 
-interface HealthResponse {
-  status: "ok";
+interface HealthData {
+  status: string;
   timestamp: string;
   uptime: number;
 }
 
 export function useHealth() {
   return useQuery({
-    queryKey: queryKeys.health(),
-    queryFn: async () => {
-      const { data, error } = await api.health.get();
+    queryKey: ["health"],
+    queryFn: async (): Promise<HealthData> => {
+      const response = await client.api.system.health.$get();
 
-      if (error) {
-        throw new Error(getApiErrorMessage(error, "Failed to fetch health status"));
+      if (!response.ok) {
+        throw new Error("Failed to fetch health data");
       }
 
-      return data as HealthResponse;
+      return response.json();
     },
+    refetchInterval: 30_000,
   });
 }
