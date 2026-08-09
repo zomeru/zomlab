@@ -4,7 +4,7 @@ permissions:
 
 on:
   push:
-    branches: [main]
+    branches: [dev, main]
   pull_request:
     branches: ["*"]
   merge_group:
@@ -13,17 +13,17 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-  BETTER_AUTH_URL: http://localhost:3000
-  BETTER_AUTH_ALLOWED_HOSTS: localhost:3000,localhost:3100
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  E2E_PORT: 3100
-
 jobs:
   check-test-build:
     name: Format, Lint, Test and Build
     runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    env:
+      BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+      BETTER_AUTH_URL: http://localhost:3000
+      BETTER_AUTH_ALLOWED_HOSTS: localhost:3000
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      APP_ENV: ${{ vars.APP_ENV }}
 
     steps:
       - name: Checkout repo

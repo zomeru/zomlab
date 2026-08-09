@@ -4,7 +4,7 @@ permissions:
 
 on:
   push:
-    branches: [main]
+    branches: [dev]
   pull_request:
     branches: ["*"]
   merge_group:
@@ -13,17 +13,18 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-  BETTER_AUTH_URL: http://localhost:3100
-  BETTER_AUTH_ALLOWED_HOSTS: localhost:3100
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  E2E_PORT: 3100
-
 jobs:
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
+    environment: staging
+    env:
+      BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+      BETTER_AUTH_URL: http://localhost:3100
+      BETTER_AUTH_ALLOWED_HOSTS: localhost:3100
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      E2E_PORT: 3100
+      APP_ENV: ${{ vars.APP_ENV }}
 
     steps:
       - name: Checkout repo
@@ -73,6 +74,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          APP_ENV: ${{ vars.APP_ENV }}
         run: |
           {
             printf 'DATABASE_URL="%s"\n' "$DATABASE_URL"
@@ -80,6 +82,7 @@ jobs:
             printf 'BETTER_AUTH_URL="http://localhost:3100"\n'
             printf 'BETTER_AUTH_ALLOWED_HOSTS="localhost:3100"\n'
             printf 'E2E_PORT="3100"\n'
+            printf 'APP_ENV="%s"\n' "$APP_ENV"
           } > apps/web/.dev.vars
 
       - name: Run E2E tests
