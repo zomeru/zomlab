@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
-    "@zomlab/tsconfig": "workspace:*"
+    "@zomlab/tsconfig": "workspace:*",
+    "@zomlab/vitest-config": "workspace:*"
   }
 }

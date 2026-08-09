@@ -13,12 +13,25 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".output/**", "dist/**"]
     },
+    "build:production": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".output/**", "dist/**"]
+    },
     "deploy": {
       "dependsOn": ["build"],
       "cache": false
     },
+    "deploy:production": {
+      "dependsOn": ["build:production"],
+      "cache": false
+    },
     "versions:upload": {
       "dependsOn": ["build"],
+      "cache": false
+    },
+    "versions:upload:production": {
+      "dependsOn": ["build:production"],
       "cache": false
     },
     "test": {
@@ -33,13 +46,17 @@
       "persistent": true
     },
     "cf:typegen": {
-      "outputs": ["worker-configuration.d.ts"]
+      "outputs": ["worker-configuration.staging.d.ts", "worker-configuration.production.d.ts"]
     },
     "cf:typegen:check": {
       "outputs": []
     },
     "cf:deploy:check": {
       "dependsOn": ["build"],
+      "cache": false
+    },
+    "cf:deploy:check:production": {
+      "dependsOn": ["build:production"],
       "cache": false
     },
     "cf:startup": {
