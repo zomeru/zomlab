@@ -193,7 +193,7 @@ The database URL comes from `DATABASE_URL` env var. No separate migration URL is
 
 Zod-validated environment variables via a lazy Proxy (parses once on first access). Validation failures print every issue and exit. Add new vars to the schema **and** `.env.example` together.
 
-Schema: `NODE_ENV`, `VITE_SITE_URL`, `DATABASE_URL`, `E2E_PORT`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `GITHUB_CLIENT_ID/SECRET`, `GOOGLE_CLIENT_ID/SECRET`.
+Schema: `APP_ENV` (`development`, `staging`, `production`, or `test`), `VITE_SITE_URL`, `DATABASE_URL`, `E2E_PORT`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `GITHUB_CLIENT_ID/SECRET`, `GOOGLE_CLIENT_ID/SECRET`.
 
 ## packages/ui
 
