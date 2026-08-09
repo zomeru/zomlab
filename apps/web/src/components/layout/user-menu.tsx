@@ -1,7 +1,7 @@
 "use client";
 
-import { useNavigate } from "@tanstack/react-router";
-import { authClient } from "@zomlab/auth";
+import { useRouter } from "@tanstack/react-router";
+import { authClient } from "@zomlab/auth/client";
 import { useEffect, useRef, useState } from "react";
 
 type UserMenuProps = {
@@ -11,7 +11,7 @@ type UserMenuProps = {
 };
 
 export function UserMenu({ name, email, initial }: UserMenuProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
@@ -28,7 +28,8 @@ export function UserMenu({ name, email, initial }: UserMenuProps) {
   async function handleSignOut() {
     setOpen(false);
     await authClient.signOut();
-    navigate({ to: "/" });
+    await router.navigate({ to: "/", replace: true });
+    await router.invalidate();
   }
 
   return (

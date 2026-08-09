@@ -4,11 +4,14 @@
   "envMode": "loose",
   "globalDependencies": ["pnpm-lock.yaml", "pnpm-workspace.yaml", ".env"],
   "globalPassThroughEnv": ["E2E_PORT"],
+  "remoteCache": {
+    "signature": true
+  },
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**", ".output/**", "dist/**"]
+      "outputs": [".output/**", "dist/**"]
     },
     "deploy": {
       "dependsOn": ["build"],
@@ -32,6 +35,17 @@
     "cf:typegen": {
       "outputs": ["worker-configuration.d.ts"]
     },
+    "cf:typegen:check": {
+      "outputs": []
+    },
+    "cf:deploy:check": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "cf:startup": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
     "dev": {
       "cache": false,
       "persistent": true
@@ -45,18 +59,14 @@
       "outputs": ["storybook-static/**"]
     },
 
-    "db:deploy": {
-      "cache": false
-    },
     "db:generate": {
-      "outputs": ["generated/**"]
+      "outputs": ["drizzle/**"]
     },
     "db:push": {
       "cache": false
     },
     "db:migrate": {
-      "cache": false,
-      "interactive": true
+      "cache": false
     },
     "db:studio": {
       "cache": false,

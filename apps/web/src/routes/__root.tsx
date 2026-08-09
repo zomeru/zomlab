@@ -15,12 +15,16 @@ import appCss from "../styles/globals.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
-    title: "ZomLab",
     meta: [
-      // your meta tags and site config
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "ZomLab" },
+      {
+        name: "description",
+        content: "A personal software engineering laboratory and interactive knowledge base.",
+      },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
-    // other head config
   }),
   component: RootDocument,
 });
@@ -125,9 +129,9 @@ function RootDocument() {
             </div>
           </div>
         </footer>
-        <Devtools />
+        {import.meta.env.DEV ? <Devtools /> : null}
+        <Scripts />
       </body>
-      <Scripts />
     </html>
   );
 }

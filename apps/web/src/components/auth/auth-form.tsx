@@ -1,18 +1,31 @@
 "use client";
 
-import { Link, useNavigate } from "@tanstack/react-router";
-import { authClient } from "@zomlab/auth";
-import { useState } from "react";
+import { Link, useRouter } from "@tanstack/react-router";
+import { authClient } from "@zomlab/auth/client";
+import { useEffect, useState } from "react";
+import { getSafeRedirect } from "~/lib/safe-redirect";
 
 type AuthFormProps = {
   mode: "login" | "signup";
+  redirect?: string;
 };
 
 const INPUT_CLASSES =
   "mt-1.5 h-10 w-full rounded-md border border-input bg-background px-3 text-base text-foreground placeholder:text-muted-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:text-sm";
 
-export function AuthForm({ mode }: AuthFormProps) {
-  const navigate = useNavigate();
+function useHydrated() {
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  return hydrated;
+}
+
+export function AuthForm({ mode, redirect }: AuthFormProps) {
+  const router = useRouter();
+  const hydrated = useHydrated();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +51,8 @@ export function AuthForm({ mode }: AuthFormProps) {
       return;
     }
 
-    navigate({ to: "/core/crud/demo" });
+    await router.invalidate();
+    await router.navigate({ href: getSafeRedirect(redirect), replace: true });
   }
 
   return (
@@ -47,58 +61,65 @@ export function AuthForm({ mode }: AuthFormProps) {
         <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
         <p className="mt-1.5 text-sm text-muted-foreground">{description}</p>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          {!isLogin && (
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4" aria-busy={loading}>
+          <fieldset disabled={!hydrated || loading} className="contents">
+            {!isLogin && (
+              <label className="block">
+                <span className="text-sm font-medium text-foreground">Name</span>
+                <input
+                  type="text"
+                  name="name"
+                  autoComplete="name"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={INPUT_CLASSES}
+                />
+              </label>
+            )}
+
             <label className="block">
-              <span className="text-sm font-medium text-foreground">Name</span>
+              <span className="text-sm font-medium text-foreground">Email</span>
               <input
-                type="text"
+                type="email"
+                name="email"
+                autoComplete="email"
                 required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className={INPUT_CLASSES}
               />
             </label>
-          )}
 
-          <label className="block">
-            <span className="text-sm font-medium text-foreground">Email</span>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={INPUT_CLASSES}
-            />
-          </label>
+            <label className="block">
+              <span className="text-sm font-medium text-foreground">Password</span>
+              <input
+                type="password"
+                name="password"
+                autoComplete={isLogin ? "current-password" : "new-password"}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={INPUT_CLASSES}
+              />
+            </label>
 
-          <label className="block">
-            <span className="text-sm font-medium text-foreground">Password</span>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={INPUT_CLASSES}
-            />
-          </label>
+            {error && (
+              <p
+                className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
+                role="alert"
+              >
+                {error}
+              </p>
+            )}
 
-          {error && (
-            <p
-              className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
-              role="alert"
+            <button
+              type="submit"
+              className="h-10 w-full rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-[background-color,transform] hover:bg-primary/90 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {error}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="h-10 w-full rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-[background-color,transform] hover:bg-primary/90 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {loading ? (isLogin ? "Signing in…" : "Creating account…") : title}
-          </button>
+              {loading ? (isLogin ? "Signing in…" : "Creating account…") : title}
+            </button>
+          </fieldset>
         </form>
       </div>
 
@@ -108,6 +129,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             No account?{" "}
             <Link
               to="/signup"
+              search={{ redirect }}
               className="font-medium text-link underline underline-offset-4 hover:opacity-80"
             >
               Sign up
@@ -118,6 +140,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             Already have an account?{" "}
             <Link
               to="/login"
+              search={{ redirect }}
               className="font-medium text-link underline underline-offset-4 hover:opacity-80"
             >
               Sign in

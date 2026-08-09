@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { apiApp } from "~/integration/hono/app";
 
 type HandlerContext = {
   request: Request;
 };
 
-function handleRequest({ request }: HandlerContext) {
+async function handleRequest({ request }: HandlerContext) {
+  const { apiApp } = await import("~/integration/hono/app");
   return apiApp.fetch(request);
 }
 

@@ -25,7 +25,6 @@ This project is a **work-in-progress**. The foundation is built, the TanStack St
 | Theme system (OKLCH tokens, light/dark) | ✅ Built |
 | E2E tests (Playwright) | ✅ Built (4 specs) |
 | UI components (`@zomlab/ui`, Storybook) | 🟡 Minimal |
-| Redis (docker compose, unused by app) | ⏳ Planned |
 | Realtime / WebSockets / AI / Payments / Webhooks | ⏳ Planned |
 
 ---
@@ -139,7 +138,6 @@ Every feature is implemented as if it were part of a real-world application.
 ├── docs                   # Local plans & design documents (gitignored)
 ├── .github                # CI workflows
 │
-├── docker-compose.yml     # PostgreSQL + Redis for local services
 ├── turbo.json
 ├── biome.jsonc
 ├── knip.config.ts
@@ -229,7 +227,7 @@ The Notes feature is the reference implementation: `labs/core/crud/` (UI + hooks
 
 - Node.js >= 24.18.1 (see `.node-version`)
 - pnpm 11.20.0 (pinned in `packageManager`)
-- PostgreSQL (local via Docker, or Neon serverless)
+- A Neon PostgreSQL database (the runtime uses Neon's Workers-compatible HTTP driver)
 
 ### Quick Start
 
@@ -241,13 +239,10 @@ pnpm install
 cp .env.example .env
 # Edit .env with your values (generate BETTER_AUTH_SECRET with: openssl rand -base64 32)
 
-# 3. (Optional) Start local services — PostgreSQL + Redis via Docker
-pnpm dev:db
-
-# 4. Generate Drizzle client / push schema
+# 3. Synchronize the development database schema
 pnpm db:push
 
-# 5. Start development
+# 4. Start the Workers-compatible development server
 pnpm dev
 ```
 
@@ -255,12 +250,12 @@ pnpm dev
 
 | Command | What runs |
 |---|---|
-| `pnpm dev` | TanStack Start web app (port 3000) |
-| `pnpm dev:db` | PostgreSQL + Redis via Docker Compose |
+| `pnpm dev` | TanStack Start app in the Cloudflare Workers runtime (port 3000) |
 | `pnpm dev:types` | Watch-mode TypeScript checking across the monorepo |
 | `pnpm dev:debug` | Dev with the Node inspector enabled |
 | `pnpm dev:clean` | Clear the root Turbo cache and metadata |
 | `pnpm kill:ports` | Kill anything on ports 3000–3005 and 8787 |
+| `pnpm cf:validate` | Type-check bindings, dry-run the Worker bundle, and check startup |
 
 ### Database Workflows
 
@@ -293,6 +288,11 @@ pnpm security:check # pnpm audit (all)
 ```
 
 CI runs the same pipeline (`.github/workflows/ci.yml`): Biome → syncpack → knip → tsc → Vitest → build → `pnpm audit`.
+
+Cloudflare secrets (`DATABASE_URL`, `BETTER_AUTH_SECRET`, and OAuth credentials) belong in
+Wrangler secrets, not `wrangler.jsonc`. Set `BETTER_AUTH_ALLOWED_HOSTS` to the production host and
+any intentional Workers preview wildcard. Local Vite development reads `.env` and `.dev.vars` and
+runs through the Cloudflare Vite plugin's Workers runtime.
 
 ### Creating a New Package
 

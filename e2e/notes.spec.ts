@@ -13,7 +13,7 @@ test("unauthenticated users are redirected to login", async ({ baseURL, page }) 
 test("sign up, create, edit, and delete a note", async ({ baseURL, page }) => {
   const email = `e2e-${randomUUID()}@test.local`;
 
-  await page.goto("/signup");
+  await page.goto("/signup?redirect=%2Fcore%2Fcrud%2Fdemo");
   await page.getByLabel("Name").fill("E2E User");
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Password").fill(password);

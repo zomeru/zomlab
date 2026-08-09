@@ -1,0 +1,57 @@
+import { randomUUID } from "node:crypto";
+import { expect, test } from "@playwright/test";
+
+const password = "e2e-password-123";
+
+async function signIn(page: import("@playwright/test").Page, email: string) {
+  await page.getByLabel("Email").fill(email);
+  await page.getByLabel("Password").fill(password);
+  await page.getByRole("button", { name: "Sign in" }).click();
+}
+
+async function signOut(page: import("@playwright/test").Page) {
+  await page.getByRole("button", { name: "Account menu" }).click();
+  await page.getByRole("menuitem", { name: "Sign out" }).click();
+}
+
+test("authentication stays synchronized across redirects, refreshes, logout, and relogin", async ({
+  baseURL,
+  page,
+}) => {
+  const email = `auth-lifecycle-${randomUUID()}@test.local`;
+  const protectedPath = "/core/crud/demo";
+
+  await page.goto(protectedPath);
+  await expect(page).toHaveURL(new RegExp(`${baseURL}/login\\?redirect=`));
+
+  await page.getByRole("link", { name: "Sign up" }).click();
+  await expect(page).toHaveURL(new RegExp(`${baseURL}/signup\\?redirect=`));
+  await page.getByLabel("Name").fill("Auth Lifecycle User");
+  await page.getByLabel("Email").fill(email);
+  await page.getByLabel("Password").fill(password);
+  await page.getByRole("button", { name: "Sign up" }).click();
+  await expect(page).toHaveURL(`${baseURL}${protectedPath}`);
+  await expect(page.getByRole("button", { name: "Account menu" })).toBeVisible();
+
+  await page.reload();
+  await expect(page).toHaveURL(`${baseURL}${protectedPath}`);
+  await expect(page.getByRole("heading", { name: "Notes" })).toBeVisible();
+
+  await signOut(page);
+  await expect(page).toHaveURL(`${baseURL}/`);
+  await expect(page.getByRole("link", { name: "Sign in" })).toBeVisible();
+
+  await page.goto(protectedPath);
+  await expect(page).toHaveURL(new RegExp(`${baseURL}/login\\?redirect=`));
+  await signIn(page, email);
+  await expect(page).toHaveURL(`${baseURL}${protectedPath}`);
+
+  await signOut(page);
+  await expect(page).toHaveURL(`${baseURL}/`);
+  await page.goto(protectedPath);
+  await expect(page).toHaveURL(new RegExp(`${baseURL}/login\\?redirect=`));
+
+  await signIn(page, email);
+  await expect(page).toHaveURL(`${baseURL}${protectedPath}`);
+  await expect(page.getByRole("button", { name: "Account menu" })).toBeVisible();
+});

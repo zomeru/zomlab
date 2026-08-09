@@ -33,7 +33,7 @@ async function captureTheme(
 }
 
 async function signUpAndCreateVisualNote(page: Page) {
-  await page.goto("/signup");
+  await page.goto("/signup?redirect=%2Fcore%2Fcrud%2Fdemo");
   await page.getByLabel("Name").fill("Visual User");
   await page.getByLabel("Email").fill(`visual-${randomUUID()}@test.local`);
   await page.getByLabel("Password").fill("password123");

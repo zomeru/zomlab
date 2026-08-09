@@ -80,7 +80,6 @@ Always prefer the **latest stable** versions of dependencies. This is an enginee
 
 ```bash
 pnpm dev            # TanStack Start web app (port 3000)
-pnpm dev:db         # Start PostgreSQL + Redis via Docker
 pnpm test           # Vitest (unit + integration)
 pnpm test:e2e       # Playwright E2E (port 3100, override with E2E_PORT)
 pnpm check:all      # Biome → syncpack → knip → tsc → Vitest
@@ -114,7 +113,6 @@ e2e/                # Playwright E2E tests + contract specs
 scripts/            # setup.ts, generate-package.ts, sync-version.ts
 docs/               # Local plans & design documents (gitignored)
 .github/workflows/  # CI pipeline
-docker-compose.yml  # PostgreSQL + Redis for local services
 ```
 
 Never place reusable logic inside apps if it belongs in packages.
@@ -165,8 +163,8 @@ Config details:
 
 Exports:
 
-- `auth` — the Better Auth instance
-- `authClient` — the React client (`createAuthClient()`)
+- `auth` — the Better Auth instance (`@zomlab/auth/server`)
+- `authClient` — the React client (`@zomlab/auth/client`)
 - `AuthSession`, `AuthUser` — inferred session/user types
 
 ## packages/contracts

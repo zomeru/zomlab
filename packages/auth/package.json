@@ -9,6 +9,14 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./client": {
+      "types": "./src/client.ts",
+      "default": "./src/client.ts"
+    },
+    "./server": {
+      "types": "./src/auth.server.ts",
+      "default": "./src/auth.server.ts"
     }
   },
   "scripts": {
@@ -23,7 +31,7 @@
     "better-auth": "^1.6.25"
   },
   "devDependencies": {
-    "@types/node": "^26.1.2",
+    "@types/node": "^26.2.0",
     "@zomlab/tsconfig": "workspace:*",
     "@zomlab/vitest-config": "workspace:*",
     "typescript": "^6.0.3"

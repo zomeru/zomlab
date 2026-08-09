@@ -6,6 +6,7 @@ const envSchema = z.object({
   E2E_PORT: z.coerce.number().default(3100),
   BETTER_AUTH_SECRET: z.string().min(32),
   BETTER_AUTH_URL: z.url(),
+  BETTER_AUTH_ALLOWED_HOSTS: z.string().default(""),
   GITHUB_CLIENT_ID: z.string().default(""),
   GITHUB_CLIENT_SECRET: z.string().default(""),
   GOOGLE_CLIENT_ID: z.string().default(""),

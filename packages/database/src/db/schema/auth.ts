@@ -1,5 +1,15 @@
 import { relations } from "drizzle-orm";
-import { boolean, index, pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import {
+  bigint,
+  boolean,
+  index,
+  integer,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { notes } from ".";
 
 export const userRoleEnum = pgEnum("user_role", ["user", "admin"]);
@@ -84,6 +94,13 @@ export const verification = pgTable("verification", {
     .$onUpdate(() => new Date()),
 });
 
+export const rateLimits = pgTable("rate_limits", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  key: varchar("key", { length: 255 }).notNull().unique(),
+  count: integer("count").notNull(),
+  lastRequest: bigint("last_request", { mode: "number" }).notNull(),
+});
+
 // Relations
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -114,3 +131,5 @@ export type Session = typeof sessions.$inferSelect;
 export type NewSession = typeof sessions.$inferInsert;
 export type Verification = typeof verification.$inferSelect;
 export type NewVerification = typeof verification.$inferInsert;
+export type RateLimit = typeof rateLimits.$inferSelect;
+export type NewRateLimit = typeof rateLimits.$inferInsert;

@@ -15,32 +15,15 @@ concurrency:
 
 env:
   BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-  BETTER_AUTH_URL: http://localhost:3000
-  NEXT_PUBLIC_SITE_URL: http://localhost:3000
+  BETTER_AUTH_URL: http://localhost:3100
+  BETTER_AUTH_ALLOWED_HOSTS: localhost:3100
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  DIRECT_URL: ${{ secrets.DIRECT_URL }}
-  API_PORT: 8080
   E2E_PORT: 3100
 
 jobs:
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: pgvector/pgvector:pg18-trixie
-        env:
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_DB_PASSWORD }}
-          POSTGRES_DB: test_db
-          POSTGRES_HOST_AUTH_METHOD: trust
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
 
     steps:
       - name: Checkout repo
@@ -80,10 +63,10 @@ jobs:
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Generate Prisma client
+      - name: Validate Drizzle migrations
         run: pnpm run db:generate
 
-      - name: Apply Prisma migrations
+      - name: Synchronize test database schema
         run: pnpm run db:push
 
       - name: Run E2E tests

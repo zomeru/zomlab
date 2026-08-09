@@ -1,18 +1,27 @@
 import { env } from "cloudflare:workers";
 import { OpenAPIHono } from "@hono/zod-openapi";
+import "@tanstack/react-start/server-only";
 import { contextStorage } from "hono/context-storage";
-import { cors } from "hono/cors";
 import { csrf } from "hono/csrf";
 import { logger } from "hono/logger";
-import { prettyJSON } from "hono/pretty-json";
+import { requestId } from "hono/request-id";
 import { timing } from "hono/timing";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { rateLimiter } from "hono-rate-limiter";
 import { apiErrorHandler, notFoundHandler } from "~/integration/hono/errors/error-handler";
 import { noteServiceMiddleware } from "~/integration/hono/middleware/note-service.middleware";
+import { privateResponseMiddleware } from "~/integration/hono/middleware/private-response.middleware";
 import noteRoutes from "~/integration/hono/routes/core/notes.route";
 import systemRoutes from "~/integration/hono/routes/system/system.route";
 import type { HonoEnv } from "~/integration/hono/types";
+
+function getRateLimitBinding() {
+  if (!env.MY_RATE_LIMITER) {
+    throw new Error("Missing Cloudflare MY_RATE_LIMITER binding");
+  }
+
+  return env.MY_RATE_LIMITER;
+}
 
 export const apiApp = new OpenAPIHono<HonoEnv>()
   .basePath("/api")
@@ -21,6 +30,7 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
 
   // Request normalization / infrastructure
   .use(trimTrailingSlash())
+  .use(requestId())
   .use(contextStorage())
 
   // Observability
@@ -28,25 +38,16 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
   .use(timing())
 
   // Security
-  .use(
-    cors({
-      origin: (origin) => origin,
-      credentials: true,
-      allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-      allowHeaders: ["Content-Type", "Authorization", "Cookie"],
-    }),
-  )
   .use(csrf())
-
-  // Development / presentation
-  .use(prettyJSON())
 
   // Traffic protection
   .use(
     rateLimiter({
-      // biome-ignore lint/style/noNonNullAssertion: RateLimiter Binding from Cloudflare
-      binding: () => env.MY_RATE_LIMITER!,
-      keyGenerator: (c) => c.req.header("cf-connecting-ip") ?? "",
+      binding: getRateLimitBinding,
+      keyGenerator: (c) =>
+        c.req.header("cf-connecting-ip") ??
+        c.req.header("x-forwarded-for")?.split(",")[0]?.trim() ??
+        "anonymous",
       message: {
         error: "Rate limit exceeded",
         retryAfter: "60s",
@@ -55,10 +56,13 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
   )
 
   // Core
+  .use("/notes", privateResponseMiddleware)
+  .use("/notes/*", privateResponseMiddleware)
   .use("/notes", noteServiceMiddleware)
+  .use("/notes/*", noteServiceMiddleware)
   .route("/notes", noteRoutes)
 
   // System
-  .route("/system", systemRoutes);
+  .route("/", systemRoutes);
 
 export type ApiApp = typeof apiApp;

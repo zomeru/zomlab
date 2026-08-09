@@ -11,7 +11,7 @@ export function useHealth() {
   return useQuery({
     queryKey: ["health"],
     queryFn: async (): Promise<HealthData> => {
-      const response = await client.api.system.health.$get();
+      const response = await client.api.health.$get();
 
       if (!response.ok) {
         throw new Error("Failed to fetch health data");

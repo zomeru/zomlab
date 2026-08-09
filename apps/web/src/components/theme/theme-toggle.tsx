@@ -44,9 +44,11 @@ function getTheme(): "light" | "dark" {
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     setIsDark(getTheme() === "dark");
+    setHydrated(true);
   }, []);
 
   const toggle = useCallback(() => {
@@ -63,6 +65,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
+      disabled={!hydrated}
       aria-label={label}
       title={label}
       className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"

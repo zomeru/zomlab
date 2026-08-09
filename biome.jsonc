@@ -35,6 +35,7 @@
       "!**/public",
       "!**/out",
       "!**/graphify-out",
+      "!**/drizzle",
       "!**/routeTree.gen.ts",
       "!**/worker-configuration.d.ts"
     ]

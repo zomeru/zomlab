@@ -16,31 +16,14 @@ concurrency:
 env:
   BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
   BETTER_AUTH_URL: http://localhost:3000
-  NEXT_PUBLIC_SITE_URL: http://localhost:3000
+  BETTER_AUTH_ALLOWED_HOSTS: localhost:3000,localhost:3100
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  DIRECT_URL: ${{ secrets.DIRECT_URL }}
-  API_PORT: 8080
   E2E_PORT: 3100
 
 jobs:
   check-test-build:
     name: Format, Lint, Test and Build
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: pgvector/pgvector:pg18-trixie
-        env:
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_DB_PASSWORD }}
-          POSTGRES_DB: test_db
-          POSTGRES_HOST_AUTH_METHOD: trust
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
 
     steps:
       - name: Checkout repo
@@ -66,23 +49,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-
 
-      - name: Cache Next.js build
-        uses: actions/cache@v6
-        with:
-          path: apps/_web/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.mjs', 'turbo.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
-            ${{ runner.os }}-nextjs-
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Generate Prisma client
-        run: pnpm run db:generate
-
-      - name: Apply Prisma migrations
-        run: pnpm run db:push
+      - name: Lint workflows
+        run: pnpm run lint:workflows
 
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
@@ -92,11 +63,8 @@ jobs:
       - name: Run Biome
         run: pnpm exec biome ci .
 
-      - name: Lint workflows
-        run: pnpm run lint:workflows
-
       - name: Check dependency consistency
-        run: pnpm exec syncpack lint
+        run: pnpm run deps:check
 
       - name: Check unused files
         run: pnpm run deps:unused
@@ -110,6 +78,8 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Validate Cloudflare Worker
+        run: pnpm run cf:validate
+
       - name: Audit dependencies
         run: pnpm run security:audit
-        continue-on-error: true

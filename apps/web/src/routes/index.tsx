@@ -9,26 +9,24 @@ const QUICK_START = [
   { label: "Install dependencies", command: "pnpm install" },
   { label: "Copy environment", command: "cp .env.example .env" },
   { label: "First-time setup", command: "pnpm setup" },
-  { label: "Start services", command: "pnpm dev:db" },
-  { label: "Generate Prisma client", command: "pnpm db:generate" },
+  { label: "Synchronize development schema", command: "pnpm db:push" },
   { label: "Start dev server", command: "pnpm dev" },
+  { label: "Validate Worker build", command: "pnpm cf:validate" },
 ];
 
 const DEVELOPMENT_MODES = [
-  { label: "Web app", command: "pnpm dev" },
-  { label: "API only", command: "pnpm dev:api" },
-  { label: "Microservices", command: "pnpm dev:standalone" },
-  { label: "Database", command: "pnpm dev:db" },
+  { label: "Workers-compatible app", command: "pnpm dev" },
   { label: "Watch types", command: "pnpm dev:types" },
   { label: "Debug", command: "pnpm dev:debug" },
   { label: "Reset cache", command: "pnpm dev:clean" },
+  { label: "Production build", command: "pnpm build" },
+  { label: "Worker validation", command: "pnpm cf:validate" },
 ];
 
 const DATABASE_WORKFLOWS = [
-  { label: "Generate client", command: "pnpm db:generate" },
-  { label: "Push schema", command: "pnpm db:push" },
-  { label: "Deploy migrations", command: "pnpm db:deploy" },
-  { label: "Create migration", command: "pnpm db:migrate" },
+  { label: "Generate migrations", command: "pnpm db:generate" },
+  { label: "Push development schema", command: "pnpm db:push" },
+  { label: "Apply migrations", command: "pnpm db:migrate" },
   { label: "Open Studio", command: "pnpm db:studio" },
 ];
 

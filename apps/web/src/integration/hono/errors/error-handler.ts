@@ -1,5 +1,6 @@
 import { apiErrorSchema } from "@zomlab/contracts";
 import type { Context, ErrorHandler } from "hono";
+import { HTTPException } from "hono/http-exception";
 import { ZodError } from "zod";
 import { ApiError, InternalError, NotFoundError, ValidationError } from "./api-error";
 
@@ -11,7 +12,7 @@ function normalizeDetail(error: unknown): unknown {
     }));
   }
   if (error instanceof ValidationError) {
-    return error.detail;
+    return normalizeDetail(error.detail) ?? error.detail;
   }
   return undefined;
 }
@@ -46,6 +47,15 @@ export const apiErrorHandler: ErrorHandler = (error, c: Context) => {
   if (error instanceof ZodError) {
     const validationError = new ValidationError("Validation failed", error);
     return c.json(createErrorEnvelope(validationError), 422);
+  }
+
+  if (error instanceof HTTPException) {
+    const httpError = new ApiError(
+      error.status === 403 ? "FORBIDDEN" : "HTTP_ERROR",
+      error.message || "Request failed",
+      error.status,
+    );
+    return c.json(createErrorEnvelope(httpError), error.status as 400);
   }
 
   // Unknown error - log server-side, mask from response

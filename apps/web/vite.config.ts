@@ -19,10 +19,14 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "~": resolve(__dirname, "src"),
+      "~": resolve(import.meta.dirname, "src"),
     },
   },
   server: {
+    port: Number(process.env.E2E_PORT ?? 3000),
+    strictPort: true,
+  },
+  preview: {
     port: Number(process.env.E2E_PORT ?? 3000),
     strictPort: true,
   },

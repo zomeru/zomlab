@@ -1,38 +1,21 @@
 "use client";
 
 import { Link } from "@tanstack/react-router";
-import { authClient } from "@zomlab/auth";
-import { useEffect, useState } from "react";
+import { authClient } from "@zomlab/auth/client";
 import { UserMenu } from "./user-menu";
 
-type SessionUser = {
-  id: string;
-  name?: string | null;
-  email?: string | null;
-};
-
 export function ProfileButton() {
-  const [user, setUser] = useState<SessionUser | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
 
-  useEffect(() => {
-    authClient
-      .getSession()
-      .then((result) => {
-        setUser(result?.data?.user ?? null);
-      })
-      .catch(() => {
-        setUser(null);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
+  if (isPending) {
     return (
       <div className="grid size-8 place-items-center rounded-md text-muted-foreground">
-        <div className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+        <div
+          aria-label="Loading account"
+          role="status"
+          className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent motion-reduce:animate-none"
+        />
       </div>
     );
   }
@@ -41,6 +24,7 @@ export function ProfileButton() {
     return (
       <Link
         to="/login"
+        search={{ redirect: undefined }}
         className="rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
         Sign in

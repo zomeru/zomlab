@@ -10,23 +10,25 @@
     "deploy": "wrangler deploy",
     "versions:upload": "wrangler versions upload",
     "cf:typegen": "wrangler types",
+    "cf:typegen:check": "wrangler types --check",
+    "cf:deploy:check": "wrangler deploy --dry-run",
+    "cf:startup": "wrangler check startup --outfile dist/worker-startup.cpuprofile",
     "check-types": "tsc --noEmit",
     "check-types:watch": "tsc --noEmit --watch",
     "test": "vitest run"
   },
   "dependencies": {
-    "@hono/zod-openapi": "1.5.1",
+    "@hono/zod-openapi": "1.5.2",
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@mdx-js/rollup": "^3.1.1",
     "@tanstack/react-query": "^5.101.4",
-    "@tanstack/react-router": "^1.170.19",
-    "@tanstack/react-start": "^1.168.35",
+    "@tanstack/react-router": "^1.170.23",
+    "@tanstack/react-start": "^1.168.40",
     "@zomlab/auth": "workspace:*",
     "@zomlab/contracts": "workspace:*",
     "@zomlab/database": "workspace:*",
-    "hono": "^4.13.0",
-    "hono-idempotency": "^0.9.1",
+    "hono": "^4.13.1",
     "hono-rate-limiter": "^0.5.3",
     "mermaid": "^11.16.0",
     "react": "19.2.8",
@@ -35,7 +37,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.50.0",
+    "@cloudflare/vite-plugin": "^1.51.1",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-devtools": "^0.10.9",
     "@tanstack/react-query-devtools": "^5.101.4",
@@ -51,6 +53,6 @@
     "typescript": "^6.0.3",
     "vite": "^8.2.0",
     "vitest": "^4.1.10",
-    "wrangler": "^4.118.0"
+    "wrangler": "^4.120.0"
   }
 }

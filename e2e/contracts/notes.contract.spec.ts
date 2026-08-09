@@ -55,8 +55,9 @@ test("notes API preserves authentication, validation, ownership, and CRUD contra
   expect(anonymousList.status()).toBe(401);
   expect(await anonymousList.json()).toMatchObject({ error: { code: "UNAUTHORIZED" } });
 
-  const userA = await playwright.request.newContext({ baseURL });
-  const userB = await playwright.request.newContext({ baseURL });
+  const extraHTTPHeaders = { Origin: baseURL as string };
+  const userA = await playwright.request.newContext({ baseURL, extraHTTPHeaders });
+  const userB = await playwright.request.newContext({ baseURL, extraHTTPHeaders });
 
   try {
     await signUpContractUser(userA, "A", baseURL as string);
@@ -86,6 +87,9 @@ test("notes API preserves authentication, validation, ownership, and CRUD contra
 
     const list = await userA.get("/api/notes");
     expect(list.status()).toBe(200);
+    expect(list.headers()["cache-control"]).toContain("private");
+    expect(list.headers()["cache-control"]).toContain("no-store");
+    expect(list.headers().vary).toContain("Cookie");
     const listed = (await list.json()) as NoteContract[];
     expect(listed).toHaveLength(1);
     expect(listed[0]).toEqual(created);
@@ -118,8 +122,9 @@ test("notes API preserves authentication, validation, ownership, and CRUD contra
     expect(await otherUserGet.json()).toMatchObject({ error: { code: "NOTE_NOT_FOUND" } });
 
     const deleted = await userA.delete(`/api/notes/${created.id}`);
-    expect(deleted.status()).toBe(200);
-    expect(await deleted.json()).toEqual({ success: true });
+    const deletedBody = await deleted.json();
+    expect(deleted.status(), JSON.stringify(deletedBody)).toBe(200);
+    expect(deletedBody).toEqual({ success: true });
 
     const deletedGet = await userA.get(`/api/notes/${created.id}`);
     expect(deletedGet.status()).toBe(404);

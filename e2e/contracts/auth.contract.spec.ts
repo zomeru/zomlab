@@ -32,6 +32,7 @@ test("email authentication preserves its session and cookie contract", async ({
 
     const session = await request.get("/api/auth/get-session");
     expect(session.status()).toBe(200);
+    expect(session.headers()["cache-control"]).toContain("no-store");
     const sessionBody = await session.json();
     expect(sessionBody).toMatchObject({ user: { email } });
 
@@ -40,6 +41,7 @@ test("email authentication preserves its session and cookie contract", async ({
       headers: originHeader,
     });
     expect(signout.status()).toBe(200);
+    expect(signout.headers()["cache-control"]).toContain("no-store");
 
     const clearedSession = await request.get("/api/auth/get-session");
     expect(clearedSession.status()).toBe(200);

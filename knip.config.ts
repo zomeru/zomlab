@@ -8,14 +8,12 @@ const config: KnipConfig = {
     },
     scripts: {
       project: ["**/*.ts"],
-      ignoreFiles: ["tmp-db-probe.ts"],
     },
 
     "apps/web": {
       entry: ["src/routes/**/*.{ts,tsx}", "src/components/**/*.{ts,tsx}"],
       project: ["src/**/*.{ts,tsx}", "src/**/*.mdx", "src/styles/**/*.css"],
       tailwind: true,
-      ignoreDependencies: ["hono-idempotency"],
     },
     "packages/auth": {
       project: ["src/**/*.ts"],

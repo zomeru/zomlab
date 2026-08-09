@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "@types/node": "^26.1.2",
+    "@types/node": "^26.2.0",
     "@zomlab/tsconfig": "workspace:*",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10"

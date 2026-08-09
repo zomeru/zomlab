@@ -1,7 +1,12 @@
 import { expect, test } from "@playwright/test";
 
 test("homepage loads and shows ZomLab branding", async ({ page }) => {
-  await page.goto("/");
+  const response = await page.goto("/");
+
+  expect(response).not.toBeNull();
+  expect(response?.headers()["cache-control"]).toContain("private");
+  expect(response?.headers()["cache-control"]).toContain("no-store");
+  expect(response?.headers().vary).toContain("Cookie");
 
   await expect(page).toHaveTitle(/ZomLab/);
   await expect(page.getByRole("main")).toBeVisible();

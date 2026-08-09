@@ -20,16 +20,15 @@
     "db:export": "drizzle-kit export",
     "db:check": "drizzle-kit check",
     "db:up": "drizzle-kit up",
-    "db:studio": "drizzle-kit studio",
-    "db:apply-migration": "tsx scripts/apply-migration.ts"
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@zomlab/env": "workspace:*",
     "@neondatabase/serverless": "^1.1.0",
+    "@zomlab/env": "workspace:*",
     "drizzle-orm": "^0.45.2"
   },
   "devDependencies": {
-    "@types/node": "^26.1.2",
+    "@types/node": "^26.2.0",
     "@zomlab/tsconfig": "workspace:*",
     "@zomlab/vitest-config": "workspace:*",
     "drizzle-kit": "^0.31.10"

@@ -10,12 +10,11 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: "list",
-  globalTeardown: "./e2e/teardown.ts",
   use: {
     baseURL,
   },
   webServer: {
-    command: `pnpm run dev --port=${E2E_PORT}`,
+    command: "pnpm run with-env -- pnpm exec turbo run dev --filter=@zomlab/web --ui=stream",
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

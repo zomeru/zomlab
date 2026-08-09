@@ -1,6 +1,6 @@
 // apps/web/src/integration/hono/middleware/auth.middleware.ts
 
-import { auth } from "@zomlab/auth";
+import { auth } from "@zomlab/auth/server";
 import { createMiddleware } from "hono/factory";
 
 import { UnauthorizedError } from "../errors/api-error";
