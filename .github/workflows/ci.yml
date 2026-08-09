@@ -79,7 +79,7 @@ jobs:
         run: pnpm run build
 
       - name: Generate worker types
-        run: pnpm run cy:typegen
+        run: pnpm run cf:typegen
 
       - name: Validate Cloudflare Worker
         run: pnpm run cf:validate
