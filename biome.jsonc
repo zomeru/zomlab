@@ -37,7 +37,7 @@
       "!**/graphify-out",
       "!**/drizzle",
       "!**/routeTree.gen.ts",
-      "!**/worker-configuration.d.ts"
+      "!**/worker-configuration*.d.ts"
     ]
   },
   "css": {

@@ -1,6 +1,5 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "zomlab",
   "main": "@tanstack/react-start/server-entry",
   "compatibility_date": "2026-08-08",
   "compatibility_flags": ["nodejs_compat"],
@@ -10,6 +9,7 @@
   },
   "env": {
     "staging": {
+      "name": "zomlab-staging",
       "vars": {
         "APP_ENV": "staging"
       },
@@ -25,6 +25,7 @@
       ]
     },
     "production": {
+      "name": "zomlab-production",
       "vars": {
         "APP_ENV": "production"
       },
