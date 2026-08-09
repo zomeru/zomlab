@@ -54,7 +54,7 @@ export function createAuthOptions(authEnv: typeof env = env): BetterAuthOptions 
         users: schema.users,
         accounts: schema.accounts,
         sessions: schema.sessions,
-        verification: schema.verification,
+        verifications: schema.verifications,
         rateLimits: schema.rateLimits,
       },
     }),

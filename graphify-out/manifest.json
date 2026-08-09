@@ -395,7 +395,7 @@
     "semantic_hash": ""
   },
   "packages/auth/package.json": {
-    "mtime": 1786273701.490398,
+    "mtime": 1786297602.2805688,
     "ast_hash": "51147f6655265df711e64c564445e9f3",
     "semantic_hash": ""
   },
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "packages/auth/src/auth.server.ts": {
-    "mtime": 1786287465.637799,
-    "ast_hash": "b38b8169695837ad92647dd5e273076c",
+    "mtime": 1786297602.2796745,
+    "ast_hash": "342a4abb5694489644a21dfe5deaf722",
     "semantic_hash": ""
   },
   "packages/auth/src/client.ts": {
@@ -469,39 +469,14 @@
     "ast_hash": "ac458da1730e62368630da7be68367b6",
     "semantic_hash": ""
   },
-  "packages/database/drizzle/0000_ambitious_thunderbolt_ross.sql": {
-    "mtime": 1786203395.8087142,
-    "ast_hash": "66e76c7a202847b43551757aebc12752",
-    "semantic_hash": ""
-  },
-  "packages/database/drizzle/0001_absent_mordo.sql": {
-    "mtime": 1786272560.094606,
-    "ast_hash": "d91e4dc77b5e9758973949afefd49d71",
-    "semantic_hash": ""
-  },
-  "packages/database/drizzle/0002_neat_miek.sql": {
-    "mtime": 1786272733.0175257,
-    "ast_hash": "8ef3483856bff72bf53386bdd1baaa65",
-    "semantic_hash": ""
-  },
   "packages/database/drizzle/meta/0000_snapshot.json": {
-    "mtime": 1786203395.8090365,
-    "ast_hash": "948363733d930331a0ea4961a0f1f978",
-    "semantic_hash": ""
-  },
-  "packages/database/drizzle/meta/0001_snapshot.json": {
-    "mtime": 1786272560.0943656,
-    "ast_hash": "4a832c18edeebd1399ecb5d3746a8c04",
-    "semantic_hash": ""
-  },
-  "packages/database/drizzle/meta/0002_snapshot.json": {
-    "mtime": 1786272733.01723,
-    "ast_hash": "5413cfddd70a35ad5474436f37edb47d",
+    "mtime": 1786297643.5162053,
+    "ast_hash": "22c64633778cd9f3e3d6f1ea86daa3fb",
     "semantic_hash": ""
   },
   "packages/database/drizzle/meta/_journal.json": {
-    "mtime": 1786272733.0173934,
-    "ast_hash": "7f5fdb77bdd3624a673bdd37601ff582",
+    "mtime": 1786297643.5164876,
+    "ast_hash": "7b6d7c8298319a426f739422c1d3fcd2",
     "semantic_hash": ""
   },
   "packages/database/package.json": {
@@ -515,8 +490,8 @@
     "semantic_hash": ""
   },
   "packages/database/src/db/schema/auth.ts": {
-    "mtime": 1786272724.1115232,
-    "ast_hash": "0d8dca10d0c01eb328aadf2e6a7d124c",
+    "mtime": 1786297602.2789595,
+    "ast_hash": "d00e364ad1f37d55440b0422588f16f5",
     "semantic_hash": ""
   },
   "packages/database/src/db/schema/core/crud.ts": {
@@ -840,8 +815,13 @@
     "semantic_hash": ""
   },
   ".github/workflows/deploy.yml": {
-    "mtime": 1786295271.670498,
+    "mtime": 1786295951.0827496,
     "ast_hash": "a01a7378474f6b1439126701564b20ac",
+    "semantic_hash": ""
+  },
+  "packages/database/drizzle/0000_lethal_maddog.sql": {
+    "mtime": 1786297643.5166485,
+    "ast_hash": "c11e0890b0d23e35cab2d246cca547d3",
     "semantic_hash": ""
   }
 }

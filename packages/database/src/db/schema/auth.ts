@@ -1,135 +1,108 @@
 import { relations } from "drizzle-orm";
-import {
-  bigint,
-  boolean,
-  index,
-  integer,
-  pgEnum,
-  pgTable,
-  text,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { bigint, boolean, index, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { notes } from ".";
 
-export const userRoleEnum = pgEnum("user_role", ["user", "admin"]);
-
-// Tables
-
 export const users = pgTable("users", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  name: varchar("name", { length: 255 }),
-  email: varchar("email", { length: 255 }).notNull().unique(),
-  emailVerified: boolean("email_verified").notNull().default(false),
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: boolean("email_verified").default(false).notNull(),
   image: text("image"),
-  role: userRoleEnum("role").notNull().default("user"),
-  banned: boolean("banned").notNull().default(false),
-  banReason: text("ban_reason"),
-  banExpires: timestamp("ban_expires", { withTimezone: true }),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
     .defaultNow()
-    .$onUpdate(() => new Date()),
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
 });
+
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: text("id").primaryKey(),
+    expiresAt: timestamp("expires_at").notNull(),
+    token: text("token").notNull().unique(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+  },
+  (table) => [index("sessions_userId_idx").on(table.userId)],
+);
 
 export const accounts = pgTable(
   "accounts",
   {
-    id: varchar("id", { length: 255 }).primaryKey(),
-    accountId: varchar("account_id", { length: 255 }).notNull(),
-    providerId: varchar("provider_id", { length: 255 }).notNull(),
-    userId: varchar("user_id", { length: 255 })
+    id: text("id").primaryKey(),
+    accountId: text("account_id").notNull(),
+    providerId: text("provider_id").notNull(),
+    userId: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     accessToken: text("access_token"),
     refreshToken: text("refresh_token"),
     idToken: text("id_token"),
-    accessTokenExpiresAt: timestamp("access_token_expires_at", { withTimezone: true }),
-    refreshTokenExpiresAt: timestamp("refresh_token_expires_at", { withTimezone: true }),
+    accessTokenExpiresAt: timestamp("access_token_expires_at"),
+    refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
     scope: text("scope"),
     password: text("password"),
-    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-    updatedAt: timestamp("updated_at", { withTimezone: true })
-      .notNull()
-      .defaultNow()
-      .$onUpdate(() => new Date()),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
   },
-  (table) => ({
-    userIdIdx: index("accounts_user_id_idx").on(table.userId),
-  }),
+  (table) => [index("accounts_userId_idx").on(table.userId)],
 );
 
-export const sessions = pgTable(
-  "sessions",
+export const verifications = pgTable(
+  "verifications",
   {
-    id: varchar("id", { length: 255 }).primaryKey(),
-    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
-    token: varchar("token", { length: 255 }).notNull().unique(),
-    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-    updatedAt: timestamp("updated_at", { withTimezone: true })
-      .notNull()
+    id: text("id").primaryKey(),
+    identifier: text("identifier").notNull(),
+    value: text("value").notNull(),
+    expiresAt: timestamp("expires_at").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
       .defaultNow()
-      .$onUpdate(() => new Date()),
-    ipAddress: text("ip_address"),
-    userAgent: text("user_agent"),
-    userId: varchar("user_id", { length: 255 })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
+      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .notNull(),
   },
-  (table) => ({
-    userIdIdx: index("sessions_user_id_idx").on(table.userId),
-  }),
+  (table) => [index("verifications_identifier_idx").on(table.identifier)],
 );
-
-export const verification = pgTable("verification", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  identifier: varchar("identifier", { length: 255 }).notNull(),
-  value: text("value").notNull(),
-  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow()
-    .$onUpdate(() => new Date()),
-});
 
 export const rateLimits = pgTable("rate_limits", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  key: varchar("key", { length: 255 }).notNull().unique(),
+  id: text("id").primaryKey(),
+  key: text("key").notNull().unique(),
   count: integer("count").notNull(),
   lastRequest: bigint("last_request", { mode: "number" }).notNull(),
 });
 
-// Relations
-
 export const usersRelations = relations(users, ({ many }) => ({
-  accounts: many(accounts),
   sessions: many(sessions),
+  accounts: many(accounts),
   notes: many(notes),
 }));
 
-export const accountsRelations = relations(accounts, ({ one }) => ({
-  user: one(users, {
-    fields: [accounts.userId],
-    references: [users.id],
-  }),
-}));
-
 export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users, {
+  users: one(users, {
     fields: [sessions.userId],
     references: [users.id],
   }),
 }));
 
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  users: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
+}));
+
 export type User = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
+export type Verification = typeof verifications.$inferSelect;
 export type Account = typeof accounts.$inferSelect;
-export type NewAccount = typeof accounts.$inferInsert;
 export type Session = typeof sessions.$inferSelect;
-export type NewSession = typeof sessions.$inferInsert;
-export type Verification = typeof verification.$inferSelect;
-export type NewVerification = typeof verification.$inferInsert;
 export type RateLimit = typeof rateLimits.$inferSelect;
-export type NewRateLimit = typeof rateLimits.$inferInsert;
