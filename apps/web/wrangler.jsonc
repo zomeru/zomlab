@@ -23,7 +23,9 @@
     "staging": {
       "name": "zomlab-staging",
       "vars": {
-        "APP_ENV": "staging"
+        "APP_ENV": "staging",
+        "BETTER_AUTH_URL": "https://zomlab-staging.zomer.workers.dev",
+        "BETTER_AUTH_ALLOWED_HOSTS": "zomlab-staging.zomer.workers.dev"
       },
       "ratelimits": [
         {
@@ -39,7 +41,9 @@
     "production": {
       "name": "zomlab",
       "vars": {
-        "APP_ENV": "production"
+        "APP_ENV": "production",
+        "BETTER_AUTH_URL": "https://zomlab.zomer.workers.dev",
+        "BETTER_AUTH_ALLOWED_HOSTS": "zomlab.zomer.workers.dev"
       },
       "preview_urls": true,
       "ratelimits": [
