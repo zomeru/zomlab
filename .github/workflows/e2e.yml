@@ -69,5 +69,18 @@ jobs:
       - name: Synchronize test database schema
         run: pnpm run db:push
 
+      - name: Provide Worker variables for E2E
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+        run: |
+          {
+            printf 'DATABASE_URL="%s"\n' "$DATABASE_URL"
+            printf 'BETTER_AUTH_SECRET="%s"\n' "$BETTER_AUTH_SECRET"
+            printf 'BETTER_AUTH_URL="http://localhost:3100"\n'
+            printf 'BETTER_AUTH_ALLOWED_HOSTS="localhost:3100"\n'
+            printf 'E2E_PORT="3100"\n'
+          } > apps/web/.dev.vars
+
       - name: Run E2E tests
         run: pnpm run test:e2e
