@@ -265,7 +265,7 @@ describe("package-manager policy", () => {
     const workflow = textFile(".github/workflows/ci.yml") ?? "";
 
     expect(manifest.scripts?.["lint:workflows"]).toBe(
-      "pnpm exec tsx scripts/actionlint.ts .github/workflows/ci.yml .github/workflows/e2e.yml",
+      "pnpm exec tsx scripts/actionlint.ts .github/workflows/ci.yml .github/workflows/deploy.yml .github/workflows/e2e.yml",
     );
     expect(uncommentedYamlLines(workflow)).toContain("        run: pnpm run lint:workflows");
   });
@@ -304,7 +304,7 @@ describe("package-manager policy", () => {
       const requiredCommandSteps = steps
         .map((step, index) => ({ step, index }))
         .filter(({ step }) =>
-          hasRunCommand(step, /\b(?:db:(?:generate|push)|test|build|playwright)\b/),
+          hasRunCommand(step, /\b(?:db:(?:generate|migrate|push)|deploy|test|build|playwright)\b/),
         );
 
       expect(steps.some(isPnpmSetupStep), file).toBe(true);
