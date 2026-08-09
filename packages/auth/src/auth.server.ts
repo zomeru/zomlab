@@ -6,6 +6,8 @@ import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { magicLink } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 
+import { isDeployedEnvironment } from "./auth-environment";
+
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 32;
 
@@ -30,13 +32,14 @@ function getAllowedHosts() {
 
 function createAuth() {
   const allowedHosts = getAllowedHosts();
+  const isDeployed = isDeployedEnvironment(env.APP_ENV);
   const options: BetterAuthOptions = {
     appName: "ZomLab",
     basePath: "/api/auth",
     baseURL: {
       allowedHosts,
       fallback: env.BETTER_AUTH_URL,
-      protocol: env.APP_ENV === "development" ? "auto" : "https",
+      protocol: isDeployed ? "https" : "auto",
     },
     trustedOrigins: allowedHosts.flatMap((host) =>
       host.startsWith("localhost") || host.startsWith("127.0.0.1")
@@ -60,7 +63,7 @@ function createAuth() {
       encryptOAuthTokens: true,
     },
     advanced: {
-      useSecureCookies: env.APP_ENV !== "development",
+      useSecureCookies: isDeployed,
       ipAddress: {
         ipAddressHeaders: ["cf-connecting-ip", "x-forwarded-for"],
       },
@@ -89,7 +92,7 @@ function createAuth() {
         : {}),
     },
     rateLimit: {
-      enabled: env.APP_ENV !== "development",
+      enabled: isDeployed,
       storage: "database",
     },
     plugins: [
