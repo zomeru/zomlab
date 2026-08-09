@@ -2,4 +2,4 @@
 .claude/** linguist-documentation
 .codex/** linguist-documentation
 .opencode/** linguist-documentation
-.graphify-out/** linguist-documentation
+graphify-out/** linguist-documentation
