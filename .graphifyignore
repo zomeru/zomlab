@@ -13,3 +13,6 @@ playwright-report/
 test-results/
 generated/
 .serena
+.agents
+.claude
+.opencode
