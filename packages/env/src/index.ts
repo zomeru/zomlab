@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  APP_ENV: z.enum(["development", "staging", "production", "test"]).default("development"),
+  APP_ENV: z.enum(["staging", "production"]).default("staging"),
   DATABASE_URL: z.url(),
   E2E_PORT: z.coerce.number().default(3100),
   BETTER_AUTH_SECRET: z.string().min(32),
@@ -31,7 +31,7 @@ export function resolveEnvSource(
   return {
     ...processEnv,
     ...cloudflareEnv,
-    APP_ENV: cloudflareEnv?.APP_ENV ?? processEnv.APP_ENV ?? "development",
+    APP_ENV: cloudflareEnv?.APP_ENV ?? processEnv.APP_ENV ?? "staging",
   };
 }
 

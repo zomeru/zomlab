@@ -4,12 +4,12 @@ import { resolveEnvSource } from "./index";
 
 describe("resolveEnvSource", () => {
   test("prefers Cloudflare Worker APP_ENV over the local process environment", () => {
-    expect(resolveEnvSource({ APP_ENV: "staging" }, { APP_ENV: "development" }).APP_ENV).toBe(
+    expect(resolveEnvSource({ APP_ENV: "staging" }, { APP_ENV: "production" }).APP_ENV).toBe(
       "staging",
     );
   });
 
-  test("defaults APP_ENV to development when no runtime provides it", () => {
-    expect(resolveEnvSource(undefined, {}).APP_ENV).toBe("development");
+  test("defaults APP_ENV to staging when no runtime provides it", () => {
+    expect(resolveEnvSource(undefined, {}).APP_ENV).toBe("staging");
   });
 });

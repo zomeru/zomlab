@@ -322,7 +322,7 @@ Validated at runtime by `@zomlab/env` (Zod). See `.env.example`.
 | `DATABASE_URL` | ✅ | PostgreSQL connection string (Neon or local) |
 | `BETTER_AUTH_SECRET` | ✅ | ≥ 32 chars; also encrypts OAuth tokens |
 | `BETTER_AUTH_URL` | ✅ | Auth base URL |
-| `APP_ENV` | — | `development` / `staging` / `production` / `test` (default `development`) |
+| `APP_ENV` | — | `staging` / `production` (default `staging`; use staging locally) |
 | `E2E_PORT` | — | Playwright port (default `3100`) |
 | `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | — | Enable GitHub OAuth (both set → provider active) |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | — | Enable Google OAuth (both set → provider active) |

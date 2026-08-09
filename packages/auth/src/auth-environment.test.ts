@@ -36,7 +36,7 @@ import { createAuthOptions } from "./auth.server";
 import { isDeployedEnvironment } from "./auth-environment";
 
 const baseEnv = {
-  APP_ENV: "development",
+  APP_ENV: "staging",
   BETTER_AUTH_ALLOWED_HOSTS: "app.example.com",
   BETTER_AUTH_SECRET: "a".repeat(32),
   BETTER_AUTH_URL: "https://zomlab.example.com",
@@ -52,13 +52,6 @@ describe("isDeployedEnvironment", () => {
   test.each(["staging", "production"] as const)("hardens the %s deployment", (appEnv) => {
     expect(isDeployedEnvironment(appEnv)).toBe(true);
   });
-
-  test.each(["development", "test"] as const)(
-    "retains non-production behavior for %s",
-    (appEnv) => {
-      expect(isDeployedEnvironment(appEnv)).toBe(false);
-    },
-  );
 });
 
 describe("createAuthOptions", () => {
@@ -66,8 +59,11 @@ describe("createAuthOptions", () => {
     vi.clearAllMocks();
   });
 
-  test("keeps test authentication behavior non-deployed", () => {
-    const options = createAuthOptions({ ...baseEnv, APP_ENV: "test" });
+  test("keeps local staging authentication behavior non-deployed", () => {
+    const options = createAuthOptions({
+      ...baseEnv,
+      BETTER_AUTH_URL: "http://localhost:3100",
+    });
 
     expect(options.baseURL).toMatchObject({
       allowedHosts: expect.arrayContaining(["localhost:3000", "127.0.0.1:3100"]),
