@@ -23,7 +23,7 @@ jobs:
       BETTER_AUTH_URL: http://localhost:3000
       BETTER_AUTH_ALLOWED_HOSTS: localhost:3000
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      APP_ENV: ${{ vars.APP_ENV }}
+      APP_ENV: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
 
     steps:
       - name: Checkout repo

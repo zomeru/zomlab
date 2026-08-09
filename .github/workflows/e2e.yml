@@ -24,7 +24,7 @@ jobs:
       BETTER_AUTH_ALLOWED_HOSTS: localhost:3100
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       E2E_PORT: 3100
-      APP_ENV: ${{ vars.APP_ENV }}
+      APP_ENV: staging
 
     steps:
       - name: Checkout repo
@@ -74,7 +74,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-          APP_ENV: ${{ vars.APP_ENV }}
+          APP_ENV: staging
         run: |
           {
             printf 'DATABASE_URL="%s"\n' "$DATABASE_URL"
