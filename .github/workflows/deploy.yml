@@ -41,7 +41,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Validate Drizzle migrations
-        run: pnpm exec turbo run db:check --filter=@zomlab/database
+        run: pnpm run db:check
 
       - name: Apply Drizzle migrations
         run: pnpm run db:migrate

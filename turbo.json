@@ -79,6 +79,18 @@
     "db:push": {
       "cache": false
     },
+    "db:pull": {
+      "cache": false
+    },
+    "db:export": {
+      "cache": false
+    },
+    "db:check": {
+      "cache": false
+    },
+    "db:up": {
+      "cache": false
+    },
     "db:migrate": {
       "cache": false
     },
