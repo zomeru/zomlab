@@ -18,7 +18,7 @@ function getAllowedHosts() {
   );
   hosts.add(configuredHost);
 
-  if (env.NODE_ENV !== "production") {
+  if (env.APP_ENV === "development") {
     hosts.add("localhost:3000");
     hosts.add(`localhost:${env.E2E_PORT}`);
     hosts.add("127.0.0.1:3000");
@@ -36,7 +36,7 @@ function createAuth() {
     baseURL: {
       allowedHosts,
       fallback: env.BETTER_AUTH_URL,
-      protocol: env.NODE_ENV === "production" ? "https" : "auto",
+      protocol: env.APP_ENV === "development" ? "auto" : "https",
     },
     trustedOrigins: allowedHosts.flatMap((host) =>
       host.startsWith("localhost") || host.startsWith("127.0.0.1")
@@ -60,7 +60,7 @@ function createAuth() {
       encryptOAuthTokens: true,
     },
     advanced: {
-      useSecureCookies: env.NODE_ENV === "production",
+      useSecureCookies: env.APP_ENV !== "development",
       ipAddress: {
         ipAddressHeaders: ["cf-connecting-ip", "x-forwarded-for"],
       },
@@ -89,11 +89,11 @@ function createAuth() {
         : {}),
     },
     rateLimit: {
-      enabled: env.NODE_ENV === "production",
+      enabled: env.APP_ENV !== "development",
       storage: "database",
     },
     plugins: [
-      ...(env.NODE_ENV === "development"
+      ...(env.APP_ENV === "development"
         ? [
             magicLink({
               sendMagicLink: async ({ email, url }) => {

@@ -7,7 +7,7 @@ export function createDatabase() {
 
   return drizzle({
     client: sql,
-    logger: env.NODE_ENV === "development",
+    logger: env.APP_ENV === "development",
   });
 }
 

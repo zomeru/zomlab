@@ -455,6 +455,9 @@ importers:
       '@zomlab/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+      '@zomlab/vitest-config':
+        specifier: workspace:*
+        version: link:../vitest-config
 
   packages/tsconfig: {}
 

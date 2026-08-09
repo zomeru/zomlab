@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+  APP_ENV: z.enum(["development", "staging", "production", "test"]).default("development"),
   DATABASE_URL: z.url(),
   E2E_PORT: z.coerce.number().default(3100),
   BETTER_AUTH_SECRET: z.string().min(32),
@@ -24,16 +24,19 @@ function getCloudflareEnv(): Record<string, unknown> | undefined {
   }
 }
 
-function getEnvSource(): Record<string, unknown> {
+export function resolveEnvSource(
+  cloudflareEnv: Record<string, unknown> | undefined,
+  processEnv: Record<string, unknown>,
+): Record<string, unknown> {
   return {
-    ...process.env,
-    ...(getCloudflareEnv() ?? {}),
-    NODE_ENV: process.env.NODE_ENV ?? "development",
+    ...processEnv,
+    ...cloudflareEnv,
+    APP_ENV: cloudflareEnv?.APP_ENV ?? processEnv.APP_ENV ?? "development",
   };
 }
 
 function parseEnv() {
-  const envSource = getEnvSource();
+  const envSource = resolveEnvSource(getCloudflareEnv(), process.env);
   const result = envSchema.safeParse(envSource);
 
   if (!result.success) {

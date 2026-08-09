@@ -21,7 +21,7 @@ declare global {
       readonly GITHUB_CLIENT_SECRET: string | undefined;
       readonly GOOGLE_CLIENT_ID: string | undefined;
       readonly GOOGLE_CLIENT_SECRET: string | undefined;
-      readonly NODE_ENV: "development" | "production" | "test";
+      readonly APP_ENV: "development" | "staging" | "production" | "test";
     }
   }
 }
