@@ -14,6 +14,7 @@
     "kill:ports": "kill $(lsof -tiTCP:3000-3005 -iTCP:8787 -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
     "kill:e2e-port": "kill $(lsof -tiTCP:${E2E_PORT:-3100} -sTCP:LISTEN 2>/dev/null) 2>/dev/null || true",
     "build": "pnpm run with-env -- pnpm exec turbo run build",
+    "build:production": "pnpm run with-env -- pnpm exec turbo run build:production",
     "deploy": "pnpm run with-env -- pnpm exec turbo deploy --filter=@zomlab/web",
     "deploy:production": "pnpm run with-env -- pnpm exec turbo deploy:production --filter=@zomlab/web",
     "versions:upload": "pnpm run with-env -- pnpm exec turbo versions:upload --filter=@zomlab/web",

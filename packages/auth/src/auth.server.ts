@@ -11,34 +11,34 @@ import { isDeployedEnvironment } from "./auth-environment";
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 32;
 
-function getAllowedHosts() {
-  const configuredHost = new URL(env.BETTER_AUTH_URL).host;
+function getAllowedHosts(authEnv: typeof env) {
+  const configuredHost = new URL(authEnv.BETTER_AUTH_URL).host;
   const hosts = new Set(
-    env.BETTER_AUTH_ALLOWED_HOSTS.split(",")
+    authEnv.BETTER_AUTH_ALLOWED_HOSTS.split(",")
       .map((host) => host.trim())
       .filter(Boolean),
   );
   hosts.add(configuredHost);
 
-  if (env.APP_ENV === "development") {
+  if (!isDeployedEnvironment(authEnv.APP_ENV)) {
     hosts.add("localhost:3000");
-    hosts.add(`localhost:${env.E2E_PORT}`);
+    hosts.add(`localhost:${authEnv.E2E_PORT}`);
     hosts.add("127.0.0.1:3000");
-    hosts.add(`127.0.0.1:${env.E2E_PORT}`);
+    hosts.add(`127.0.0.1:${authEnv.E2E_PORT}`);
   }
 
   return [...hosts];
 }
 
-function createAuth() {
-  const allowedHosts = getAllowedHosts();
-  const isDeployed = isDeployedEnvironment(env.APP_ENV);
-  const options: BetterAuthOptions = {
+export function createAuthOptions(authEnv: typeof env = env): BetterAuthOptions {
+  const allowedHosts = getAllowedHosts(authEnv);
+  const isDeployed = isDeployedEnvironment(authEnv.APP_ENV);
+  return {
     appName: "ZomLab",
     basePath: "/api/auth",
     baseURL: {
       allowedHosts,
-      fallback: env.BETTER_AUTH_URL,
+      fallback: authEnv.BETTER_AUTH_URL,
       protocol: isDeployed ? "https" : "auto",
     },
     trustedOrigins: allowedHosts.flatMap((host) =>
@@ -46,7 +46,7 @@ function createAuth() {
         ? [`http://${host}`]
         : [`https://${host}`],
     ),
-    secret: env.BETTER_AUTH_SECRET,
+    secret: authEnv.BETTER_AUTH_SECRET,
     database: drizzleAdapter(db, {
       provider: "pg",
       usePlural: true,
@@ -74,19 +74,19 @@ function createAuth() {
       maxPasswordLength: PASSWORD_MAX_LENGTH,
     },
     socialProviders: {
-      ...(env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET
+      ...(authEnv.GITHUB_CLIENT_ID && authEnv.GITHUB_CLIENT_SECRET
         ? {
             github: {
-              clientId: env.GITHUB_CLIENT_ID,
-              clientSecret: env.GITHUB_CLIENT_SECRET,
+              clientId: authEnv.GITHUB_CLIENT_ID,
+              clientSecret: authEnv.GITHUB_CLIENT_SECRET,
             },
           }
         : {}),
-      ...(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
+      ...(authEnv.GOOGLE_CLIENT_ID && authEnv.GOOGLE_CLIENT_SECRET
         ? {
             google: {
-              clientId: env.GOOGLE_CLIENT_ID,
-              clientSecret: env.GOOGLE_CLIENT_SECRET,
+              clientId: authEnv.GOOGLE_CLIENT_ID,
+              clientSecret: authEnv.GOOGLE_CLIENT_SECRET,
             },
           }
         : {}),
@@ -96,7 +96,7 @@ function createAuth() {
       storage: "database",
     },
     plugins: [
-      ...(env.APP_ENV === "development"
+      ...(!isDeployed
         ? [
             magicLink({
               sendMagicLink: async ({ email, url }) => {
@@ -108,8 +108,10 @@ function createAuth() {
       tanstackStartCookies(),
     ],
   };
+}
 
-  return betterAuth(options);
+function createAuth() {
+  return betterAuth(createAuthOptions());
 }
 
 type AuthType = ReturnType<typeof createAuth>;
