@@ -89,4 +89,20 @@ describe("createAuthOptions", () => {
     expect(options.rateLimit).toMatchObject({ enabled: true });
     expect(mocks.magicLink).not.toHaveBeenCalled();
   });
+
+  test("keeps a local staging Worker compatible with HTTP development", () => {
+    const options = createAuthOptions({
+      ...baseEnv,
+      APP_ENV: "staging",
+      BETTER_AUTH_URL: "http://localhost:3100",
+    });
+
+    expect(options.baseURL).toMatchObject({
+      allowedHosts: expect.arrayContaining(["localhost:3100", "127.0.0.1:3100"]),
+      protocol: "auto",
+    });
+    expect(options.advanced).toMatchObject({ useSecureCookies: false });
+    expect(options.rateLimit).toMatchObject({ enabled: false });
+    expect(mocks.magicLink).toHaveBeenCalledOnce();
+  });
 });

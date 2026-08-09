@@ -6,7 +6,7 @@ import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { magicLink } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 
-import { isDeployedEnvironment } from "./auth-environment";
+import { isDeployedAuthEnvironment } from "./auth-environment";
 
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 32;
@@ -20,7 +20,7 @@ function getAllowedHosts(authEnv: typeof env) {
   );
   hosts.add(configuredHost);
 
-  if (!isDeployedEnvironment(authEnv.APP_ENV)) {
+  if (!isDeployedAuthEnvironment(authEnv.APP_ENV, authEnv.BETTER_AUTH_URL)) {
     hosts.add("localhost:3000");
     hosts.add(`localhost:${authEnv.E2E_PORT}`);
     hosts.add("127.0.0.1:3000");
@@ -32,7 +32,7 @@ function getAllowedHosts(authEnv: typeof env) {
 
 export function createAuthOptions(authEnv: typeof env = env): BetterAuthOptions {
   const allowedHosts = getAllowedHosts(authEnv);
-  const isDeployed = isDeployedEnvironment(authEnv.APP_ENV);
+  const isDeployed = isDeployedAuthEnvironment(authEnv.APP_ENV, authEnv.BETTER_AUTH_URL);
   return {
     appName: "ZomLab",
     basePath: "/api/auth",
