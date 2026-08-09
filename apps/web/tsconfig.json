@@ -5,7 +5,7 @@
     "moduleResolution": "bundler",
     "noEmit": true,
     "target": "ESNext",
-    "types": ["./worker-configuration.staging.d.ts"],
+    "types": ["./worker-configuration.d.ts"],
     "paths": {
       "~/*": ["src/*"]
     },
@@ -17,7 +17,7 @@
     "src/**/*.tsx",
     "vite.config.ts",
     "vitest.config.ts",
-    "worker-configuration.staging.d.ts",
+    "worker-configuration.d.ts",
     "env.d.ts"
   ],
   "exclude": ["node_modules", "dist"]

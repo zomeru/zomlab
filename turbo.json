@@ -4,9 +4,6 @@
   "envMode": "loose",
   "globalDependencies": ["pnpm-lock.yaml", "pnpm-workspace.yaml", ".env"],
   "globalPassThroughEnv": ["E2E_PORT"],
-  "remoteCache": {
-    "signature": true
-  },
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -46,7 +43,7 @@
       "persistent": true
     },
     "cf:typegen": {
-      "outputs": ["worker-configuration.staging.d.ts", "worker-configuration.production.d.ts"]
+      "outputs": ["worker-configuration.d.ts"]
     },
     "cf:typegen:check": {
       "outputs": []
