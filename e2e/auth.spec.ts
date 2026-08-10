@@ -5,7 +5,7 @@ const password = "e2e-password-123";
 
 async function signIn(page: import("@playwright/test").Page, email: string) {
   await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Password").fill(password);
+  await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Sign in" }).click();
 }
 
@@ -28,7 +28,8 @@ test("authentication stays synchronized across redirects, refreshes, logout, and
   await expect(page).toHaveURL(new RegExp(`${baseURL}/signup\\?redirect=`));
   await page.getByLabel("Name").fill("Auth Lifecycle User");
   await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Password").fill(password);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page.getByLabel("Confirm password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Sign up" }).click();
   await expect(page).toHaveURL(`${baseURL}${protectedPath}`);
   await expect(page.getByRole("button", { name: "Account menu" })).toBeVisible();
@@ -54,4 +55,40 @@ test("authentication stays synchronized across redirects, refreshes, logout, and
   await signIn(page, email);
   await expect(page).toHaveURL(`${baseURL}${protectedPath}`);
   await expect(page.getByRole("button", { name: "Account menu" })).toBeVisible();
+});
+
+test("auth forms provide password visibility controls and social authentication", async ({
+  page,
+}) => {
+  await page.goto("/login");
+
+  const passwordInput = page.getByLabel("Password", { exact: true });
+  await expect(passwordInput).toHaveAttribute("type", "password");
+  await page.getByRole("button", { name: "Show password" }).click();
+  await expect(passwordInput).toHaveAttribute("type", "text");
+  await page.getByRole("button", { name: "Hide password" }).click();
+  await expect(passwordInput).toHaveAttribute("type", "password");
+  await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Continue with GitHub" })).toBeVisible();
+
+  await page.goto("/signup");
+  await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Continue with GitHub" })).toBeVisible();
+  const confirmPasswordInput = page.getByLabel("Confirm password", { exact: true });
+  await expect(confirmPasswordInput).toHaveAttribute("type", "password");
+  await page.getByRole("button", { name: "Show confirm password" }).click();
+  await expect(confirmPasswordInput).toHaveAttribute("type", "text");
+});
+
+test("sign up requires matching passwords", async ({ page }) => {
+  await page.goto("/signup");
+
+  await expect(page.getByLabel("Confirm password", { exact: true })).toBeVisible();
+  await page.getByLabel("Name").fill("Password Match User");
+  await page.getByLabel("Email").fill("password-match@test.local");
+  await page.getByLabel("Password", { exact: true }).fill("e2e-password-123");
+  await page.getByLabel("Confirm password", { exact: true }).fill("different-password");
+  await page.getByRole("button", { name: "Sign up" }).click();
+
+  await expect(page.getByRole("alert")).toHaveText("Passwords do not match");
 });

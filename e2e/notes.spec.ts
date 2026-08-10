@@ -16,7 +16,8 @@ test("sign up, create, edit, and delete a note", async ({ baseURL, page }) => {
   await page.goto("/signup?redirect=%2Fcore%2Fcrud%2Fdemo");
   await page.getByLabel("Name").fill("E2E User");
   await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Password").fill(password);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page.getByLabel("Confirm password", { exact: true }).fill(password);
   await page.getByRole("button", { name: /sign up/i }).click();
 
   await expect(page).toHaveURL(`${baseURL}/core/crud/demo`);

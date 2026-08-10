@@ -5,78 +5,49 @@ export const Route = createFileRoute("/")({
   component: GettingStarted,
 });
 
-const QUICK_START = [
-  { label: "Install dependencies", command: "pnpm install" },
+const LOCAL_SETUP = [
+  { label: "Install dependencies", command: "pnpm install --frozen-lockfile" },
   { label: "Copy environment", command: "cp .env.example .env" },
-  { label: "First-time setup", command: "pnpm setup" },
-  { label: "Synchronize development schema", command: "pnpm db:push" },
-  { label: "Start dev server", command: "pnpm dev" },
-  { label: "Validate Worker build", command: "pnpm cf:validate" },
+  { label: "Configure environment", command: "nano .env" },
+  { label: "Apply migrations", command: "pnpm db:migrate" },
+  { label: "Start development", command: "pnpm dev" },
 ];
 
-const DEVELOPMENT_MODES = [
-  { label: "Workers-compatible app", command: "pnpm dev" },
+const COMMON_WORKFLOWS = [
   { label: "Watch types", command: "pnpm dev:types" },
-  { label: "Debug", command: "pnpm dev:debug" },
-  { label: "Reset cache", command: "pnpm dev:clean" },
-  { label: "Production build", command: "pnpm build" },
-  { label: "Worker validation", command: "pnpm cf:validate" },
+  { label: "Run all checks", command: "pnpm check:all" },
+  { label: "Run browser tests", command: "pnpm test:e2e" },
+  { label: "Build the app", command: "pnpm build" },
+  { label: "Validate Workers", command: "pnpm cf:validate" },
 ];
 
 const DATABASE_WORKFLOWS = [
   { label: "Generate migrations", command: "pnpm db:generate" },
-  { label: "Push development schema", command: "pnpm db:push" },
   { label: "Apply migrations", command: "pnpm db:migrate" },
-  { label: "Open Studio", command: "pnpm db:studio" },
+  { label: "Push development schema", command: "pnpm db:push" },
+  { label: "Open Drizzle Studio", command: "pnpm db:studio" },
 ];
 
-const QUALITY_CHECKS = [
-  { label: "Full pipeline", command: "pnpm check:all" },
-  { label: "Lint", command: "pnpm lint" },
-  { label: "Lint (fix)", command: "pnpm lint:fix" },
-  { label: "Format", command: "pnpm format" },
-  { label: "Format (check)", command: "pnpm format:check" },
-  { label: "Types", command: "pnpm check-types" },
-  { label: "Types (watch)", command: "pnpm check-types:watch" },
-  { label: "Unit tests", command: "pnpm test" },
-  { label: "Unit tests (watch)", command: "pnpm test:watch" },
-  { label: "E2E tests", command: "pnpm test:e2e" },
-  { label: "Deps consistency", command: "pnpm deps:check" },
-  { label: "Deps (fix)", command: "pnpm deps:fix" },
-  { label: "Unused code", command: "pnpm deps:unused" },
-];
-
-const SECURITY_CHECKS = [
-  { label: "Production audit", command: "pnpm security:audit" },
-  { label: "Full audit", command: "pnpm security:check" },
-];
-
-const SCAFFOLDING = [
-  { label: "New package", command: "pnpm generate:package <name>" },
-  { label: "Sync versions", command: "pnpm version:sync" },
-  { label: "Changesets", command: "pnpm changeset" },
-  { label: "Production build", command: "pnpm build" },
-  { label: "Storybook", command: "pnpm storybook" },
-  { label: "Build storybook", command: "pnpm build-storybook" },
-  { label: "Clean workspace", command: "pnpm clean" },
-  { label: "Reset install", command: "pnpm reset" },
+const DEPLOYMENT_WORKFLOWS = [
+  { label: "Deploy staging", command: "pnpm deploy" },
+  { label: "Deploy production", command: "pnpm deploy:production" },
 ];
 
 const TECH_STACK = [
-  { label: "Framework", value: "TanStack Start + Hono" },
-  { label: "Language", value: "TypeScript 6" },
+  { label: "Application", value: "TanStack Start + React 19" },
+  { label: "API", value: "Embedded Hono + Zod" },
+  { label: "Database", value: "Neon PostgreSQL + Drizzle" },
+  { label: "Authentication", value: "Better Auth" },
   { label: "Styling", value: "Tailwind CSS v4" },
-  { label: "Database", value: "PostgreSQL + Drizzle" },
-  { label: "Auth", value: "Better Auth" },
-  { label: "Monorepo", value: "Turborepo + pnpm" },
+  { label: "Tooling", value: "TypeScript 6 + pnpm + Turbo" },
 ];
 
-const BADGES = ["TanStack Start", "TypeScript 6", "Tailwind v4", "Hono", "Drizzle", "Better Auth"];
+const BADGES = ["TanStack Start", "React 19", "TypeScript 6", "Hono", "Drizzle", "Better Auth"];
 
 const HERO_META = {
   lastUpdated: "August 2026",
   difficulty: "Beginner",
-  readingTime: "6 min",
+  readingTime: "4 min",
 };
 
 function GettingStarted() {
@@ -84,10 +55,10 @@ function GettingStarted() {
     <div className="mx-auto max-w-3xl">
       <header>
         <p className="font-mono text-sm text-muted-foreground">docs / getting-started</p>
-        <h1 className="mt-2 text-4xl font-semibold tracking-tight text-balance">Getting Started</h1>
+        <h1 className="mt-2 text-4xl font-semibold tracking-tight text-balance">Getting started</h1>
         <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
-          ZomLab is a personal software engineering laboratory — a single monorepo where every
-          feature is a real, production-quality implementation you can run, read, and learn from.
+          ZomLab is a personal software engineering lab where working features and their
+          documentation live together in one TypeScript monorepo.
         </p>
 
         <ul className="mt-5 flex flex-wrap gap-2" aria-label="Technology badges">
@@ -113,86 +84,75 @@ function GettingStarted() {
       <hr className="my-10 border-border" />
 
       <section>
-        <h2 className="text-2xl font-semibold tracking-tight">What is ZomLab?</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">What ZomLab contains</h2>
         <p className="mt-3 leading-7 text-muted-foreground">
-          Instead of scattered demo repos, ZomLab keeps everything in one monorepo. Every module
-          follows the same architecture — UI, hooks, API layer, services, repositories — so patterns
-          learned in one feature transfer to the next. The goal is simple: build once, learn
-          forever.
-        </p>
-        <p className="mt-3 leading-7 text-muted-foreground">
-          The codebase is organized around reusable packages (
+          The TanStack Start application in{" "}
           <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
-            @zomlab/*
-          </code>
-          ), with a TanStack Start web app, a standalone Hono API, and shared packages for auth,
-          database, and UI. Everything is fully typed, tested, and documented as it is built.
+            apps/web
+          </code>{" "}
+          owns both the React interface and an embedded Hono API. Shared workspace packages provide
+          authentication, API contracts, database access, environment validation, and development
+          tooling.
+        </p>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          Authenticated notes CRUD is the only completed vertical slice. The other topics shown in
+          the navigation are planned labs, not implemented integrations.
+        </p>
+        <p className="mt-4">
+          <a
+            href="https://github.com/zomeru/zomlab/blob/main/README.md"
+            className="font-medium text-link underline underline-offset-4 hover:opacity-80 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            Read the repository README
+          </a>
+          <span className="text-muted-foreground">
+            {" "}
+            for the complete command and environment reference.
+          </span>
         </p>
       </section>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Quick Start</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">Set up the project locally</h2>
         <p className="mt-3 leading-7 text-muted-foreground">
-          From a fresh clone to a running dev server in six commands:
+          Configure an isolated PostgreSQL database and a Better Auth secret with at least 32
+          characters before applying the migration.
         </p>
-        <TerminalBlock lines={QUICK_START} />
+        <TerminalBlock lines={LOCAL_SETUP} />
       </section>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Development Modes</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">Explore the implemented lab</h2>
         <p className="mt-3 leading-7 text-muted-foreground">
-          The dev scripts cover every workflow — web, API-only, microservices, and tooling. Ports
-          3000–3005 are freed automatically before starting so stale servers never collide.
+          The Core CRUD lab demonstrates authenticated notes from the React form through TanStack
+          Query, the typed Hono client, OpenAPI routes, a service and repository, Drizzle, and Neon
+          PostgreSQL. Its documentation includes the architecture, request flow, and implementation
+          pitfalls.
         </p>
-        <TerminalBlock lines={DEVELOPMENT_MODES} />
       </section>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Database Workflows</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">Run common workflows</h2>
         <p className="mt-3 leading-7 text-muted-foreground">
-          Drizzle ORM with Neon PostgreSQL lives in{" "}
-          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
-            @zomlab/database
-          </code>
-          . The generated client is shared by auth, web, and the API.{" "}
+          Use the root commands so Turbo can resolve the workspace dependency graph.
+        </p>
+        <TerminalBlock lines={COMMON_WORKFLOWS} />
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold tracking-tight">Manage the database</h2>
+        <p className="mt-3 leading-7 text-muted-foreground">
+          Use migrations for tracked schema history. Use{" "}
           <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
             db:push
           </code>{" "}
-          is for rapid prototyping;{" "}
-          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
-            db:migrate
-          </code>{" "}
-          keeps a migration history for production.
+          only when synchronizing a disposable development database.
         </p>
         <TerminalBlock lines={DATABASE_WORKFLOWS} />
       </section>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Quality Checks</h2>
-        <p className="mt-3 leading-7 text-muted-foreground">
-          Run the full validation pipeline before committing:
-        </p>
-        <TerminalBlock lines={QUALITY_CHECKS} />
-        <p className="mt-3 leading-7 text-muted-foreground">
-          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
-            check:all
-          </code>{" "}
-          runs Biome → syncpack → knip → TypeScript → Vitest in sequence, so the individual commands
-          are there when you want a faster, focused loop.
-        </p>
-      </section>
-
-      <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Security</h2>
-        <p className="mt-3 leading-7 text-muted-foreground">
-          Dependency audits keep the supply chain clean. Run them regularly, not just before
-          release:
-        </p>
-        <TerminalBlock lines={SECURITY_CHECKS} />
-      </section>
-
-      <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Tech Stack</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">Review the current stack</h2>
         <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {TECH_STACK.map(({ label, value }) => (
             <div key={label} className="rounded-xl border border-border bg-card p-4">
@@ -206,12 +166,20 @@ function GettingStarted() {
       </section>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Scaffolding & Tooling</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">Deploy to Cloudflare Workers</h2>
         <p className="mt-3 leading-7 text-muted-foreground">
-          New packages are scaffolded with TypeScript and tests pre-configured. Versions stay in
-          sync across the workspace via changesets.
+          The{" "}
+          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
+            dev
+          </code>{" "}
+          branch deploys to the staging Worker, while{" "}
+          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
+            main
+          </code>{" "}
+          deploys to production. GitHub Actions validates and applies Drizzle migrations before
+          deployment.
         </p>
-        <TerminalBlock lines={SCAFFOLDING} />
+        <TerminalBlock lines={DEPLOYMENT_WORKFLOWS} />
       </section>
 
       <hr className="my-12 border-border" />

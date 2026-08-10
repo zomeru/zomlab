@@ -1,0 +1,17 @@
+import { readFile } from "node:fs/promises";
+
+import { describe, expect, test } from "vitest";
+
+describe("package exports", () => {
+  test("exposes the server entry point consumed by the web application", async () => {
+    const packageJsonUrl = new URL("../package.json", import.meta.url);
+    const packageJson = JSON.parse(await readFile(packageJsonUrl, "utf8")) as {
+      exports: Record<string, { default: string; types: string }>;
+    };
+
+    expect(packageJson.exports["./server"]).toEqual({
+      types: "./src/auth.server.ts",
+      default: "./src/auth.server.ts",
+    });
+  });
+});

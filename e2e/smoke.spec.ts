@@ -20,4 +20,16 @@ test("homepage loads and shows ZomLab branding", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeVisible();
   await expect(page.getByRole("link", { name: "ZomLab", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Getting Started" })).toBeVisible();
+
+  const readmeLink = page.getByRole("link", {
+    name: "Read the repository README",
+  });
+  await expect(readmeLink).toHaveAttribute(
+    "href",
+    "https://github.com/zomeru/zomlab/blob/main/README.md",
+  );
+  await expect(page.getByText(/only completed vertical slice/i)).toBeVisible();
+  const main = page.getByRole("main");
+  await expect(main.getByText(/standalone Hono API/i)).toHaveCount(0);
+  await expect(main.getByText(/microservices/i)).toHaveCount(0);
 });

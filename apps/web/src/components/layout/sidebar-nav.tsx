@@ -1,18 +1,28 @@
 "use client";
 
 import { Link, useLocation } from "@tanstack/react-router";
+import { getSafeRedirect } from "~/lib/safe-redirect";
 import { isNavActive, isSectionActive, NAV, type NavEntry, type NavItem } from "../../lib/nav";
 
 export function SidebarNav() {
-  const pathname = useLocation({ select: (loc) => loc.pathname });
+  const { pathname, redirect } = useLocation({
+    select: (loc) => ({ pathname: loc.pathname, redirect: loc.search.redirect }),
+  });
+  const activePathname = getActivePathname(pathname, redirect);
 
   return (
     <nav aria-label="Sidebar" className="flex flex-col gap-4">
       {NAV.map((entry) => (
-        <NavEntryView key={entry.label} entry={entry} pathname={pathname} />
+        <NavEntryView key={entry.label} entry={entry} pathname={activePathname} />
       ))}
     </nav>
   );
+}
+
+function getActivePathname(pathname: string, redirect: unknown): string {
+  if (pathname !== "/login") return pathname;
+
+  return getSafeRedirect(redirect, pathname).split(/[?#]/, 1)[0] ?? pathname;
 }
 
 function NavEntryView({ entry, pathname }: { entry: NavEntry; pathname: string }) {
