@@ -7,10 +7,10 @@ const envSchema = z.object({
   BETTER_AUTH_SECRET: z.string().min(32),
   BETTER_AUTH_URL: z.url(),
   BETTER_AUTH_ALLOWED_HOSTS: z.string().default(""),
-  GITHUB_CLIENT_ID: z.string().default(""),
-  GITHUB_CLIENT_SECRET: z.string().default(""),
-  GOOGLE_CLIENT_ID: z.string().default(""),
-  GOOGLE_CLIENT_SECRET: z.string().default(""),
+  BETTER_AUTH_GITHUB_CLIENT_ID: z.string().default(""),
+  BETTER_AUTH_GITHUB_CLIENT_SECRET: z.string().default(""),
+  BETTER_AUTH_GOOGLE_CLIENT_ID: z.string().default(""),
+  BETTER_AUTH_GOOGLE_CLIENT_SECRET: z.string().default(""),
 });
 
 type ServerEnv = z.infer<typeof envSchema>;

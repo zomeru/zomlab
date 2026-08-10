@@ -25,7 +25,9 @@
       "vars": {
         "APP_ENV": "staging",
         "BETTER_AUTH_URL": "https://zomlab-staging.zomer.workers.dev",
-        "BETTER_AUTH_ALLOWED_HOSTS": "zomlab-staging.zomer.workers.dev"
+        "BETTER_AUTH_ALLOWED_HOSTS": "zomlab-staging.zomer.workers.dev",
+        "BETTER_AUTH_GITHUB_CLIENT_ID": "Ov23lieSOSh0vW0h5GkW",
+        "BETTER_AUTH_GOOGLE_CLIENT_ID": "613252713855-3gi0bub6162bqgmk0rs3b3ojia3e3a98.apps.googleusercontent.com"
       },
       "ratelimits": [
         {
@@ -43,7 +45,9 @@
       "vars": {
         "APP_ENV": "production",
         "BETTER_AUTH_URL": "https://zomlab.zomer.workers.dev",
-        "BETTER_AUTH_ALLOWED_HOSTS": "zomlab.zomer.workers.dev"
+        "BETTER_AUTH_ALLOWED_HOSTS": "zomlab.zomer.workers.dev",
+        "BETTER_AUTH_GITHUB_CLIENT_ID": "Ov23li2eRKovhCAzWZ2r",
+        "BETTER_AUTH_GOOGLE_CLIENT_ID": "613252713855-3gi0bub6162bqgmk0rs3b3ojia3e3a98.apps.googleusercontent.com"
       },
       "preview_urls": true,
       "ratelimits": [

@@ -11,7 +11,8 @@ describe("actionlint", () => {
     await expect(
       lintWorkflowFiles([
         resolve(REPOSITORY_ROOT, ".github/workflows/ci.yml"),
-        resolve(REPOSITORY_ROOT, ".github/workflows/e2e.yml"),
+        resolve(REPOSITORY_ROOT, ".github/workflows/migrate-db.yml"),
+        resolve(REPOSITORY_ROOT, ".github/workflows/e2e-tests.yml"),
       ]),
     ).resolves.toEqual([]);
   });

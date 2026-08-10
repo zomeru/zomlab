@@ -17,10 +17,10 @@ declare global {
       readonly DATABASE_URL: string;
       readonly BETTER_AUTH_SECRET: string;
       readonly BETTER_AUTH_URL: string;
-      readonly GITHUB_CLIENT_ID: string | undefined;
-      readonly GITHUB_CLIENT_SECRET: string | undefined;
-      readonly GOOGLE_CLIENT_ID: string | undefined;
-      readonly GOOGLE_CLIENT_SECRET: string | undefined;
+      readonly BETTER_AUTH_GITHUB_CLIENT_ID: string | undefined;
+      readonly BETTER_AUTH_GITHUB_CLIENT_SECRET: string | undefined;
+      readonly BETTER_AUTH_GOOGLE_CLIENT_ID: string | undefined;
+      readonly BETTER_AUTH_GOOGLE_CLIENT_SECRET: string | undefined;
       readonly APP_ENV: "staging" | "production";
     }
   }

@@ -7,10 +7,10 @@ interface __BaseEnv_Env {
 	DATABASE_URL: string;
 	BETTER_AUTH_SECRET: string;
 	BETTER_AUTH_URL: string;
-	GITHUB_CLIENT_ID: string;
-	GITHUB_CLIENT_SECRET: string;
-	GOOGLE_CLIENT_ID: string;
-	GOOGLE_CLIENT_SECRET: string;
+	BETTER_AUTH_GITHUB_CLIENT_ID: string;
+	BETTER_AUTH_GITHUB_CLIENT_SECRET: string;
+	BETTER_AUTH_GOOGLE_CLIENT_ID: string;
+	BETTER_AUTH_GOOGLE_CLIENT_SECRET: string;
 }
 declare namespace Cloudflare {
 	interface Env extends __BaseEnv_Env {}
@@ -20,7 +20,7 @@ type StringifyValues<EnvType extends Record<string, unknown>> = {
 	[Binding in keyof EnvType]: EnvType[Binding] extends string ? EnvType[Binding] : string;
 };
 declare namespace NodeJS {
-	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "APP_ENV" | "DATABASE_URL" | "BETTER_AUTH_SECRET" | "BETTER_AUTH_URL" | "GITHUB_CLIENT_ID" | "GITHUB_CLIENT_SECRET" | "GOOGLE_CLIENT_ID" | "GOOGLE_CLIENT_SECRET">> {}
+	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "APP_ENV" | "DATABASE_URL" | "BETTER_AUTH_SECRET" | "BETTER_AUTH_URL" | "BETTER_AUTH_GITHUB_CLIENT_ID" | "BETTER_AUTH_GITHUB_CLIENT_SECRET" | "BETTER_AUTH_GOOGLE_CLIENT_ID" | "BETTER_AUTH_GOOGLE_CLIENT_SECRET">> {}
 }
 
 // Begin runtime types

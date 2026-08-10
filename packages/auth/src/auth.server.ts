@@ -74,19 +74,19 @@ export function createAuthOptions(authEnv: typeof env = env): BetterAuthOptions 
       maxPasswordLength: PASSWORD_MAX_LENGTH,
     },
     socialProviders: {
-      ...(authEnv.GITHUB_CLIENT_ID && authEnv.GITHUB_CLIENT_SECRET
+      ...(authEnv.BETTER_AUTH_GITHUB_CLIENT_ID && authEnv.BETTER_AUTH_GITHUB_CLIENT_SECRET
         ? {
             github: {
-              clientId: authEnv.GITHUB_CLIENT_ID,
-              clientSecret: authEnv.GITHUB_CLIENT_SECRET,
+              clientId: authEnv.BETTER_AUTH_GITHUB_CLIENT_ID,
+              clientSecret: authEnv.BETTER_AUTH_GITHUB_CLIENT_SECRET,
             },
           }
         : {}),
-      ...(authEnv.GOOGLE_CLIENT_ID && authEnv.GOOGLE_CLIENT_SECRET
+      ...(authEnv.BETTER_AUTH_GOOGLE_CLIENT_ID && authEnv.BETTER_AUTH_GOOGLE_CLIENT_SECRET
         ? {
             google: {
-              clientId: authEnv.GOOGLE_CLIENT_ID,
-              clientSecret: authEnv.GOOGLE_CLIENT_SECRET,
+              clientId: authEnv.BETTER_AUTH_GOOGLE_CLIENT_ID,
+              clientSecret: authEnv.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
             },
           }
         : {}),

@@ -5,10 +5,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const REPOSITORY_ROOT = process.cwd();
-const APPROVED_MIGRATION_HISTORY = new Set([
-  "docs/plans/stack-migration/00-migration-design.md",
-  "docs/plans/stack-migration/01-pnpm-package-manager.md",
-]);
+
 const PACKAGE_JSON_FIELDS = [
   "dependencies",
   "devDependencies",
@@ -53,12 +50,7 @@ function gitFiles(): string[] {
 }
 
 function isExcluded(file: string): boolean {
-  return (
-    file.startsWith(".agents/") ||
-    file.startsWith(".claude/") ||
-    APPROVED_MIGRATION_HISTORY.has(file) ||
-    isGeneratedArtifact(file)
-  );
+  return file.startsWith(".agents/") || file.startsWith(".claude/") || isGeneratedArtifact(file);
 }
 
 function isGeneratedArtifact(file: string): boolean {
@@ -265,14 +257,17 @@ describe("package-manager policy", () => {
     const workflow = textFile(".github/workflows/ci.yml") ?? "";
 
     expect(manifest.scripts?.["lint:workflows"]).toBe(
-      "pnpm exec tsx scripts/actionlint.ts .github/workflows/ci.yml .github/workflows/deploy.yml .github/workflows/e2e.yml",
+      "pnpm exec tsx scripts/actionlint.ts .github/workflows/ci.yml .github/workflows/migrate-db.yml .github/workflows/e2e-tests.yml",
     );
     expect(uncommentedYamlLines(workflow)).toContain("        run: pnpm run lint:workflows");
   });
 
   it("uses pnpm setup, Node caching, and frozen installs in every CI workflow", () => {
     const workflowFiles = gitFiles().filter(
-      (file) => file.startsWith(".github/workflows/") && /\.ya?ml$/.test(file),
+      (file) =>
+        file.startsWith(".github/workflows/") &&
+        /\.ya?ml$/.test(file) &&
+        existsSync(join(REPOSITORY_ROOT, file)),
     );
     const forbiddenPackageManagerTooling = new RegExp(
       [
@@ -304,7 +299,10 @@ describe("package-manager policy", () => {
       const requiredCommandSteps = steps
         .map((step, index) => ({ step, index }))
         .filter(({ step }) =>
-          hasRunCommand(step, /\b(?:db:(?:generate|migrate|push)|deploy|test|build|playwright)\b/),
+          hasRunCommand(
+            step,
+            /\b(?:db:(?:check|generate|migrate|push)|migrate-db|test|build|playwright)\b/,
+          ),
         );
 
       expect(steps.some(isPnpmSetupStep), file).toBe(true);

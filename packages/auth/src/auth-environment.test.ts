@@ -42,10 +42,10 @@ const baseEnv = {
   BETTER_AUTH_URL: "https://zomlab.example.com",
   DATABASE_URL: "https://database.example.com",
   E2E_PORT: 3100,
-  GITHUB_CLIENT_ID: "",
-  GITHUB_CLIENT_SECRET: "",
-  GOOGLE_CLIENT_ID: "",
-  GOOGLE_CLIENT_SECRET: "",
+  BETTER_AUTH_GITHUB_CLIENT_ID: "",
+  BETTER_AUTH_GITHUB_CLIENT_SECRET: "",
+  BETTER_AUTH_GOOGLE_CLIENT_ID: "",
+  BETTER_AUTH_GOOGLE_CLIENT_SECRET: "",
 } as const;
 
 describe("isDeployedEnvironment", () => {

@@ -72,10 +72,10 @@ Server variables are validated lazily by `@zomlab/env`. Invalid required values 
 | `BETTER_AUTH_ALLOWED_HOSTS` | Recommended | Comma-separated hostnames accepted by Better Auth; the host from `BETTER_AUTH_URL` is always added |
 | `APP_ENV` | No | `staging` or `production`; defaults to `staging` |
 | `E2E_PORT` | No | Development and Playwright server port; defaults to `3100` in environment validation and Playwright, while Vite defaults to `3000` when it is unset |
-| `GITHUB_CLIENT_ID` | No | Enables GitHub OAuth when paired with `GITHUB_CLIENT_SECRET` |
-| `GITHUB_CLIENT_SECRET` | No | GitHub OAuth secret |
-| `GOOGLE_CLIENT_ID` | No | Enables Google OAuth when paired with `GOOGLE_CLIENT_SECRET` |
-| `GOOGLE_CLIENT_SECRET` | No | Google OAuth secret |
+| `BETTER_AUTH_GITHUB_CLIENT_ID` | No | Enables GitHub OAuth when paired with `BETTER_AUTH_GITHUB_CLIENT_SECRET` |
+| `BETTER_AUTH_GITHUB_CLIENT_SECRET` | No | GitHub OAuth secret |
+| `BETTER_AUTH_GOOGLE_CLIENT_ID` | No | Enables Google OAuth when paired with `BETTER_AUTH_GOOGLE_CLIENT_SECRET` |
+| `BETTER_AUTH_GOOGLE_CLIENT_SECRET` | No | Google OAuth secret |
 
 The deployed Worker also requires the `MY_RATE_LIMITER` Cloudflare rate-limit binding. `apps/web/wrangler.jsonc` defines it for the staging and production environments.
 
