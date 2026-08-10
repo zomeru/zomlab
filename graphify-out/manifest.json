@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/auth/auth-form.tsx": {
-    "mtime": 1786371113.8370707,
-    "ast_hash": "a31a78a2c42093de86d4c7804c7b13c6",
+    "mtime": 1786376198.4413643,
+    "ast_hash": "8bb5852087172ceb5d7c30bcfee11dba",
     "semantic_hash": ""
   },
   "apps/web/src/components/layout/github-link.tsx": {
@@ -50,7 +50,7 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/layout/profile-button.tsx": {
-    "mtime": 1786298232.7331667,
+    "mtime": 1786376967.1301532,
     "ast_hash": "88361edefba1e13ed5d69342f5f04cea",
     "semantic_hash": ""
   },
@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/layout/user-menu.tsx": {
-    "mtime": 1786298232.735652,
-    "ast_hash": "9c1671e343f380743037fbd4e0467d47",
+    "mtime": 1786376198.4430437,
+    "ast_hash": "ab5398ade4bd8e0ed0e5b39b2d8e05e1",
     "semantic_hash": ""
   },
   "apps/web/src/components/mdx/mermaid.tsx": {
@@ -85,7 +85,7 @@
     "semantic_hash": ""
   },
   "apps/web/src/env.d.ts": {
-    "mtime": 1786371485.6055655,
+    "mtime": 1786374667.8498933,
     "ast_hash": "59b3645aea29f791394b26f20cd09c9a",
     "semantic_hash": ""
   },
@@ -145,7 +145,7 @@
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/types.ts": {
-    "mtime": 1786371485.6135538,
+    "mtime": 1786374667.8500333,
     "ast_hash": "ab477ca2ff0e0a09d236b3b81fe760c3",
     "semantic_hash": ""
   },
@@ -250,7 +250,7 @@
     "semantic_hash": ""
   },
   "apps/web/src/routes/__root.tsx": {
-    "mtime": 1786298232.772652,
+    "mtime": 1786376967.1291587,
     "ast_hash": "3994d98ed062d4bf52442c776d2a5467",
     "semantic_hash": ""
   },
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/routes/_authenticated.tsx": {
-    "mtime": 1786298230.4990973,
-    "ast_hash": "e1dc3af012575778f10932d4357d58ca",
+    "mtime": 1786376967.1315944,
+    "ast_hash": "02128baae77356c7c4252c55f9427910",
     "semantic_hash": ""
   },
   "apps/web/src/routes/api/$.ts": {
@@ -290,13 +290,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/routes/login.tsx": {
-    "mtime": 1786298232.7852967,
-    "ast_hash": "4fcbeb4caf3324f84a6c9c6f7311b280",
+    "mtime": 1786376967.1306937,
+    "ast_hash": "74e6a5fe8b0d65a03f6d06327ebb53f2",
     "semantic_hash": ""
   },
   "apps/web/src/routes/signup.tsx": {
-    "mtime": 1786298232.7891166,
-    "ast_hash": "92ea15df2862246f9acd0c0eb5063cce",
+    "mtime": 1786376967.1311476,
+    "ast_hash": "0388e3adf39acfebd2d7324ce4f9777d",
     "semantic_hash": ""
   },
   "apps/web/src/routes/status.tsx": {
@@ -390,7 +390,7 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1786373984.1239896,
+    "mtime": 1786374667.8644474,
     "ast_hash": "3a85416873842be98506370fb6d944d8",
     "semantic_hash": ""
   },
@@ -400,7 +400,7 @@
     "semantic_hash": ""
   },
   "packages/auth/src/auth-environment.test.ts": {
-    "mtime": 1786371485.6375043,
+    "mtime": 1786374667.864665,
     "ast_hash": "60e8e290e3736bbf9bd454d3adc5e422",
     "semantic_hash": ""
   },
@@ -410,7 +410,7 @@
     "semantic_hash": ""
   },
   "packages/auth/src/auth.server.ts": {
-    "mtime": 1786371485.6135468,
+    "mtime": 1786374667.8648357,
     "ast_hash": "d879aa1c4df3da9744f0afd602da4c72",
     "semantic_hash": ""
   },
@@ -550,7 +550,7 @@
     "semantic_hash": ""
   },
   "packages/env/src/index.ts": {
-    "mtime": 1786371485.6374714,
+    "mtime": 1786374667.865004,
     "ast_hash": "6d2b7fde42830ae7aea1072af43d5486",
     "semantic_hash": ""
   },
@@ -650,7 +650,7 @@
     "semantic_hash": ""
   },
   "playwright.config.ts": {
-    "mtime": 1786372694.0923183,
+    "mtime": 1786374667.8651428,
     "ast_hash": "ec026b6ba0fc560382954dfc10ffb2f7",
     "semantic_hash": ""
   },
@@ -660,7 +660,7 @@
     "semantic_hash": ""
   },
   "scripts/actionlint.test.ts": {
-    "mtime": 1786374270.670334,
+    "mtime": 1786374667.865289,
     "ast_hash": "880aabf4109bc10253834840c6daae43",
     "semantic_hash": ""
   },
@@ -680,7 +680,7 @@
     "semantic_hash": ""
   },
   "scripts/package-manager-policy.test.ts": {
-    "mtime": 1786374270.671635,
+    "mtime": 1786374667.8654962,
     "ast_hash": "b468ea6ae1d6c1685d3295f81db5818b",
     "semantic_hash": ""
   },
@@ -770,7 +770,7 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1786371485.5239716,
+    "mtime": 1786374667.8497407,
     "ast_hash": "058a9a2cea102a16be798a7a230605a7",
     "semantic_hash": ""
   },
@@ -805,7 +805,7 @@
     "semantic_hash": ""
   },
   "apps/web/worker-configuration.d.ts": {
-    "mtime": 1786371485.6006494,
+    "mtime": 1786374667.8509877,
     "ast_hash": "6c045f558fd1dc4ec334d5668a3976d2",
     "semantic_hash": ""
   },
@@ -825,23 +825,28 @@
     "semantic_hash": ""
   },
   "scripts/write-e2e-worker-vars.test.ts": {
-    "mtime": 1786372131.9671535,
+    "mtime": 1786374667.8656216,
     "ast_hash": "374b430f778f99edfe065a09b13e7701",
     "semantic_hash": ""
   },
   "scripts/write-e2e-worker-vars.ts": {
-    "mtime": 1786371873.9295447,
+    "mtime": 1786374667.8657222,
     "ast_hash": "49f73e24f54c4d9a1a165d9a034df7af",
     "semantic_hash": ""
   },
   ".github/workflows/e2e-tests.yml": {
-    "mtime": 1786373292.0399446,
+    "mtime": 1786374667.8494353,
     "ast_hash": "f32b180693e6ed25639e467bfe3f703f",
     "semantic_hash": ""
   },
   ".github/workflows/migrate-db.yml": {
-    "mtime": 1786373248.5136487,
-    "ast_hash": "0d7d6d95e67ee6e6a436ad25720b2697",
+    "mtime": 1786376524.878118,
+    "ast_hash": "7489fc74c1a40e2da23036dc12decf1c",
+    "semantic_hash": ""
+  },
+  "apps/web/src/__tests__/routes/auth-route-context.test.ts": {
+    "mtime": 1786376967.1286175,
+    "ast_hash": "e4659709b52d70491c5cd288107ab82b",
     "semantic_hash": ""
   }
 }

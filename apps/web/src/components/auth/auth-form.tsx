@@ -61,7 +61,7 @@ export function AuthForm({ mode, redirect }: AuthFormProps) {
       return;
     }
 
-    await router.invalidate();
+    await router.invalidate({ sync: true });
     await router.navigate({ href: getSafeRedirect(redirect), replace: true });
   }
 

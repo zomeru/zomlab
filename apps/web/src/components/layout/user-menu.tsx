@@ -29,7 +29,7 @@ export function UserMenu({ name, email, initial }: UserMenuProps) {
     setOpen(false);
     await authClient.signOut();
     await router.navigate({ to: "/", replace: true });
-    await router.invalidate();
+    await router.invalidate({ sync: true });
   }
 
   return (

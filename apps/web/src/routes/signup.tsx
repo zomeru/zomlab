@@ -7,7 +7,11 @@ export const Route = createFileRoute("/signup")({
   validateSearch: (search: Record<string, unknown>) => ({
     redirect: typeof search.redirect === "string" ? search.redirect : undefined,
   }),
-  beforeLoad: async ({ search }) => {
+  beforeLoad: async ({ preload, search }) => {
+    if (preload) {
+      return;
+    }
+
     const session = await getSession();
     if (session) {
       throw redirect({ href: getSafeRedirect(search.redirect, "/") });

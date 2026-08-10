@@ -14,6 +14,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    name: Detect E2E-relevant changes
+    runs-on: ubuntu-latest
+    outputs:
+      e2e: ${{ steps.filter.outputs.e2e }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+ 
+      - name: Filter changed paths
+        id: filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            e2e:
+              - 'e2e/**'
+              - 'playwright.config.*'
+              - 'scripts/write-e2e-worker-vars.ts'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - '.github/workflows/e2e-tests.yml'
+              
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest

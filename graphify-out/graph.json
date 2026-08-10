@@ -1225,13 +1225,24 @@
       "norm_label": "wrangler"
     },
     {
+      "label": "auth-route-context.test.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/__tests__/routes/auth-route-context.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "apps_web_src_tests_routes_auth_route_context_test",
+      "community": 811,
+      "community_name": "auth-route-context.test.ts",
+      "norm_label": "auth-route-context.test.ts"
+    },
+    {
       "label": "auth-form.tsx",
       "file_type": "code",
       "source_file": "apps/web/src/components/auth/auth-form.tsx",
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_auth_auth_form",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "auth-form.tsx"
     },
@@ -1244,7 +1255,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "apps_web_src_components_auth_auth_form_authformprops",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "authformprops"
     },
@@ -1256,7 +1267,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_components_auth_auth_form_usehydrated",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "usehydrated()"
     },
@@ -1268,7 +1279,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_components_auth_auth_form_authform",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "authform()"
     },
@@ -1325,7 +1336,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_layout_profile_button",
-      "community": 777,
+      "community": 715,
       "community_name": "profile-button.tsx",
       "norm_label": "profile-button.tsx"
     },
@@ -1465,7 +1476,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_components_layout_user_menu",
-      "community": 777,
+      "community": 715,
       "community_name": "profile-button.tsx",
       "norm_label": "user-menu.tsx"
     },
@@ -1478,7 +1489,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "apps_web_src_components_layout_user_menu_usermenuprops",
-      "community": 777,
+      "community": 715,
       "community_name": "profile-button.tsx",
       "norm_label": "usermenuprops"
     },
@@ -1490,7 +1501,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_components_layout_user_menu_usermenu",
-      "community": 777,
+      "community": 715,
       "community_name": "profile-button.tsx",
       "norm_label": "usermenu()"
     },
@@ -1693,7 +1704,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_hooks_use_health",
-      "community": 149,
+      "community": 641,
       "community_name": "status.tsx",
       "norm_label": "use-health.ts"
     },
@@ -1706,7 +1717,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "apps_web_src_hooks_use_health_healthdata",
-      "community": 149,
+      "community": 641,
       "community_name": "status.tsx",
       "norm_label": "healthdata"
     },
@@ -1718,7 +1729,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_hooks_use_health_usehealth",
-      "community": 149,
+      "community": 641,
       "community_name": "status.tsx",
       "norm_label": "usehealth()"
     },
@@ -2007,7 +2018,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_middleware_auth_middleware_requireauth",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "requireauth"
     },
@@ -2018,7 +2029,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_middleware_note_service_middleware",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": "note-service.middleware.ts"
     },
@@ -2029,7 +2040,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_middleware_note_service_middleware_noteservice",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": "noteservice"
     },
@@ -2073,7 +2084,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_routes_core_notes_route",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "notes.route.ts"
     },
@@ -2128,7 +2139,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_service_core_notes_service",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": "notes.service.ts"
     },
@@ -2141,7 +2152,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_service_core_notes_service_noteservice",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": "noteservice"
     },
@@ -2153,7 +2164,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_service_core_notes_service_noteservice_getbyid",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": ".getbyid()"
     },
@@ -2165,7 +2176,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_service_core_notes_service_noteservice_listbyauthor",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": ".listbyauthor()"
     },
@@ -2177,7 +2188,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_service_core_notes_service_noteservice_create",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": ".create()"
     },
@@ -2189,7 +2200,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_service_core_notes_service_noteservice_update",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": ".update()"
     },
@@ -2201,7 +2212,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_service_core_notes_service_noteservice_delete",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": ".delete()"
     },
@@ -2213,7 +2224,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_integration_hono_service_core_notes_service_createnoteservice",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": "createnoteservice()"
     },
@@ -2333,7 +2344,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_components_note_detail",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "note-detail.tsx"
     },
@@ -2345,7 +2356,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_components_note_detail_notedetail",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "notedetail()"
     },
@@ -2448,7 +2459,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_hooks_use_delete_note",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "use-delete-note.ts"
     },
@@ -2460,7 +2471,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_hooks_use_delete_note_usedeletenote",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "usedeletenote()"
     },
@@ -2471,7 +2482,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_hooks_use_note",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "use-note.ts"
     },
@@ -2483,7 +2494,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_hooks_use_note_usenote",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "usenote()"
     },
@@ -2517,7 +2528,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_hooks_use_update_note",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "use-update-note.ts"
     },
@@ -2529,7 +2540,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_hooks_use_update_note_useupdatenote",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "useupdatenote()"
     },
@@ -2540,7 +2551,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_lib_api",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "api.ts"
     },
@@ -2553,7 +2564,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "apps_web_src_lib_api_client",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "client"
     },
@@ -2565,7 +2576,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_lib_api_getclient",
-      "community": 341,
+      "community": 366,
       "community_name": "api.ts",
       "norm_label": "getclient()"
     },
@@ -2576,7 +2587,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_lib_auth_function",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "auth.function.ts"
     },
@@ -2587,7 +2598,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "apps_web_src_lib_auth_function_getsession",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "getsession"
     },
@@ -2707,7 +2718,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_lib_safe_redirect_test",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "safe-redirect.test.ts"
     },
@@ -2718,7 +2729,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_lib_safe_redirect",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "safe-redirect.ts"
     },
@@ -2730,7 +2741,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_lib_safe_redirect_getsaferedirect",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "getsaferedirect()"
     },
@@ -3044,7 +3055,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "apps_web_src_routetree_gen_register",
-      "community": 363,
+      "community": 780,
       "community_name": "start.ts",
       "norm_label": "register"
     },
@@ -3204,7 +3215,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_routes_authenticated",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "_authenticated.tsx"
     },
@@ -3452,7 +3463,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_routes_login",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "login.tsx"
     },
@@ -3471,11 +3482,11 @@
       "label": "LoginPage()",
       "file_type": "code",
       "source_file": "apps/web/src/routes/login.tsx",
-      "source_location": "L19",
+      "source_location": "L23",
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_routes_login_loginpage",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "loginpage()"
     },
@@ -3486,7 +3497,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_routes_signup",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "signup.tsx"
     },
@@ -3505,11 +3516,11 @@
       "label": "SignupPage()",
       "file_type": "code",
       "source_file": "apps/web/src/routes/signup.tsx",
-      "source_location": "L19",
+      "source_location": "L23",
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_routes_signup_signuppage",
-      "community": 130,
+      "community": 173,
       "community_name": "auth-form.tsx",
       "norm_label": "signuppage()"
     },
@@ -3520,7 +3531,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_routes_status",
-      "community": 149,
+      "community": 641,
       "community_name": "status.tsx",
       "norm_label": "status.tsx"
     },
@@ -3531,7 +3542,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "apps_web_src_routes_status_route",
-      "community": 149,
+      "community": 641,
       "community_name": "status.tsx",
       "norm_label": "route"
     },
@@ -3543,7 +3554,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_routes_status_formatuptime",
-      "community": 149,
+      "community": 641,
       "community_name": "status.tsx",
       "norm_label": "formatuptime()"
     },
@@ -3555,7 +3566,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "apps_web_src_routes_status_statuspage",
-      "community": 149,
+      "community": 641,
       "community_name": "status.tsx",
       "norm_label": "statuspage()"
     },
@@ -3566,7 +3577,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_start",
-      "community": 363,
+      "community": 780,
       "community_name": "start.ts",
       "norm_label": "start.ts"
     },
@@ -3577,7 +3588,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "apps_web_src_start_csrfmiddleware",
-      "community": 363,
+      "community": 780,
       "community_name": "start.ts",
       "norm_label": "csrfmiddleware"
     },
@@ -3588,7 +3599,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "apps_web_src_start_privatehtmlresponses",
-      "community": 363,
+      "community": 780,
       "community_name": "start.ts",
       "norm_label": "privatehtmlresponses"
     },
@@ -3599,7 +3610,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "apps_web_src_start_startinstance",
-      "community": 363,
+      "community": 780,
       "community_name": "start.ts",
       "norm_label": "startinstance"
     },
@@ -26566,8 +26577,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "package_devdependencies_changesets_cli",
-      "community": 18,
-      "community_name": "devDependencies",
+      "community": 640,
+      "community_name": "@changesets/cli",
       "norm_label": "@changesets/cli"
     },
     {
@@ -26577,8 +26588,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "changesets_cli",
-      "community": 18,
-      "community_name": "devDependencies",
+      "community": 640,
+      "community_name": "@changesets/cli",
       "norm_label": "@changesets/cli"
     },
     {
@@ -26874,8 +26885,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "package_devdependencies_turbo",
-      "community": 849,
-      "community_name": "turbo",
+      "community": 18,
+      "community_name": "devDependencies",
       "norm_label": "turbo"
     },
     {
@@ -26885,8 +26896,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "package_json_turbo",
-      "community": 849,
-      "community_name": "turbo",
+      "community": 18,
+      "community_name": "devDependencies",
       "norm_label": "turbo"
     },
     {
@@ -27659,7 +27670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_auth_src_client",
-      "community": 777,
+      "community": 715,
       "community_name": "profile-button.tsx",
       "norm_label": "auth/src/client.ts"
     },
@@ -27670,7 +27681,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_auth_src_client_authclient",
-      "community": 777,
+      "community": 715,
       "community_name": "profile-button.tsx",
       "norm_label": "authclient"
     },
@@ -28143,7 +28154,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "notes.ts"
     },
@@ -28154,7 +28165,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_noteschema",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "noteschema"
     },
@@ -28165,7 +28176,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_notelistresponseschema",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "notelistresponseschema"
     },
@@ -28176,7 +28187,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_createnotebodyschema",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "createnotebodyschema"
     },
@@ -28187,7 +28198,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_updatenotebodyschema",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "updatenotebodyschema"
     },
@@ -28198,7 +28209,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_noteparamsschema",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "noteparamsschema"
     },
@@ -28209,7 +28220,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_deletenoteresponseschema",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "deletenoteresponseschema"
     },
@@ -28222,7 +28233,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_note",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": "note"
     },
@@ -28235,7 +28246,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_notelistresponse",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "notelistresponse"
     },
@@ -28261,7 +28272,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_updatenotebody",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": "updatenotebody"
     },
@@ -28274,7 +28285,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_noteparams",
-      "community": 715,
+      "community": 363,
       "community_name": "notes.route.ts",
       "norm_label": "noteparams"
     },
@@ -28287,7 +28298,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "packages_contracts_src_core_crud_notes_deletenoteresponse",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": "deletenoteresponse"
     },
@@ -28298,7 +28309,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "packages_contracts_src_errors",
-      "community": 802,
+      "community": 783,
       "community_name": "errors.ts",
       "norm_label": "errors.ts"
     },
@@ -28309,7 +28320,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "packages_contracts_src_errors_validationissueschema",
-      "community": 802,
+      "community": 783,
       "community_name": "errors.ts",
       "norm_label": "validationissueschema"
     },
@@ -28322,7 +28333,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "packages_contracts_src_errors_validationissue",
-      "community": 802,
+      "community": 783,
       "community_name": "errors.ts",
       "norm_label": "validationissue"
     },
@@ -28333,7 +28344,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "packages_contracts_src_errors_apierrorschema",
-      "community": 802,
+      "community": 783,
       "community_name": "errors.ts",
       "norm_label": "apierrorschema"
     },
@@ -28346,7 +28357,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "packages_contracts_src_errors_apierror",
-      "community": 802,
+      "community": 783,
       "community_name": "errors.ts",
       "norm_label": "apierror"
     },
@@ -29365,7 +29376,7 @@
       "_callable": true,
       "_origin": "ast",
       "id": "packages_database_src_repositories_core_crud_createnoterepository",
-      "community": 63,
+      "community": 241,
       "community_name": "notes.service.ts",
       "norm_label": "createnoterepository()"
     },
@@ -32957,8 +32968,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "turbo_globaldependencies",
-      "community": 366,
-      "community_name": "globalDependencies",
+      "community": 558,
+      "community_name": "turbo.json",
       "norm_label": "globaldependencies"
     },
     {
@@ -32968,8 +32979,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "ref_pnpm_lock_yaml",
-      "community": 366,
-      "community_name": "globalDependencies",
+      "community": 558,
+      "community_name": "turbo.json",
       "norm_label": "pnpm-lock.yaml"
     },
     {
@@ -32979,8 +32990,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "ref_pnpm_workspace_yaml",
-      "community": 366,
-      "community_name": "globalDependencies",
+      "community": 558,
+      "community_name": "turbo.json",
       "norm_label": "pnpm-workspace.yaml"
     },
     {
@@ -32990,8 +33001,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "ref_env",
-      "community": 366,
-      "community_name": "globalDependencies",
+      "community": 163,
+      "community_name": "^build",
       "norm_label": ".env"
     },
     {
@@ -33067,8 +33078,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "turbo_build_inputs",
-      "community": 366,
-      "community_name": "globalDependencies",
+      "community": 163,
+      "community_name": "^build",
       "norm_label": "inputs"
     },
     {
@@ -33078,8 +33089,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "ref_turbo_default",
-      "community": 366,
-      "community_name": "globalDependencies",
+      "community": 163,
+      "community_name": "^build",
       "norm_label": "$turbo_default$"
     },
     {
@@ -33144,8 +33155,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "turbo_build_production_inputs",
-      "community": 366,
-      "community_name": "globalDependencies",
+      "community": 163,
+      "community_name": "^build",
       "norm_label": "inputs"
     },
     {
@@ -33243,8 +33254,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "turbo_tasks_versions_upload",
-      "community": 848,
-      "community_name": "versions:upload",
+      "community": 163,
+      "community_name": "^build",
       "norm_label": "versions:upload"
     },
     {
@@ -33254,8 +33265,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "turbo_versions_upload_dependson",
-      "community": 848,
-      "community_name": "versions:upload",
+      "community": 163,
+      "community_name": "^build",
       "norm_label": "dependson"
     },
     {
@@ -33265,8 +33276,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "turbo_versions_upload_cache",
-      "community": 848,
-      "community_name": "versions:upload",
+      "community": 163,
+      "community_name": "^build",
       "norm_label": "cache"
     },
     {
@@ -33540,8 +33551,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "turbo_tasks_cf_startup",
-      "community": 163,
-      "community_name": "^build",
+      "community": 810,
+      "community_name": "cf:startup",
       "norm_label": "cf:startup"
     },
     {
@@ -33551,8 +33562,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "turbo_cf_startup_dependson",
-      "community": 163,
-      "community_name": "^build",
+      "community": 810,
+      "community_name": "cf:startup",
       "norm_label": "dependson"
     },
     {
@@ -33562,8 +33573,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "turbo_cf_startup_cache",
-      "community": 163,
-      "community_name": "^build",
+      "community": 810,
+      "community_name": "cf:startup",
       "norm_label": "cache"
     },
     {
@@ -34464,7 +34475,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_content_pitfalls",
-      "community": 741,
+      "community": 690,
       "community_name": "Common Pitfalls",
       "norm_label": "pitfalls.mdx"
     },
@@ -34475,7 +34486,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_content_pitfalls_common_pitfalls",
-      "community": 741,
+      "community": 690,
       "community_name": "Common Pitfalls",
       "norm_label": "common pitfalls"
     },
@@ -34486,7 +34497,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_content_pitfalls_leaking_drizzle_into_services",
-      "community": 741,
+      "community": 690,
       "community_name": "Common Pitfalls",
       "norm_label": "leaking drizzle into services"
     },
@@ -34497,7 +34508,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_content_pitfalls_missing_ownership_checks",
-      "community": 741,
+      "community": 690,
       "community_name": "Common Pitfalls",
       "norm_label": "missing ownership checks"
     },
@@ -34508,7 +34519,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_content_pitfalls_trusting_user_without_narrowing",
-      "community": 741,
+      "community": 690,
       "community_name": "Common Pitfalls",
       "norm_label": "trusting `user` without narrowing"
     },
@@ -34519,7 +34530,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_content_pitfalls_forgetting_cookie_forwarding",
-      "community": 741,
+      "community": 690,
       "community_name": "Common Pitfalls",
       "norm_label": "forgetting cookie forwarding"
     },
@@ -34530,7 +34541,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "apps_web_src_labs_core_crud_content_pitfalls_422_vs_400_for_validation",
-      "community": 741,
+      "community": 690,
       "community_name": "Common Pitfalls",
       "norm_label": "422 vs 400 for validation"
     },
@@ -38676,8 +38687,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L120",
       "_origin": "ast",
-      "community": 244,
-      "community_name": "Animations",
+      "community": 495,
+      "community_name": "Exit Animations",
       "norm_label": "exit animations",
       "id": "agents_skills_better_ui_animations_exit_animations"
     },
@@ -38687,8 +38698,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L124",
       "_origin": "ast",
-      "community": 244,
-      "community_name": "Animations",
+      "community": 495,
+      "community_name": "Exit Animations",
       "norm_label": "subtle exit (recommended)",
       "id": "agents_skills_better_ui_animations_subtle_exit_recommended"
     },
@@ -38698,8 +38709,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L140",
       "_origin": "ast",
-      "community": 244,
-      "community_name": "Animations",
+      "community": 495,
+      "community_name": "Exit Animations",
       "norm_label": "full exit (when context matters)",
       "id": "agents_skills_better_ui_animations_full_exit_when_context_matters"
     },
@@ -38709,8 +38720,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L156",
       "_origin": "ast",
-      "community": 244,
-      "community_name": "Animations",
+      "community": 495,
+      "community_name": "Exit Animations",
       "norm_label": "good vs. bad",
       "id": "agents_skills_better_ui_animations_good_vs_bad"
     },
@@ -38720,8 +38731,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L185",
       "_origin": "ast",
-      "community": 783,
-      "community_name": "Contextual Icon Animations",
+      "community": 244,
+      "community_name": "Animations",
       "norm_label": "contextual icon animations",
       "id": "agents_skills_better_ui_animations_contextual_icon_animations"
     },
@@ -38731,8 +38742,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L189",
       "_origin": "ast",
-      "community": 783,
-      "community_name": "Contextual Icon Animations",
+      "community": 244,
+      "community_name": "Animations",
       "norm_label": "motion example",
       "id": "agents_skills_better_ui_animations_motion_example"
     },
@@ -38742,8 +38753,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L215",
       "_origin": "ast",
-      "community": 783,
-      "community_name": "Contextual Icon Animations",
+      "community": 244,
+      "community_name": "Animations",
       "norm_label": "css transition approach (no motion)",
       "id": "agents_skills_better_ui_animations_css_transition_approach_no_motion"
     },
@@ -38753,8 +38764,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L257",
       "_origin": "ast",
-      "community": 783,
-      "community_name": "Contextual Icon Animations",
+      "community": 244,
+      "community_name": "Animations",
       "norm_label": "choosing between motion and css",
       "id": "agents_skills_better_ui_animations_choosing_between_motion_and_css"
     },
@@ -38764,8 +38775,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L268",
       "_origin": "ast",
-      "community": 783,
-      "community_name": "Contextual Icon Animations",
+      "community": 244,
+      "community_name": "Animations",
       "norm_label": "when to animate icons",
       "id": "agents_skills_better_ui_animations_when_to_animate_icons"
     },
@@ -38775,8 +38786,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L283",
       "_origin": "ast",
-      "community": 244,
-      "community_name": "Animations",
+      "community": 341,
+      "community_name": "Scale on Press",
       "norm_label": "scale on press",
       "id": "agents_skills_better_ui_animations_scale_on_press"
     },
@@ -38786,8 +38797,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L289",
       "_origin": "ast",
-      "community": 244,
-      "community_name": "Animations",
+      "community": 341,
+      "community_name": "Scale on Press",
       "norm_label": "css example",
       "id": "agents_skills_better_ui_animations_css_example"
     },
@@ -38797,8 +38808,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L303",
       "_origin": "ast",
-      "community": 244,
-      "community_name": "Animations",
+      "community": 341,
+      "community_name": "Scale on Press",
       "norm_label": "tailwind example",
       "id": "agents_skills_better_ui_animations_tailwind_example"
     },
@@ -38808,8 +38819,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L311",
       "_origin": "ast",
-      "community": 244,
-      "community_name": "Animations",
+      "community": 341,
+      "community_name": "Scale on Press",
       "norm_label": "motion example",
       "id": "agents_skills_better_ui_animations_motion_example_311"
     },
@@ -38819,8 +38830,8 @@
       "source_file": ".agents/skills/better-ui/animations.md",
       "source_location": "L319",
       "_origin": "ast",
-      "community": 244,
-      "community_name": "Animations",
+      "community": 341,
+      "community_name": "Scale on Press",
       "norm_label": "static prop pattern",
       "id": "agents_skills_better_ui_animations_static_prop_pattern"
     },
@@ -50545,8 +50556,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 373,
-      "community_name": "workers/README.md",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "d1/readme.md",
       "id": "agents_skills_cloudflare_references_d1_readme"
     },
@@ -50688,8 +50699,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 373,
-      "community_name": "workers/README.md",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "d1/api.md",
       "id": "agents_skills_cloudflare_references_d1_api"
     },
@@ -50699,8 +50710,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 462,
-      "community_name": "D1 API Reference",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "d1 api reference",
       "id": "agents_skills_cloudflare_references_d1_api_d1_api_reference"
     },
@@ -50710,8 +50721,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 462,
-      "community_name": "D1 API Reference",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "prepared statements (required for security)",
       "id": "agents_skills_cloudflare_references_d1_api_prepared_statements_required_for_security"
     },
@@ -50721,8 +50732,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 462,
-      "community_name": "D1 API Reference",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "query execution methods",
       "id": "agents_skills_cloudflare_references_d1_api_query_execution_methods"
     },
@@ -50732,8 +50743,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 462,
-      "community_name": "D1 API Reference",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "batch operations",
       "id": "agents_skills_cloudflare_references_d1_api_batch_operations"
     },
@@ -50743,8 +50754,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L57",
       "_origin": "ast",
-      "community": 462,
-      "community_name": "D1 API Reference",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "transactions (via batch)",
       "id": "agents_skills_cloudflare_references_d1_api_transactions_via_batch"
     },
@@ -50754,8 +50765,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L69",
       "_origin": "ast",
-      "community": 462,
-      "community_name": "D1 API Reference",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "sessions api (paid plans)",
       "id": "agents_skills_cloudflare_references_d1_api_sessions_api_paid_plans"
     },
@@ -50765,8 +50776,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L85",
       "_origin": "ast",
-      "community": 462,
-      "community_name": "D1 API Reference",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "read replication (paid plans)",
       "id": "agents_skills_cloudflare_references_d1_api_read_replication_paid_plans"
     },
@@ -50776,8 +50787,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L106",
       "_origin": "ast",
-      "community": 462,
-      "community_name": "D1 API Reference",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "error handling",
       "id": "agents_skills_cloudflare_references_d1_api_error_handling"
     },
@@ -50787,8 +50798,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L129",
       "_origin": "ast",
-      "community": 462,
-      "community_name": "D1 API Reference",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "rest api (http) access",
       "id": "agents_skills_cloudflare_references_d1_api_rest_api_http_access"
     },
@@ -50798,8 +50809,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/api.md",
       "source_location": "L172",
       "_origin": "ast",
-      "community": 462,
-      "community_name": "D1 API Reference",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "testing & debugging",
       "id": "agents_skills_cloudflare_references_d1_api_testing_debugging"
     },
@@ -50809,8 +50820,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/configuration.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 373,
-      "community_name": "workers/README.md",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "d1/configuration.md",
       "id": "agents_skills_cloudflare_references_d1_configuration"
     },
@@ -51172,8 +51183,8 @@
       "source_file": ".agents/skills/cloudflare/references/d1/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 373,
-      "community_name": "workers/README.md",
+      "community": 249,
+      "community_name": "D1 Patterns & Best Practices",
       "norm_label": "d1/patterns.md",
       "id": "agents_skills_cloudflare_references_d1_patterns"
     },
@@ -51876,8 +51887,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 84,
-      "community_name": "do-storage/README.md",
+      "community": 373,
+      "community_name": "workers/README.md",
       "norm_label": "do-storage/readme.md",
       "id": "agents_skills_cloudflare_references_do_storage_readme"
     },
@@ -51887,8 +51898,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 588,
-      "community_name": "Cloudflare Durable Objects Storage",
+      "community": 299,
+      "community_name": "DO Storage Patterns & Best Practices",
       "norm_label": "cloudflare durable objects storage",
       "id": "agents_skills_cloudflare_references_do_storage_readme_cloudflare_durable_objects_storage"
     },
@@ -51898,8 +51909,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/README.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 588,
-      "community_name": "Cloudflare Durable Objects Storage",
+      "community": 299,
+      "community_name": "DO Storage Patterns & Best Practices",
       "norm_label": "overview",
       "id": "agents_skills_cloudflare_references_do_storage_readme_overview"
     },
@@ -51909,8 +51920,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/README.md",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 588,
-      "community_name": "Cloudflare Durable Objects Storage",
+      "community": 299,
+      "community_name": "DO Storage Patterns & Best Practices",
       "norm_label": "quick start",
       "id": "agents_skills_cloudflare_references_do_storage_readme_quick_start"
     },
@@ -51920,8 +51931,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/README.md",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 588,
-      "community_name": "Cloudflare Durable Objects Storage",
+      "community": 299,
+      "community_name": "DO Storage Patterns & Best Practices",
       "norm_label": "storage backends",
       "id": "agents_skills_cloudflare_references_do_storage_readme_storage_backends"
     },
@@ -51931,8 +51942,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/README.md",
       "source_location": "L47",
       "_origin": "ast",
-      "community": 588,
-      "community_name": "Cloudflare Durable Objects Storage",
+      "community": 299,
+      "community_name": "DO Storage Patterns & Best Practices",
       "norm_label": "core apis",
       "id": "agents_skills_cloudflare_references_do_storage_readme_core_apis"
     },
@@ -51942,8 +51953,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/README.md",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 588,
-      "community_name": "Cloudflare Durable Objects Storage",
+      "community": 299,
+      "community_name": "DO Storage Patterns & Best Practices",
       "norm_label": "reading order",
       "id": "agents_skills_cloudflare_references_do_storage_readme_reading_order"
     },
@@ -51953,8 +51964,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/README.md",
       "source_location": "L63",
       "_origin": "ast",
-      "community": 588,
-      "community_name": "Cloudflare Durable Objects Storage",
+      "community": 299,
+      "community_name": "DO Storage Patterns & Best Practices",
       "norm_label": "in this reference",
       "id": "agents_skills_cloudflare_references_do_storage_readme_in_this_reference"
     },
@@ -51964,8 +51975,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/README.md",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 588,
-      "community_name": "Cloudflare Durable Objects Storage",
+      "community": 299,
+      "community_name": "DO Storage Patterns & Best Practices",
       "norm_label": "see also",
       "id": "agents_skills_cloudflare_references_do_storage_readme_see_also"
     },
@@ -51975,8 +51986,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/api.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 364,
-      "community_name": "DO Storage API Reference",
+      "community": 373,
+      "community_name": "workers/README.md",
       "norm_label": "do-storage/api.md",
       "id": "agents_skills_cloudflare_references_do_storage_api"
     },
@@ -52086,7 +52097,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 84,
-      "community_name": "do-storage/README.md",
+      "community_name": "DO Storage Configuration",
       "norm_label": "do-storage/configuration.md",
       "id": "agents_skills_cloudflare_references_do_storage_configuration"
     },
@@ -52097,7 +52108,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 84,
-      "community_name": "do-storage/README.md",
+      "community_name": "DO Storage Configuration",
       "norm_label": "do storage configuration",
       "id": "agents_skills_cloudflare_references_do_storage_configuration_do_storage_configuration"
     },
@@ -52108,7 +52119,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "community": 84,
-      "community_name": "do-storage/README.md",
+      "community_name": "DO Storage Configuration",
       "norm_label": "sqlite-backed (recommended)",
       "id": "agents_skills_cloudflare_references_do_storage_configuration_sqlite_backed_recommended"
     },
@@ -52119,7 +52130,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "community": 84,
-      "community_name": "do-storage/README.md",
+      "community_name": "DO Storage Configuration",
       "norm_label": "kv-backed (legacy)",
       "id": "agents_skills_cloudflare_references_do_storage_configuration_kv_backed_legacy"
     },
@@ -52130,7 +52141,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "community": 84,
-      "community_name": "do-storage/README.md",
+      "community_name": "DO Storage Configuration",
       "norm_label": "typescript setup",
       "id": "agents_skills_cloudflare_references_do_storage_configuration_typescript_setup"
     },
@@ -52141,7 +52152,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "community": 84,
-      "community_name": "do-storage/README.md",
+      "community_name": "DO Storage Configuration",
       "norm_label": "cpu limits",
       "id": "agents_skills_cloudflare_references_do_storage_configuration_cpu_limits"
     },
@@ -52152,7 +52163,7 @@
       "source_location": "L84",
       "_origin": "ast",
       "community": 84,
-      "community_name": "do-storage/README.md",
+      "community_name": "DO Storage Configuration",
       "norm_label": "location control",
       "id": "agents_skills_cloudflare_references_do_storage_configuration_location_control"
     },
@@ -52163,7 +52174,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "community": 84,
-      "community_name": "do-storage/README.md",
+      "community_name": "DO Storage Configuration",
       "norm_label": "initialization",
       "id": "agents_skills_cloudflare_references_do_storage_configuration_initialization"
     },
@@ -52382,8 +52393,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 299,
-      "community_name": "DO Storage Patterns & Best Practices",
+      "community": 373,
+      "community_name": "workers/README.md",
       "norm_label": "do-storage/patterns.md",
       "id": "agents_skills_cloudflare_references_do_storage_patterns"
     },
@@ -52503,8 +52514,8 @@
       "source_file": ".agents/skills/cloudflare/references/do-storage/testing.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 193,
-      "community_name": "DO Storage Testing",
+      "community": 373,
+      "community_name": "workers/README.md",
       "norm_label": "do-storage/testing.md",
       "id": "agents_skills_cloudflare_references_do_storage_testing"
     },
@@ -52613,8 +52624,8 @@
       "source_file": ".agents/skills/cloudflare/references/durable-objects/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 84,
-      "community_name": "do-storage/README.md",
+      "community": 373,
+      "community_name": "workers/README.md",
       "norm_label": "durable-objects/readme.md",
       "id": "agents_skills_cloudflare_references_durable_objects_readme"
     },
@@ -52844,8 +52855,8 @@
       "source_file": ".agents/skills/cloudflare/references/durable-objects/api.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 84,
-      "community_name": "do-storage/README.md",
+      "community": 373,
+      "community_name": "workers/README.md",
       "norm_label": "durable-objects/api.md",
       "id": "agents_skills_cloudflare_references_durable_objects_api"
     },
@@ -52987,8 +52998,8 @@
       "source_file": ".agents/skills/cloudflare/references/durable-objects/configuration.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 84,
-      "community_name": "do-storage/README.md",
+      "community": 373,
+      "community_name": "workers/README.md",
       "norm_label": "durable-objects/configuration.md",
       "id": "agents_skills_cloudflare_references_durable_objects_configuration"
     },
@@ -53108,8 +53119,8 @@
       "source_file": ".agents/skills/cloudflare/references/durable-objects/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 84,
-      "community_name": "do-storage/README.md",
+      "community": 373,
+      "community_name": "workers/README.md",
       "norm_label": "durable-objects/gotchas.md",
       "id": "agents_skills_cloudflare_references_durable_objects_gotchas"
     },
@@ -53328,8 +53339,8 @@
       "source_file": ".agents/skills/cloudflare/references/durable-objects/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 84,
-      "community_name": "do-storage/README.md",
+      "community": 373,
+      "community_name": "workers/README.md",
       "norm_label": "durable-objects/patterns.md",
       "id": "agents_skills_cloudflare_references_durable_objects_patterns"
     },
@@ -57706,8 +57717,8 @@
       "source_file": ".agents/skills/cloudflare/references/images/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 372,
-      "community_name": "Cloudflare Images Skill Reference",
+      "community": 802,
+      "community_name": "images/README.md",
       "norm_label": "images/readme.md",
       "id": "agents_skills_cloudflare_references_images_readme"
     },
@@ -57794,8 +57805,8 @@
       "source_file": ".agents/skills/cloudflare/references/images/api.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 258,
-      "community_name": "API Reference",
+      "community": 802,
+      "community_name": "images/README.md",
       "norm_label": "images/api.md",
       "id": "agents_skills_cloudflare_references_images_api"
     },
@@ -58102,8 +58113,8 @@
       "source_file": ".agents/skills/cloudflare/references/images/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 372,
-      "community_name": "Cloudflare Images Skill Reference",
+      "community": 802,
+      "community_name": "images/README.md",
       "norm_label": "images/gotchas.md",
       "id": "agents_skills_cloudflare_references_images_gotchas"
     },
@@ -58267,8 +58278,8 @@
       "source_file": ".agents/skills/cloudflare/references/images/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 372,
-      "community_name": "Cloudflare Images Skill Reference",
+      "community": 802,
+      "community_name": "images/README.md",
       "norm_label": "images/patterns.md",
       "id": "agents_skills_cloudflare_references_images_patterns"
     },
@@ -58399,8 +58410,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 373,
-      "community_name": "workers/README.md",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "kv/readme.md",
       "id": "agents_skills_cloudflare_references_kv_readme"
     },
@@ -58509,8 +58520,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/api.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 373,
-      "community_name": "workers/README.md",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "kv/api.md",
       "id": "agents_skills_cloudflare_references_kv_api"
     },
@@ -58740,8 +58751,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 373,
-      "community_name": "workers/README.md",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "kv/gotchas.md",
       "id": "agents_skills_cloudflare_references_kv_gotchas"
     },
@@ -58861,8 +58872,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 373,
-      "community_name": "workers/README.md",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "kv/patterns.md",
       "id": "agents_skills_cloudflare_references_kv_patterns"
     },
@@ -58872,8 +58883,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 640,
-      "community_name": "KV Patterns & Best Practices",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "kv patterns & best practices",
       "id": "agents_skills_cloudflare_references_kv_patterns_kv_patterns_best_practices"
     },
@@ -58883,8 +58894,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/patterns.md",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 640,
-      "community_name": "KV Patterns & Best Practices",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "multi-tier caching",
       "id": "agents_skills_cloudflare_references_kv_patterns_multi_tier_caching"
     },
@@ -58894,8 +58905,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/patterns.md",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 640,
-      "community_name": "KV Patterns & Best Practices",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "api response caching",
       "id": "agents_skills_cloudflare_references_kv_patterns_api_response_caching"
     },
@@ -58905,8 +58916,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/patterns.md",
       "source_location": "L55",
       "_origin": "ast",
-      "community": 640,
-      "community_name": "KV Patterns & Best Practices",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "session management",
       "id": "agents_skills_cloudflare_references_kv_patterns_session_management"
     },
@@ -58916,8 +58927,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/patterns.md",
       "source_location": "L80",
       "_origin": "ast",
-      "community": 640,
-      "community_name": "KV Patterns & Best Practices",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "coalesce cold keys",
       "id": "agents_skills_cloudflare_references_kv_patterns_coalesce_cold_keys"
     },
@@ -58927,8 +58938,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/patterns.md",
       "source_location": "L98",
       "_origin": "ast",
-      "community": 640,
-      "community_name": "KV Patterns & Best Practices",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "prefix-based namespacing",
       "id": "agents_skills_cloudflare_references_kv_patterns_prefix_based_namespacing"
     },
@@ -58938,8 +58949,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/patterns.md",
       "source_location": "L133",
       "_origin": "ast",
-      "community": 640,
-      "community_name": "KV Patterns & Best Practices",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "metadata versioning",
       "id": "agents_skills_cloudflare_references_kv_patterns_metadata_versioning"
     },
@@ -58949,8 +58960,8 @@
       "source_file": ".agents/skills/cloudflare/references/kv/patterns.md",
       "source_location": "L173",
       "_origin": "ast",
-      "community": 640,
-      "community_name": "KV Patterns & Best Practices",
+      "community": 452,
+      "community_name": "Cloudflare Workers KV",
       "norm_label": "error boundary pattern",
       "id": "agents_skills_cloudflare_references_kv_patterns_error_boundary_pattern"
     },
@@ -63625,7 +63636,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "queues/readme.md",
       "id": "agents_skills_cloudflare_references_queues_readme"
     },
@@ -63635,7 +63646,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 455,
+      "community": 462,
       "community_name": "Cloudflare Queues",
       "norm_label": "cloudflare queues",
       "id": "agents_skills_cloudflare_references_queues_readme_cloudflare_queues"
@@ -63646,7 +63657,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/README.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 455,
+      "community": 462,
       "community_name": "Cloudflare Queues",
       "norm_label": "overview",
       "id": "agents_skills_cloudflare_references_queues_readme_overview"
@@ -63657,7 +63668,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/README.md",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 455,
+      "community": 462,
       "community_name": "Cloudflare Queues",
       "norm_label": "quick start",
       "id": "agents_skills_cloudflare_references_queues_readme_quick_start"
@@ -63668,7 +63679,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/README.md",
       "source_location": "L42",
       "_origin": "ast",
-      "community": 455,
+      "community": 462,
       "community_name": "Cloudflare Queues",
       "norm_label": "critical warnings",
       "id": "agents_skills_cloudflare_references_queues_readme_critical_warnings"
@@ -63679,7 +63690,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/README.md",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 455,
+      "community": 462,
       "community_name": "Cloudflare Queues",
       "norm_label": "core operations",
       "id": "agents_skills_cloudflare_references_queues_readme_core_operations"
@@ -63690,7 +63701,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/README.md",
       "source_location": "L61",
       "_origin": "ast",
-      "community": 455,
+      "community": 462,
       "community_name": "Cloudflare Queues",
       "norm_label": "architecture",
       "id": "agents_skills_cloudflare_references_queues_readme_architecture"
@@ -63701,7 +63712,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/README.md",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 455,
+      "community": 462,
       "community_name": "Cloudflare Queues",
       "norm_label": "reading order",
       "id": "agents_skills_cloudflare_references_queues_readme_reading_order"
@@ -63712,7 +63723,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/README.md",
       "source_location": "L85",
       "_origin": "ast",
-      "community": 455,
+      "community": 462,
       "community_name": "Cloudflare Queues",
       "norm_label": "in this reference",
       "id": "agents_skills_cloudflare_references_queues_readme_in_this_reference"
@@ -63723,7 +63734,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/README.md",
       "source_location": "L92",
       "_origin": "ast",
-      "community": 455,
+      "community": 462,
       "community_name": "Cloudflare Queues",
       "norm_label": "see also",
       "id": "agents_skills_cloudflare_references_queues_readme_see_also"
@@ -63735,7 +63746,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "queues/api.md",
       "id": "agents_skills_cloudflare_references_queues_api"
     },
@@ -63746,7 +63757,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "queues api reference",
       "id": "agents_skills_cloudflare_references_queues_api_queues_api_reference"
     },
@@ -63757,7 +63768,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "producer: send messages",
       "id": "agents_skills_cloudflare_references_queues_api_producer_send_messages"
     },
@@ -63768,7 +63779,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "consumer: push-based (worker)",
       "id": "agents_skills_cloudflare_references_queues_api_consumer_push_based_worker"
     },
@@ -63779,7 +63790,7 @@
       "source_location": "L93",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "ack/retry precedence rules",
       "id": "agents_skills_cloudflare_references_queues_api_ack_retry_precedence_rules"
     },
@@ -63790,7 +63801,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "batch operations",
       "id": "agents_skills_cloudflare_references_queues_api_batch_operations"
     },
@@ -63801,7 +63812,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "exponential backoff",
       "id": "agents_skills_cloudflare_references_queues_api_exponential_backoff"
     },
@@ -63812,7 +63823,7 @@
       "source_location": "L139",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "multiple queues, single consumer",
       "id": "agents_skills_cloudflare_references_queues_api_multiple_queues_single_consumer"
     },
@@ -63823,7 +63834,7 @@
       "source_location": "L154",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "consumer: pull-based (http)",
       "id": "agents_skills_cloudflare_references_queues_api_consumer_pull_based_http"
     },
@@ -63834,7 +63845,7 @@
       "source_location": "L183",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "interfaces",
       "id": "agents_skills_cloudflare_references_queues_api_interfaces"
     },
@@ -63845,7 +63856,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "queues/configuration.md",
       "id": "agents_skills_cloudflare_references_queues_configuration"
     },
@@ -63855,8 +63866,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/configuration.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 241,
-      "community_name": "Queues Configuration",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "queues configuration",
       "id": "agents_skills_cloudflare_references_queues_configuration_queues_configuration"
     },
@@ -63866,8 +63877,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/configuration.md",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 241,
-      "community_name": "Queues Configuration",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "create queue",
       "id": "agents_skills_cloudflare_references_queues_configuration_create_queue"
     },
@@ -63877,8 +63888,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/configuration.md",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 241,
-      "community_name": "Queues Configuration",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "producer binding",
       "id": "agents_skills_cloudflare_references_queues_configuration_producer_binding"
     },
@@ -63888,8 +63899,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/configuration.md",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 241,
-      "community_name": "Queues Configuration",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "consumer configuration (push-based)",
       "id": "agents_skills_cloudflare_references_queues_configuration_consumer_configuration_push_based"
     },
@@ -63899,8 +63910,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/configuration.md",
       "source_location": "L48",
       "_origin": "ast",
-      "community": 241,
-      "community_name": "Queues Configuration",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "consumer configuration (pull-based)",
       "id": "agents_skills_cloudflare_references_queues_configuration_consumer_configuration_pull_based"
     },
@@ -63910,8 +63921,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/configuration.md",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 241,
-      "community_name": "Queues Configuration",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "typescript types",
       "id": "agents_skills_cloudflare_references_queues_configuration_typescript_types"
     },
@@ -63921,8 +63932,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/configuration.md",
       "source_location": "L91",
       "_origin": "ast",
-      "community": 241,
-      "community_name": "Queues Configuration",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "content type selection",
       "id": "agents_skills_cloudflare_references_queues_configuration_content_type_selection"
     },
@@ -63932,8 +63943,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/configuration.md",
       "source_location": "L129",
       "_origin": "ast",
-      "community": 241,
-      "community_name": "Queues Configuration",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "cli commands",
       "id": "agents_skills_cloudflare_references_queues_configuration_cli_commands"
     },
@@ -63943,8 +63954,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "queues/gotchas.md",
       "id": "agents_skills_cloudflare_references_queues_gotchas"
     },
@@ -63954,8 +63965,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "queues gotchas & troubleshooting",
       "id": "agents_skills_cloudflare_references_queues_gotchas_queues_gotchas_troubleshooting"
     },
@@ -63965,8 +63976,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "critical: top production mistakes",
       "id": "agents_skills_cloudflare_references_queues_gotchas_critical_top_production_mistakes"
     },
@@ -63976,8 +63987,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "1. \"entire batch retried after single error\"",
       "id": "agents_skills_cloudflare_references_queues_gotchas_1_entire_batch_retried_after_single_error"
     },
@@ -63987,8 +63998,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "2. \"messages retry forever\"",
       "id": "agents_skills_cloudflare_references_queues_gotchas_2_messages_retry_forever"
     },
@@ -63998,8 +64009,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "common errors",
       "id": "agents_skills_cloudflare_references_queues_gotchas_common_errors"
     },
@@ -64009,8 +64020,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L66",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "\"duplicate message processing\"",
       "id": "agents_skills_cloudflare_references_queues_gotchas_duplicate_message_processing"
     },
@@ -64020,8 +64031,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L88",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "\"pull consumer can't decode messages\"",
       "id": "agents_skills_cloudflare_references_queues_gotchas_pull_consumer_can_t_decode_messages"
     },
@@ -64031,8 +64042,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L102",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "\"messages not being delivered\"",
       "id": "agents_skills_cloudflare_references_queues_gotchas_messages_not_being_delivered"
     },
@@ -64042,8 +64053,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L108",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "\"high dead letter queue rate\"",
       "id": "agents_skills_cloudflare_references_queues_gotchas_high_dead_letter_queue_rate"
     },
@@ -64053,8 +64064,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L114",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "error classification patterns",
       "id": "agents_skills_cloudflare_references_queues_gotchas_error_classification_patterns"
     },
@@ -64064,8 +64075,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L155",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "\"cpu time exceeded in consumer\"",
       "id": "agents_skills_cloudflare_references_queues_gotchas_cpu_time_exceeded_in_consumer"
     },
@@ -64075,8 +64086,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L161",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "content type decision guide",
       "id": "agents_skills_cloudflare_references_queues_gotchas_content_type_decision_guide"
     },
@@ -64086,8 +64097,8 @@
       "source_file": ".agents/skills/cloudflare/references/queues/gotchas.md",
       "source_location": "L189",
       "_origin": "ast",
-      "community": 173,
-      "community_name": "Queues Gotchas & Troubleshooting",
+      "community": 212,
+      "community_name": "Queues API Reference",
       "norm_label": "limits",
       "id": "agents_skills_cloudflare_references_queues_gotchas_limits"
     },
@@ -64098,7 +64109,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 212,
-      "community_name": "Queues Patterns & Best Practices",
+      "community_name": "Queues API Reference",
       "norm_label": "queues/patterns.md",
       "id": "agents_skills_cloudflare_references_queues_patterns"
     },
@@ -64108,7 +64119,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "queues patterns & best practices",
       "id": "agents_skills_cloudflare_references_queues_patterns_queues_patterns_best_practices"
@@ -64119,7 +64130,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "async task processing",
       "id": "agents_skills_cloudflare_references_queues_patterns_async_task_processing"
@@ -64130,7 +64141,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "buffering api calls",
       "id": "agents_skills_cloudflare_references_queues_patterns_buffering_api_calls"
@@ -64141,7 +64152,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "rate limiting upstream",
       "id": "agents_skills_cloudflare_references_queues_patterns_rate_limiting_upstream"
@@ -64152,7 +64163,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "event-driven workflows",
       "id": "agents_skills_cloudflare_references_queues_patterns_event_driven_workflows"
@@ -64163,7 +64174,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "dead letter queue pattern",
       "id": "agents_skills_cloudflare_references_queues_patterns_dead_letter_queue_pattern"
@@ -64174,7 +64185,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L111",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "priority queues",
       "id": "agents_skills_cloudflare_references_queues_patterns_priority_queues"
@@ -64185,7 +64196,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L115",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "delayed job processing",
       "id": "agents_skills_cloudflare_references_queues_patterns_delayed_job_processing"
@@ -64196,7 +64207,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L121",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "fan-out pattern",
       "id": "agents_skills_cloudflare_references_queues_patterns_fan_out_pattern"
@@ -64207,7 +64218,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L138",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "idempotency pattern",
       "id": "agents_skills_cloudflare_references_queues_patterns_idempotency_pattern"
@@ -64218,7 +64229,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L157",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "integration: d1 batch writes",
       "id": "agents_skills_cloudflare_references_queues_patterns_integration_d1_batch_writes"
@@ -64229,7 +64240,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L177",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "integration: workflows",
       "id": "agents_skills_cloudflare_references_queues_patterns_integration_workflows"
@@ -64240,7 +64251,7 @@
       "source_file": ".agents/skills/cloudflare/references/queues/patterns.md",
       "source_location": "L197",
       "_origin": "ast",
-      "community": 212,
+      "community": 63,
       "community_name": "Queues Patterns & Best Practices",
       "norm_label": "integration: durable objects",
       "id": "agents_skills_cloudflare_references_queues_patterns_integration_durable_objects"
@@ -69256,7 +69267,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 810,
+      "community": 725,
       "community_name": "smart-placement/README.md",
       "norm_label": "smart-placement/readme.md",
       "id": "agents_skills_cloudflare_references_smart_placement_readme"
@@ -69399,7 +69410,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/api.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 810,
+      "community": 725,
       "community_name": "smart-placement/README.md",
       "norm_label": "smart-placement/api.md",
       "id": "agents_skills_cloudflare_references_smart_placement_api"
@@ -69509,7 +69520,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/configuration.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 810,
+      "community": 725,
       "community_name": "smart-placement/README.md",
       "norm_label": "smart-placement/configuration.md",
       "id": "agents_skills_cloudflare_references_smart_placement_configuration"
@@ -69586,7 +69597,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/configuration.md",
       "source_location": "L62",
       "_origin": "ast",
-      "community": 811,
+      "community": 741,
       "community_name": "Requirements & Limitations",
       "norm_label": "requirements & limitations",
       "id": "agents_skills_cloudflare_references_smart_placement_configuration_requirements_limitations"
@@ -69597,7 +69608,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/configuration.md",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 811,
+      "community": 741,
       "community_name": "Requirements & Limitations",
       "norm_label": "requirements",
       "id": "agents_skills_cloudflare_references_smart_placement_configuration_requirements"
@@ -69608,7 +69619,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/configuration.md",
       "source_location": "L70",
       "_origin": "ast",
-      "community": 811,
+      "community": 741,
       "community_name": "Requirements & Limitations",
       "norm_label": "what smart placement affects",
       "id": "agents_skills_cloudflare_references_smart_placement_configuration_what_smart_placement_affects"
@@ -69619,7 +69630,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/configuration.md",
       "source_location": "L112",
       "_origin": "ast",
-      "community": 811,
+      "community": 741,
       "community_name": "Requirements & Limitations",
       "norm_label": "baseline traffic",
       "id": "agents_skills_cloudflare_references_smart_placement_configuration_baseline_traffic"
@@ -69630,7 +69641,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/configuration.md",
       "source_location": "L115",
       "_origin": "ast",
-      "community": 811,
+      "community": 741,
       "community_name": "Requirements & Limitations",
       "norm_label": "validation rules",
       "id": "agents_skills_cloudflare_references_smart_placement_configuration_validation_rules"
@@ -69685,7 +69696,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 810,
+      "community": 725,
       "community_name": "smart-placement/README.md",
       "norm_label": "smart-placement/gotchas.md",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas"
@@ -69696,7 +69707,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 495,
+      "community": 397,
       "community_name": "Smart Placement Gotchas",
       "norm_label": "smart placement gotchas",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_smart_placement_gotchas"
@@ -69707,7 +69718,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 828,
+      "community": 777,
       "community_name": "Common Errors",
       "norm_label": "common errors",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_common_errors"
@@ -69718,7 +69729,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 828,
+      "community": 777,
       "community_name": "Common Errors",
       "norm_label": "\"insufficient_invocations\"",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_insufficient_invocations"
@@ -69729,7 +69740,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 828,
+      "community": 777,
       "community_name": "Common Errors",
       "norm_label": "\"unsupported_application\"",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_unsupported_application"
@@ -69740,7 +69751,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 828,
+      "community": 777,
       "community_name": "Common Errors",
       "norm_label": "\"no request duration metrics\"",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_no_request_duration_metrics"
@@ -69751,7 +69762,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L38",
       "_origin": "ast",
-      "community": 828,
+      "community": 777,
       "community_name": "Common Errors",
       "norm_label": "\"cf-placement header missing\"",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_cf_placement_header_missing"
@@ -69762,7 +69773,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 495,
+      "community": 397,
       "community_name": "Smart Placement Gotchas",
       "norm_label": "pages/assets + smart placement performance degradation",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_pages_assets_smart_placement_performance_degradation"
@@ -69773,7 +69784,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L75",
       "_origin": "ast",
-      "community": 495,
+      "community": 397,
       "community_name": "Smart Placement Gotchas",
       "norm_label": "monolithic full-stack worker",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_monolithic_full_stack_worker"
@@ -69784,7 +69795,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L98",
       "_origin": "ast",
-      "community": 495,
+      "community": 397,
       "community_name": "Smart Placement Gotchas",
       "norm_label": "local development confusion",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_local_development_confusion"
@@ -69795,7 +69806,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L106",
       "_origin": "ast",
-      "community": 495,
+      "community": 397,
       "community_name": "Smart Placement Gotchas",
       "norm_label": "baseline traffic & analysis time",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_baseline_traffic_analysis_time"
@@ -69806,7 +69817,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L112",
       "_origin": "ast",
-      "community": 495,
+      "community": 397,
       "community_name": "Smart Placement Gotchas",
       "norm_label": "rpc methods not affected (critical limitation)",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_rpc_methods_not_affected_critical_limitation"
@@ -69817,7 +69828,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L141",
       "_origin": "ast",
-      "community": 495,
+      "community": 397,
       "community_name": "Smart Placement Gotchas",
       "norm_label": "requirements",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_requirements"
@@ -69828,7 +69839,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L147",
       "_origin": "ast",
-      "community": 495,
+      "community": 397,
       "community_name": "Smart Placement Gotchas",
       "norm_label": "limits",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_limits"
@@ -69839,7 +69850,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L156",
       "_origin": "ast",
-      "community": 495,
+      "community": 397,
       "community_name": "Smart Placement Gotchas",
       "norm_label": "disabling smart placement",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_disabling_smart_placement"
@@ -69850,7 +69861,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/gotchas.md",
       "source_location": "L165",
       "_origin": "ast",
-      "community": 495,
+      "community": 397,
       "community_name": "Smart Placement Gotchas",
       "norm_label": "when not to use smart placement",
       "id": "agents_skills_cloudflare_references_smart_placement_gotchas_when_not_to_use_smart_placement"
@@ -69861,7 +69872,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 810,
+      "community": 725,
       "community_name": "smart-placement/README.md",
       "norm_label": "smart-placement/patterns.md",
       "id": "agents_skills_cloudflare_references_smart_placement_patterns"
@@ -69872,7 +69883,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 690,
+      "community": 603,
       "community_name": "Smart Placement Patterns",
       "norm_label": "smart placement patterns",
       "id": "agents_skills_cloudflare_references_smart_placement_patterns_smart_placement_patterns"
@@ -69883,7 +69894,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/patterns.md",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 690,
+      "community": 603,
       "community_name": "Smart Placement Patterns",
       "norm_label": "backend worker with database access",
       "id": "agents_skills_cloudflare_references_smart_placement_patterns_backend_worker_with_database_access"
@@ -69894,7 +69905,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/patterns.md",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 690,
+      "community": 603,
       "community_name": "Smart Placement Patterns",
       "norm_label": "frontend + backend split (service bindings)",
       "id": "agents_skills_cloudflare_references_smart_placement_patterns_frontend_backend_split_service_bindings"
@@ -69905,7 +69916,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/patterns.md",
       "source_location": "L75",
       "_origin": "ast",
-      "community": 690,
+      "community": 603,
       "community_name": "Smart Placement Patterns",
       "norm_label": "external api integration",
       "id": "agents_skills_cloudflare_references_smart_placement_patterns_external_api_integration"
@@ -69916,7 +69927,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/patterns.md",
       "source_location": "L96",
       "_origin": "ast",
-      "community": 690,
+      "community": 603,
       "community_name": "Smart Placement Patterns",
       "norm_label": "ssr / api gateway pattern",
       "id": "agents_skills_cloudflare_references_smart_placement_patterns_ssr_api_gateway_pattern"
@@ -69927,7 +69938,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/patterns.md",
       "source_location": "L121",
       "_origin": "ast",
-      "community": 690,
+      "community": 603,
       "community_name": "Smart Placement Patterns",
       "norm_label": "durable objects with smart placement",
       "id": "agents_skills_cloudflare_references_smart_placement_patterns_durable_objects_with_smart_placement"
@@ -69938,7 +69949,7 @@
       "source_file": ".agents/skills/cloudflare/references/smart-placement/patterns.md",
       "source_location": "L177",
       "_origin": "ast",
-      "community": 690,
+      "community": 603,
       "community_name": "Smart Placement Patterns",
       "norm_label": "best practices",
       "id": "agents_skills_cloudflare_references_smart_placement_patterns_best_practices"
@@ -74613,8 +74624,8 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 603,
-      "community_name": "tunnel/README.md",
+      "community": 321,
+      "community_name": "Cloudflare Tunnel",
       "norm_label": "tunnel/readme.md",
       "id": "agents_skills_cloudflare_references_tunnel_readme"
     },
@@ -74745,8 +74756,8 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/api.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 603,
-      "community_name": "tunnel/README.md",
+      "community": 321,
+      "community_name": "Cloudflare Tunnel",
       "norm_label": "tunnel/api.md",
       "id": "agents_skills_cloudflare_references_tunnel_api"
     },
@@ -75020,8 +75031,8 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/configuration.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 603,
-      "community_name": "tunnel/README.md",
+      "community": 321,
+      "community_name": "Cloudflare Tunnel",
       "norm_label": "tunnel/configuration.md",
       "id": "agents_skills_cloudflare_references_tunnel_configuration"
     },
@@ -75196,7 +75207,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "tunnel/gotchas.md",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas"
@@ -75207,7 +75218,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "tunnel gotchas",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_tunnel_gotchas"
@@ -75218,7 +75229,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "common errors",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_common_errors"
@@ -75229,7 +75240,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "\"error 1016 (origin dns error)\"",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_error_1016_origin_dns_error"
@@ -75240,7 +75251,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "\"self-signed certificate rejected\"",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_self_signed_certificate_rejected"
@@ -75251,7 +75262,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "\"connection timeout\"",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_connection_timeout"
@@ -75262,7 +75273,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "\"tunnel not starting\"",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_tunnel_not_starting"
@@ -75273,7 +75284,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "\"connection already registered\"",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_connection_already_registered"
@@ -75284,7 +75295,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L58",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "\"tunnel credentials rotated but connections fail\"",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_tunnel_credentials_rotated_but_connections_fail"
@@ -75295,7 +75306,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L73",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "limits",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_limits"
@@ -75306,7 +75317,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "best practices",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_best_practices"
@@ -75317,7 +75328,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L86",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "security",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_security"
@@ -75328,7 +75339,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L94",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "performance",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_performance"
@@ -75339,7 +75350,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L102",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "configuration",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_configuration"
@@ -75350,7 +75361,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L109",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "operations",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_operations"
@@ -75361,7 +75372,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L117",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "debug mode",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_debug_mode"
@@ -75372,7 +75383,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L124",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "migration strategies",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_migration_strategies"
@@ -75383,7 +75394,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L126",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "from ngrok",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_from_ngrok"
@@ -75394,7 +75405,7 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/gotchas.md",
       "source_location": "L136",
       "_origin": "ast",
-      "community": 397,
+      "community": 149,
       "community_name": "Common Errors",
       "norm_label": "from vpn",
       "id": "agents_skills_cloudflare_references_tunnel_gotchas_from_vpn"
@@ -75405,8 +75416,8 @@
       "source_file": ".agents/skills/cloudflare/references/tunnel/networking.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 603,
-      "community_name": "tunnel/README.md",
+      "community": 321,
+      "community_name": "Cloudflare Tunnel",
       "norm_label": "networking.md",
       "id": "agents_skills_cloudflare_references_tunnel_networking"
     },
@@ -77198,8 +77209,8 @@
       "source_file": ".agents/skills/cloudflare/references/turnstile/gotchas.md",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 220,
-      "community_name": "Troubleshooting & Gotchas",
+      "community": 455,
+      "community_name": "Critical Rules",
       "norm_label": "critical rules",
       "id": "agents_skills_cloudflare_references_turnstile_gotchas_critical_rules"
     },
@@ -77209,8 +77220,8 @@
       "source_file": ".agents/skills/cloudflare/references/turnstile/gotchas.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 220,
-      "community_name": "Troubleshooting & Gotchas",
+      "community": 455,
+      "community_name": "Critical Rules",
       "norm_label": "\u274c skipping server-side validation",
       "id": "agents_skills_cloudflare_references_turnstile_gotchas_skipping_server_side_validation"
     },
@@ -77220,8 +77231,8 @@
       "source_file": ".agents/skills/cloudflare/references/turnstile/gotchas.md",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 220,
-      "community_name": "Troubleshooting & Gotchas",
+      "community": 455,
+      "community_name": "Critical Rules",
       "norm_label": "\u274c exposing secret key",
       "id": "agents_skills_cloudflare_references_turnstile_gotchas_exposing_secret_key"
     },
@@ -77231,8 +77242,8 @@
       "source_file": ".agents/skills/cloudflare/references/turnstile/gotchas.md",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 220,
-      "community_name": "Troubleshooting & Gotchas",
+      "community": 455,
+      "community_name": "Critical Rules",
       "norm_label": "\u274c reusing tokens (single-use rule)",
       "id": "agents_skills_cloudflare_references_turnstile_gotchas_reusing_tokens_single_use_rule"
     },
@@ -77242,8 +77253,8 @@
       "source_file": ".agents/skills/cloudflare/references/turnstile/gotchas.md",
       "source_location": "L35",
       "_origin": "ast",
-      "community": 220,
-      "community_name": "Troubleshooting & Gotchas",
+      "community": 455,
+      "community_name": "Critical Rules",
       "norm_label": "\u274c not handling token expiry",
       "id": "agents_skills_cloudflare_references_turnstile_gotchas_not_handling_token_expiry"
     },
@@ -77264,8 +77275,8 @@
       "source_file": ".agents/skills/cloudflare/references/turnstile/gotchas.md",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 780,
-      "community_name": "Framework Gotchas",
+      "community": 220,
+      "community_name": "Troubleshooting & Gotchas",
       "norm_label": "framework gotchas",
       "id": "agents_skills_cloudflare_references_turnstile_gotchas_framework_gotchas"
     },
@@ -77275,8 +77286,8 @@
       "source_file": ".agents/skills/cloudflare/references/turnstile/gotchas.md",
       "source_location": "L58",
       "_origin": "ast",
-      "community": 780,
-      "community_name": "Framework Gotchas",
+      "community": 220,
+      "community_name": "Troubleshooting & Gotchas",
       "norm_label": "react: widget re-mounting",
       "id": "agents_skills_cloudflare_references_turnstile_gotchas_react_widget_re_mounting"
     },
@@ -77286,8 +77297,8 @@
       "source_file": ".agents/skills/cloudflare/references/turnstile/gotchas.md",
       "source_location": "L86",
       "_origin": "ast",
-      "community": 780,
-      "community_name": "Framework Gotchas",
+      "community": 220,
+      "community_name": "Troubleshooting & Gotchas",
       "norm_label": "react strictmode: double render",
       "id": "agents_skills_cloudflare_references_turnstile_gotchas_react_strictmode_double_render"
     },
@@ -77297,8 +77308,8 @@
       "source_file": ".agents/skills/cloudflare/references/turnstile/gotchas.md",
       "source_location": "L97",
       "_origin": "ast",
-      "community": 780,
-      "community_name": "Framework Gotchas",
+      "community": 220,
+      "community_name": "Troubleshooting & Gotchas",
       "norm_label": "next.js: ssr hydration",
       "id": "agents_skills_cloudflare_references_turnstile_gotchas_next_js_ssr_hydration"
     },
@@ -77308,8 +77319,8 @@
       "source_file": ".agents/skills/cloudflare/references/turnstile/gotchas.md",
       "source_location": "L106",
       "_origin": "ast",
-      "community": 780,
-      "community_name": "Framework Gotchas",
+      "community": 220,
+      "community_name": "Troubleshooting & Gotchas",
       "norm_label": "spa: navigation without cleanup",
       "id": "agents_skills_cloudflare_references_turnstile_gotchas_spa_navigation_without_cleanup"
     },
@@ -78837,8 +78848,8 @@
       "source_file": ".agents/skills/cloudflare/references/web-analytics/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 843,
-      "community_name": "web-analytics/README.md",
+      "community": 399,
+      "community_name": "Framework Integration",
       "norm_label": "web-analytics/readme.md",
       "id": "agents_skills_cloudflare_references_web_analytics_readme"
     },
@@ -79035,8 +79046,8 @@
       "source_file": ".agents/skills/cloudflare/references/web-analytics/configuration.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 843,
-      "community_name": "web-analytics/README.md",
+      "community": 399,
+      "community_name": "Framework Integration",
       "norm_label": "web-analytics/configuration.md",
       "id": "agents_skills_cloudflare_references_web_analytics_configuration"
     },
@@ -79156,8 +79167,8 @@
       "source_file": ".agents/skills/cloudflare/references/web-analytics/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 843,
-      "community_name": "web-analytics/README.md",
+      "community": 542,
+      "community_name": "Web Analytics Gotchas",
       "norm_label": "web-analytics/gotchas.md",
       "id": "agents_skills_cloudflare_references_web_analytics_gotchas"
     },
@@ -79398,8 +79409,8 @@
       "source_file": ".agents/skills/cloudflare/references/web-analytics/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 843,
-      "community_name": "web-analytics/README.md",
+      "community": 399,
+      "community_name": "Framework Integration",
       "norm_label": "web-analytics/patterns.md",
       "id": "agents_skills_cloudflare_references_web_analytics_patterns"
     },
@@ -81488,8 +81499,8 @@
       "source_file": ".agents/skills/cloudflare/references/workers-for-platforms/api.md",
       "source_location": "L89",
       "_origin": "ast",
-      "community": 725,
-      "community_name": "Static Assets",
+      "community": 222,
+      "community_name": "API Operations",
       "norm_label": "static assets",
       "id": "agents_skills_cloudflare_references_workers_for_platforms_api_static_assets"
     },
@@ -81499,8 +81510,8 @@
       "source_file": ".agents/skills/cloudflare/references/workers-for-platforms/api.md",
       "source_location": "L93",
       "_origin": "ast",
-      "community": 725,
-      "community_name": "Static Assets",
+      "community": 222,
+      "community_name": "API Operations",
       "norm_label": "1. create upload session",
       "id": "agents_skills_cloudflare_references_workers_for_platforms_api_1_create_upload_session"
     },
@@ -81510,8 +81521,8 @@
       "source_file": ".agents/skills/cloudflare/references/workers-for-platforms/api.md",
       "source_location": "L107",
       "_origin": "ast",
-      "community": 725,
-      "community_name": "Static Assets",
+      "community": 222,
+      "community_name": "API Operations",
       "norm_label": "2. upload files",
       "id": "agents_skills_cloudflare_references_workers_for_platforms_api_2_upload_files"
     },
@@ -81521,8 +81532,8 @@
       "source_file": ".agents/skills/cloudflare/references/workers-for-platforms/api.md",
       "source_location": "L117",
       "_origin": "ast",
-      "community": 725,
-      "community_name": "Static Assets",
+      "community": 222,
+      "community_name": "API Operations",
       "norm_label": "3. deploy with assets",
       "id": "agents_skills_cloudflare_references_workers_for_platforms_api_3_deploy_with_assets"
     },
@@ -82852,8 +82863,8 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 603,
-      "community_name": "tunnel/README.md",
+      "community": 130,
+      "community_name": "TCP Sockets API Reference",
       "norm_label": "workers-vpc/readme.md",
       "id": "agents_skills_cloudflare_references_workers_vpc_readme"
     },
@@ -82984,8 +82995,8 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/api.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 603,
-      "community_name": "tunnel/README.md",
+      "community": 130,
+      "community_name": "TCP Sockets API Reference",
       "norm_label": "workers-vpc/api.md",
       "id": "agents_skills_cloudflare_references_workers_vpc_api"
     },
@@ -82995,7 +83006,7 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/api.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 70,
+      "community": 130,
       "community_name": "TCP Sockets API Reference",
       "norm_label": "tcp sockets api reference",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_tcp_sockets_api_reference"
@@ -83006,7 +83017,7 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/api.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 70,
+      "community": 130,
       "community_name": "TCP Sockets API Reference",
       "norm_label": "core function: `connect()`",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_core_function_connect"
@@ -83017,7 +83028,7 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/api.md",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 70,
+      "community": 130,
       "community_name": "TCP Sockets API Reference",
       "norm_label": "parameters",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_parameters"
@@ -83028,7 +83039,7 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/api.md",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 70,
+      "community": 130,
       "community_name": "TCP Sockets API Reference",
       "norm_label": "`socketaddress`",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_socketaddress"
@@ -83039,7 +83050,7 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/api.md",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 70,
+      "community": 130,
       "community_name": "TCP Sockets API Reference",
       "norm_label": "`socketoptions`",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_socketoptions"
@@ -83050,7 +83061,7 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/api.md",
       "source_location": "L58",
       "_origin": "ast",
-      "community": 70,
+      "community": 130,
       "community_name": "TCP Sockets API Reference",
       "norm_label": "returns",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_returns"
@@ -83062,7 +83073,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "community": 70,
-      "community_name": "TCP Sockets API Reference",
+      "community_name": "Properties",
       "norm_label": "socket interface",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_socket_interface"
     },
@@ -83073,7 +83084,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "community": 70,
-      "community_name": "TCP Sockets API Reference",
+      "community_name": "Properties",
       "norm_label": "properties",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_properties"
     },
@@ -83084,7 +83095,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "community": 70,
-      "community_name": "TCP Sockets API Reference",
+      "community_name": "Properties",
       "norm_label": "`readable: readablestream<uint8array>`",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_readable_readablestream_uint8array"
     },
@@ -83095,7 +83106,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "community": 70,
-      "community_name": "TCP Sockets API Reference",
+      "community_name": "Properties",
       "norm_label": "`writable: writablestream<uint8array>`",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_writable_writablestream_uint8array"
     },
@@ -83106,7 +83117,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "community": 70,
-      "community_name": "TCP Sockets API Reference",
+      "community_name": "Properties",
       "norm_label": "`opened: promise<socketinfo>`",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_opened_promise_socketinfo"
     },
@@ -83117,7 +83128,7 @@
       "source_location": "L118",
       "_origin": "ast",
       "community": 70,
-      "community_name": "TCP Sockets API Reference",
+      "community_name": "Properties",
       "norm_label": "`closed: promise<void>`",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_closed_promise_void"
     },
@@ -83128,7 +83139,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "community": 70,
-      "community_name": "TCP Sockets API Reference",
+      "community_name": "Properties",
       "norm_label": "methods",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_methods"
     },
@@ -83139,7 +83150,7 @@
       "source_location": "L124",
       "_origin": "ast",
       "community": 70,
-      "community_name": "TCP Sockets API Reference",
+      "community_name": "Properties",
       "norm_label": "`close(): promise<void>`",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_close_promise_void"
     },
@@ -83150,7 +83161,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "community": 70,
-      "community_name": "TCP Sockets API Reference",
+      "community_name": "Properties",
       "norm_label": "`starttls(): socket`",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_starttls_socket"
     },
@@ -83160,7 +83171,7 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/api.md",
       "source_location": "L156",
       "_origin": "ast",
-      "community": 70,
+      "community": 130,
       "community_name": "TCP Sockets API Reference",
       "norm_label": "complete example",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_complete_example"
@@ -83171,7 +83182,7 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/api.md",
       "source_location": "L185",
       "_origin": "ast",
-      "community": 70,
+      "community": 130,
       "community_name": "TCP Sockets API Reference",
       "norm_label": "quick reference",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_quick_reference"
@@ -83182,7 +83193,7 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/api.md",
       "source_location": "L198",
       "_origin": "ast",
-      "community": 70,
+      "community": 130,
       "community_name": "TCP Sockets API Reference",
       "norm_label": "see also",
       "id": "agents_skills_cloudflare_references_workers_vpc_api_see_also"
@@ -83193,8 +83204,8 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/configuration.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 603,
-      "community_name": "tunnel/README.md",
+      "community": 130,
+      "community_name": "TCP Sockets API Reference",
       "norm_label": "workers-vpc/configuration.md",
       "id": "agents_skills_cloudflare_references_workers_vpc_configuration"
     },
@@ -83358,8 +83369,8 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/gotchas.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 603,
-      "community_name": "tunnel/README.md",
+      "community": 130,
+      "community_name": "TCP Sockets API Reference",
       "norm_label": "workers-vpc/gotchas.md",
       "id": "agents_skills_cloudflare_references_workers_vpc_gotchas"
     },
@@ -83655,8 +83666,8 @@
       "source_file": ".agents/skills/cloudflare/references/workers-vpc/patterns.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 603,
-      "community_name": "tunnel/README.md",
+      "community": 130,
+      "community_name": "TCP Sockets API Reference",
       "norm_label": "workers-vpc/patterns.md",
       "id": "agents_skills_cloudflare_references_workers_vpc_patterns"
     },
@@ -96360,7 +96371,7 @@
       "source_file": ".agents/skills/turborepo/references/cli/RULE.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 641,
+      "community": 588,
       "community_name": "turbo run",
       "norm_label": "cli/rule.md",
       "id": "agents_skills_turborepo_references_cli_rule"
@@ -96371,7 +96382,7 @@
       "source_file": ".agents/skills/turborepo/references/cli/RULE.md",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 641,
+      "community": 588,
       "community_name": "turbo run",
       "norm_label": "turbo run",
       "id": "agents_skills_turborepo_references_cli_rule_turbo_run"
@@ -96382,7 +96393,7 @@
       "source_file": ".agents/skills/turborepo/references/cli/RULE.md",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 641,
+      "community": 588,
       "community_name": "turbo run",
       "norm_label": "basic usage",
       "id": "agents_skills_turborepo_references_cli_rule_basic_usage"
@@ -96393,7 +96404,7 @@
       "source_file": ".agents/skills/turborepo/references/cli/RULE.md",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 641,
+      "community": 588,
       "community_name": "turbo run",
       "norm_label": "when to use `turbo run` vs `turbo`",
       "id": "agents_skills_turborepo_references_cli_rule_when_to_use_turbo_run_vs_turbo"
@@ -96404,7 +96415,7 @@
       "source_file": ".agents/skills/turborepo/references/cli/RULE.md",
       "source_location": "L53",
       "_origin": "ast",
-      "community": 641,
+      "community": 588,
       "community_name": "turbo run",
       "norm_label": "running tasks",
       "id": "agents_skills_turborepo_references_cli_rule_running_tasks"
@@ -96415,7 +96426,7 @@
       "source_file": ".agents/skills/turborepo/references/cli/RULE.md",
       "source_location": "L68",
       "_origin": "ast",
-      "community": 641,
+      "community": 588,
       "community_name": "turbo run",
       "norm_label": "passing arguments to scripts",
       "id": "agents_skills_turborepo_references_cli_rule_passing_arguments_to_scripts"
@@ -96426,7 +96437,7 @@
       "source_file": ".agents/skills/turborepo/references/cli/RULE.md",
       "source_location": "L80",
       "_origin": "ast",
-      "community": 641,
+      "community": 588,
       "community_name": "turbo run",
       "norm_label": "package selection",
       "id": "agents_skills_turborepo_references_cli_rule_package_selection"
@@ -96437,7 +96448,7 @@
       "source_file": ".agents/skills/turborepo/references/cli/RULE.md",
       "source_location": "L91",
       "_origin": "ast",
-      "community": 641,
+      "community": 588,
       "community_name": "turbo run",
       "norm_label": "quick reference",
       "id": "agents_skills_turborepo_references_cli_rule_quick_reference"
@@ -115869,7 +115880,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "apps/web/src/routes/login.tsx",
-      "source_location": "L16",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -115903,7 +115914,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "apps/web/src/routes/signup.tsx",
-      "source_location": "L16",
+      "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -220790,5 +220801,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "997369120aa28cd02327267a74164b52d282d212"
+  "built_at_commit": "8dff1db3dc5870eebaddd8159e6ed3c529cf0239"
 }
