@@ -13,6 +13,7 @@ coverage
 
 .turbo
 .worktrees/
+.superpowers/
 
 .vercel
 
@@ -31,7 +32,12 @@ yarn-error.log*
 .DS_Store
 *.pem
 
-/docs
+/docs/*
+!/docs/superpowers/
+/docs/superpowers/*
+!/docs/superpowers/specs/
+/docs/superpowers/specs/*
+!/docs/superpowers/specs/2026-08-11-production-ui-overhaul-design.md
 
 # Wrangler local dev secrets (never commit)
 **/.dev.vars*
