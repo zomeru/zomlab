@@ -105,6 +105,19 @@ The exact directories may be reduced if a category would contain only one incide
 Repeated raw controls and class strings move incrementally to shared components. Business
 components remain in the app even when they are restyled with design-system primitives.
 
+### Stylesheet and theme interface
+
+`packages/ui` exports a token stylesheet that contains semantic CSS variables, the `.dark` token
+overrides, `@theme inline` mappings, and shared base/component layers. It does not import Tailwind
+itself. `apps/web/src/styles/globals.css` remains the application's single CSS entry point: it
+imports Tailwind once, registers `packages/ui/src` as a Tailwind source, imports the shared token
+stylesheet, and then defines app-only MDX or route rules. Storybook uses its own preview stylesheet
+that imports Tailwind once, scans `packages/ui/src`, and imports the same shared token stylesheet.
+
+The app and Storybook both apply resolved theme state to the root element with exactly one `.light`
+or `.dark` class. Components consume semantic utilities only; they do not own a parallel theme
+provider or duplicate token values.
+
 ## Design foundations
 
 ### Color
@@ -147,14 +160,21 @@ Code keeps clear differentiation without reducing legibility.
 
 ## Shared component scope
 
-Implement only components required by current application or Storybook foundation coverage.
-Expected first-wave primitives and patterns are:
+The first implementation wave is mandatory and maps directly to current consumers:
 
-- Button, Input, Textarea, Label, Badge, Separator, Skeleton;
-- Tooltip, Dropdown Menu, Collapsible, Sheet, and the Sidebar family;
-- Card, Alert, Empty State, and loading/error feedback patterns;
-- App Shell, Page Container, Page Header, and content-width variants;
-- Callout, Code or Source Container, Demo Panel, Diagram Container, and responsive Table wrapper.
+| Shared unit | Current consumer boundary |
+| --- | --- |
+| Button, Input, Textarea, Label, Badge | auth, notes, search, header actions, and planned labels |
+| Dropdown Menu | current custom profile/user menu |
+| Collapsible, Sheet, and Sidebar family | current nested sidebar and its responsive presentation |
+| Skeleton, Alert, and Empty State | profile loading, auth/notes failures, and notes empty state |
+| Card, App Shell, Page Container, and Page Header | root shell, auth cards, notes, and route layouts |
+| Callout, Code Container, Demo Panel, Diagram Container, Table Wrapper | MDX, terminal/source blocks, embedded demos, Mermaid, and documentation tables |
+
+Helpers for class composition and semantic variants are also mandatory. Separator, Tooltip, and
+other shadcn primitives are added only when integration reveals a current, named consumer; their
+existence is not part of completion. Selects, dialogs, popovers, pagination, tabs, and other unused
+catalog components remain out of scope.
 
 Variants must encode product semantics rather than arbitrary visual permutations. Components use
 native elements and accessible Radix/shadcn behavior where an interaction pattern requires focus
@@ -178,16 +198,19 @@ Routes select an intentional container variant instead of repeating unrelated ma
 
 ### Desktop
 
-Render a persistent, scrollable sidebar. It is expanded by default and may collapse to a compact
-icon/rail presentation only where the retained hierarchy remains understandable. Provide a visible,
-keyboard-accessible trigger and an optional documented shortcut. Collapsing must not cause layout
-shift beyond the deliberate content inset transition.
+At `64rem`/1024 CSS pixels and above, render a persistent, scrollable 16rem sidebar. It is expanded
+by default and can collapse fully off-canvas; the header retains a visible, keyboard-accessible
+trigger. Do not implement an icon-only rail in this pass because the current text-led navigation has
+no stable icon model. Persist desktop expanded/collapsed state in a `zomlab_sidebar` cookie and read
+that cookie during server rendering so hydration does not change the initial content inset. The
+content inset may transition only after a user-triggered state change. A keyboard shortcut is not a
+completion requirement.
 
 ### Tablet
 
-At intermediate widths, retain a compact rail only where the content remains usable. The full
-nested navigation opens off-canvas from the same trigger. Breakpoints follow content fit rather
-than relying exclusively on framework defaults.
+Below `64rem`, remove the persistent sidebar and use the overlay Sheet presentation. Do not retain a
+compact rail. Tablet widths use the same navigation tree and focus behavior as mobile with a maximum
+18rem Sheet width.
 
 ### Mobile
 
@@ -200,8 +223,32 @@ Render the complete existing navigation inside a full-height Sheet. The Sheet mu
 - expose visible active state and expanded ancestors;
 - preserve comfortable touch targets and avoid off-screen controls.
 
+The Sheet width is `min(18rem, calc(100vw - 2rem))`. It closes after a navigation link is selected.
+Mobile/overlay open state is transient and is never written to the desktop-state cookie. Active-route
+ancestors always open when the navigation mounts. User-opened inactive sections remain open only
+while that navigation instance is mounted; closing and reopening the Sheet re-derives disclosure
+state from the active route rather than persisting arbitrary expansions.
+
 All presentations use the same `NAV` data and active-state logic. There is no separately maintained
 mobile menu tree.
+
+## Theme behavior
+
+Replace the hardcoded initial dark class and binary post-hydration toggle with an explicit
+preference contract:
+
+- accepted preferences are `light`, `dark`, and `system`;
+- store the preference under the existing `theme` local-storage key;
+- when no preference exists, default to `system`;
+- a small inline head bootstrap resolves the stored preference and `prefers-color-scheme` before the
+  first paint, then applies exactly one `.light` or `.dark` class and matching `color-scheme`;
+- system preference listens for operating-system changes while selected;
+- the accessible theme control exposes all three named options and indicates the selected option;
+- theme changes update shared components, MDX, code surfaces, overlays, and Mermaid without reload;
+- Storybook's theme toolbar sets an explicit light or dark class and does not persist app preference.
+
+The bootstrap must be deterministic, covered by a non-React theme-resolution unit test, and verified
+for no incorrect-theme flash or hydration warning in a production build.
 
 ## MDX and documentation UI
 
@@ -280,11 +327,14 @@ Do not add React component tests or visual snapshots. Add unit tests only for de
 logic introduced by this work, such as class/variant helpers, Mermaid configuration, or theme
 resolution utilities.
 
-Update existing Playwright coverage for the responsive sidebar and other changed user flows. Browser
-verification must cover representative homepage, documentation, demo, auth/form, MDX, Mermaid, and
-authenticated routes when credentials and an isolated database are available.
+Update existing Playwright coverage for the responsive sidebar and other changed user flows. The
+automated responsive matrix covers 375, 768, and 1280 CSS pixels in both explicit themes for the
+shell/sidebar and at least one MDX/Mermaid route. Browser verification must cover representative
+homepage, documentation, demo, auth/form, MDX, Mermaid, and authenticated routes when credentials
+and an isolated database are available.
 
-Verify at 320, 375, 430, 768, 1024, 1280, and 1440+ pixel widths in light and dark themes. Include:
+Perform and record a manual browser audit at 320, 375, 430, 768, 1024, 1280, and 1440+ pixel widths
+in light and dark themes. Include:
 
 - sidebar opening, closing, nesting, active state, focus trap, and focus restoration;
 - keyboard-only traversal, visible focus, reduced motion, and 200% zoom;
@@ -301,6 +351,22 @@ pnpm run build
 ```
 
 Run `graphify update .` after implementation changes, as required by repository policy.
+
+## Final implementation report
+
+The completion response records:
+
+1. major UI and design-system changes;
+2. the final `packages/ui` structure and components moved or adopted by `apps/web`;
+3. responsive sidebar and mobile navigation behavior;
+4. theme, color, and typography decisions;
+5. MDX, Mermaid, and Storybook changes;
+6. accessibility and performance decisions;
+7. tests added or updated and the recorded manual browser matrix;
+8. remaining technical debt or follow-up work;
+9. the observed result of each required validation command.
+
+Do not claim completion when a required command was not run or did not pass.
 
 ## Implementation sequence
 
