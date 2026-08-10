@@ -1,12 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Alert } from "@zomlab/ui/components/alert";
+import { DiagramContainer } from "@zomlab/ui/components/docs";
+import { Skeleton } from "@zomlab/ui/components/skeleton";
+import { createMermaidThemeVariables } from "@zomlab/ui/lib/mermaid-theme";
+import { useEffect, useId, useRef, useState } from "react";
+
+let mermaidRenderQueue = Promise.resolve();
+
+function enqueueMermaidRender<T>(task: () => Promise<T>): Promise<T> {
+  const result = mermaidRenderQueue.then(task, task);
+  mermaidRenderQueue = result.then(
+    () => undefined,
+    () => undefined,
+  );
+  return result;
+}
 
 interface MermaidProps {
   chart: string;
 }
 
 export function Mermaid({ chart }: MermaidProps) {
+  const id = useId().replaceAll(":", "");
+  const renderGeneration = useRef(0);
   const [svg, setSvg] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,21 +31,40 @@ export function Mermaid({ chart }: MermaidProps) {
     let cancelled = false;
 
     async function render() {
+      const generation = ++renderGeneration.current;
+
       try {
-        const { default: mermaid } = await import("mermaid");
-        const dark = document.documentElement.classList.contains("dark");
-        mermaid.initialize({
-          startOnLoad: false,
-          securityLevel: "strict",
-          theme: dark ? "dark" : "default",
+        const styles = getComputedStyle(document.documentElement);
+        const token = (name: string) => styles.getPropertyValue(name).trim();
+        const themeVariables = createMermaidThemeVariables({
+          background: token("--diagram-background"),
+          border: token("--diagram-border"),
+          foreground: token("--diagram-foreground"),
+          muted: token("--diagram-muted"),
+          mutedForeground: token("--diagram-muted-foreground"),
+          primary: token("--diagram-primary"),
+          primaryForeground: token("--diagram-primary-foreground"),
         });
-        const { svg: rendered } = await mermaid.render(
-          `mermaid-${Math.random().toString(36).slice(2)}`,
-          chart,
-        );
-        if (!cancelled) setSvg(rendered);
+
+        const rendered = await enqueueMermaidRender(async () => {
+          const { default: mermaid } = await import("mermaid");
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: "strict",
+            theme: "base",
+            themeVariables,
+          });
+          return mermaid.render(`mermaid-${id}-${generation}`, chart);
+        });
+
+        if (!cancelled && generation === renderGeneration.current) {
+          setError(null);
+          setSvg(rendered.svg);
+        }
       } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : "Failed to render diagram");
+        if (!cancelled && generation === renderGeneration.current) {
+          setError(e instanceof Error ? e.message : "Failed to render diagram");
+        }
       }
     }
 
@@ -43,24 +79,24 @@ export function Mermaid({ chart }: MermaidProps) {
       cancelled = true;
       observer.disconnect();
     };
-  }, [chart]);
+  }, [chart, id]);
 
   if (error) {
     return (
-      <pre className="overflow-x-auto rounded-md border border-destructive/30 bg-destructive/5 p-4 text-xs text-destructive">
-        {chart}
-        <span className="mt-2 block font-medium">Mermaid error: {error}</span>
-      </pre>
+      <Alert variant="destructive" role="alert">
+        <span className="font-medium">Diagram could not be rendered.</span>
+        <span className="mt-1 block font-mono text-xs">{error}</span>
+      </Alert>
     );
   }
 
   if (!svg) {
-    return <div className="py-8 text-center text-sm text-muted-foreground">Loading diagram…</div>;
+    return <Skeleton className="my-6 h-56" aria-label="Loading diagram" />;
   }
 
   return (
-    <div
-      className="my-6 overflow-x-auto rounded-lg border border-border bg-card p-4"
+    <DiagramContainer
+      aria-label="Architecture diagram"
       // Mermaid renders to sanitized SVG (securityLevel: "strict").
       // biome-ignore lint/security/noDangerouslySetInnerHtml: required by Mermaid API
       dangerouslySetInnerHTML={{ __html: svg }}

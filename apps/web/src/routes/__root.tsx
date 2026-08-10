@@ -4,16 +4,29 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { createRootRoute, HeadContent, Link, Outlet, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import {
+  DesktopSidebarTrigger,
+  MobileSidebarTrigger,
+  SidebarDesktop,
+  SidebarInset,
+  SidebarMobile,
+  SidebarProvider,
+  useSidebar,
+} from "@zomlab/ui/components/sidebar";
+import { THEME_INIT_SCRIPT } from "@zomlab/ui/lib/preferences";
+import { GitHubLink } from "~/components/layout/github-link";
+import { GlobalSearch } from "~/components/layout/global-search";
+import { ProfileButton } from "~/components/layout/profile-button";
+import { SidebarNav } from "~/components/layout/sidebar-nav";
+import { SiteFooter } from "~/components/layout/site-footer";
+import { ThemeControl } from "~/components/theme/theme-control";
+import { getSidebarPreference } from "~/lib/sidebar.function";
 import { getRouter } from "~/router";
-import { GitHubLink } from "../components/layout/github-link";
-import { GlobalSearch } from "../components/layout/global-search";
-import { ProfileButton } from "../components/layout/profile-button";
-import { SidebarNav } from "../components/layout/sidebar-nav";
-import { ThemeToggle } from "../components/theme/theme-toggle";
 
 import appCss from "../styles/globals.css?url";
 
 export const Route = createRootRoute({
+  loader: () => getSidebarPreference(),
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -31,104 +44,96 @@ export const Route = createRootRoute({
 
 function Devtools() {
   const router = getRouter();
-
   return (
     <TanStackDevtools
       plugins={[
-        {
-          name: "TanStack Query",
-          render: <ReactQueryDevtoolsPanel />,
-        },
-        {
-          name: "TanStack Router",
-          render: <TanStackRouterDevtoolsPanel router={router} />,
-        },
+        { name: "TanStack Query", render: <ReactQueryDevtoolsPanel /> },
+        { name: "TanStack Router", render: <TanStackRouterDevtoolsPanel router={router} /> },
       ]}
     />
   );
 }
 
-function RootDocument() {
+function MobileNavigation() {
+  const { setMobileOpen } = useSidebar();
   return (
-    <html lang="en" className="dark h-full antialiased">
+    <SidebarMobile>
+      <SidebarNav onNavigate={() => setMobileOpen(false)} />
+    </SidebarMobile>
+  );
+}
+
+function RootDocument() {
+  const sidebarDefaultOpen = Route.useLoaderData();
+
+  return (
+    <html lang="en" className="light h-full" suppressHydrationWarning>
       <head>
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static pre-paint theme bootstrap prevents a color flash */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
-      <body className="flex min-h-full flex-col bg-background text-foreground">
+      <body className="flex min-h-full flex-col bg-sidebar text-foreground">
         <a
           href="#main"
-          className="sr-only rounded-md focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground"
+          className="sr-only rounded-md focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:not-sr-only focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground"
         >
           Skip to content
         </a>
 
-        <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60">
-          <div className="mx-auto flex h-14 w-full max-w-350 items-center gap-3 px-4 sm:px-6 lg:px-8">
-            <Link to="/" className="flex shrink-0 items-center gap-2.5">
-              <span
-                aria-hidden="true"
-                className="grid size-6 place-items-center rounded-md bg-primary font-mono text-xs font-bold text-primary-foreground"
+        <SidebarProvider defaultOpen={sidebarDefaultOpen}>
+          <header className="sticky top-0 z-40 border-b border-sidebar-border bg-sidebar/92 backdrop-blur-lg">
+            <div className="mx-auto flex h-14 w-full max-w-[90rem] items-center gap-1.5 px-2 sm:gap-3 sm:px-4 lg:px-5">
+              <MobileSidebarTrigger />
+              <DesktopSidebarTrigger />
+
+              <Link
+                to="/"
+                aria-label="ZomLab"
+                className="flex shrink-0 items-center gap-2 rounded-md px-1 py-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sidebar-ring"
               >
-                Z
-              </span>
-              <span className="text-base font-semibold tracking-tight text-foreground">ZomLab</span>
-            </Link>
+                <span
+                  aria-hidden="true"
+                  className="grid size-7 place-items-center rounded-md bg-primary font-mono text-xs font-bold text-primary-foreground"
+                >
+                  Z
+                </span>
+                <span className="hidden sm:block">
+                  <span className="block text-sm font-semibold tracking-tight text-sidebar-foreground">
+                    ZomLab
+                  </span>
+                  <span className="block font-mono text-[0.5625rem] uppercase tracking-[0.16em] text-muted-foreground">
+                    Engineering lab
+                  </span>
+                </span>
+              </Link>
 
-            <GlobalSearch />
+              <GlobalSearch />
 
-            <div className="ml-auto flex items-center gap-1.5">
-              <GitHubLink />
-              <ThemeToggle />
-              <ProfileButton />
-            </div>
-          </div>
-        </header>
-
-        <div className="mx-auto flex w-full max-w-350 flex-1">
-          <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-60 shrink-0 overflow-y-auto border-r border-border bg-sidebar px-4 py-6 md:block">
-            <SidebarNav />
-          </aside>
-
-          <main id="main" className="min-w-0 flex-1 px-4 py-8 sm:px-8 lg:px-10">
-            <Outlet />
-          </main>
-        </div>
-
-        <footer className="border-t border-border py-8">
-          <div className="mx-auto max-w-350 px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <p className="text-sm font-semibold text-foreground">ZomLab</p>
-                <p className="mt-1 text-sm text-muted-foreground">Interactive Engineering Lab</p>
-                <p className="mt-1 text-xs text-muted-foreground">License: MIT</p>
+              <div className="ml-auto flex items-center gap-0.5 sm:gap-1">
+                <GitHubLink />
+                <ThemeControl />
+                <ProfileButton />
               </div>
-              <nav aria-label="Footer" className="flex gap-6">
-                <a
-                  href="https://github.com/zomeru/zomlab"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  GitHub
-                </a>
-                <a
-                  href="https://github.com/zomeru/zomlab/releases"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  Changelog
-                </a>
-                <a href="/status" className="text-sm text-muted-foreground hover:text-foreground">
-                  Tech Stack
-                </a>
-              </nav>
             </div>
-            <div className="mt-6 flex flex-col gap-2 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-xs text-muted-foreground">
-                TanStack Start &middot; Hono &middot; Drizzle &middot; Better Auth &middot; Tailwind
-                CSS
-              </p>
-              <p className="text-xs text-muted-foreground">v0.1.0</p>
-            </div>
+          </header>
+
+          <div className="mx-auto flex w-full max-w-[90rem] flex-1 bg-background lg:my-3 lg:overflow-clip lg:rounded-xl lg:shadow-[var(--surface-shadow)]">
+            <SidebarDesktop>
+              <SidebarNav />
+            </SidebarDesktop>
+            <MobileNavigation />
+
+            <SidebarInset>
+              <main id="main" className="min-w-0 px-4 py-8 sm:px-7 sm:py-10 lg:px-10 xl:px-12">
+                <Outlet />
+              </main>
+            </SidebarInset>
           </div>
-        </footer>
+
+          <SiteFooter />
+        </SidebarProvider>
+
         {import.meta.env.DEV ? <Devtools /> : null}
         <Scripts />
       </body>

@@ -1,16 +1,17 @@
 "use client";
 
 import { useNavigate } from "@tanstack/react-router";
+import { Alert } from "@zomlab/ui/components/alert";
+import { Button } from "@zomlab/ui/components/button";
+import { Card, CardContent } from "@zomlab/ui/components/card";
+import { Input } from "@zomlab/ui/components/input";
+import { Label } from "@zomlab/ui/components/label";
+import { Skeleton } from "@zomlab/ui/components/skeleton";
+import { Textarea } from "@zomlab/ui/components/textarea";
 import { useState } from "react";
 import { useDeleteNote } from "../hooks/use-delete-note";
 import { useNote } from "../hooks/use-note";
 import { useUpdateNote } from "../hooks/use-update-note";
-
-const INPUT_CLASSES =
-  "mt-1.5 h-10 w-full rounded-md border border-input bg-background px-3 text-base text-foreground placeholder:text-muted-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:text-sm";
-
-const SECONDARY_BUTTON_CLASSES =
-  "h-9 rounded-md border border-border bg-background px-4 text-sm font-medium text-foreground transition-[background-color,transform] hover:bg-muted active:scale-[0.96]";
 
 export function NoteDetail({ id }: { id: string }) {
   const navigate = useNavigate();
@@ -24,17 +25,19 @@ export function NoteDetail({ id }: { id: string }) {
 
   if (isLoading) {
     return (
-      <p className="text-sm text-muted-foreground" role="status">
-        Loading note…
-      </p>
+      <div className="mx-auto max-w-3xl space-y-4" role="status" aria-label="Loading note">
+        <Skeleton className="h-10 w-2/3" />
+        <Skeleton className="h-5 w-48" />
+        <Skeleton className="mt-8 h-52" />
+      </div>
     );
   }
 
   if (error || !note) {
     return (
-      <p className="rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+      <Alert className="mx-auto max-w-3xl" variant="destructive" role="alert">
         {error?.message ?? "Note not found"}
-      </p>
+      </Alert>
     );
   }
 
@@ -59,8 +62,12 @@ export function NoteDetail({ id }: { id: string }) {
   }
 
   async function handleDelete() {
-    await deleteNote.mutateAsync(id);
-    navigate({ to: "/core/crud/demo" });
+    try {
+      await deleteNote.mutateAsync(id);
+      navigate({ to: "/core/crud/demo" });
+    } catch {
+      // The mutation exposes the actionable error beside the destructive control.
+    }
   }
 
   return (
@@ -77,75 +84,72 @@ export function NoteDetail({ id }: { id: string }) {
 
         {!editing && (
           <div className="flex shrink-0 gap-2">
-            <button type="button" onClick={startEdit} className={SECONDARY_BUTTON_CLASSES}>
+            <Button type="button" variant="outline" onClick={startEdit}>
               Edit
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              variant="destructive"
               onClick={handleDelete}
               disabled={deleteNote.isPending}
-              className="h-9 rounded-md border border-destructive/40 bg-background px-4 text-sm font-medium text-destructive transition-[background-color,transform] hover:bg-destructive/5 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {deleteNote.isPending ? "Deleting…" : "Delete"}
-            </button>
+            </Button>
           </div>
         )}
       </div>
 
+      {deleteNote.error && !editing ? (
+        <Alert className="mt-4" variant="destructive" role="alert">
+          Could not delete this note. {deleteNote.error.message} You can try again.
+        </Alert>
+      ) : null}
+
       {editing ? (
-        <form onSubmit={handleSave} className="mt-8 space-y-4">
-          <label className="block">
-            <span className="text-sm font-medium text-foreground">Title</span>
-            <input
-              type="text"
-              required
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className={INPUT_CLASSES}
-            />
-          </label>
+        <Card className="mt-8">
+          <CardContent className="pt-6">
+            <form onSubmit={handleSave} className="space-y-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="note-title">Title</Label>
+                <Input
+                  id="note-title"
+                  type="text"
+                  required
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
 
-          <label className="block">
-            <span className="text-sm font-medium text-foreground">Content</span>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              rows={8}
-              className="mt-1.5 w-full resize-y rounded-md border border-input bg-background px-3 py-2 text-base text-foreground placeholder:text-muted-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:text-sm"
-            />
-          </label>
+              <div className="space-y-1.5">
+                <Label htmlFor="note-content">Content</Label>
+                <Textarea
+                  id="note-content"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  rows={8}
+                />
+              </div>
 
-          {updateNote.error && (
-            <p
-              className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
-              role="alert"
-            >
-              {updateNote.error.message}
-            </p>
-          )}
+              {updateNote.error && (
+                <Alert variant="destructive" role="alert">
+                  {updateNote.error.message}
+                </Alert>
+              )}
 
-          <div className="flex gap-2">
-            <button
-              type="submit"
-              disabled={updateNote.isPending}
-              className="h-9 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-[background-color,transform] hover:bg-primary/90 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {updateNote.isPending ? "Saving…" : "Save"}
-            </button>
-            <button
-              type="button"
-              onClick={() => setEditing(false)}
-              className={SECONDARY_BUTTON_CLASSES}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
+              <div className="flex gap-2">
+                <Button type="submit" disabled={updateNote.isPending}>
+                  {updateNote.isPending ? "Saving…" : "Save"}
+                </Button>
+                <Button type="button" variant="outline" onClick={() => setEditing(false)}>
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
       ) : (
         currentNote.content && (
-          <div className="mt-8 whitespace-pre-wrap leading-7 text-foreground">
-            {currentNote.content}
-          </div>
+          <div className="text-prose mt-8 whitespace-pre-wrap leading-7">{currentNote.content}</div>
         )
       )}
     </article>

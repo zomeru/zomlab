@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "css": "src/styles/tokens.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@zomlab/ui/components",
+    "ui": "@zomlab/ui/components",
+    "hooks": "@zomlab/ui/hooks",
+    "lib": "@zomlab/ui/lib",
+    "utils": "@zomlab/ui/lib/utils"
+  }
+}

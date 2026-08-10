@@ -90,5 +90,9 @@ test("sign up requires matching passwords", async ({ page }) => {
   await page.getByLabel("Confirm password", { exact: true }).fill("different-password");
   await page.getByRole("button", { name: "Sign up" }).click();
 
+  const confirmPassword = page.getByLabel("Confirm password", { exact: true });
   await expect(page.getByRole("alert")).toHaveText("Passwords do not match");
+  await expect(confirmPassword).toBeFocused();
+  await expect(confirmPassword).toHaveAttribute("aria-invalid", "true");
+  await expect(confirmPassword).toHaveAttribute("aria-describedby", "confirm-password-error");
 });

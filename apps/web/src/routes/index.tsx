@@ -1,4 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Badge } from "@zomlab/ui/components/badge";
+import { Card } from "@zomlab/ui/components/card";
+import { PageDescription, PageEyebrow, PageHeader, PageTitle } from "@zomlab/ui/components/page";
 import { TerminalBlock } from "../components/terminal-block";
 
 export const Route = createFileRoute("/")({
@@ -53,21 +56,18 @@ const HERO_META = {
 function GettingStarted() {
   return (
     <div className="mx-auto max-w-3xl">
-      <header>
-        <p className="font-mono text-sm text-muted-foreground">docs / getting-started</p>
-        <h1 className="mt-2 text-4xl font-semibold tracking-tight text-balance">Getting started</h1>
-        <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
+      <PageHeader>
+        <PageEyebrow>docs / getting-started</PageEyebrow>
+        <PageTitle>Getting started</PageTitle>
+        <PageDescription>
           ZomLab is a personal software engineering lab where working features and their
           documentation live together in one TypeScript monorepo.
-        </p>
+        </PageDescription>
 
         <ul className="mt-5 flex flex-wrap gap-2" aria-label="Technology badges">
           {BADGES.map((badge) => (
-            <li
-              key={badge}
-              className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-xs text-foreground"
-            >
-              {badge}
+            <li key={badge}>
+              <Badge variant="outline">{badge}</Badge>
             </li>
           ))}
         </ul>
@@ -79,7 +79,7 @@ function GettingStarted() {
           <span aria-hidden="true">·</span>
           <span>Reading time: {HERO_META.readingTime}</span>
         </p>
-      </header>
+      </PageHeader>
 
       <hr className="my-10 border-border" />
 
@@ -155,12 +155,12 @@ function GettingStarted() {
         <h2 className="text-2xl font-semibold tracking-tight">Review the current stack</h2>
         <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {TECH_STACK.map(({ label, value }) => (
-            <div key={label} className="rounded-xl border border-border bg-card p-4">
+            <Card key={label} className="p-4">
               <dt className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 {label}
               </dt>
               <dd className="mt-1.5 font-medium text-foreground">{value}</dd>
-            </div>
+            </Card>
           ))}
         </dl>
       </section>

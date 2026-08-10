@@ -17,7 +17,13 @@ test("homepage loads and shows ZomLab branding", async ({ page }) => {
     "href",
     "#main",
   );
-  await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Change theme" })).toBeVisible();
+  await page.getByRole("button", { name: "Change theme" }).click();
+  await expect(page.getByRole("menuitemradio", { name: "System" })).toHaveAttribute(
+    "aria-checked",
+    "true",
+  );
+  await page.keyboard.press("Escape");
   await expect(page.getByRole("link", { name: "ZomLab", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Getting Started" })).toBeVisible();
 

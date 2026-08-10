@@ -10,8 +10,10 @@ export function NotesView() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="text-3xl font-semibold tracking-tight text-balance">Notes</h1>
-      <p className="mt-2 text-lg text-muted-foreground">Your personal notes — private to you.</p>
+      <PageHeader>
+        <PageTitle>Notes</PageTitle>
+        <PageDescription>Your personal notes — private to you.</PageDescription>
+      </PageHeader>
 
       <div className="mt-8">
         <NoteForm />
@@ -19,18 +21,16 @@ export function NotesView() {
 
       <div className="mt-10 space-y-4">
         {isLoading && (
-          <p className="text-sm text-muted-foreground" role="status">
-            Loading notes…
-          </p>
+          <div className="space-y-3" role="status" aria-label="Loading notes">
+            <Skeleton className="h-24" />
+            <Skeleton className="h-24" />
+          </div>
         )}
 
         {error && (
-          <p
-            className="rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"
-            role="alert"
-          >
+          <Alert variant="destructive" role="alert">
             Failed to load notes: {error.message}
-          </p>
+          </Alert>
         )}
 
         {!isLoading && !error && data && data.length === 0 && <EmptyState />}
@@ -40,3 +40,7 @@ export function NotesView() {
     </div>
   );
 }
+
+import { Alert } from "@zomlab/ui/components/alert";
+import { PageDescription, PageHeader, PageTitle } from "@zomlab/ui/components/page";
+import { Skeleton } from "@zomlab/ui/components/skeleton";

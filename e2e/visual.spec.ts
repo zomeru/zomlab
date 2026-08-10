@@ -24,7 +24,12 @@ async function captureTheme(
   );
 
   if (!hasExpectedTheme) {
-    await page.getByRole("button", { name: `Switch to ${options.colorScheme} theme` }).click();
+    await page.getByRole("button", { name: "Change theme" }).click();
+    await page
+      .getByRole("menuitemradio", {
+        name: new RegExp(`^${options.colorScheme}`, "i"),
+      })
+      .click();
   }
 
   await expect(root).toHaveClass(new RegExp(`(^|\\s)${options.colorScheme}(\\s|$)`));
@@ -50,11 +55,11 @@ async function signUpAndCreateVisualNote(page: Page) {
   return noteLink;
 }
 
-test("captures the legacy homepage in both themes", async ({ page }) => {
+test("captures the workbench homepage in both themes", async ({ page }) => {
   for (const colorScheme of COLOR_SCHEMES) {
     await captureTheme(page, {
       colorScheme,
-      filename: `legacy-home-${colorScheme}.png`,
+      filename: `workbench-home-${colorScheme}.png`,
       route: "/",
       ready: async () => {
         await expect(page.getByRole("main")).toBeVisible();
@@ -63,11 +68,11 @@ test("captures the legacy homepage in both themes", async ({ page }) => {
   }
 });
 
-test("captures the legacy signup page in both themes", async ({ page }) => {
+test("captures the signup page in both themes", async ({ page }) => {
   for (const colorScheme of COLOR_SCHEMES) {
     await captureTheme(page, {
       colorScheme,
-      filename: `legacy-signup-${colorScheme}.png`,
+      filename: `signup-${colorScheme}.png`,
       route: "/signup",
       ready: async () => {
         await expect(page.getByRole("heading", { name: "Sign up" })).toBeVisible();
@@ -76,26 +81,28 @@ test("captures the legacy signup page in both themes", async ({ page }) => {
   }
 });
 
-test("captures the legacy CRUD documentation in both themes", async ({ page }) => {
+test("captures the CRUD documentation in both themes", async ({ page }) => {
   for (const colorScheme of COLOR_SCHEMES) {
     await captureTheme(page, {
       colorScheme,
-      filename: `legacy-crud-docs-${colorScheme}.png`,
+      filename: `crud-docs-${colorScheme}.png`,
       route: "/core/crud",
       ready: async () => {
-        await expect(page.getByRole("main").locator("div.my-6 svg").first()).toBeVisible();
+        await expect(page.getByRole("main").locator("figure svg").first()).toBeVisible({
+          timeout: 15_000,
+        });
       },
     });
   }
 });
 
-test("captures the authenticated legacy notes list in both themes", async ({ page }) => {
+test("captures the authenticated notes list in both themes", async ({ page }) => {
   await signUpAndCreateVisualNote(page);
 
   for (const colorScheme of COLOR_SCHEMES) {
     await captureTheme(page, {
       colorScheme,
-      filename: `legacy-notes-list-${colorScheme}.png`,
+      filename: `notes-list-${colorScheme}.png`,
       route: "/core/crud/demo",
       ready: async () => {
         await expect(page.getByRole("link", { name: "A beautifully styled note" })).toBeVisible();
@@ -104,7 +111,7 @@ test("captures the authenticated legacy notes list in both themes", async ({ pag
   }
 });
 
-test("captures an authenticated legacy note detail in both themes", async ({ page }) => {
+test("captures an authenticated note detail in both themes", async ({ page }) => {
   const noteLink = await signUpAndCreateVisualNote(page);
   const detailPath = await noteLink.getAttribute("href");
   expect(detailPath).toMatch(/^\/core\/crud\/demo\/[^/]+$/);
@@ -113,7 +120,7 @@ test("captures an authenticated legacy note detail in both themes", async ({ pag
   for (const colorScheme of COLOR_SCHEMES) {
     await captureTheme(page, {
       colorScheme,
-      filename: `legacy-note-detail-${colorScheme}.png`,
+      filename: `note-detail-${colorScheme}.png`,
       route: detailPath,
       ready: async () => {
         await expect(

@@ -28,8 +28,9 @@ const config: KnipConfig = {
       project: ["src/**/*.ts"],
     },
     "packages/ui": {
-      entry: ["src/**/*.{ts,tsx}"],
-      project: ["src/**/*.{ts,tsx}"],
+      entry: ["src/**/*.{ts,tsx}", "src/**/*.mdx"],
+      project: ["src/**/*.{ts,tsx,mdx}", "src/**/*.css"],
+      tailwind: true,
     },
     "packages/vitest-config": {
       project: ["src/**/*.ts"],
