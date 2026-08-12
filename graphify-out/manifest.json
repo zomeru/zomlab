@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/auth/auth-form.tsx": {
-    "mtime": 1786385046.391452,
-    "ast_hash": "24f02dd32704c6251f659c5db6afd100",
+    "mtime": 1786523711.2962098,
+    "ast_hash": "b02af3af492f9121f4de9da930271517",
     "semantic_hash": ""
   },
   "apps/web/src/components/layout/github-link.tsx": {
@@ -245,8 +245,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/routes/__root.tsx": {
-    "mtime": 1786384051.4377873,
-    "ast_hash": "6be15d60e632f4c01557ee653e97a526",
+    "mtime": 1786521174.8650715,
+    "ast_hash": "57e0312afabf4be49c730a13d1091fea",
     "semantic_hash": ""
   },
   "apps/web/src/routes/_authenticated.core.crud.demo.$id.tsx": {
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "e2e/auth.spec.ts": {
-    "mtime": 1786385147.421182,
-    "ast_hash": "29403553114e4173c6e9a4246560ca1a",
+    "mtime": 1786523610.8662796,
+    "ast_hash": "0bd493b3f05e2574ab62ad8ab892f424",
     "semantic_hash": ""
   },
   "e2e/contracts/auth.contract.spec.ts": {
@@ -370,8 +370,8 @@
     "semantic_hash": ""
   },
   "e2e/smoke.spec.ts": {
-    "mtime": 1786385147.4219427,
-    "ast_hash": "572f25cbc08b7250ac4c568bbe145b33",
+    "mtime": 1786521118.151436,
+    "ast_hash": "3f9ee8ff81f05a7dc6955cc373629062",
     "semantic_hash": ""
   },
   "e2e/visual.spec.ts": {
@@ -730,8 +730,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/crud/content/architecture.mdx": {
-    "mtime": 1786298230.4690583,
-    "ast_hash": "0a3067ad51e98d97a93bd57b4ea80015",
+    "mtime": 1786519266.4605649,
+    "ast_hash": "cbb5ab960e110e1e8c7994d5bf601a43",
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/crud/content/overview.mdx": {
@@ -967,6 +967,21 @@
   "zizmor.yml": {
     "mtime": 1786517283.9163902,
     "ast_hash": "b0c4581e379b08d55cc7843101dacd2f",
+    "semantic_hash": ""
+  },
+  "apps/web/src/components/layout/not-found-page.tsx": {
+    "mtime": 1786521207.9659832,
+    "ast_hash": "7874fd795e373152e99fa6e679e3949c",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/components/field.tsx": {
+    "mtime": 1786522825.956076,
+    "ast_hash": "fafa77ed1bbe59729e89e2f59ce999c9",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/components/input-group.tsx": {
+    "mtime": 1786523711.2954078,
+    "ast_hash": "fdb450aadfd3309b12837f0fa132a143",
     "semantic_hash": ""
   }
 }

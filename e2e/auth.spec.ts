@@ -62,6 +62,9 @@ test("auth forms provide password visibility controls and social authentication"
 }) => {
   await page.goto("/login");
 
+  await expect(page.locator('[data-slot="field-group"]')).toHaveCount(1);
+  await expect(page.locator('[data-slot="field"]')).toHaveCount(2);
+  await expect(page.locator('[data-slot="input-group"]')).toHaveCount(2);
   const passwordInput = page.getByLabel("Password", { exact: true });
   await expect(passwordInput).toHaveAttribute("type", "password");
   await page.getByRole("button", { name: "Show password" }).click();
@@ -70,8 +73,12 @@ test("auth forms provide password visibility controls and social authentication"
   await expect(passwordInput).toHaveAttribute("type", "password");
   await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Continue with GitHub" })).toBeVisible();
+  await expect(page.getByText("OR", { exact: true })).toBeVisible();
 
   await page.goto("/signup");
+  await expect(page.locator('[data-slot="field-group"]')).toHaveCount(1);
+  await expect(page.locator('[data-slot="field"]')).toHaveCount(4);
+  await expect(page.locator('[data-slot="input-group"]')).toHaveCount(3);
   await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Continue with GitHub" })).toBeVisible();
   const confirmPasswordInput = page.getByLabel("Confirm password", { exact: true });

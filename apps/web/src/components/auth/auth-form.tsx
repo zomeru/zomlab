@@ -5,8 +5,10 @@ import { authClient } from "@zomlab/auth/client";
 import { Alert } from "@zomlab/ui/components/alert";
 import { Button } from "@zomlab/ui/components/button";
 import { Card, CardContent, CardDescription, CardHeader } from "@zomlab/ui/components/card";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@zomlab/ui/components/field";
 import { Input } from "@zomlab/ui/components/input";
-import { Label } from "@zomlab/ui/components/label";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@zomlab/ui/components/input-group";
+import { EyeIcon, EyeOffIcon, MailIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { getSafeRedirect } from "~/lib/safe-redirect";
 
@@ -26,36 +28,8 @@ function useHydrated() {
 }
 
 function PasswordVisibilityIcon({ visible }: { visible: boolean }) {
-  return (
-    <svg
-      aria-hidden="true"
-      className="size-5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      {visible ? (
-        <>
-          <path strokeLinecap="round" strokeLinejoin="round" d="m3 3 18 18" />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M10.6 10.6a2 2 0 0 0 2.8 2.8m-8.9-8.9C3 5.6 2 7.6 2 9s3.6 6 10 6c1.5 0 2.8-.2 4-.6M6.2 6.2C4.5 7.1 3.4 8.2 2 9c1.5 2.4 4.9 6 10 6 1.2 0 2.3-.2 3.3-.5M9.9 4.2C10.6 4.1 11.3 4 12 4c6.4 0 10 4.6 10 6 0 .8-1.2 2.8-3.4 4.3"
-          />
-        </>
-      ) : (
-        <>
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z"
-          />
-          <circle cx="12" cy="12" r="2.5" />
-        </>
-      )}
-    </svg>
-  );
+  const Icon = visible ? EyeOffIcon : EyeIcon;
+  return <Icon aria-hidden="true" className="size-5" />;
 }
 
 export function AuthForm({ mode, redirect }: AuthFormProps) {
@@ -130,108 +104,118 @@ export function AuthForm({ mode, redirect }: AuthFormProps) {
           <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4" aria-busy={loading || socialLoading}>
+          <form onSubmit={handleSubmit} className="space-y-5" aria-busy={loading || socialLoading}>
             <fieldset disabled={!hydrated || loading || socialLoading} className="contents">
-              {!isLogin && (
-                <div className="space-y-1.5">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    name="name"
-                    autoComplete="name"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-              )}
-
-              <div className="space-y-1.5">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Input
-                    type={passwordVisible ? "text" : "password"}
-                    id="password"
-                    name="password"
-                    autoComplete={isLogin ? "current-password" : "new-password"}
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pr-11"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    aria-label={passwordVisible ? "Hide password" : "Show password"}
-                    aria-pressed={passwordVisible}
-                    onClick={() => setPasswordVisible((visible) => !visible)}
-                    className="absolute right-0 top-0 text-muted-foreground hover:text-foreground"
-                  >
-                    <PasswordVisibilityIcon visible={passwordVisible} />
-                  </Button>
-                </div>
-              </div>
-
-              {!isLogin && (
-                <div className="space-y-1.5">
-                  <Label htmlFor="confirm-password">Confirm password</Label>
-                  <div className="relative">
+              <FieldGroup>
+                {!isLogin && (
+                  <Field>
+                    <FieldLabel htmlFor="name">Name</FieldLabel>
                     <Input
-                      ref={confirmPasswordRef}
-                      type={confirmPasswordVisible ? "text" : "password"}
-                      id="confirm-password"
-                      name="confirmPassword"
-                      autoComplete="new-password"
+                      id="name"
+                      type="text"
+                      name="name"
+                      autoComplete="name"
                       required
-                      aria-invalid={Boolean(confirmPasswordError)}
-                      aria-describedby={confirmPasswordError ? "confirm-password-error" : undefined}
-                      value={confirmPassword}
-                      onChange={(e) => {
-                        setConfirmPassword(e.target.value);
-                        setConfirmPasswordError(null);
-                      }}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </Field>
+                )}
+
+                <Field>
+                  <FieldLabel htmlFor="email">Email</FieldLabel>
+                  <InputGroup>
+                    <InputGroupInput
+                      id="email"
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-10"
+                    />
+                    <InputGroupAddon>
+                      <MailIcon aria-hidden="true" />
+                    </InputGroupAddon>
+                  </InputGroup>
+                </Field>
+
+                <Field>
+                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <InputGroup>
+                    <InputGroupInput
+                      type={passwordVisible ? "text" : "password"}
+                      id="password"
+                      name="password"
+                      autoComplete={isLogin ? "current-password" : "new-password"}
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="pr-11"
                     />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      aria-label={
-                        confirmPasswordVisible ? "Hide confirm password" : "Show confirm password"
-                      }
-                      aria-pressed={confirmPasswordVisible}
-                      onClick={() => setConfirmPasswordVisible((visible) => !visible)}
-                      className="absolute right-0 top-0 text-muted-foreground hover:text-foreground"
-                    >
-                      <PasswordVisibilityIcon visible={confirmPasswordVisible} />
-                    </Button>
-                  </div>
-                  {confirmPasswordError ? (
-                    <p
-                      id="confirm-password-error"
-                      className="text-sm text-destructive"
-                      role="alert"
-                    >
-                      {confirmPasswordError}
-                    </p>
-                  ) : null}
-                </div>
-              )}
+                    <InputGroupAddon align="inline-end">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        aria-label={passwordVisible ? "Hide password" : "Show password"}
+                        aria-pressed={passwordVisible}
+                        onClick={() => setPasswordVisible((visible) => !visible)}
+                        className="bg-transparent text-muted-foreground hover:bg-transparent hover:text-foreground"
+                      >
+                        <PasswordVisibilityIcon visible={passwordVisible} />
+                      </Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                </Field>
+
+                {!isLogin && (
+                  <Field data-invalid={Boolean(confirmPasswordError)}>
+                    <FieldLabel htmlFor="confirm-password">Confirm password</FieldLabel>
+                    <InputGroup>
+                      <InputGroupInput
+                        ref={confirmPasswordRef}
+                        type={confirmPasswordVisible ? "text" : "password"}
+                        id="confirm-password"
+                        name="confirmPassword"
+                        autoComplete="new-password"
+                        required
+                        aria-invalid={Boolean(confirmPasswordError)}
+                        aria-describedby={
+                          confirmPasswordError ? "confirm-password-error" : undefined
+                        }
+                        value={confirmPassword}
+                        onChange={(e) => {
+                          setConfirmPassword(e.target.value);
+                          setConfirmPasswordError(null);
+                        }}
+                        className="pr-11"
+                      />
+                      <InputGroupAddon align="inline-end">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          aria-label={
+                            confirmPasswordVisible
+                              ? "Hide confirm password"
+                              : "Show confirm password"
+                          }
+                          aria-pressed={confirmPasswordVisible}
+                          onClick={() => setConfirmPasswordVisible((visible) => !visible)}
+                          className="bg-transparent text-muted-foreground hover:bg-transparent hover:text-foreground"
+                        >
+                          <PasswordVisibilityIcon visible={confirmPasswordVisible} />
+                        </Button>
+                      </InputGroupAddon>
+                    </InputGroup>
+                    {confirmPasswordError ? (
+                      <FieldError id="confirm-password-error">{confirmPasswordError}</FieldError>
+                    ) : null}
+                  </Field>
+                )}
+              </FieldGroup>
 
               {error && (
                 <Alert variant="destructive" role="alert">
@@ -243,6 +227,14 @@ export function AuthForm({ mode, redirect }: AuthFormProps) {
                 <Button type="submit" className="w-full">
                   {loading ? (isLogin ? "Signing in…" : "Creating account…") : title}
                 </Button>
+                <div
+                  aria-hidden="true"
+                  className="flex items-center gap-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground"
+                >
+                  <span className="h-px flex-1 bg-border" />
+                  <span>OR</span>
+                  <span className="h-px flex-1 bg-border" />
+                </div>
                 <Button
                   type="button"
                   variant="outline"

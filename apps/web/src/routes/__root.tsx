@@ -16,6 +16,7 @@ import {
 import { THEME_INIT_SCRIPT } from "@zomlab/ui/lib/preferences";
 import { GitHubLink } from "~/components/layout/github-link";
 import { GlobalSearch } from "~/components/layout/global-search";
+import { NotFoundPage } from "~/components/layout/not-found-page";
 import { ProfileButton } from "~/components/layout/profile-button";
 import { SidebarNav } from "~/components/layout/sidebar-nav";
 import { SiteFooter } from "~/components/layout/site-footer";
@@ -40,6 +41,7 @@ export const Route = createRootRoute({
     links: [{ rel: "stylesheet", href: appCss }],
   }),
   component: RootDocument,
+  notFoundComponent: NotFoundPage,
 });
 
 function Devtools() {

@@ -6,11 +6,11 @@ down to the database. Each layer only talks to the layer below it.
 <Mermaid
   chart={`
 flowchart TD
-  UI[Notes UI - apps/web] --> H[Hooks - TanStack Query]
-  H --> C[Hono client hc]
-  C --> R[Hono routes /api/notes]
-  R --> S[NoteService]
-  S --> REPO[NoteRepository]
+  UI["Notes UI — apps/web"] --> H["Hooks — TanStack Query"]
+  H --> C["Hono client (hc)"]
+  C --> R["Hono routes (/api/notes)"]
+  R --> S["NoteService"]
+  S --> REPO["NoteRepository"]
   REPO --> DB[(PostgreSQL)]
 `}
 />
