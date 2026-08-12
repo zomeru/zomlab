@@ -18,7 +18,7 @@ The implemented vertical slice is an authenticated notes lab. It includes file-b
 | Styling and content | Tailwind CSS 4, MDX, GitHub Flavored Markdown, and Mermaid |
 | Deployment | Cloudflare Workers through the Cloudflare Vite plugin and Wrangler |
 | Tests and component docs | Vitest 4, Playwright, and Storybook 10 |
-| Quality tooling | Biome, actionlint, syncpack, Knip, TypeScript, Husky, lint-staged, and Changesets |
+| Quality tooling | Biome, zizmor, syncpack, Knip, TypeScript, Husky, lint-staged, and Changesets |
 
 Dependency ranges live in the workspace manifests. Resolved versions live in `pnpm-lock.yaml`.
 
@@ -182,7 +182,7 @@ Run root commands from the repository root.
 | Command | Effect |
 | --- | --- |
 | `pnpm check:all` | Run workflow linting, Biome, syncpack, Knip, TypeScript, and Vitest |
-| `pnpm lint:workflows` | Lint all GitHub Actions workflows with the pinned actionlint package |
+| `pnpm lint:workflows` | Run zizmor against all GitHub Actions workflows (install with `uv tool install zizmor==1.29.0`) |
 | `pnpm lint` | Check repository files with Biome |
 | `pnpm lint:fix` | Apply Biome fixes |
 | `pnpm format` | Format repository files with Biome |

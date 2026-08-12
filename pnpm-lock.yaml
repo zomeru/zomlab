@@ -231,9 +231,6 @@ importers:
       '@types/node':
         specifier: ^26.2.0
         version: 26.2.0
-      actionlint:
-        specifier: 2.0.6
-        version: 2.0.6
       dotenv-cli:
         specifier: ^11.0.0
         version: 11.0.0
@@ -3760,9 +3757,6 @@ packages:
     resolution: {integrity: sha512-lGq+9yr1/GuAWaVYIHRjvvySG5/4VfKIvC8EWxStPdcDh/Ka7FG3twP6v4d5BkravUilhIAsG4Qj83t02LWUPQ==}
     engines: {node: '>=0.4.0'}
     hasBin: true
-
-  actionlint@2.0.6:
-    resolution: {integrity: sha512-tNx8f48yJNSLXTIygGntu5dSZlIZblDt8sR7pIs7EEmmb2PkEF87d+3UKZV2GUgCuN9Awj7k4ZPrwdAxFWEqgw==}
 
   ajv@8.20.0:
     resolution: {integrity: sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==}
@@ -9305,8 +9299,6 @@ snapshots:
       acorn: 8.18.0
 
   acorn@8.18.0: {}
-
-  actionlint@2.0.6: {}
 
   ajv@8.20.0:
     dependencies:

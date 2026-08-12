@@ -17,17 +17,24 @@ jobs:
   check-test-build:
     name: Format, Lint, Test and Build
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    
+    environment: 
+      name: staging
+      deployment: false
+
     env:
       BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
       BETTER_AUTH_URL: http://localhost:3000
       BETTER_AUTH_ALLOWED_HOSTS: localhost:3000
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      APP_ENV: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+      APP_ENV: staging
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v7
+
+      - name: Install zizmor
+        run: python3 -m pip install --user zizmor==1.29.0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
