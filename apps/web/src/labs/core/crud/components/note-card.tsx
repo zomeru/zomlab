@@ -10,7 +10,7 @@ export function NoteCard({ note }: { note: Note }) {
   return (
     <Card className="group transition-[background-color,border-color,box-shadow] hover:border-border-strong hover:bg-surface-elevated hover:shadow-surface">
       <Link
-        to="/core/crud/demo/$id"
+        to="/core/crud-demo/$id"
         params={{ id: note.id }}
         className="block rounded-xl p-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >

@@ -1,4 +1,5 @@
 export * from "./components/alert";
+export * from "./components/attachment";
 export * from "./components/badge";
 export * from "./components/button";
 export * from "./components/card";
@@ -9,9 +10,11 @@ export * from "./components/empty-state";
 export * from "./components/input";
 export * from "./components/label";
 export * from "./components/page";
+export * from "./components/pagination";
 export * from "./components/sheet";
 export * from "./components/sidebar";
 export * from "./components/skeleton";
+export * from "./components/table";
 export * from "./components/textarea";
 export * from "./lib/mermaid-theme";
 export * from "./lib/preferences";

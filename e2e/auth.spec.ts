@@ -19,7 +19,7 @@ test("authentication stays synchronized across redirects, refreshes, logout, and
   page,
 }) => {
   const email = `auth-lifecycle-${randomUUID()}@test.local`;
-  const protectedPath = "/core/crud/demo";
+  const protectedPath = "/core/crud-demo";
 
   await page.goto(protectedPath);
   await expect(page).toHaveURL(new RegExp(`${baseURL}/login\\?redirect=`));

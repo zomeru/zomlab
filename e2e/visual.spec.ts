@@ -38,17 +38,22 @@ async function captureTheme(
 }
 
 async function signUpAndCreateVisualNote(page: Page) {
-  await page.goto("/signup?redirect=%2Fcore%2Fcrud%2Fdemo");
+  await page.goto("/signup?redirect=%2Fcore%2Fcrud-demo");
   await page.getByLabel("Name").fill("Visual User");
   await page.getByLabel("Email").fill(`visual-${randomUUID()}@test.local`);
   await page.getByLabel("Password", { exact: true }).fill("password123");
   await page.getByLabel("Confirm password", { exact: true }).fill("password123");
   await page.getByRole("button", { name: /sign up/i }).click();
-  await expect(page).toHaveURL(/\/core\/crud\/demo$/);
+  await expect(page).toHaveURL(/\/core\/crud-demo$/);
 
   await page.getByLabel("Title").fill("A beautifully styled note");
   await page.getByLabel("Content").fill("Rendered with care.");
+  const createResponsePromise = page.waitForResponse(
+    (response) => response.url().endsWith("/api/notes") && response.request().method() === "POST",
+  );
   await page.getByRole("button", { name: /create note/i }).click();
+  const createResponse = await createResponsePromise;
+  expect(createResponse.status()).toBe(201);
 
   const noteLink = page.getByRole("link", { name: "A beautifully styled note" });
   await expect(noteLink).toBeVisible();
@@ -88,9 +93,7 @@ test("captures the CRUD documentation in both themes", async ({ page }) => {
       filename: `crud-docs-${colorScheme}.png`,
       route: "/core/crud",
       ready: async () => {
-        await expect(page.getByRole("main").locator("figure svg").first()).toBeVisible({
-          timeout: 15_000,
-        });
+        await expect(page.getByRole("heading", { name: "CRUD Notes", exact: true })).toBeVisible();
       },
     });
   }
@@ -103,7 +106,7 @@ test("captures the authenticated notes list in both themes", async ({ page }) =>
     await captureTheme(page, {
       colorScheme,
       filename: `notes-list-${colorScheme}.png`,
-      route: "/core/crud/demo",
+      route: "/core/crud-demo",
       ready: async () => {
         await expect(page.getByRole("link", { name: "A beautifully styled note" })).toBeVisible();
       },
@@ -114,7 +117,7 @@ test("captures the authenticated notes list in both themes", async ({ page }) =>
 test("captures an authenticated note detail in both themes", async ({ page }) => {
   const noteLink = await signUpAndCreateVisualNote(page);
   const detailPath = await noteLink.getAttribute("href");
-  expect(detailPath).toMatch(/^\/core\/crud\/demo\/[^/]+$/);
+  expect(detailPath).toMatch(/^\/core\/crud-demo\/[^/]+$/);
   if (!detailPath) throw new Error("Created note link is missing its href");
 
   for (const colorScheme of COLOR_SCHEMES) {

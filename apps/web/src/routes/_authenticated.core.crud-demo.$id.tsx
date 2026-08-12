@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { NoteDetail } from "~/labs/core/crud/components/note-detail";
 
-export const Route = createFileRoute("/_authenticated/core/crud/demo/$id")({
+export const Route = createFileRoute("/_authenticated/core/crud-demo/$id")({
   component: NoteDetailRoute,
 });
 

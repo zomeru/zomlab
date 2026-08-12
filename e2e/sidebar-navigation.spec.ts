@@ -1,5 +1,100 @@
 import { expect, test } from "@playwright/test";
 
+test("shows Search & Filtering as an overview and demo group", async ({ page }) => {
+  await page.goto("/");
+
+  const sidebar = page.getByRole("navigation", { name: "Sidebar" });
+  await sidebar.locator("details").filter({ hasText: "Core" }).locator(":scope > summary").click();
+  const searchSummary = sidebar.locator("summary", { hasText: /^Search & Filtering$/ });
+  const searchGroup = searchSummary.locator("..");
+  await searchSummary.click();
+
+  await expect(searchGroup.getByRole("link", { name: "Overview" })).toHaveAttribute(
+    "href",
+    "/core/search-filter",
+  );
+  await expect(searchGroup.getByRole("link", { name: "Demo" })).toHaveAttribute(
+    "href",
+    "/core/search-filter-demo",
+  );
+});
+
+test("shows CRUD as an overview and demo group", async ({ page }) => {
+  await page.goto("/");
+
+  const sidebar = page.getByRole("navigation", { name: "Sidebar" });
+  await sidebar.locator("details").filter({ hasText: "Core" }).locator(":scope > summary").click();
+  const crudSummary = sidebar.locator("summary", { hasText: /^CRUD$/ });
+  const crudGroup = crudSummary.locator("..");
+  await crudSummary.click();
+
+  await expect(crudGroup.getByRole("link", { name: "Overview" })).toHaveAttribute(
+    "href",
+    "/core/crud",
+  );
+  await expect(crudGroup.getByRole("link", { name: "Demo" })).toHaveAttribute(
+    "href",
+    "/core/crud-demo",
+  );
+});
+
+test("shows Pagination as an overview and demo group", async ({ page }) => {
+  await page.goto("/");
+
+  const sidebar = page.getByRole("navigation", { name: "Sidebar" });
+  await sidebar.locator("details").filter({ hasText: "Core" }).locator(":scope > summary").click();
+  const paginationSummary = sidebar.locator("summary", { hasText: /^Pagination$/ });
+  const paginationGroup = paginationSummary.locator("..");
+  await paginationSummary.click();
+
+  await expect(paginationGroup.getByRole("link", { name: "Overview" })).toHaveAttribute(
+    "href",
+    "/core/pagination",
+  );
+  await expect(paginationGroup.getByRole("link", { name: "Demo" })).toHaveAttribute(
+    "href",
+    "/core/pagination-demo",
+  );
+});
+
+test("shows Tables as an overview and demo group", async ({ page }) => {
+  await page.goto("/");
+
+  const sidebar = page.getByRole("navigation", { name: "Sidebar" });
+  await sidebar.locator("details").filter({ hasText: "Core" }).locator(":scope > summary").click();
+  const tablesSummary = sidebar.locator("summary", { hasText: /^Tables$/ });
+  const tablesGroup = tablesSummary.locator("..");
+  await tablesSummary.click();
+
+  await expect(tablesGroup.getByRole("link", { name: "Overview" })).toHaveAttribute(
+    "href",
+    "/core/tables",
+  );
+  await expect(tablesGroup.getByRole("link", { name: "Demo" })).toHaveAttribute(
+    "href",
+    "/core/tables-demo",
+  );
+});
+
+test("shows File Uploads as an overview and demo group", async ({ page }) => {
+  await page.goto("/");
+
+  const sidebar = page.getByRole("navigation", { name: "Sidebar" });
+  await sidebar.locator("details").filter({ hasText: "Core" }).locator(":scope > summary").click();
+  const uploadsSummary = sidebar.locator("summary", { hasText: /^File Uploads$/ });
+  const uploadsGroup = uploadsSummary.locator("..");
+  await uploadsSummary.click();
+
+  await expect(uploadsGroup.getByRole("link", { name: "Overview" })).toHaveAttribute(
+    "href",
+    "/core/file-uploads",
+  );
+  await expect(uploadsGroup.getByRole("link", { name: "Demo" })).toHaveAttribute(
+    "href",
+    "/core/file-uploads-demo",
+  );
+});
+
 test("keeps the Core sidebar section open after an unauthenticated demo redirect", async ({
   page,
 }) => {

@@ -3,8 +3,8 @@ import { getSafeRedirect } from "./safe-redirect";
 
 describe("getSafeRedirect", () => {
   it("keeps an internal application path", () => {
-    expect(getSafeRedirect("/core/crud/demo?view=list#notes")).toBe(
-      "/core/crud/demo?view=list#notes",
+    expect(getSafeRedirect("/core/crud-demo?view=list#notes")).toBe(
+      "/core/crud-demo?view=list#notes",
     );
   });
 

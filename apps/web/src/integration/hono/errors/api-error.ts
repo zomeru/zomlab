@@ -33,6 +33,13 @@ export class NoteNotFoundError extends ApiError {
   }
 }
 
+export class FileNotFoundError extends ApiError {
+  constructor() {
+    super("FILE_NOT_FOUND", "File not found", 404);
+    this.name = "FileNotFoundError";
+  }
+}
+
 export class NotFoundError extends ApiError {
   constructor(message = "Resource not found") {
     super("NOT_FOUND", message, 404);

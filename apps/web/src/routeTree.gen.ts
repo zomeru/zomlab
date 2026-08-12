@@ -15,10 +15,18 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as StatusRouteImport } from './routes/status'
 import { Route as ApiSplatRouteImport } from './routes/api/$'
+import { Route as AuthenticatedCoreFileUploadsDemoRouteImport } from './routes/_authenticated.core.file-uploads-demo'
+import { Route as AuthenticatedCorePaginationDemoRouteImport } from './routes/_authenticated.core.pagination-demo'
+import { Route as AuthenticatedCoreSearchFilterDemoRouteImport } from './routes/_authenticated.core.search-filter-demo'
+import { Route as AuthenticatedCoreTablesDemoRouteImport } from './routes/_authenticated.core.tables-demo'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as CoreCrudIndexRouteImport } from './routes/core.crud.index'
-import { Route as AuthenticatedCoreCrudDemoIndexRouteImport } from './routes/_authenticated.core.crud.demo.index'
-import { Route as AuthenticatedCoreCrudDemoIdRouteImport } from './routes/_authenticated.core.crud.demo.$id'
+import { Route as CoreFileUploadsIndexRouteImport } from './routes/core.file-uploads.index'
+import { Route as CorePaginationIndexRouteImport } from './routes/core.pagination.index'
+import { Route as CoreSearchFilterIndexRouteImport } from './routes/core.search-filter.index'
+import { Route as CoreTablesIndexRouteImport } from './routes/core.tables.index'
+import { Route as AuthenticatedCoreCrudDemoIndexRouteImport } from './routes/_authenticated.core.crud-demo.index'
+import { Route as AuthenticatedCoreCrudDemoIdRouteImport } from './routes/_authenticated.core.crud-demo.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -49,6 +57,30 @@ const ApiSplatRoute = ApiSplatRouteImport.update({
   path: '/api/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedCoreFileUploadsDemoRoute =
+  AuthenticatedCoreFileUploadsDemoRouteImport.update({
+    id: '/core/file-uploads-demo',
+    path: '/core/file-uploads-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCorePaginationDemoRoute =
+  AuthenticatedCorePaginationDemoRouteImport.update({
+    id: '/core/pagination-demo',
+    path: '/core/pagination-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreSearchFilterDemoRoute =
+  AuthenticatedCoreSearchFilterDemoRouteImport.update({
+    id: '/core/search-filter-demo',
+    path: '/core/search-filter-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreTablesDemoRoute =
+  AuthenticatedCoreTablesDemoRouteImport.update({
+    id: '/core/tables-demo',
+    path: '/core/tables-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -59,16 +91,36 @@ const CoreCrudIndexRoute = CoreCrudIndexRouteImport.update({
   path: '/core/crud/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoreFileUploadsIndexRoute = CoreFileUploadsIndexRouteImport.update({
+  id: '/core/file-uploads/',
+  path: '/core/file-uploads/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CorePaginationIndexRoute = CorePaginationIndexRouteImport.update({
+  id: '/core/pagination/',
+  path: '/core/pagination/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreSearchFilterIndexRoute = CoreSearchFilterIndexRouteImport.update({
+  id: '/core/search-filter/',
+  path: '/core/search-filter/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreTablesIndexRoute = CoreTablesIndexRouteImport.update({
+  id: '/core/tables/',
+  path: '/core/tables/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedCoreCrudDemoIndexRoute =
   AuthenticatedCoreCrudDemoIndexRouteImport.update({
-    id: '/core/crud/demo/',
-    path: '/core/crud/demo/',
+    id: '/core/crud-demo/',
+    path: '/core/crud-demo/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedCoreCrudDemoIdRoute =
   AuthenticatedCoreCrudDemoIdRouteImport.update({
-    id: '/core/crud/demo/$id',
-    path: '/core/crud/demo/$id',
+    id: '/core/crud-demo/$id',
+    path: '/core/crud-demo/$id',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
@@ -78,10 +130,18 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/status': typeof StatusRoute
   '/api/$': typeof ApiSplatRoute
+  '/core/file-uploads-demo': typeof AuthenticatedCoreFileUploadsDemoRoute
+  '/core/pagination-demo': typeof AuthenticatedCorePaginationDemoRoute
+  '/core/search-filter-demo': typeof AuthenticatedCoreSearchFilterDemoRoute
+  '/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/': typeof CoreCrudIndexRoute
-  '/core/crud/demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
-  '/core/crud/demo/': typeof AuthenticatedCoreCrudDemoIndexRoute
+  '/core/file-uploads/': typeof CoreFileUploadsIndexRoute
+  '/core/pagination/': typeof CorePaginationIndexRoute
+  '/core/search-filter/': typeof CoreSearchFilterIndexRoute
+  '/core/tables/': typeof CoreTablesIndexRoute
+  '/core/crud-demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
+  '/core/crud-demo/': typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -89,10 +149,18 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/status': typeof StatusRoute
   '/api/$': typeof ApiSplatRoute
+  '/core/file-uploads-demo': typeof AuthenticatedCoreFileUploadsDemoRoute
+  '/core/pagination-demo': typeof AuthenticatedCorePaginationDemoRoute
+  '/core/search-filter-demo': typeof AuthenticatedCoreSearchFilterDemoRoute
+  '/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud': typeof CoreCrudIndexRoute
-  '/core/crud/demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
-  '/core/crud/demo': typeof AuthenticatedCoreCrudDemoIndexRoute
+  '/core/file-uploads': typeof CoreFileUploadsIndexRoute
+  '/core/pagination': typeof CorePaginationIndexRoute
+  '/core/search-filter': typeof CoreSearchFilterIndexRoute
+  '/core/tables': typeof CoreTablesIndexRoute
+  '/core/crud-demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
+  '/core/crud-demo': typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -102,10 +170,18 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/status': typeof StatusRoute
   '/api/$': typeof ApiSplatRoute
+  '/_authenticated/core/file-uploads-demo': typeof AuthenticatedCoreFileUploadsDemoRoute
+  '/_authenticated/core/pagination-demo': typeof AuthenticatedCorePaginationDemoRoute
+  '/_authenticated/core/search-filter-demo': typeof AuthenticatedCoreSearchFilterDemoRoute
+  '/_authenticated/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/': typeof CoreCrudIndexRoute
-  '/_authenticated/core/crud/demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
-  '/_authenticated/core/crud/demo/': typeof AuthenticatedCoreCrudDemoIndexRoute
+  '/core/file-uploads/': typeof CoreFileUploadsIndexRoute
+  '/core/pagination/': typeof CorePaginationIndexRoute
+  '/core/search-filter/': typeof CoreSearchFilterIndexRoute
+  '/core/tables/': typeof CoreTablesIndexRoute
+  '/_authenticated/core/crud-demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
+  '/_authenticated/core/crud-demo/': typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -115,10 +191,18 @@ export interface FileRouteTypes {
     | '/signup'
     | '/status'
     | '/api/$'
+    | '/core/file-uploads-demo'
+    | '/core/pagination-demo'
+    | '/core/search-filter-demo'
+    | '/core/tables-demo'
     | '/api/auth/$'
     | '/core/crud/'
-    | '/core/crud/demo/$id'
-    | '/core/crud/demo/'
+    | '/core/file-uploads/'
+    | '/core/pagination/'
+    | '/core/search-filter/'
+    | '/core/tables/'
+    | '/core/crud-demo/$id'
+    | '/core/crud-demo/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -126,10 +210,18 @@ export interface FileRouteTypes {
     | '/signup'
     | '/status'
     | '/api/$'
+    | '/core/file-uploads-demo'
+    | '/core/pagination-demo'
+    | '/core/search-filter-demo'
+    | '/core/tables-demo'
     | '/api/auth/$'
     | '/core/crud'
-    | '/core/crud/demo/$id'
-    | '/core/crud/demo'
+    | '/core/file-uploads'
+    | '/core/pagination'
+    | '/core/search-filter'
+    | '/core/tables'
+    | '/core/crud-demo/$id'
+    | '/core/crud-demo'
   id:
     | '__root__'
     | '/'
@@ -138,10 +230,18 @@ export interface FileRouteTypes {
     | '/signup'
     | '/status'
     | '/api/$'
+    | '/_authenticated/core/file-uploads-demo'
+    | '/_authenticated/core/pagination-demo'
+    | '/_authenticated/core/search-filter-demo'
+    | '/_authenticated/core/tables-demo'
     | '/api/auth/$'
     | '/core/crud/'
-    | '/_authenticated/core/crud/demo/$id'
-    | '/_authenticated/core/crud/demo/'
+    | '/core/file-uploads/'
+    | '/core/pagination/'
+    | '/core/search-filter/'
+    | '/core/tables/'
+    | '/_authenticated/core/crud-demo/$id'
+    | '/_authenticated/core/crud-demo/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -153,6 +253,10 @@ export interface RootRouteChildren {
   ApiSplatRoute: typeof ApiSplatRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   CoreCrudIndexRoute: typeof CoreCrudIndexRoute
+  CoreFileUploadsIndexRoute: typeof CoreFileUploadsIndexRoute
+  CorePaginationIndexRoute: typeof CorePaginationIndexRoute
+  CoreSearchFilterIndexRoute: typeof CoreSearchFilterIndexRoute
+  CoreTablesIndexRoute: typeof CoreTablesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -199,6 +303,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/core/file-uploads-demo': {
+      id: '/_authenticated/core/file-uploads-demo'
+      path: '/core/file-uploads-demo'
+      fullPath: '/core/file-uploads-demo'
+      preLoaderRoute: typeof AuthenticatedCoreFileUploadsDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/pagination-demo': {
+      id: '/_authenticated/core/pagination-demo'
+      path: '/core/pagination-demo'
+      fullPath: '/core/pagination-demo'
+      preLoaderRoute: typeof AuthenticatedCorePaginationDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/search-filter-demo': {
+      id: '/_authenticated/core/search-filter-demo'
+      path: '/core/search-filter-demo'
+      fullPath: '/core/search-filter-demo'
+      preLoaderRoute: typeof AuthenticatedCoreSearchFilterDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/tables-demo': {
+      id: '/_authenticated/core/tables-demo'
+      path: '/core/tables-demo'
+      fullPath: '/core/tables-demo'
+      preLoaderRoute: typeof AuthenticatedCoreTablesDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -213,17 +345,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoreCrudIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/core/crud/demo/': {
-      id: '/_authenticated/core/crud/demo/'
-      path: '/core/crud/demo'
-      fullPath: '/core/crud/demo/'
+    '/core/file-uploads/': {
+      id: '/core/file-uploads/'
+      path: '/core/file-uploads'
+      fullPath: '/core/file-uploads/'
+      preLoaderRoute: typeof CoreFileUploadsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/pagination/': {
+      id: '/core/pagination/'
+      path: '/core/pagination'
+      fullPath: '/core/pagination/'
+      preLoaderRoute: typeof CorePaginationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/search-filter/': {
+      id: '/core/search-filter/'
+      path: '/core/search-filter'
+      fullPath: '/core/search-filter/'
+      preLoaderRoute: typeof CoreSearchFilterIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/tables/': {
+      id: '/core/tables/'
+      path: '/core/tables'
+      fullPath: '/core/tables/'
+      preLoaderRoute: typeof CoreTablesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/core/crud-demo/': {
+      id: '/_authenticated/core/crud-demo/'
+      path: '/core/crud-demo'
+      fullPath: '/core/crud-demo/'
       preLoaderRoute: typeof AuthenticatedCoreCrudDemoIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/core/crud/demo/$id': {
-      id: '/_authenticated/core/crud/demo/$id'
-      path: '/core/crud/demo/$id'
-      fullPath: '/core/crud/demo/$id'
+    '/_authenticated/core/crud-demo/$id': {
+      id: '/_authenticated/core/crud-demo/$id'
+      path: '/core/crud-demo/$id'
+      fullPath: '/core/crud-demo/$id'
       preLoaderRoute: typeof AuthenticatedCoreCrudDemoIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
@@ -231,11 +391,20 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedCoreFileUploadsDemoRoute: typeof AuthenticatedCoreFileUploadsDemoRoute
+  AuthenticatedCorePaginationDemoRoute: typeof AuthenticatedCorePaginationDemoRoute
+  AuthenticatedCoreSearchFilterDemoRoute: typeof AuthenticatedCoreSearchFilterDemoRoute
+  AuthenticatedCoreTablesDemoRoute: typeof AuthenticatedCoreTablesDemoRoute
   AuthenticatedCoreCrudDemoIdRoute: typeof AuthenticatedCoreCrudDemoIdRoute
   AuthenticatedCoreCrudDemoIndexRoute: typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedCoreFileUploadsDemoRoute: AuthenticatedCoreFileUploadsDemoRoute,
+  AuthenticatedCorePaginationDemoRoute: AuthenticatedCorePaginationDemoRoute,
+  AuthenticatedCoreSearchFilterDemoRoute:
+    AuthenticatedCoreSearchFilterDemoRoute,
+  AuthenticatedCoreTablesDemoRoute: AuthenticatedCoreTablesDemoRoute,
   AuthenticatedCoreCrudDemoIdRoute: AuthenticatedCoreCrudDemoIdRoute,
   AuthenticatedCoreCrudDemoIndexRoute: AuthenticatedCoreCrudDemoIndexRoute,
 }
@@ -253,6 +422,10 @@ const rootRouteChildren: RootRouteChildren = {
   ApiSplatRoute: ApiSplatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   CoreCrudIndexRoute: CoreCrudIndexRoute,
+  CoreFileUploadsIndexRoute: CoreFileUploadsIndexRoute,
+  CorePaginationIndexRoute: CorePaginationIndexRoute,
+  CoreSearchFilterIndexRoute: CoreSearchFilterIndexRoute,
+  CoreTablesIndexRoute: CoreTablesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

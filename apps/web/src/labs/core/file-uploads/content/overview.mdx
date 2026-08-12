@@ -1,0 +1,30 @@
+# File Uploads
+
+File uploads cross browser, API, authorization, and object-storage boundaries. This lab keeps that
+flow small and explicit with validated multipart requests and private Cloudflare R2 objects.
+
+## What the lab demonstrates
+
+- Accessible file selection with clear type and size constraints
+- Shared client and server validation for files up to 500 KB
+- Authenticated multipart uploads through the typed Hono client
+- User-prefixed R2 object keys for private ownership
+- Streamed downloads and explicit deletion
+- Attachment lifecycle states and actions built from the composable `@zomlab/ui` attachment
+- Loading, empty, upload, and error feedback that stays visible to assistive technology
+
+## Request flow
+
+```text
+File input → TanStack Query mutation → Hono → FileService → private R2 object
+```
+
+The server derives the object prefix from the authenticated session. Clients provide only the file,
+never an owner ID or storage key.
+
+## Routes
+
+- Overview: `/core/file-uploads`
+- Demo: `/core/file-uploads-demo`
+
+[Open the authenticated file uploads demo](/core/file-uploads-demo)

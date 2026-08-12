@@ -15,8 +15,6 @@ export function useCreateNote() {
 
       return data;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
-    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notes"] }),
   });
 }

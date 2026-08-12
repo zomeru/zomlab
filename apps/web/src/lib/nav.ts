@@ -22,13 +22,37 @@ export const NAV: NavEntry[] = [
         label: "CRUD",
         children: [
           { label: "Overview", href: "/core/crud" },
-          { label: "Demo", href: "/core/crud/demo" },
+          { label: "Demo", href: "/core/crud-demo" },
         ],
       },
-      { label: "Search & Filtering" },
-      { label: "Pagination" },
-      { label: "Tables" },
-      { label: "File Uploads" },
+      {
+        label: "Search & Filtering",
+        children: [
+          { label: "Overview", href: "/core/search-filter" },
+          { label: "Demo", href: "/core/search-filter-demo" },
+        ],
+      },
+      {
+        label: "Pagination",
+        children: [
+          { label: "Overview", href: "/core/pagination" },
+          { label: "Demo", href: "/core/pagination-demo" },
+        ],
+      },
+      {
+        label: "Tables",
+        children: [
+          { label: "Overview", href: "/core/tables" },
+          { label: "Demo", href: "/core/tables-demo" },
+        ],
+      },
+      {
+        label: "File Uploads",
+        children: [
+          { label: "Overview", href: "/core/file-uploads" },
+          { label: "Demo", href: "/core/file-uploads-demo" },
+        ],
+      },
       { label: "Error Handling" },
       { label: "Caching" },
       { label: "Middleware" },

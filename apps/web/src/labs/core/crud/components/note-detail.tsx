@@ -64,7 +64,7 @@ export function NoteDetail({ id }: { id: string }) {
   async function handleDelete() {
     try {
       await deleteNote.mutateAsync(id);
-      navigate({ to: "/core/crud/demo" });
+      navigate({ to: "/core/crud-demo" });
     } catch {
       // The mutation exposes the actionable error beside the destructive control.
     }

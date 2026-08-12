@@ -38,6 +38,12 @@
             "period": 60
           }
         }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "FILE_UPLOADS",
+          "bucket_name": "zomlab-uploads-staging"
+        }
       ]
     },
     "production": {
@@ -58,6 +64,12 @@
             "limit": 100,
             "period": 60
           }
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "FILE_UPLOADS",
+          "bucket_name": "zomlab-uploads"
         }
       ]
     }

@@ -1,0 +1,30 @@
+# Tables
+
+Tables make structured collections easier to scan, compare, and act on. This lab combines notes
+CRUD with server-side search, sorting, and pagination in one responsive view.
+
+## What the lab demonstrates
+
+- Headless table state and rendering with TanStack Table
+- Semantic `@zomlab/ui` table markup with accessible sort controls
+- User-controlled column visibility
+- Validated sort fields and directions shared by the API and client
+- Stable server-side ordering with a deterministic tie-breaker
+- URL-backed search, sorting, page, and page-size state
+- Responsive overflow without hiding row actions
+
+## Request flow
+
+```text
+Table controls → URL state → TanStack Query → Hono → NoteService → Drizzle order + limit
+```
+
+Every table query remains scoped to the authenticated author before search, sorting, or pagination
+is applied.
+
+## Routes
+
+- Overview: `/core/tables`
+- Demo: `/core/tables-demo`
+
+[Open the authenticated tables demo](/core/tables-demo)

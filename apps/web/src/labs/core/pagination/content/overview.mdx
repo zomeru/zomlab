@@ -1,0 +1,29 @@
+# Pagination
+
+Pagination keeps large collections responsive by requesting one bounded page at a time.
+This lab extends the authenticated notes API with validated page controls and result metadata.
+
+## What the lab demonstrates
+
+- Validated `page` and `pageSize` query parameters
+- User-scoped `limit` and `offset` queries in Drizzle
+- A total-count query for page metadata
+- URL-backed pagination state with TanStack Router
+- Numbered page links, previous and next controls, and compact ellipses from `@zomlab/ui`
+- Smooth page transitions with TanStack Query placeholder data
+
+## Request flow
+
+```text
+Page controls → URL state → TanStack Query → Hono → NoteService → Drizzle limit + offset
+```
+
+The API applies the authenticated author's ID to both the item query and count query, so totals
+never include another user's notes.
+
+## Routes
+
+- Overview: `/core/pagination`
+- Demo: `/core/pagination-demo`
+
+[Open the authenticated pagination demo](/core/pagination-demo)

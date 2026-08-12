@@ -33,9 +33,9 @@ export function NotesView() {
           </Alert>
         )}
 
-        {!isLoading && !error && data && data.length === 0 && <EmptyState />}
+        {!isLoading && !error && data && data.items.length === 0 && <EmptyState />}
 
-        {!isLoading && !error && data && data.length > 0 && <NotesList notes={data} />}
+        {!isLoading && !error && data && data.items.length > 0 && <NotesList notes={data.items} />}
       </div>
     </div>
   );

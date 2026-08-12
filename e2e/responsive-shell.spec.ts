@@ -35,9 +35,13 @@ for (const viewport of VIEWPORTS) {
       }
 
       await page.goto("/core/crud");
-      await expect(page.getByRole("main").locator("figure svg").first()).toBeVisible({
-        timeout: 15_000,
-      });
+      await expect(page.getByRole("heading", { name: "CRUD Notes", exact: true })).toBeVisible();
+      await expect(
+        page.getByText(
+          "Notes UI → TanStack Query → Hono → NoteService → NoteRepository → Drizzle",
+          { exact: true },
+        ),
+      ).toBeVisible();
       await expect
         .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
         .toBe(true);

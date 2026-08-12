@@ -11,6 +11,14 @@ interface NoteContract {
   updatedAt: string;
 }
 
+interface NoteListContract {
+  items: NoteContract[];
+  page: number;
+  pageCount: number;
+  pageSize: number;
+  total: number;
+}
+
 function expectIsoTimestamp(value: string) {
   expect(new Date(value).toISOString()).toBe(value);
 }
@@ -85,15 +93,59 @@ test("notes API preserves authentication, validation, ownership, and CRUD contra
     const created = (await create.json()) as NoteContract;
     expectNoteContract(created, { title: "Contract note", content: "Original content" });
 
+    const searchable = await userA.post("/api/notes", {
+      data: { title: "Roadmap", content: "Release checklist" },
+    });
+    expect(searchable.status()).toBe(201);
+    const searchableNote = (await searchable.json()) as NoteContract;
+    expectNoteContract(searchableNote, { title: "Roadmap", content: "Release checklist" });
+
+    const search = await userA.get("/api/notes?query=checklist");
+    expect(search.status()).toBe(200);
+    expect(await search.json()).toEqual({
+      items: [searchableNote],
+      page: 1,
+      pageCount: 1,
+      pageSize: 20,
+      total: 1,
+    });
+
+    const sorted = await userA.get("/api/notes?sortBy=title&sortDirection=asc&page=1&pageSize=20");
+    expect(sorted.status()).toBe(200);
+    const sortedBody = (await sorted.json()) as NoteListContract;
+    expect(sortedBody.items.map((note) => note.title)).toEqual(["Contract note", "Roadmap"]);
+
+    const invalidSort = await userA.get("/api/notes?sortBy=unknown");
+    expect(invalidSort.status()).toBe(422);
+
+    const invalidPage = await userA.get("/api/notes?page=0");
+    expect(invalidPage.status()).toBe(422);
+
+    const firstPage = await userA.get("/api/notes?page=1&pageSize=1");
+    expect(firstPage.status()).toBe(200);
+    const firstPageBody = (await firstPage.json()) as NoteListContract;
+    expect(firstPageBody).toMatchObject({ page: 1, pageCount: 2, pageSize: 1, total: 2 });
+    expect(firstPageBody.items).toHaveLength(1);
+
+    const secondPage = await userA.get("/api/notes?page=2&pageSize=1");
+    expect(secondPage.status()).toBe(200);
+    const secondPageBody = (await secondPage.json()) as NoteListContract;
+    expect(secondPageBody).toMatchObject({ page: 2, pageCount: 2, pageSize: 1, total: 2 });
+    expect(secondPageBody.items).toHaveLength(1);
+    expect(
+      new Set([...firstPageBody.items, ...secondPageBody.items].map((note) => note.id)),
+    ).toEqual(new Set([created.id, searchableNote.id]));
+
     const list = await userA.get("/api/notes");
     expect(list.status()).toBe(200);
     expect(list.headers()["cache-control"]).toContain("private");
     expect(list.headers()["cache-control"]).toContain("no-store");
     expect(list.headers().vary).toContain("Cookie");
-    const listed = (await list.json()) as NoteContract[];
-    expect(listed).toHaveLength(1);
-    expect(listed[0]).toEqual(created);
-    expectNoteContract(listed[0] as NoteContract, {
+    const listed = (await list.json()) as NoteListContract;
+    expect(listed).toMatchObject({ page: 1, pageCount: 1, pageSize: 20, total: 2 });
+    expect(listed.items).toHaveLength(2);
+    expect(listed.items).toEqual(expect.arrayContaining([created, searchableNote]));
+    expectNoteContract(created, {
       title: "Contract note",
       content: "Original content",
     });

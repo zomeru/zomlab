@@ -1,35 +1,30 @@
-# Notes Overview
+# CRUD Notes
 
-Notes is a full vertical slice of the architecture: UI → Hooks → API → Service →
-Repository → Database — end to end.
+CRUD covers the core operations for creating, reading, updating, and deleting data.
+This lab implements those operations as an authenticated notes feature from the UI to
+PostgreSQL.
 
-## Why Notes
+## What the lab demonstrates
 
-It is small enough to finish, yet touches every layer of the stack:
+- Shared Zod contracts for API inputs and responses
+- Protected Hono routes for each CRUD operation
+- User-scoped data access that keeps notes private
+- A service and repository boundary around Drizzle
+- Typed TanStack Query hooks for server state
 
-- A real Drizzle model with a relation to `User`
-- Authenticated routes behind a reusable `requireAuth` guard
-- A service layer that enforces ownership
-- A repository layer that isolates Drizzle
-- TanStack Query hooks feeding typed React components
-- MDX + Mermaid documentation, like this page
+## Request flow
 
-Notes is private by default: every note belongs to exactly one user, and the service
-layer returns `404` for notes that do not belong to the caller.
-
-## Feature folders
-
-The feature is split across the monorepo following the project convention, mirroring
-the sidebar structure (`Core → CRUD`):
-
-```
-apps/web/src/integration/hono/  # routes → services
-apps/web/src/labs/core/crud/    # hooks → components → content
-packages/database/              # schema → repositories
-packages/contracts/             # shared Zod schemas
+```text
+Notes UI → TanStack Query → Hono → NoteService → NoteRepository → Drizzle
 ```
 
-Types flow from the contracts package to both the API and the UI, so a schema change
-surfaces as a type error in every layer that uses it.
+Every operation carries the authenticated user's ID through the stack. Missing notes
+and notes owned by someone else both return `404`, so the API does not reveal whether
+another user's note exists.
 
-<br />
+## Routes
+
+- Overview: `/core/crud`
+- Demo: `/core/crud-demo`
+
+[Open the authenticated CRUD demo](/core/crud-demo)
