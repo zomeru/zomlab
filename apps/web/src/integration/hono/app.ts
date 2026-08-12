@@ -5,6 +5,7 @@ import { contextStorage } from "hono/context-storage";
 import { csrf } from "hono/csrf";
 import { logger } from "hono/logger";
 import { requestId } from "hono/request-id";
+import { secureHeaders } from "hono/secure-headers";
 import { timing } from "hono/timing";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { rateLimiter } from "hono-rate-limiter";
@@ -39,6 +40,7 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
 
   // Security
   .use(csrf())
+  .use(secureHeaders())
 
   // Traffic protection
   .use(
