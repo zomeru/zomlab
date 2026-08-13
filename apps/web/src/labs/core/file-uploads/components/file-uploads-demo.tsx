@@ -7,6 +7,16 @@ import {
 } from "@zomlab/contracts";
 import { Alert } from "@zomlab/ui/components/alert";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@zomlab/ui/components/alert-dialog";
+import {
   Attachment,
   AttachmentAction,
   AttachmentActions,
@@ -22,20 +32,18 @@ import {
   EmptyStateTitle,
 } from "@zomlab/ui/components/empty-state";
 import { FieldError } from "@zomlab/ui/components/field";
-import { PageDescription, PageHeader, PageTitle } from "@zomlab/ui/components/page";
 import { Skeleton } from "@zomlab/ui/components/skeleton";
 import { Download, FileText, Trash2, Upload, X } from "lucide-react";
 import { type FormEvent, useRef, useState } from "react";
+import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
+import { CoreLoadingState } from "~/labs/core/shared/core-loading-state";
+import { formatBytes, formatDate } from "~/labs/core/shared/formatters";
 import { useDeleteFile, useFiles, useUploadFile } from "../hooks/use-files";
-
-function formatBytes(bytes: number) {
-  if (bytes < 1024) return `${bytes} B`;
-  return `${(bytes / 1024).toFixed(1)} KB`;
-}
 
 export function FileUploadsDemo() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File>();
+  const [fileToDelete, setFileToDelete] = useState<UploadedFile>();
   const [selectionError, setSelectionError] = useState("");
   const files = useFiles();
   const upload = useUploadFile();
@@ -87,16 +95,25 @@ export function FileUploadsDemo() {
     }
   }
 
-  return (
-    <div className="mx-auto max-w-4xl">
-      <PageHeader>
-        <PageTitle>File Uploads</PageTitle>
-        <PageDescription>
-          Upload, download, and remove files from your private workspace.
-        </PageDescription>
-      </PageHeader>
+  async function handleDelete(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    if (!fileToDelete || deleteFile.isPending) return;
 
-      <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
+    try {
+      await deleteFile.mutateAsync(fileToDelete.id);
+      setFileToDelete(undefined);
+    } catch {
+      // Keep the controlled dialog open so its error can be read and retried.
+    }
+  }
+
+  return (
+    <CoreDemoShell
+      description="Upload, download, and remove files from your private workspace."
+      title="File Uploads"
+      width="roomy"
+    >
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <label
           className="group flex min-h-44 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-muted/25 px-6 py-8 text-center transition-[background-color,border-color,box-shadow] hover:border-border-strong hover:bg-muted/45 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring"
           htmlFor="file-upload"
@@ -165,7 +182,7 @@ export function FileUploadsDemo() {
           </Alert>
         ) : null}
 
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-muted-foreground">Files are private to your account.</p>
           <Button disabled={upload.isPending} type="submit">
             <Upload aria-hidden="true" />
@@ -188,21 +205,15 @@ export function FileUploadsDemo() {
         </div>
 
         {files.isLoading ? (
-          <div className="space-y-3" role="status" aria-label="Loading uploaded files">
+          <CoreLoadingState className="space-y-3" label="Loading uploaded files">
             <Skeleton className="h-20" />
             <Skeleton className="h-20" />
-          </div>
+          </CoreLoadingState>
         ) : null}
 
         {files.error ? (
           <Alert variant="destructive" role="alert">
             {files.error.message}
-          </Alert>
-        ) : null}
-
-        {deleteFile.error ? (
-          <Alert className="mb-4" variant="destructive" role="alert">
-            {deleteFile.error.message}
           </Alert>
         ) : null}
 
@@ -226,8 +237,7 @@ export function FileUploadsDemo() {
                   <AttachmentContent>
                     <AttachmentTitle>{file.name}</AttachmentTitle>
                     <AttachmentDescription>
-                      {file.type} · {formatBytes(file.size)} · Uploaded{" "}
-                      {new Date(file.createdAt).toLocaleDateString()}
+                      {file.type} · {formatBytes(file.size)} · Uploaded {formatDate(file.createdAt)}
                     </AttachmentDescription>
                   </AttachmentContent>
                   <AttachmentActions>
@@ -239,8 +249,11 @@ export function FileUploadsDemo() {
                     </Button>
                     <AttachmentAction
                       aria-label={`Delete ${file.name}`}
-                      disabled={deleteFile.isPending}
-                      onClick={() => deleteFile.mutate(file.id)}
+                      disabled={deleteFile.isPending && fileToDelete?.id === file.id}
+                      onClick={() => {
+                        deleteFile.reset();
+                        setFileToDelete(file);
+                      }}
                       type="button"
                     >
                       <Trash2 aria-hidden="true" />
@@ -252,6 +265,35 @@ export function FileUploadsDemo() {
           </ul>
         ) : null}
       </section>
-    </div>
+
+      <AlertDialog
+        onOpenChange={(open) => {
+          if (!deleteFile.isPending && !open) setFileToDelete(undefined);
+        }}
+        open={Boolean(fileToDelete)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete file?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Delete “{fileToDelete?.name}”? This cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          {deleteFile.error ? (
+            <Alert variant="destructive" role="alert">
+              Could not delete this file. {deleteFile.error.message} You can try again.
+            </Alert>
+          ) : null}
+
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleteFile.isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogAction disabled={deleteFile.isPending} onClick={handleDelete}>
+              {deleteFile.isPending ? "Deleting…" : "Delete file"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </CoreDemoShell>
   );
 }

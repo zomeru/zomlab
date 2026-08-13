@@ -2,11 +2,18 @@
 
 import { useNavigate } from "@tanstack/react-router";
 import { Alert } from "@zomlab/ui/components/alert";
-import { PageDescription, PageHeader, PageTitle } from "@zomlab/ui/components/page";
+import {
+  EmptyState,
+  EmptyStateDescription,
+  EmptyStateTitle,
+} from "@zomlab/ui/components/empty-state";
+import { Select } from "@zomlab/ui/components/select";
 import { Skeleton } from "@zomlab/ui/components/skeleton";
 import { NoteForm } from "~/labs/core/crud/components/note-form";
 import { NotesList } from "~/labs/core/crud/components/notes-list";
 import { useNotes } from "~/labs/core/crud/hooks/use-notes";
+import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
+import { CoreLoadingState } from "~/labs/core/shared/core-loading-state";
 import { NotePagination } from "./note-pagination";
 
 interface PaginationDemoProps {
@@ -19,15 +26,11 @@ export function PaginationDemo({ page, pageSize }: PaginationDemoProps) {
   const { data, error, isFetching, isLoading } = useNotes({ page, pageSize });
 
   return (
-    <div className="mx-auto max-w-3xl">
-      <PageHeader>
-        <PageTitle>Pagination</PageTitle>
-        <PageDescription>Browse your private notes one predictable page at a time.</PageDescription>
-      </PageHeader>
-
-      <div className="mt-8">
-        <NoteForm />
-      </div>
+    <CoreDemoShell
+      description="Browse your private notes one predictable page at a time."
+      title="Pagination"
+    >
+      <NoteForm />
 
       <section className="mt-10 space-y-4" aria-labelledby="paginated-notes-heading">
         <div className="flex flex-col gap-3 rounded-xl bg-card p-4 shadow-[var(--surface-shadow)] sm:flex-row sm:items-end sm:justify-between">
@@ -42,10 +45,15 @@ export function PaginationDemo({ page, pageSize }: PaginationDemoProps) {
             </p>
           </div>
 
-          <label className="flex items-center gap-2 text-sm font-medium text-foreground">
+          <label
+            className="flex items-center gap-2 text-sm font-medium text-foreground"
+            htmlFor="notes-per-page"
+          >
             Notes per page
-            <select
-              className="h-10 rounded-md border border-input bg-background px-3 text-foreground shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            <Select
+              aria-label="Notes per page"
+              id="notes-per-page"
+              name="pageSize"
               onChange={(event) => {
                 void navigate({
                   replace: true,
@@ -61,15 +69,15 @@ export function PaginationDemo({ page, pageSize }: PaginationDemoProps) {
               <option value={2}>2</option>
               <option value={5}>5</option>
               <option value={10}>10</option>
-            </select>
+            </Select>
           </label>
         </div>
 
         {isLoading ? (
-          <div className="space-y-3" role="status" aria-label="Loading paginated notes">
+          <CoreLoadingState className="space-y-3" label="Loading paginated notes">
             <Skeleton className="h-24" />
             <Skeleton className="h-24" />
-          </div>
+          </CoreLoadingState>
         ) : null}
 
         {error ? (
@@ -79,9 +87,12 @@ export function PaginationDemo({ page, pageSize }: PaginationDemoProps) {
         ) : null}
 
         {!isLoading && !error && data?.items.length === 0 ? (
-          <p className="rounded-xl bg-card p-6 text-sm text-muted-foreground shadow-[var(--surface-shadow)]">
-            No notes yet. Create one above to start paging through your collection.
-          </p>
+          <EmptyState>
+            <EmptyStateTitle>No notes yet</EmptyStateTitle>
+            <EmptyStateDescription>
+              Create one above to start paging through your collection.
+            </EmptyStateDescription>
+          </EmptyState>
         ) : null}
 
         {!isLoading && !error && data && data.items.length > 0 ? (
@@ -99,6 +110,6 @@ export function PaginationDemo({ page, pageSize }: PaginationDemoProps) {
           {isFetching && !isLoading ? "Loading the selected page." : ""}
         </p>
       </section>
-    </div>
+    </CoreDemoShell>
   );
 }

@@ -29,9 +29,7 @@ export function SearchFilterDemo({ query, onQueryChange }: SearchFilterDemoProps
       description="Search your private notes by title or content."
       title="Search and Filtering"
     >
-      <div className="mt-8">
-        <NoteForm />
-      </div>
+      <NoteForm />
 
       <div className="mt-10 space-y-4">
         <NoteSearch query={queryDraft} onQueryChange={setQueryDraft} />

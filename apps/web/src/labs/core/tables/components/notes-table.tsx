@@ -32,6 +32,7 @@ import {
   Columns3Icon,
   ExternalLinkIcon,
 } from "lucide-react";
+import { formatDate } from "~/labs/core/shared/formatters";
 
 type SortBy = NonNullable<NoteListQuery["sortBy"]>;
 type SortDirection = NonNullable<NoteListQuery["sortDirection"]>;
@@ -59,19 +60,15 @@ const columnLabels: Record<string, string> = {
   updatedAt: "Updated",
 };
 
-function formatDate(value: string) {
-  return new Date(value).toLocaleDateString(undefined, {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-}
-
 const columns: Array<ColumnDef<typeof features, Note>> = [
   {
     accessorKey: "title",
     header: "Title",
-    cell: ({ row }) => <span className="font-medium text-foreground">{row.original.title}</span>,
+    cell: ({ row }) => (
+      <span className="block min-w-0 font-medium wrap-break-word text-foreground">
+        {row.original.title}
+      </span>
+    ),
   },
   {
     accessorKey: "createdAt",
@@ -149,7 +146,7 @@ export function NotesTable({
   });
 
   return (
-    <div className="overflow-hidden rounded-xl bg-card shadow-[var(--surface-shadow)]">
+    <div className="overflow-x-auto rounded-xl bg-card shadow-[var(--surface-shadow)]">
       <div className="flex items-center justify-between gap-4 border-b border-border px-4 py-3">
         <p className="text-sm text-muted-foreground" role="status">
           Showing <span className="font-medium text-foreground">{notes.length}</span> of {total}

@@ -2,6 +2,11 @@
 
 import type { NoteListQuery } from "@zomlab/contracts";
 import { Alert } from "@zomlab/ui/components/alert";
+import {
+  EmptyState,
+  EmptyStateDescription,
+  EmptyStateTitle,
+} from "@zomlab/ui/components/empty-state";
 import { Skeleton } from "@zomlab/ui/components/skeleton";
 import { NoteForm } from "~/labs/core/crud/components/note-form";
 import { useNotes } from "~/labs/core/crud/hooks/use-notes";
@@ -51,9 +56,7 @@ export function TablesDemo({
       title="Tables"
       width="table"
     >
-      <div className="mt-8">
-        <NoteForm />
-      </div>
+      <NoteForm />
 
       <section className="mt-10 space-y-4" aria-labelledby="notes-table-heading">
         <h2 className="sr-only" id="notes-table-heading">
@@ -75,11 +78,16 @@ export function TablesDemo({
         ) : null}
 
         {!isLoading && !error && data?.items.length === 0 ? (
-          <p className="rounded-xl bg-card p-6 text-sm text-muted-foreground shadow-[var(--surface-shadow)]">
-            {query
-              ? `No notes match “${query}”. Clear the search to see every note.`
-              : "No notes yet. Create one above to populate the table."}
-          </p>
+          <EmptyState>
+            <EmptyStateTitle>
+              {query ? `No notes match “${query}”` : "No notes yet"}
+            </EmptyStateTitle>
+            <EmptyStateDescription>
+              {query
+                ? "Clear the search to see every note."
+                : "Create one above to populate the table."}
+            </EmptyStateDescription>
+          </EmptyState>
         ) : null}
 
         {!isLoading && !error && data && data.items.length > 0 ? (

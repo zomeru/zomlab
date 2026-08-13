@@ -1,7 +1,15 @@
 "use client";
 
+import { Alert } from "@zomlab/ui/components/alert";
+import {
+  EmptyState,
+  EmptyStateDescription,
+  EmptyStateTitle,
+} from "@zomlab/ui/components/empty-state";
+import { Skeleton } from "@zomlab/ui/components/skeleton";
+import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
+import { CoreLoadingState } from "~/labs/core/shared/core-loading-state";
 import { useNotes } from "../hooks/use-notes";
-import { EmptyState } from "./empty-states";
 import { NoteForm } from "./note-form";
 import { NotesList } from "./notes-list";
 
@@ -9,22 +17,15 @@ export function NotesView() {
   const { data, isLoading, error } = useNotes();
 
   return (
-    <div className="mx-auto max-w-3xl">
-      <PageHeader>
-        <PageTitle>Notes</PageTitle>
-        <PageDescription>Your personal notes — private to you.</PageDescription>
-      </PageHeader>
-
-      <div className="mt-8">
-        <NoteForm />
-      </div>
+    <CoreDemoShell description="Your personal notes — private to you." title="Notes">
+      <NoteForm />
 
       <div className="mt-10 space-y-4">
         {isLoading && (
-          <div className="space-y-3" role="status" aria-label="Loading notes">
+          <CoreLoadingState className="space-y-3" label="Loading notes">
             <Skeleton className="h-24" />
             <Skeleton className="h-24" />
-          </div>
+          </CoreLoadingState>
         )}
 
         {error && (
@@ -33,14 +34,17 @@ export function NotesView() {
           </Alert>
         )}
 
-        {!isLoading && !error && data && data.items.length === 0 && <EmptyState />}
+        {!isLoading && !error && data && data.items.length === 0 && (
+          <EmptyState>
+            <EmptyStateTitle>No notes yet</EmptyStateTitle>
+            <EmptyStateDescription>
+              Create your first note above to begin your private workspace.
+            </EmptyStateDescription>
+          </EmptyState>
+        )}
 
         {!isLoading && !error && data && data.items.length > 0 && <NotesList notes={data.items} />}
       </div>
-    </div>
+    </CoreDemoShell>
   );
 }
-
-import { Alert } from "@zomlab/ui/components/alert";
-import { PageDescription, PageHeader, PageTitle } from "@zomlab/ui/components/page";
-import { Skeleton } from "@zomlab/ui/components/skeleton";

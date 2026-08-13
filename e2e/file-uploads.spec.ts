@@ -50,6 +50,10 @@ test("uploads, downloads, and deletes a private file", async ({ baseURL, page })
   );
 
   await fileRow.getByRole("button", { name: "Delete project-brief.txt" }).click();
+  const deleteDialog = page.getByRole("alertdialog", { name: "Delete file?" });
+  await expect(deleteDialog).toBeVisible();
+  await expect(fileRow).toBeVisible();
+  await deleteDialog.getByRole("button", { name: "Delete file" }).click();
   await expect(fileRow).toBeHidden();
   await expect(page.getByText("No files uploaded yet.")).toBeVisible();
 });

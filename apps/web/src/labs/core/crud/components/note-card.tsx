@@ -3,10 +3,9 @@
 import { Link } from "@tanstack/react-router";
 import type { Note } from "@zomlab/contracts";
 import { Card } from "@zomlab/ui/components/card";
+import { formatDate } from "~/labs/core/shared/formatters";
 
 export function NoteCard({ note }: { note: Note }) {
-  const date = new Date(note.updatedAt);
-
   return (
     <Card className="group transition-[background-color,border-color,box-shadow] hover:border-border-strong hover:bg-surface-elevated hover:shadow-surface">
       <Link
@@ -19,10 +18,10 @@ export function NoteCard({ note }: { note: Note }) {
             {note.title}
           </h2>
           <time
-            dateTime={date.toISOString()}
+            dateTime={note.updatedAt}
             className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground"
           >
-            {date.toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+            {formatDate(note.updatedAt)}
           </time>
         </div>
         {note.content && (

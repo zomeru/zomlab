@@ -3,10 +3,10 @@
 import { Alert } from "@zomlab/ui/components/alert";
 import { Button } from "@zomlab/ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@zomlab/ui/components/card";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@zomlab/ui/components/field";
 import { Input } from "@zomlab/ui/components/input";
-import { Label } from "@zomlab/ui/components/label";
 import { Textarea } from "@zomlab/ui/components/textarea";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCreateNote } from "../hooks/use-create-note";
 
 export function NoteForm() {
@@ -14,6 +14,8 @@ export function NoteForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [hydrated, setHydrated] = useState(false);
+  const [titleError, setTitleError] = useState("");
+  const titleInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setHydrated(true);
@@ -21,12 +23,22 @@ export function NoteForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title.trim()) return;
+    if (!title.trim()) {
+      setTitleError("Enter a title for your note.");
+      titleInputRef.current?.focus();
+      return;
+    }
 
-    await createNote.mutateAsync({ title: title.trim(), content: content.trim() || undefined });
+    setTitleError("");
 
-    setTitle("");
-    setContent("");
+    try {
+      await createNote.mutateAsync({ title: title.trim(), content: content.trim() || undefined });
+
+      setTitle("");
+      setContent("");
+    } catch {
+      // The mutation error remains rendered next to the form.
+    }
   }
 
   return (
@@ -37,30 +49,48 @@ export function NoteForm() {
       <CardContent>
         <form onSubmit={handleSubmit} aria-busy={createNote.isPending}>
           <fieldset disabled={!hydrated || createNote.isPending} className="contents">
-            <div className="space-y-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="new-note-title">Title</Label>
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="new-note-title">Title</FieldLabel>
                 <Input
+                  aria-describedby={
+                    titleError
+                      ? "new-note-title-description new-note-title-error"
+                      : "new-note-title-description"
+                  }
+                  aria-invalid={titleError ? true : undefined}
                   id="new-note-title"
-                  type="text"
-                  required
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  name="title"
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                    if (titleError) setTitleError("");
+                  }}
                   placeholder="What's on your mind?"
+                  ref={titleInputRef}
+                  type="text"
+                  value={title}
                 />
-              </div>
+                <p className="text-sm text-muted-foreground" id="new-note-title-description">
+                  Give your note a concise, recognizable title.
+                </p>
+                {titleError ? (
+                  <FieldError id="new-note-title-error">{titleError}</FieldError>
+                ) : null}
+              </Field>
 
-              <div className="space-y-1.5">
-                <Label htmlFor="new-note-content">Content</Label>
+              <Field>
+                <FieldLabel htmlFor="new-note-content">Content</FieldLabel>
                 <Textarea
                   id="new-note-content"
+                  name="content"
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="Write something…"
                   rows={3}
                 />
-              </div>
-            </div>
+                <p className="text-sm text-muted-foreground">Optional details for your note.</p>
+              </Field>
+            </FieldGroup>
 
             {createNote.error && (
               <Alert className="mt-4" variant="destructive" role="alert">
@@ -68,9 +98,9 @@ export function NoteForm() {
               </Alert>
             )}
 
-            <Button type="submit" className="mt-5">
-              {createNote.isPending ? "Creating…" : "Create note"}
-            </Button>
+            <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+              <Button type="submit">{createNote.isPending ? "Creating…" : "Create note"}</Button>
+            </div>
           </fieldset>
         </form>
       </CardContent>

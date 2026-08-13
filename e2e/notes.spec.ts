@@ -47,6 +47,10 @@ test("sign up, create, edit, and delete a note", async ({ baseURL, page }) => {
   await expect(page.getByText("My edited note")).toBeVisible();
 
   await page.getByRole("button", { name: /delete/i }).click();
+  const deleteDialog = page.getByRole("alertdialog", { name: "Delete note?" });
+  await expect(deleteDialog).toBeVisible();
+  await expect(page.getByText("My edited note")).toBeVisible();
+  await deleteDialog.getByRole("button", { name: "Delete note" }).click();
   await expect(page).toHaveURL(`${baseURL}/core/crud-demo`);
   await expect(page.getByRole("link", { name: "My edited note" })).not.toBeVisible();
 });
