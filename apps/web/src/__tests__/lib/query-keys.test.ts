@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { queryKeys } from "./query-keys";
+import { queryKeys } from "~/lib/query-keys";
 
 describe("queryKeys", () => {
   it("keeps list inputs and detail IDs under stable prefixes", () => {

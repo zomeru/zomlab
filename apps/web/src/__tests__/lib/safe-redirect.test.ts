@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getSafeRedirect } from "./safe-redirect";
+import { getSafeRedirect } from "~/lib/safe-redirect";
 
 describe("getSafeRedirect", () => {
   it("keeps an internal application path", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatBytes, formatDate, formatDuration } from "./formatters";
+import { formatBytes, formatDate, formatDuration } from "~/labs/core/shared/formatters";
 
 describe("Core formatters", () => {
   it("formats comparable values consistently", () => {

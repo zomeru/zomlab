@@ -65,12 +65,12 @@ test("sign up, create, edit, and delete a note", async ({ baseURL, page }) => {
   await contentInput.fill("Hello from Playwright");
   await page.getByRole("button", { name: /save/i }).click();
   await expect(page).toHaveURL(detailUrl);
-  await expect(page.getByText("My edited note")).toBeVisible();
+  await expect(page.getByText("My edited note", { exact: true })).toBeVisible();
 
   await page.getByRole("button", { name: /delete/i }).click();
   const deleteDialog = page.getByRole("alertdialog", { name: "Delete note?" });
   await expect(deleteDialog).toBeVisible();
-  await expect(page.getByText("My edited note")).toBeVisible();
+  await expect(page.getByText("My edited note", { exact: true })).toBeVisible();
   await deleteDialog.getByRole("button", { name: "Cancel" }).click();
   await expect(page.getByRole("button", { name: "Delete" })).toBeFocused();
 

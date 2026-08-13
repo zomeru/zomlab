@@ -9,6 +9,7 @@ export function useCreateNote() {
 
   return useMutation({
     mutationFn: async (input: CreateNoteBody) => {
+      await queryClient.cancelQueries({ queryKey: queryKeys.notes.lists });
       const response = await client.api.notes.$post({
         json: input,
       });

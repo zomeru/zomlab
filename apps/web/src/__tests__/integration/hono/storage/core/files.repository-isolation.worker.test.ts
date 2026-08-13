@@ -1,6 +1,6 @@
 import { env } from "cloudflare:workers";
 import { expect, test } from "vitest";
-import { createFileRepository } from "./files.repository";
+import { createFileRepository } from "~/integration/hono/storage/core/files.repository";
 import { isolationFileId, isolationUserId } from "./files.repository.worker-fixtures";
 
 test("isolates R2 storage between worker test files", async () => {

@@ -1,6 +1,6 @@
 import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
-import { createFileRepository } from "./files.repository";
+import { createFileRepository } from "~/integration/hono/storage/core/files.repository";
 import { isolationFileId, isolationUserId } from "./files.repository.worker-fixtures";
 
 describe("FileRepository in workerd", () => {

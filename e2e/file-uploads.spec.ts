@@ -38,7 +38,9 @@ test("uploads, downloads, and deletes a private file", async ({ baseURL, page })
   });
   await page.getByRole("button", { name: "Upload file" }).click();
 
-  const fileRow = page.getByRole("listitem").filter({ hasText: "project-brief.txt" });
+  const fileRow = page
+    .getByRole("listitem", { includeHidden: true })
+    .filter({ hasText: "project-brief.txt" });
   await expect(fileRow).toBeVisible();
   await expect(fileRow.getByRole("group", { name: "project-brief.txt" })).toHaveAttribute(
     "data-state",

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { validateNoteDraft } from "./note-form-validation";
+import { validateNoteDraft } from "~/labs/core/crud/components/note-form-validation";
 
 describe("validateNoteDraft", () => {
   test("reports both contract maximum violations", () => {

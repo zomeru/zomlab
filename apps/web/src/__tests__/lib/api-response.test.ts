@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { type ApiResponseError, readJsonResponse } from "./api-response";
+import { type ApiResponseError, readJsonResponse } from "~/lib/api-response";
 
 describe("readJsonResponse", () => {
   it("returns successful typed JSON", async () => {

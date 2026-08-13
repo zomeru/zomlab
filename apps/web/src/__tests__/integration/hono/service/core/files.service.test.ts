@@ -1,7 +1,7 @@
 import type { UploadedFile } from "@zomlab/contracts";
 import { describe, expect, it } from "vitest";
+import { createFileService } from "~/integration/hono/service/core/files.service";
 import type { FileRepository } from "~/integration/hono/storage/core/files.repository";
-import { createFileService } from "./files.service";
 
 const uploadedFile: UploadedFile = {
   id: "00000000-0000-4000-8000-000000000001",

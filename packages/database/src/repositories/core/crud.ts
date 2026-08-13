@@ -28,7 +28,7 @@ export function createNoteRepository() {
             or(ilike(notes.title, `%${query}%`), ilike(notes.content, `%${query}%`)),
           )
         : eq(notes.authorId, authorId);
-      const [rows, totalRows] = await Promise.all([
+      const [rows, totalRows] = await db.batch([
         db
           .select()
           .from(notes)

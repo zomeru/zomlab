@@ -11,6 +11,7 @@ import { trimTrailingSlash } from "hono/trailing-slash";
 import { rateLimiter } from "hono-rate-limiter";
 import { apiErrorHandler, notFoundHandler } from "~/integration/hono/errors/error-handler";
 import { privateResponseMiddleware } from "~/integration/hono/middleware/private-response.middleware";
+import { getRateLimitKey } from "~/integration/hono/middleware/rate-limit.middleware";
 import fileRoutes from "~/integration/hono/routes/core/files.route";
 import noteRoutes from "~/integration/hono/routes/core/notes.route";
 import systemRoutes from "~/integration/hono/routes/system/system.route";
@@ -46,10 +47,8 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
   .use(
     rateLimiter({
       binding: getRateLimitBinding,
-      keyGenerator: (c) =>
-        c.req.header("cf-connecting-ip") ??
-        c.req.header("x-forwarded-for")?.split(",")[0]?.trim() ??
-        "anonymous",
+      keyGenerator: (c) => getRateLimitKey(c.req.raw.headers) ?? "local",
+      skip: (c) => getRateLimitKey(c.req.raw.headers) === undefined,
       message: {
         error: "Rate limit exceeded",
         retryAfter: "60s",

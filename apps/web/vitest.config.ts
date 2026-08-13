@@ -11,6 +11,7 @@ export default defineConfig({
   },
   test: {
     ...base.test,
+    dir: "src/__tests__",
     exclude: [...configDefaults.exclude, "**/*.worker.test.ts"],
   },
 });

@@ -3,7 +3,7 @@
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, test, vi } from "vitest";
-import { useDebouncedQuery } from "./use-debounced-query";
+import { useDebouncedQuery } from "~/labs/core/shared/use-debounced-query";
 
 Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true });
 

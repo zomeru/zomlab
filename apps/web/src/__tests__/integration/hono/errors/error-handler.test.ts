@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
-import { apiErrorHandler } from "./error-handler";
+import { apiErrorHandler } from "~/integration/hono/errors/error-handler";
 
 describe("apiErrorHandler", () => {
   it("serializes validation issues using the public API contract", async () => {

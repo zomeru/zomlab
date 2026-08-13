@@ -1,7 +1,7 @@
 import type { Note } from "@zomlab/contracts";
 import type { NoteRepository } from "@zomlab/database";
 import { describe, expect, it } from "vitest";
-import { createNoteService } from "./notes.service";
+import { createNoteService } from "~/integration/hono/service/core/notes.service";
 
 const note: Note = {
   id: "00000000-0000-4000-8000-000000000001",

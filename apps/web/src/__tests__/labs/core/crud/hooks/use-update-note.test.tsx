@@ -5,8 +5,8 @@ import type { Note, UpdateNoteBody } from "@zomlab/contracts";
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, test, vi } from "vitest";
+import { useUpdateNote } from "~/labs/core/crud/hooks/use-update-note";
 import { queryKeys } from "~/lib/query-keys";
-import { useUpdateNote } from "./use-update-note";
 
 const { patchNote } = vi.hoisted(() => ({ patchNote: vi.fn() }));
 
