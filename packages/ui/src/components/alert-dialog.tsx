@@ -30,7 +30,7 @@ export function AlertDialogContent({
     <AlertDialogPrimitive.Content
       data-slot="alert-dialog-content"
       className={cn(
-        "fixed top-1/2 left-1/2 z-50 grid w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 rounded-lg border border-border bg-popover p-6 text-popover-foreground shadow-[var(--overlay-shadow)] outline-none transition-[opacity,transform] duration-150 ease-out data-[state=closed]:opacity-0 data-[state=closed]:scale-95 data-[state=open]:opacity-100 data-[state=open]:scale-100 motion-reduce:transition-none",
+        "fixed top-1/2 left-1/2 z-50 grid w-[calc(100%-2rem)] max-w-lg max-h-[calc(100dvh-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto rounded-lg border border-border bg-popover p-6 text-popover-foreground shadow-[var(--overlay-shadow)] outline-none transition-[opacity,transform] duration-150 ease-out data-[state=closed]:opacity-0 data-[state=closed]:scale-95 data-[state=open]:opacity-100 data-[state=open]:scale-100 motion-reduce:transition-none",
         className,
       )}
       {...props}
