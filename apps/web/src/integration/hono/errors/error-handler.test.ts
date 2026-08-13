@@ -34,4 +34,17 @@ describe("apiErrorHandler", () => {
       error: { code: "FORBIDDEN", message: "Forbidden" },
     });
   });
+
+  it("masks unexpected route failures as internal server errors", async () => {
+    const app = new Hono().onError(apiErrorHandler).get("/", () => {
+      throw new Error("database unavailable");
+    });
+
+    const response = await app.request("/");
+
+    expect(response.status).toBe(500);
+    expect(await response.json()).toEqual({
+      error: { code: "INTERNAL_SERVER_ERROR", message: "Internal server error" },
+    });
+  });
 });

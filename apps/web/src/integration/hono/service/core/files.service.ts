@@ -1,5 +1,5 @@
 import type { DeleteFileResponse, FileListResponse, UploadedFile } from "@zomlab/contracts";
-import { createFileRepository } from "~/integration/hono/storage/core/files.repository";
+import type { FileRepository } from "~/integration/hono/storage/core/files.repository";
 
 interface FileDownload {
   body: ReadableStream;
@@ -14,9 +14,7 @@ export interface FileService {
   delete(userId: string, id: string): Promise<DeleteFileResponse | null>;
 }
 
-export function createFileService(bucket: R2Bucket): FileService {
-  const repository = createFileRepository(bucket);
-
+export function createFileService(repository: FileRepository): FileService {
   return {
     async list(userId) {
       const items = await repository.list(userId);

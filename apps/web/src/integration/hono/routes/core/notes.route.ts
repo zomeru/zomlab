@@ -8,13 +8,14 @@ import {
   noteSchema,
   updateNoteBodySchema,
 } from "@zomlab/contracts";
+import { createNoteRepository } from "@zomlab/database";
 import { NoteNotFoundError } from "~/integration/hono/errors/api-error";
 import { apiErrorHandler } from "~/integration/hono/errors/error-handler";
 import { requireAuth } from "~/integration/hono/middleware/auth.middleware";
 import { createNoteService } from "~/integration/hono/service/core/notes.service";
 import type { HonoEnv } from "~/integration/hono/types";
 
-const noteService = createNoteService();
+const noteService = createNoteService(createNoteRepository());
 
 const app = new OpenAPIHono<HonoEnv>({
   defaultHook: (result, c) => {
@@ -45,12 +46,9 @@ const app = new OpenAPIHono<HonoEnv>({
     async (c) => {
       const userId = c.var.user.id;
       const { id } = c.req.valid("param");
-      try {
-        const note = await noteService.getById(userId, id);
-        return c.json(note, 200);
-      } catch {
-        throw new NoteNotFoundError();
-      }
+      const note = await noteService.getById(userId, id);
+      if (!note) throw new NoteNotFoundError();
+      return c.json(note, 200);
     },
   )
   .openapi(
@@ -128,7 +126,7 @@ const app = new OpenAPIHono<HonoEnv>({
       },
       responses: {
         200: {
-          description: "Note created",
+          description: "Note updated",
           content: {
             "application/json": {
               schema: noteSchema,
@@ -141,12 +139,9 @@ const app = new OpenAPIHono<HonoEnv>({
       const userId = c.var.user.id;
       const { id } = c.req.valid("param");
       const data = c.req.valid("json");
-      try {
-        const note = await noteService.update(userId, id, data);
-        return c.json(note, 200);
-      } catch {
-        throw new NoteNotFoundError();
-      }
+      const note = await noteService.update(userId, id, data);
+      if (!note) throw new NoteNotFoundError();
+      return c.json(note, 200);
     },
   )
   .openapi(
@@ -171,12 +166,9 @@ const app = new OpenAPIHono<HonoEnv>({
     async (c) => {
       const userId = c.var.user.id;
       const { id } = c.req.valid("param");
-      try {
-        const note = await noteService.delete(userId, id);
-        return c.json(note);
-      } catch {
-        throw new NoteNotFoundError();
-      }
+      const note = await noteService.delete(userId, id);
+      if (!note) throw new NoteNotFoundError();
+      return c.json(note);
     },
   )
   .doc31("/docs", {

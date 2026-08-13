@@ -12,9 +12,10 @@ import { FileNotFoundError } from "~/integration/hono/errors/api-error";
 import { apiErrorHandler } from "~/integration/hono/errors/error-handler";
 import { requireAuth } from "~/integration/hono/middleware/auth.middleware";
 import { createFileService } from "~/integration/hono/service/core/files.service";
+import { createFileRepository } from "~/integration/hono/storage/core/files.repository";
 import type { HonoEnv } from "~/integration/hono/types";
 
-const fileService = createFileService(env.FILE_UPLOADS);
+const fileService = createFileService(createFileRepository(env.FILE_UPLOADS));
 
 const uploadFileBodySchema = z.strictObject({
   file: z
