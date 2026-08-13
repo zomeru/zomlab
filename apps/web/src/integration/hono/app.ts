@@ -11,11 +11,11 @@ import { trimTrailingSlash } from "hono/trailing-slash";
 import { rateLimiter } from "hono-rate-limiter";
 import { apiErrorHandler, notFoundHandler } from "~/integration/hono/errors/error-handler";
 import { privateResponseMiddleware } from "~/integration/hono/middleware/private-response.middleware";
-import { getRateLimitKey } from "~/integration/hono/middleware/rate-limit.middleware";
 import fileRoutes from "~/integration/hono/routes/core/files.route";
 import noteRoutes from "~/integration/hono/routes/core/notes.route";
 import systemRoutes from "~/integration/hono/routes/system/system.route";
 import type { HonoEnv } from "~/integration/hono/types";
+import { getRateLimitKey } from "~/integration/hono/utils/rate-limit";
 
 function getRateLimitBinding() {
   if (!env.MY_RATE_LIMITER) {

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { getRateLimitKey } from "~/integration/hono/middleware/rate-limit.middleware";
+import { getRateLimitKey } from "~/integration/hono/utils/rate-limit";
 
 describe("getRateLimitKey", () => {
   test("prefers Cloudflare's client IP over forwarded proxy values", () => {

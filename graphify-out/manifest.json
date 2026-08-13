@@ -90,8 +90,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/app.ts": {
-    "mtime": 1786644366.434489,
-    "ast_hash": "db2d6e9b7825b4268c29ac584249757c",
+    "mtime": 1786645412.042248,
+    "ast_hash": "4f1b4580783cc9bbc93ce3dea3e778de",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/errors/api-error.ts": {
@@ -1454,18 +1454,18 @@
     "ast_hash": "e4659709b52d70491c5cd288107ab82b",
     "semantic_hash": ""
   },
-  "apps/web/src/__tests__/integration/hono/middleware/rate-limit.middleware.test.ts": {
-    "mtime": 1786644508.7846417,
-    "ast_hash": "325d16cacb3334199637bc3008e3ebd8",
-    "semantic_hash": ""
-  },
   "apps/web/src/__tests__/labs/core/crud/hooks/use-create-note.test.tsx": {
     "mtime": 1786644796.0790374,
     "ast_hash": "e3793bde74b27bcc5218b20ad9af93d8",
     "semantic_hash": ""
   },
-  "apps/web/src/integration/hono/middleware/rate-limit.middleware.ts": {
-    "mtime": 1786644521.0030997,
+  "apps/web/src/__tests__/integration/hono/utils/rate-limit.test.ts": {
+    "mtime": 1786645412.039866,
+    "ast_hash": "3609f1468083729937235b6c786a2659",
+    "semantic_hash": ""
+  },
+  "apps/web/src/integration/hono/utils/rate-limit.ts": {
+    "mtime": 1786645412.0382574,
     "ast_hash": "eea51789f0d78ddaafe56c7ccf5e7c75",
     "semantic_hash": ""
   }
