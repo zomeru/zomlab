@@ -1,7 +1,6 @@
-# File Uploads
+# File uploads
 
-File uploads cross browser, API, authorization, and object-storage boundaries. This lab keeps that
-flow small and explicit with validated multipart requests and private Cloudflare R2 objects.
+File uploads cross browser, API, authorization, and object-storage boundaries. This lab keeps that flow explicit with validated multipart requests and private Cloudflare R2 objects.
 
 ## What the lab demonstrates
 
@@ -9,9 +8,10 @@ flow small and explicit with validated multipart requests and private Cloudflare
 - Shared client and server validation for files up to 500 KB
 - Authenticated multipart uploads through the typed Hono client
 - User-prefixed R2 object keys for private ownership
-- Streamed downloads and explicit deletion
+- Streamed downloads and confirmation-based deletion
 - Attachment lifecycle states and actions built from the composable `@zomlab/ui` attachment
 - Loading, empty, upload, and error feedback that stays visible to assistive technology
+- Keyboard focus restored after the deletion dialog closes
 
 ## Request flow
 
@@ -19,24 +19,18 @@ flow small and explicit with validated multipart requests and private Cloudflare
 File input → TanStack Query mutation → Hono → FileService → private R2 object
 ```
 
-The server derives the object prefix from the authenticated session. Clients provide only the file,
-never an owner ID or storage key.
+The server derives the object prefix from the authenticated session. Clients provide only the file, never an owner ID or storage key.
 
 ## Local and deployed storage
 
-The Cloudflare Vite development runtime simulates R2 locally by default. Files uploaded through
-`pnpm dev` are stored below `apps/web/.wrangler/state/v3/r2` and do not appear in the Cloudflare
-dashboard.
+The Cloudflare Vite development runtime simulates R2 locally by default. Files uploaded through `pnpm dev` are stored below `apps/web/.wrangler/state/v3/r2` and do not appear in the Cloudflare dashboard.
 
 Deployed environments use the bindings in `apps/web/wrangler.jsonc`:
 
 - Staging writes to `zomlab-uploads-staging`
 - Production writes to `zomlab-uploads`
 
-Objects use `<authenticated-user-id>/<random-uuid>` keys. The original filename and media type live
-in custom metadata, so the dashboard object name is intentionally different from the uploaded file
-name. Local development should keep the simulated binding unless a task explicitly needs remote R2
-data.
+Objects use `<authenticated-user-id>/<random-uuid>` keys. The original filename and media type live in custom metadata, so the dashboard object name differs from the uploaded file name. Local development should keep the simulated binding unless a task needs remote R2 data.
 
 ## Routes
 

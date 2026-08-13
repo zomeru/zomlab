@@ -1,16 +1,16 @@
-# CRUD Notes
+# CRUD notes
 
-CRUD covers the core operations for creating, reading, updating, and deleting data.
-This lab implements those operations as an authenticated notes feature from the UI to
-PostgreSQL.
+CRUD covers the core operations for creating, reading, updating, and deleting data. This lab implements those operations as an authenticated notes feature from the UI to PostgreSQL.
 
 ## What the lab demonstrates
 
 - Shared Zod contracts for API inputs and responses
 - Protected Hono routes for each CRUD operation
 - User-scoped data access that keeps notes private
-- A service and repository boundary around Drizzle
-- Typed TanStack Query hooks for server state
+- Repository injection at the route composition boundary
+- Stable query-key factories for lists and details
+- Typed TanStack Query hooks that propagate public API errors
+- Validated forms and confirmation-based deletion
 
 ## Request flow
 
@@ -18,9 +18,9 @@ PostgreSQL.
 Notes UI → TanStack Query → Hono → NoteService → NoteRepository → Drizzle
 ```
 
-Every operation carries the authenticated user's ID through the stack. Missing notes
-and notes owned by someone else both return `404`, so the API does not reveal whether
-another user's note exists.
+The notes route passes a `NoteRepository` to `createNoteService(repository)`. Every operation carries the authenticated user's ID through the stack. A missing or non-owned note produces `null`, which the route translates to `NoteNotFoundError` and a 404 response.
+
+Repository failures remain exceptions. The shared error handler logs those private failures and returns a masked 500 response, so infrastructure errors never appear as missing notes. Successful creates return 201.
 
 ## Routes
 

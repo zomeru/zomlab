@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("CRUD has a concise overview page", async ({ page }) => {
   await page.goto("/core/crud");
 
-  await expect(page.getByRole("heading", { name: "CRUD Notes", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "CRUD notes", exact: true })).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Open the authenticated CRUD demo" }),
   ).toHaveAttribute("href", "/core/crud-demo");
@@ -38,7 +38,7 @@ test("tables has a dedicated overview page", async ({ page }) => {
 test("file uploads has a dedicated overview page", async ({ page }) => {
   await page.goto("/core/file-uploads");
 
-  await expect(page.getByRole("heading", { name: "File Uploads", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "File uploads", exact: true })).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Open the authenticated file uploads demo" }),
   ).toHaveAttribute("href", "/core/file-uploads-demo");

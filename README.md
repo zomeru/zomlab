@@ -123,6 +123,10 @@ The API currently exposes:
 
 All notes and file routes require a session and scope storage operations to the authenticated user. Private HTML, authentication, notes, and file responses disable shared caching.
 
+The notes route creates its repository and injects it into `createNoteService(repository)` at the composition boundary. The service returns `null` only when a read, update, or delete cannot find an owned note. Routes translate that result to a 404 response. Repository failures continue to the shared Hono error handler, which logs the private failure and returns a masked 500 response.
+
+Client hooks parse unsuccessful responses through `readJsonResponse`. Valid public error envelopes retain their message, status, code, and optional detail in `ApiResponseError`; malformed responses use stable fallback copy. Shared `queryKeys` factories keep health, file, note-list, and note-detail cache identities consistent across queries and invalidation. Note and file deletion require an accessible confirmation dialog before the mutation runs.
+
 ## Workspace structure
 
 ```text
@@ -187,7 +191,7 @@ Run root commands from the repository root.
 
 | Command | Effect |
 | --- | --- |
-| `pnpm check:all` | Run workflow linting, Biome, syncpack, Knip, TypeScript, and Vitest |
+| `pnpm check:all` | Run workflow linting, Biome, syncpack, Knip, TypeScript, Node Vitest, and workerd Vitest |
 | `pnpm lint:workflows` | Run zizmor against all GitHub Actions workflows (install with `uv tool install zizmor==1.29.0`) |
 | `pnpm lint` | Check repository files with Biome |
 | `pnpm lint:fix` | Apply Biome fixes |
@@ -196,6 +200,7 @@ Run root commands from the repository root.
 | `pnpm check-types` | Run all workspace type checks through Turbo |
 | `pnpm check-types:watch` | Watch all workspace type checks |
 | `pnpm test` | Run the Vitest workspace with environment loading |
+| `pnpm test:workers` | Run Worker-only Vitest tests in workerd with local Cloudflare bindings |
 | `pnpm test:turbo` | Run package test tasks through Turbo |
 | `pnpm test:watch` | Start Vitest in watch mode |
 | `pnpm test:e2e` | Start the app and run Playwright tests |
@@ -233,7 +238,7 @@ Access service token with a matching Service Auth policy and provide `CF_ACCESS_
 
 ## Testing
 
-Vitest discovers workspace projects from the app, packages, and `scripts/`. Tests cover API error normalization, redirect safety, auth environment hardening, environment precedence, workflow syntax, package-manager policy, setup behavior, and package generation.
+`pnpm test` discovers Node and browser-like Vitest projects from the app, packages, and `scripts/`. `pnpm test:workers` runs `*.worker.test.ts` files separately in workerd with the staging Wrangler configuration and local bindings. Together they cover API error normalization, service boundaries, query keys, storage behavior, redirect safety, authentication environment hardening, environment precedence, workflow syntax, package-manager policy, setup behavior, and package generation.
 
 Playwright starts `@zomlab/web` on `E2E_PORT`, then exercises:
 

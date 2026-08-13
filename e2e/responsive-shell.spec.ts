@@ -35,7 +35,7 @@ for (const viewport of VIEWPORTS) {
       }
 
       await page.goto("/core/crud");
-      await expect(page.getByRole("heading", { name: "CRUD Notes", exact: true })).toBeVisible();
+      await expect(page.getByRole("heading", { name: "CRUD notes", exact: true })).toBeVisible();
       await expect(
         page.getByText(
           "Notes UI → TanStack Query → Hono → NoteService → NoteRepository → Drizzle",

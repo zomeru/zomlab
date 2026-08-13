@@ -1,8 +1,6 @@
-# Error Handling
+# Error handling
 
-Error handling keeps expected failures useful and unexpected failures private. ZomLab exposes one
-stable error envelope while its Hono error boundary translates validation, domain, HTTP, and unknown
-errors.
+Error handling keeps expected failures useful and unexpected failures private. ZomLab exposes one stable error envelope while its Hono error boundary translates validation, domain, HTTP, and unknown errors.
 
 ## What the lab demonstrates
 
@@ -10,6 +8,7 @@ errors.
 - Status 422 for invalid input and 404 for missing owned resources
 - Domain errors translated at the route boundary
 - Unknown server errors masked from clients
+- Public API messages propagated through `ApiResponseError`
 - Urgent feedback announced with an alert
 
 ## Error flow
@@ -17,6 +16,8 @@ errors.
 ```text
 Thrown failure → API error handler → public envelope + status → client alert
 ```
+
+The client parses unsuccessful responses against the shared error schema. Valid envelopes retain their public message, status, code, and optional detail. Invalid or unreadable responses use stable fallback copy instead of exposing response internals.
 
 ## Routes
 

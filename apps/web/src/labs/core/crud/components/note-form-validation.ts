@@ -1,5 +1,5 @@
-export const NOTE_CONTENT_MAX_LENGTH = 300;
-export const NOTE_TITLE_MAX_LENGTH = 200;
+const NOTE_CONTENT_MAX_LENGTH = 300;
+const NOTE_TITLE_MAX_LENGTH = 200;
 
 export interface NoteDraftErrors {
   content?: string;

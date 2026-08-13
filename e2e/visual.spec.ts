@@ -93,7 +93,7 @@ test("captures the CRUD documentation in both themes", async ({ page }) => {
       filename: `crud-docs-${colorScheme}.png`,
       route: "/core/crud",
       ready: async () => {
-        await expect(page.getByRole("heading", { name: "CRUD Notes", exact: true })).toBeVisible();
+        await expect(page.getByRole("heading", { name: "CRUD notes", exact: true })).toBeVisible();
       },
     });
   }
