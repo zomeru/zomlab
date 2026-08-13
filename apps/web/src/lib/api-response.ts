@@ -1,6 +1,10 @@
 import { apiErrorSchema } from "@zomlab/contracts";
 
-type JsonResponse<T> = Response & { json(): Promise<T> };
+type JsonResponse<T> = {
+  json(): Promise<T>;
+  ok: boolean;
+  status: number;
+};
 
 export class ApiResponseError extends Error {
   readonly code?: string;

@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { CreateNoteBody } from "@zomlab/contracts";
 import { client } from "~/lib/api";
+import { readJsonResponse } from "~/lib/api-response";
+import { queryKeys } from "~/lib/query-keys";
 
 export function useCreateNote() {
   const queryClient = useQueryClient();
@@ -11,10 +13,8 @@ export function useCreateNote() {
         json: input,
       });
 
-      const data = await response.json();
-
-      return data;
+      return readJsonResponse(response, "The note could not be created");
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["notes"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.notes.lists }),
   });
 }

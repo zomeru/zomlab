@@ -1,13 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { client } from "~/lib/api";
+import { readJsonResponse } from "~/lib/api-response";
+import { queryKeys } from "~/lib/query-keys";
 
 export function useFiles() {
   return useQuery({
-    queryKey: ["files"],
+    queryKey: queryKeys.files.all,
     queryFn: async () => {
       const response = await client.api.files.$get();
-      if (!response.ok) throw new Error("Failed to load files");
-      return response.json();
+      return readJsonResponse(response, "Files could not be loaded");
     },
   });
 }
@@ -18,10 +19,9 @@ export function useUploadFile() {
   return useMutation({
     mutationFn: async (file: File) => {
       const response = await client.api.files.$post({ form: { file } });
-      if (!response.ok) throw new Error("The file could not be uploaded");
-      return response.json();
+      return readJsonResponse(response, "The file could not be uploaded");
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["files"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.files.all }),
   });
 }
 
@@ -31,8 +31,8 @@ export function useDeleteFile() {
   return useMutation({
     mutationFn: async (id: string) => {
       const response = await client.api.files[":id"].$delete({ param: { id } });
-      if (!response.ok) throw new Error("The file could not be deleted");
+      return readJsonResponse(response, "The file could not be deleted");
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["files"] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.files.all }),
   });
 }

@@ -1,10 +1,12 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import type { NoteListQuery } from "@zomlab/contracts";
 import { client } from "~/lib/api";
+import { readJsonResponse } from "~/lib/api-response";
+import { queryKeys } from "~/lib/query-keys";
 
 export function useNotes(options: NoteListQuery = { page: 1, pageSize: 20 }) {
   return useQuery({
-    queryKey: ["notes", options],
+    queryKey: queryKeys.notes.list(options),
     queryFn: async () => {
       const response = await client.api.notes.$get({
         query: {
@@ -15,8 +17,7 @@ export function useNotes(options: NoteListQuery = { page: 1, pageSize: 20 }) {
           ...(options.sortDirection ? { sortDirection: options.sortDirection } : {}),
         },
       });
-      const data = await response.json();
-      return data;
+      return readJsonResponse(response, "Notes could not be loaded");
     },
     placeholderData: keepPreviousData,
   });

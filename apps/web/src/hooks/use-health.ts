@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { client } from "~/lib/api";
+import { readJsonResponse } from "~/lib/api-response";
+import { queryKeys } from "~/lib/query-keys";
 
 interface HealthData {
   status: string;
@@ -9,15 +11,10 @@ interface HealthData {
 
 export function useHealth() {
   return useQuery({
-    queryKey: ["health"],
+    queryKey: queryKeys.health.all,
     queryFn: async (): Promise<HealthData> => {
       const response = await client.api.health.$get();
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch health data");
-      }
-
-      return response.json();
+      return readJsonResponse(response, "Health data is unavailable");
     },
     refetchInterval: 30_000,
   });

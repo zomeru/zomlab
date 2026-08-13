@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { UpdateNoteBody } from "@zomlab/contracts";
 import { client } from "~/lib/api";
+import { readJsonResponse } from "~/lib/api-response";
+import { queryKeys } from "~/lib/query-keys";
 
 export function useUpdateNote(id: string) {
   const queryClient = useQueryClient();
@@ -11,11 +13,11 @@ export function useUpdateNote(id: string) {
         param: { id },
         json: input,
       });
-      return response.json();
+      return readJsonResponse(response, "The note could not be updated");
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["note", id] });
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.notes.detail(id) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.notes.lists });
     },
   });
 }
