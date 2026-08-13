@@ -1,0 +1,25 @@
+# Data Fetching
+
+Data fetching is more than awaiting JSON. This lab uses the typed Hono client and TanStack Query to
+model loading, failure, success, freshness, retry, and background refetching.
+
+## What the lab demonstrates
+
+- Typed calls to the existing health endpoint
+- Query keys as server-state identity
+- Separate initial loading and background fetching states
+- Explicit manual refetching
+- Last-success timestamps and accessible feedback
+
+## Request flow
+
+```text
+Component → TanStack Query → typed Hono client → /api/health → cached result
+```
+
+## Routes
+
+- Overview: `/core/data-fetching`
+- Demo: `/core/data-fetching-demo`
+
+[Open the authenticated data fetching demo](/core/data-fetching-demo)

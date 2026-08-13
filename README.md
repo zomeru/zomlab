@@ -2,7 +2,7 @@
 
 ZomLab is a personal software engineering lab and executable knowledge base. It keeps working examples, their documentation, and the infrastructure needed to run them in one TypeScript monorepo.
 
-The implemented vertical slice is an authenticated notes lab. It includes file-based pages, an HTTP API, shared validation contracts, service and repository layers, PostgreSQL persistence, end-to-end tests, and MDX documentation with Mermaid diagrams. The navigation lists additional lab topics as planned work.
+The completed Core curriculum includes routing, forms, validation, state management, data fetching, authenticated notes CRUD, server-side search/sorting/pagination, tables, R2 file uploads, error handling, caching, middleware, and logging. Every implemented topic pairs MDX documentation with a working demo and browser coverage; navigation outside Core remains planned work.
 
 ## Current stack
 
@@ -77,7 +77,9 @@ Server variables are validated lazily by `@zomlab/env`. Invalid required values 
 | `BETTER_AUTH_GOOGLE_CLIENT_ID` | No | Enables Google OAuth when paired with `BETTER_AUTH_GOOGLE_CLIENT_SECRET` |
 | `BETTER_AUTH_GOOGLE_CLIENT_SECRET` | No | Google OAuth secret |
 
-The deployed Worker also requires the `MY_RATE_LIMITER` Cloudflare rate-limit binding. `apps/web/wrangler.jsonc` defines it for the staging and production environments.
+The deployed Worker also requires the `MY_RATE_LIMITER` Cloudflare rate-limit binding and the `FILE_UPLOADS` R2 binding. `apps/web/wrangler.jsonc` maps staging to `zomlab-uploads-staging`, production to `zomlab-uploads`, and places Worker backend execution near the Singapore Neon database with `aws:ap-southeast-1`.
+
+Local development uses Cloudflare's local R2 simulation. Uploaded objects remain under `apps/web/.wrangler/state/v3/r2` and do not appear in the Cloudflare dashboard unless a binding is intentionally configured for remote development.
 
 Keep `.env` and `apps/web/.dev.vars` private. The repository tracks only `.env.example`.
 
@@ -112,10 +114,14 @@ The API currently exposes:
 - `POST /api/notes`
 - `PATCH /api/notes/:id`
 - `DELETE /api/notes/:id`
+- `GET /api/files` and `GET /api/files/:id`
+- `POST /api/files`
+- `DELETE /api/files/:id`
 - Better Auth endpoints under `/api/auth/*`
 - An OpenAPI 3.1 document for notes at `/api/notes/docs`
+- An OpenAPI 3.1 document for files at `/api/files/docs`
 
-All notes routes require a session and scope database operations to the authenticated user. Private HTML, authentication, and notes responses disable shared caching.
+All notes and file routes require a session and scope storage operations to the authenticated user. Private HTML, authentication, notes, and file responses disable shared caching.
 
 ## Workspace structure
 
@@ -140,7 +146,7 @@ Inside `apps/web/src`:
 
 - `routes/` contains TanStack Router file routes and API server routes
 - `integration/hono/` contains Hono composition, middleware, errors, feature routes, and services
-- `labs/core/crud/` contains the notes UI, TanStack Query hooks, and MDX documentation
+- `labs/core/` contains the Core overview content, interactive demos, and TanStack Query hooks
 - `components/` contains shared application components
 - `lib/` contains the typed API client, auth server function, navigation model, and shared helpers
 - `styles/` contains Tailwind theme tokens and global styles
@@ -193,6 +199,7 @@ Run root commands from the repository root.
 | `pnpm test:turbo` | Run package test tasks through Turbo |
 | `pnpm test:watch` | Start Vitest in watch mode |
 | `pnpm test:e2e` | Start the app and run Playwright tests |
+| `pnpm test:staging-smoke` | Verify the deployed staging health/version contracts and request IDs |
 | `pnpm deps:check` | Check dependency policies with syncpack |
 | `pnpm deps:fix` | Apply syncpack dependency fixes |
 | `pnpm deps:unused` | Check unused files, exports, and dependencies with Knip |
@@ -200,6 +207,10 @@ Run root commands from the repository root.
 | `pnpm security:check` | Audit all dependencies |
 | `pnpm storybook` | Start the `@zomlab/ui` Storybook on port 6006 |
 | `pnpm build-storybook` | Build the static Storybook |
+
+The staging Worker is protected by Cloudflare Access. For automated smoke checks, provision an
+Access service token with a matching Service Auth policy and provide `CF_ACCESS_CLIENT_ID` and
+`CF_ACCESS_CLIENT_SECRET` to the command. Do not commit either value.
 
 ### Database and release maintenance
 

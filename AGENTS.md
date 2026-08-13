@@ -4,9 +4,9 @@ This file describes the repository as it exists. Treat source files, manifests, 
 
 ## Project scope
 
-ZomLab is a private TypeScript monorepo for executable software engineering labs. The current application combines an interactive documentation site with a working authenticated notes example.
+ZomLab is a private TypeScript monorepo for executable software engineering labs. The current application combines an interactive documentation site with working Core foundation, authenticated notes, and private file-upload examples.
 
-Only the Core CRUD notes lab is implemented end to end. Most labels in `apps/web/src/lib/nav.ts` are placeholders marked `planned`; do not infer corresponding modules or integrations from the navigation.
+The Core section is implemented end to end. Labels outside Core in `apps/web/src/lib/nav.ts` are mostly placeholders marked `planned`; do not infer corresponding modules or integrations from the navigation.
 
 ## Start every task with repository evidence
 
@@ -43,7 +43,7 @@ Important directories:
 
 - `src/routes/`: TanStack Router file routes, protected layout, and server route adapters
 - `src/integration/hono/`: Hono app composition, errors, middleware, feature routes, and services
-- `src/labs/core/crud/`: notes components, TanStack Query hooks, and MDX content
+- `src/labs/core/`: Core overview content, interactive demos, notes hooks, and upload hooks
 - `src/components/`: shared auth, layout, MDX, terminal, and theme components
 - `src/lib/`: typed API client, auth server function, navigation model, and helpers
 - `src/styles/`: Tailwind import, semantic theme tokens, and global rules
@@ -269,8 +269,7 @@ Do not manually edit:
 
 Future agents must account for these verified inconsistencies:
 
-- Only the notes lab is implemented. Most navigation entries are plans without routes or modules.
-- `apps/web/src/routes/index.tsx` describes a standalone API and several development modes that do not exist as root scripts. The API is embedded in the web app.
+- Core labs are implemented. Most navigation entries outside Core are plans without routes or modules.
 - The notes MDX has drifted from the implementation. It says the service accepts a repository interface and throws `NoteNotFoundError`; the current service constructs the repository and throws generic errors. It also shows a 200 create response, while the route returns 201.
 - `packages/ui` still contains create-turbo-style sample components. The web app does not depend on `@zomlab/ui`, and `SiteFooter` is separate from the footer currently rendered by `__root.tsx`.
 - `scripts/setup.ts` still labels Drizzle migration generation as “Generating Prisma client”, and its test repeats that wording.

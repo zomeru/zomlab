@@ -1,0 +1,25 @@
+# Logging
+
+Useful logs are structured request facts rather than prose. This lab records method, path, status,
+duration, timestamp, and request ID from real API calls.
+
+## What the lab demonstrates
+
+- One event per completed request
+- Stable fields that can be filtered and aggregated
+- Duration and status for operational diagnosis
+- Request IDs that correlate client evidence with Worker logs
+- No secrets, request bodies, or personal data in routine logs
+
+## Event flow
+
+```text
+API request → middleware correlation ID → response → structured event record
+```
+
+## Routes
+
+- Overview: `/core/logging`
+- Demo: `/core/logging-demo`
+
+[Open the authenticated logging demo](/core/logging-demo)

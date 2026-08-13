@@ -1,0 +1,25 @@
+# Validation
+
+Validation converts unknown input into a trusted value or a useful set of errors. This lab uses a
+strict Zod schema and connects each field failure to its input.
+
+## What the lab demonstrates
+
+- One strict schema for limits and messages
+- `safeParse` for expected validation failures
+- Typed data only after successful parsing
+- `aria-invalid` and `aria-describedby` for field errors
+- A success state that is separate from raw input
+
+## Request flow
+
+```text
+Draft → Zod safeParse → typed value or field errors → accessible feedback
+```
+
+## Routes
+
+- Overview: `/core/validation`
+- Demo: `/core/validation-demo`
+
+[Open the authenticated validation demo](/core/validation-demo)

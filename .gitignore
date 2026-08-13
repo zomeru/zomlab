@@ -20,6 +20,7 @@ coverage
 .next/
 .output/
 .wrangler/
+.tanstack/
 out/
 build
 dist
@@ -33,11 +34,6 @@ yarn-error.log*
 *.pem
 
 /docs/*
-!/docs/superpowers/
-/docs/superpowers/*
-!/docs/superpowers/specs/
-/docs/superpowers/specs/*
-!/docs/superpowers/specs/2026-08-11-production-ui-overhaul-design.md
 
 # Wrangler local dev secrets (never commit)
 **/.dev.vars*

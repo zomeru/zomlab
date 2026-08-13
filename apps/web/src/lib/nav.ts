@@ -13,11 +13,41 @@ export const NAV: NavEntry[] = [
     type: "section",
     label: "Core",
     items: [
-      { label: "Routing" },
-      { label: "Forms" },
-      { label: "Validation" },
-      { label: "State Management" },
-      { label: "Data Fetching" },
+      {
+        label: "Routing",
+        children: [
+          { label: "Overview", href: "/core/routing" },
+          { label: "Demo", href: "/core/routing-demo" },
+        ],
+      },
+      {
+        label: "Forms",
+        children: [
+          { label: "Overview", href: "/core/forms" },
+          { label: "Demo", href: "/core/forms-demo" },
+        ],
+      },
+      {
+        label: "Validation",
+        children: [
+          { label: "Overview", href: "/core/validation" },
+          { label: "Demo", href: "/core/validation-demo" },
+        ],
+      },
+      {
+        label: "State Management",
+        children: [
+          { label: "Overview", href: "/core/state-management" },
+          { label: "Demo", href: "/core/state-management-demo" },
+        ],
+      },
+      {
+        label: "Data Fetching",
+        children: [
+          { label: "Overview", href: "/core/data-fetching" },
+          { label: "Demo", href: "/core/data-fetching-demo" },
+        ],
+      },
       {
         label: "CRUD",
         children: [
@@ -53,10 +83,34 @@ export const NAV: NavEntry[] = [
           { label: "Demo", href: "/core/file-uploads-demo" },
         ],
       },
-      { label: "Error Handling" },
-      { label: "Caching" },
-      { label: "Middleware" },
-      { label: "Logging" },
+      {
+        label: "Error Handling",
+        children: [
+          { label: "Overview", href: "/core/error-handling" },
+          { label: "Demo", href: "/core/error-handling-demo" },
+        ],
+      },
+      {
+        label: "Caching",
+        children: [
+          { label: "Overview", href: "/core/caching" },
+          { label: "Demo", href: "/core/caching-demo" },
+        ],
+      },
+      {
+        label: "Middleware",
+        children: [
+          { label: "Overview", href: "/core/middleware" },
+          { label: "Demo", href: "/core/middleware-demo" },
+        ],
+      },
+      {
+        label: "Logging",
+        children: [
+          { label: "Overview", href: "/core/logging" },
+          { label: "Demo", href: "/core/logging-demo" },
+        ],
+      },
     ],
   },
   {

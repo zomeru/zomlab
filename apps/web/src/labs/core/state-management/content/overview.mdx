@@ -1,0 +1,25 @@
+# State Management
+
+State management is choosing an owner for each value. This lab uses component state for one input,
+a reducer for task transitions, and derived state for progress.
+
+## What the lab demonstrates
+
+- Local state for transient form input
+- Reducer actions for related transitions
+- Immutable add, toggle, and remove updates
+- Derived progress instead of duplicated counters
+- The boundary between client state and server state
+
+## State flow
+
+```text
+User action → reducer action → next task array → derived completion count → UI
+```
+
+## Routes
+
+- Overview: `/core/state-management`
+- Demo: `/core/state-management-demo`
+
+[Open the authenticated state management demo](/core/state-management-demo)

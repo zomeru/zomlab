@@ -34,7 +34,7 @@ test("homepage loads and shows ZomLab branding", async ({ page }) => {
     "href",
     "https://github.com/zomeru/zomlab/blob/main/README.md",
   );
-  await expect(page.getByText(/only completed vertical slice/i)).toBeVisible();
+  await expect(page.getByText(/completed Core learning paths/i)).toBeVisible();
   const main = page.getByRole("main");
   await expect(main.getByText(/standalone Hono API/i)).toHaveCount(0);
   await expect(main.getByText(/microservices/i)).toHaveCount(0);

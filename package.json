@@ -33,6 +33,7 @@
     "test:turbo": "pnpm run with-env -- pnpm exec turbo run test",
     "test:watch": "pnpm exec vitest",
     "test:e2e": "pnpm run kill:e2e-port && env -u NO_COLOR pnpm exec playwright test",
+    "test:staging-smoke": "pnpm exec tsx scripts/staging-smoke.ts",
     "storybook": "pnpm exec turbo run storybook",
     "build-storybook": "pnpm exec turbo run build-storybook",
     "db:generate": "pnpm run with-env -- pnpm exec turbo run db:generate --filter=@zomlab/database",

@@ -95,8 +95,10 @@ function GettingStarted() {
           tooling.
         </p>
         <p className="mt-3 leading-7 text-muted-foreground">
-          Authenticated notes CRUD is the only completed vertical slice. The other topics shown in
-          the navigation are planned labs, not implemented integrations.
+          The completed Core learning paths cover routing, forms, validation, state, data fetching,
+          CRUD, search, pagination, tables, uploads, errors, caching, middleware, and logging.
+          Topics outside Core remain planned until they have both documentation and working
+          software.
         </p>
         <p className="mt-4">
           <a
@@ -122,12 +124,11 @@ function GettingStarted() {
       </section>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Explore the implemented lab</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">Explore the implemented labs</h2>
         <p className="mt-3 leading-7 text-muted-foreground">
-          The Core CRUD lab demonstrates authenticated notes from the React form through TanStack
+          Start with the Core foundation demos, then follow authenticated notes through TanStack
           Query, the typed Hono client, OpenAPI routes, a service and repository, Drizzle, and Neon
-          PostgreSQL. Its documentation includes the architecture, request flow, and implementation
-          pitfalls.
+          PostgreSQL. Each learning path pairs a concise overview with executable behavior.
         </p>
       </section>
 

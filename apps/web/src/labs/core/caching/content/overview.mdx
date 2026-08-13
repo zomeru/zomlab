@@ -1,0 +1,25 @@
+# Caching
+
+Caching is a freshness policy, not merely stored data. This lab exposes the health query's key,
+freshness state, cached timestamp, and explicit invalidation behavior.
+
+## What the lab demonstrates
+
+- Stable query keys for shared server state
+- Fresh, stale, and fetching states
+- Cached data retained across consumers
+- Targeted invalidation instead of clearing everything
+- Background refresh without replacing the page with a spinner
+
+## Cache flow
+
+```text
+Query key → cache lookup → freshness check → optional network request → cache update
+```
+
+## Routes
+
+- Overview: `/core/caching`
+- Demo: `/core/caching-demo`
+
+[Open the authenticated caching demo](/core/caching-demo)

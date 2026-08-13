@@ -1,0 +1,25 @@
+# Middleware
+
+Middleware applies cross-cutting request behavior once. This lab sends a real request through the
+Hono stack and inspects evidence left by request IDs, timing, security, and cache policy.
+
+## What the lab demonstrates
+
+- Ordered request normalization and context setup
+- Correlation IDs for one request across logs
+- Timing data exposed in response headers
+- Security headers applied centrally
+- Feature routes kept focused on domain behavior
+
+## Request flow
+
+```text
+Request → ID → context → logger → timing → security → feature route → response
+```
+
+## Routes
+
+- Overview: `/core/middleware`
+- Demo: `/core/middleware-demo`
+
+[Open the authenticated middleware demo](/core/middleware-demo)
