@@ -312,7 +312,7 @@ quality gate so `.worker.test.ts` files cannot silently drift.
 Run and fix attributable failures from:
 
 ```bash
-pnpm graphify update .
+graphify update .
 pnpm format
 pnpm lint:workflows
 pnpm lint
@@ -326,8 +326,7 @@ pnpm build-storybook
 pnpm build
 ```
 
-Use `graphify update .` if the installed CLI exposes it without the `pnpm` prefix; the generated
-graph remains tool-owned and must not be edited manually.
+The generated graph remains tool-owned and must not be edited manually.
 
 Perform representative visual checks in light and dark themes at mobile, tablet, and desktop widths.
 Record any unrelated pre-existing failure separately rather than weakening a gate.
