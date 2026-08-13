@@ -108,7 +108,7 @@ Routes and React code must not import Drizzle. Add database access to a reposito
 
 - `@zomlab/env`: lazy Zod validation of process and Cloudflare Worker variables
 - `@zomlab/tsconfig`: strict shared TypeScript presets
-- `@zomlab/ui`: 3 small Storybook components; the web app does not currently consume this package
+- `@zomlab/ui`: shared design-system primitives, composites, preferences, and Storybook stories consumed by the web app
 - `@zomlab/vitest-config`: shared Vitest timeouts and thread-pool defaults
 - `@zomlab/scripts`: workspace metadata for root TypeScript scripts
 
@@ -274,7 +274,6 @@ Do not manually edit:
 Future agents must account for these verified inconsistencies:
 
 - Core labs are implemented. Most navigation entries outside Core are plans without routes or modules.
-- `packages/ui` still contains create-turbo-style sample components. The web app does not depend on `@zomlab/ui`, and `SiteFooter` is separate from the footer currently rendered by `__root.tsx`.
 - `scripts/setup.ts` still labels Drizzle migration generation as “Generating Prisma client”, and its test repeats that wording.
 - `packages/tsconfig/nextjs.json`, Prisma build allowances, Prisma editor settings, a legacy syncpack group, and standalone API debug tasks remain from earlier tooling. They are not evidence that Next.js, Prisma, or a standalone API is active.
 - Playwright visual test names include the word `legacy`; they still run against the current routes.
