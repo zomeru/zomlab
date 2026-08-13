@@ -40,6 +40,7 @@ export function FormsDemo() {
                 <Field>
                   <FieldLabel htmlFor="project-name">Project name</FieldLabel>
                   <Input
+                    autoComplete="off"
                     id="project-name"
                     maxLength={80}
                     name="name"
@@ -53,6 +54,7 @@ export function FormsDemo() {
                 <Field>
                   <FieldLabel htmlFor="project-summary">Summary</FieldLabel>
                   <Textarea
+                    autoComplete="off"
                     id="project-summary"
                     maxLength={240}
                     name="summary"

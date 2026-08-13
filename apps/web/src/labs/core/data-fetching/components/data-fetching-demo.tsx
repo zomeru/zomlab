@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@zomlab/ui/components/
 import { Skeleton } from "@zomlab/ui/components/skeleton";
 import { useHealth } from "~/hooks/use-health";
 import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
+import { CoreLoadingState } from "~/labs/core/shared/core-loading-state";
+import { formatTime } from "~/labs/core/shared/formatters";
 import { useHydrated } from "~/labs/core/shared/use-hydrated";
 
 export function DataFetchingDemo() {
@@ -19,10 +21,10 @@ export function DataFetchingDemo() {
       title="Data Fetching"
     >
       {health.isLoading ? (
-        <div className="space-y-3" role="status" aria-label="Loading health response">
+        <CoreLoadingState className="space-y-3" label="Loading health response">
           <Skeleton className="h-20" />
           <Skeleton className="h-32" />
-        </div>
+        </CoreLoadingState>
       ) : null}
 
       {health.error ? (
@@ -47,7 +49,7 @@ export function DataFetchingDemo() {
               <div className="rounded-lg bg-muted p-3">
                 <dt className="text-muted-foreground">Server timestamp</dt>
                 <dd className="mt-1 font-mono text-foreground">
-                  {new Date(health.data.timestamp).toLocaleTimeString()}
+                  {formatTime(health.data.timestamp)}
                 </dd>
               </div>
               <div className="rounded-lg bg-muted p-3">
@@ -65,7 +67,7 @@ export function DataFetchingDemo() {
               {health.isFetching ? "Refetching…" : "Refetch health"}
             </Button>
             <p className="text-sm text-muted-foreground" role="status">
-              Last successful response: {new Date(health.dataUpdatedAt).toLocaleTimeString()}
+              Last successful response: {formatTime(new Date(health.dataUpdatedAt))}
             </p>
           </CardContent>
         </Card>

@@ -36,6 +36,13 @@ test("runs the Core foundation demos as one authenticated learning path", async 
   await page.getByRole("button", { name: /sign up/i }).click();
 
   await expect(page).toHaveURL(`${baseURL}/core/routing-demo`, { timeout: 15_000 });
+  await expect(
+    page.getByRole("navigation", { name: "Routing topics" }).getByRole("link"),
+  ).toHaveCount(3);
+  await expect(page.getByRole("link", { name: "File routes" })).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
   await page.getByRole("link", { name: "Search parameters" }).click();
   await expect(page).toHaveURL(`${baseURL}/core/routing-demo?topic=search`);
   await expect(page.getByText("The URL is application state.")).toBeVisible();
@@ -47,6 +54,8 @@ test("runs the Core foundation demos as one authenticated learning path", async 
   await expect(page.getByText("Core labs was submitted.")).toBeVisible();
 
   await page.goto("/core/validation-demo");
+  await page.getByRole("button", { name: "Validate note" }).click();
+  await expect(page.getByLabel("Validated title")).toBeFocused();
   await page.getByLabel("Validated title").fill("Shared constraints");
   await page.getByLabel("Validated content").fill("One schema, predictable errors.");
   await page.getByRole("button", { name: "Validate note" }).click();
@@ -59,7 +68,9 @@ test("runs the Core foundation demos as one authenticated learning path", async 
   await page.getByLabel("Task name").fill("Ship the Core path");
   await page.getByRole("button", { name: "Add task" }).click();
   await expect(page.getByText("Ship the Core path")).toBeVisible();
-  await page.getByRole("checkbox", { name: "Ship the Core path" }).check();
+  const taskCheckbox = page.getByRole("checkbox", { name: "Ship the Core path" });
+  await expect(taskCheckbox).toBeVisible();
+  await taskCheckbox.check();
   await expect(page.getByText("1 of 1 complete")).toBeVisible();
 
   await page.goto("/core/data-fetching-demo");

@@ -2,6 +2,13 @@
 
 import { Button } from "@zomlab/ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@zomlab/ui/components/card";
+import { Checkbox } from "@zomlab/ui/components/checkbox";
+import {
+  EmptyState,
+  EmptyStateDescription,
+  EmptyStateTitle,
+} from "@zomlab/ui/components/empty-state";
+import { Field, FieldLabel } from "@zomlab/ui/components/field";
 import { Input } from "@zomlab/ui/components/input";
 import { type FormEvent, useReducer, useState } from "react";
 import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
@@ -55,18 +62,24 @@ export function StateManagementDemo() {
           <CardTitle>Implementation tasks</CardTitle>
         </CardHeader>
         <CardContent>
-          <form className="flex flex-col gap-3 sm:flex-row" onSubmit={addTask}>
+          <form onSubmit={addTask}>
             <fieldset className="contents" disabled={!hydrated}>
-              <label className="sr-only" htmlFor="task-name">
-                Task name
-              </label>
-              <Input
-                id="task-name"
-                onChange={(event) => setName(event.target.value)}
-                placeholder="Add a task"
-                value={name}
-              />
-              <Button type="submit">Add task</Button>
+              <Field className="flex flex-col gap-3 sm:flex-row sm:items-end">
+                <div className="min-w-0 flex-1 space-y-2">
+                  <FieldLabel className="sr-only" htmlFor="task-name">
+                    Task name
+                  </FieldLabel>
+                  <Input
+                    autoComplete="off"
+                    id="task-name"
+                    name="task-name"
+                    onChange={(event) => setName(event.target.value)}
+                    placeholder="Add a task"
+                    value={name}
+                  />
+                </div>
+                <Button type="submit">Add task</Button>
+              </Field>
             </fieldset>
           </form>
 
@@ -78,14 +91,17 @@ export function StateManagementDemo() {
             <ul className="mt-4 divide-y divide-border" aria-label="Implementation tasks">
               {tasks.map((task) => (
                 <li className="flex items-center gap-3 py-3" key={task.id}>
-                  <input
-                    aria-label={task.name}
+                  <Checkbox
                     checked={task.complete}
-                    className="size-4 accent-primary"
-                    onChange={() => dispatch({ id: task.id, type: "toggle" })}
-                    type="checkbox"
+                    id={`task-${task.id}`}
+                    onCheckedChange={() => dispatch({ id: task.id, type: "toggle" })}
                   />
-                  <span className="min-w-0 flex-1 text-sm text-foreground">{task.name}</span>
+                  <FieldLabel
+                    className="min-w-0 flex-1 cursor-pointer text-sm font-normal"
+                    htmlFor={`task-${task.id}`}
+                  >
+                    {task.name}
+                  </FieldLabel>
                   <Button
                     aria-label={`Remove ${task.name}`}
                     onClick={() => dispatch({ id: task.id, type: "remove" })}
@@ -99,9 +115,12 @@ export function StateManagementDemo() {
               ))}
             </ul>
           ) : (
-            <p className="mt-4 rounded-lg bg-muted p-4 text-sm text-muted-foreground">
-              Add a task to create the first reducer transition.
-            </p>
+            <EmptyState className="mt-4 px-4 py-8 text-left">
+              <EmptyStateTitle>No tasks yet</EmptyStateTitle>
+              <EmptyStateDescription>
+                Add a task to create the first reducer transition.
+              </EmptyStateDescription>
+            </EmptyState>
           )}
         </CardContent>
       </Card>

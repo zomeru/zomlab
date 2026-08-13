@@ -6,7 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@zomlab/ui/components/
 import { useState } from "react";
 import { useHealth } from "~/hooks/use-health";
 import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
+import { formatTime } from "~/labs/core/shared/formatters";
 import { useHydrated } from "~/labs/core/shared/use-hydrated";
+import { queryKeys } from "~/lib/query-keys";
 
 export function CachingDemo() {
   const health = useHealth();
@@ -16,7 +18,7 @@ export function CachingDemo() {
 
   async function invalidateHealth() {
     setMessage("Refreshing stale data…");
-    await queryClient.invalidateQueries({ queryKey: ["health"] });
+    await queryClient.invalidateQueries({ queryKey: queryKeys.health.all });
     setMessage("Cache refreshed with a new health response.");
   }
 
@@ -45,7 +47,7 @@ export function CachingDemo() {
               <dt className="text-muted-foreground">Cached at</dt>
               <dd className="mt-1 font-mono text-foreground">
                 {health.dataUpdatedAt
-                  ? new Date(health.dataUpdatedAt).toLocaleTimeString()
+                  ? formatTime(new Date(health.dataUpdatedAt))
                   : "Waiting for the first response"}
               </dd>
             </div>

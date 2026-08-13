@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@zomlab/ui/components/
 import { Field, FieldError, FieldGroup, FieldLabel } from "@zomlab/ui/components/field";
 import { Input } from "@zomlab/ui/components/input";
 import { Textarea } from "@zomlab/ui/components/textarea";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useRef, useState } from "react";
 import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
 import { useHydrated } from "~/labs/core/shared/use-hydrated";
 import { validationNoteSchema } from "../validation-schema";
@@ -20,6 +20,8 @@ export function ValidationDemo() {
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [success, setSuccess] = useState(false);
   const [title, setTitle] = useState("");
+  const titleRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
   const hydrated = useHydrated();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -30,6 +32,11 @@ export function ValidationDemo() {
       const fields = result.error.flatten().fieldErrors;
       setErrors({ content: fields.content?.[0], title: fields.title?.[0] });
       setSuccess(false);
+      if (fields.title?.[0]) {
+        titleRef.current?.focus();
+      } else if (fields.content?.[0]) {
+        contentRef.current?.focus();
+      }
       return;
     }
 
@@ -55,8 +62,14 @@ export function ValidationDemo() {
                   <Input
                     aria-describedby={errors.title ? "validated-title-error" : undefined}
                     aria-invalid={errors.title ? true : undefined}
+                    autoComplete="off"
                     id="validated-title"
-                    onChange={(event) => setTitle(event.target.value)}
+                    name="title"
+                    onChange={(event) => {
+                      setTitle(event.target.value);
+                      setSuccess(false);
+                    }}
+                    ref={titleRef}
                     value={title}
                   />
                   {errors.title ? (
@@ -68,8 +81,14 @@ export function ValidationDemo() {
                   <Textarea
                     aria-describedby={errors.content ? "validated-content-error" : undefined}
                     aria-invalid={errors.content ? true : undefined}
+                    autoComplete="off"
                     id="validated-content"
-                    onChange={(event) => setContent(event.target.value)}
+                    name="content"
+                    onChange={(event) => {
+                      setContent(event.target.value);
+                      setSuccess(false);
+                    }}
+                    ref={contentRef}
                     rows={4}
                     value={content}
                   />

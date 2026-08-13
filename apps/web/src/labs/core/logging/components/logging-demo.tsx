@@ -5,6 +5,7 @@ import { Button } from "@zomlab/ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@zomlab/ui/components/card";
 import { useState } from "react";
 import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
+import { formatDuration, formatTime } from "~/labs/core/shared/formatters";
 import { inspectVersionRequest } from "~/labs/core/shared/request-inspector";
 import { useHydrated } from "~/labs/core/shared/use-hydrated";
 
@@ -85,8 +86,8 @@ export function LoggingDemo() {
                     </p>
                   </div>
                   <p className="font-mono tabular-nums text-muted-foreground">
-                    {event.status} · {event.durationMs.toFixed(1)} ms ·{" "}
-                    {new Date(event.timestamp).toLocaleTimeString()}
+                    {event.status} · {formatDuration(event.durationMs)} ·{" "}
+                    {formatTime(event.timestamp)}
                   </p>
                 </li>
               ))}

@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@tanstack/react-router";
+import { Button } from "@zomlab/ui/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@zomlab/ui/components/card";
 import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
 
@@ -38,19 +39,19 @@ export function RoutingDemo({ topic }: { topic: RoutingTopic }) {
       <nav className="flex flex-wrap gap-2" aria-label="Routing topics">
         {(Object.entries(topics) as Array<[RoutingTopic, (typeof topics)[RoutingTopic]]>).map(
           ([value, item]) => (
-            <Link
-              activeOptions={{ exact: true, includeSearch: true }}
-              activeProps={{
-                "aria-current": "page",
-                className: "bg-primary text-primary-foreground",
-              }}
-              className="inline-flex h-10 items-center rounded-md border border-input bg-background px-4 text-sm font-semibold text-foreground hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-              key={value}
-              search={value === "route" ? {} : { topic: value }}
-              to="/core/routing-demo"
-            >
-              {item.label}
-            </Link>
+            <Button asChild key={value} variant="outline">
+              <Link
+                activeOptions={{ exact: true, includeSearch: true }}
+                activeProps={{
+                  "aria-current": "page",
+                  className: "bg-primary text-primary-foreground",
+                }}
+                search={value === "route" ? {} : { topic: value }}
+                to="/core/routing-demo"
+              >
+                {item.label}
+              </Link>
+            </Button>
           ),
         )}
       </nav>
