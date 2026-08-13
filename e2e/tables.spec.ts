@@ -5,6 +5,14 @@ const password = "password123";
 
 test("sorts and searches a user's notes in a URL-backed table", async ({ baseURL, page }) => {
   const email = `tables-${randomUUID()}@test.local`;
+  const searchRequests: string[] = [];
+
+  page.on("request", (request) => {
+    const url = new URL(request.url());
+    if (url.pathname === "/api/notes" && url.searchParams.has("query")) {
+      searchRequests.push(url.searchParams.get("query") ?? "");
+    }
+  });
 
   await page.goto(
     "/signup?redirect=%2Fcore%2Ftables-demo%3Fpage%3D1%26pageSize%3D5%26sortBy%3Dtitle%26sortDirection%3Dasc",
@@ -74,6 +82,18 @@ test("sorts and searches a user's notes in a URL-backed table", async ({ baseURL
   await expect(page).toHaveURL(/query=checklist/);
   await expect(rows).toHaveCount(2);
   await expect(rows.nth(1)).toContainText("Bravo");
+  expect(searchRequests).toEqual(["checklist"]);
+
+  await page.goBack();
+  await expect(page).toHaveURL(
+    `${baseURL}/core/tables-demo?page=1&pageSize=5&sortBy=title&sortDirection=desc`,
+  );
+  await expect(searchInput).toHaveValue("");
+  await page.waitForTimeout(350);
+  await expect(page).toHaveURL(
+    `${baseURL}/core/tables-demo?page=1&pageSize=5&sortBy=title&sortDirection=desc`,
+  );
+  expect(searchRequests).toEqual(["checklist"]);
 
   await page.setViewportSize({ height: 844, width: 390 });
   const compactLayout = await page.evaluate(() => ({

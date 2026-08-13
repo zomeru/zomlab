@@ -1,22 +1,23 @@
 "use client";
 
-import { useDebouncedValue } from "@tanstack/react-pacer";
-import { useNavigate } from "@tanstack/react-router";
 import type { NoteListQuery } from "@zomlab/contracts";
 import { Alert } from "@zomlab/ui/components/alert";
-import { PageDescription, PageHeader, PageTitle } from "@zomlab/ui/components/page";
 import { Skeleton } from "@zomlab/ui/components/skeleton";
-import { useEffect, useState } from "react";
 import { NoteForm } from "~/labs/core/crud/components/note-form";
 import { useNotes } from "~/labs/core/crud/hooks/use-notes";
 import { NotePagination } from "~/labs/core/pagination/components/note-pagination";
 import { NoteSearch } from "~/labs/core/search-filter/components/note-search";
+import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
+import { CoreLoadingState } from "~/labs/core/shared/core-loading-state";
+import { useDebouncedQuery } from "~/labs/core/shared/use-debounced-query";
 import { NotesTable } from "./notes-table";
 
 type SortBy = NonNullable<NoteListQuery["sortBy"]>;
 type SortDirection = NonNullable<NoteListQuery["sortDirection"]>;
 
 interface TablesDemoProps {
+  onQueryChange: (query: string) => void;
+  onSortChange: (sortBy: SortBy, sortDirection: SortDirection) => void;
   page: number;
   pageSize: number;
   query: string;
@@ -24,56 +25,32 @@ interface TablesDemoProps {
   sortDirection: SortDirection;
 }
 
-export function TablesDemo({ page, pageSize, query, sortBy, sortDirection }: TablesDemoProps) {
-  const navigate = useNavigate({ from: "/core/tables-demo" });
-  const [queryDraft, setQueryDraft] = useState(query);
-  const [debouncedQuery] = useDebouncedValue(queryDraft, { wait: 300 });
+export function TablesDemo({
+  onQueryChange,
+  onSortChange,
+  page,
+  pageSize,
+  query,
+  sortBy,
+  sortDirection,
+}: TablesDemoProps) {
+  const { queryDraft, setQueryDraft } = useDebouncedQuery({ onQueryChange, query });
   const { data, error, isFetching, isLoading } = useNotes({
     page,
     pageSize,
-    query: debouncedQuery || undefined,
+    query: query || undefined,
     sortBy,
     sortDirection,
   });
 
-  useEffect(() => {
-    setQueryDraft(query);
-  }, [query]);
-
-  useEffect(() => {
-    if (debouncedQuery !== query) {
-      void navigate({
-        replace: true,
-        search: (previous) => ({
-          ...previous,
-          page: 1,
-          query: debouncedQuery || undefined,
-        }),
-      });
-    }
-  }, [debouncedQuery, navigate, query]);
-
-  function updateSort(nextSortBy: SortBy, nextDirection: SortDirection) {
-    void navigate({
-      replace: true,
-      search: (previous) => ({
-        ...previous,
-        page: 1,
-        sortBy: nextSortBy,
-        sortDirection: nextDirection,
-      }),
-    });
-  }
-
   const tableSearch = { page, pageSize, query: query || undefined, sortBy, sortDirection };
 
   return (
-    <div className="mx-auto max-w-6xl">
-      <PageHeader>
-        <PageTitle>Tables</PageTitle>
-        <PageDescription>Scan, search, sort, and open your private notes.</PageDescription>
-      </PageHeader>
-
+    <CoreDemoShell
+      description="Scan, search, sort, and open your private notes."
+      title="Tables"
+      width="table"
+    >
       <div className="mt-8">
         <NoteForm />
       </div>
@@ -85,10 +62,10 @@ export function TablesDemo({ page, pageSize, query, sortBy, sortDirection }: Tab
         <NoteSearch onQueryChange={setQueryDraft} query={queryDraft} />
 
         {isLoading ? (
-          <div className="space-y-3" role="status" aria-label="Loading notes table">
+          <CoreLoadingState className="space-y-3" label="Loading notes table">
             <Skeleton className="h-12" />
             <Skeleton className="h-40" />
-          </div>
+          </CoreLoadingState>
         ) : null}
 
         {error ? (
@@ -99,8 +76,8 @@ export function TablesDemo({ page, pageSize, query, sortBy, sortDirection }: Tab
 
         {!isLoading && !error && data?.items.length === 0 ? (
           <p className="rounded-xl bg-card p-6 text-sm text-muted-foreground shadow-[var(--surface-shadow)]">
-            {debouncedQuery
-              ? `No notes match “${debouncedQuery}”. Clear the search to see every note.`
+            {query
+              ? `No notes match “${query}”. Clear the search to see every note.`
               : "No notes yet. Create one above to populate the table."}
           </p>
         ) : null}
@@ -108,7 +85,7 @@ export function TablesDemo({ page, pageSize, query, sortBy, sortDirection }: Tab
         {!isLoading && !error && data && data.items.length > 0 ? (
           <NotesTable
             notes={data.items}
-            onSortChange={updateSort}
+            onSortChange={onSortChange}
             page={page}
             pageSize={pageSize}
             sortBy={sortBy}
@@ -133,6 +110,6 @@ export function TablesDemo({ page, pageSize, query, sortBy, sortDirection }: Tab
           {isFetching && !isLoading ? "Updating the notes table." : ""}
         </p>
       </section>
-    </div>
+    </CoreDemoShell>
   );
 }

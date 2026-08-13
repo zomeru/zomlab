@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useCallback } from "react";
 import { z } from "zod";
 import { SearchFilterDemo } from "~/labs/core/search-filter/components/search-filter-demo";
 
@@ -12,19 +13,17 @@ export const Route = createFileRoute("/_authenticated/core/search-filter-demo")(
 function SearchFilterDemoRoute() {
   const query = Route.useSearch().query ?? "";
   const navigate = useNavigate({ from: Route.fullPath });
-
-  return (
-    <SearchFilterDemo
-      onQueryChange={(nextQuery) => {
-        void navigate({
-          replace: true,
-          search: (previous) => ({
-            ...previous,
-            query: nextQuery || undefined,
-          }),
-        });
-      }}
-      query={query}
-    />
+  const onQueryChange = useCallback(
+    (nextQuery: string) => {
+      void navigate({
+        search: (previous) => ({
+          ...previous,
+          query: nextQuery || undefined,
+        }),
+      });
+    },
+    [navigate],
   );
+
+  return <SearchFilterDemo onQueryChange={onQueryChange} query={query} />;
 }

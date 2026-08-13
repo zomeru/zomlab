@@ -1,13 +1,13 @@
 "use client";
 
-import { useDebouncedValue } from "@tanstack/react-pacer";
 import { Alert } from "@zomlab/ui/components/alert";
-import { PageDescription, PageHeader, PageTitle } from "@zomlab/ui/components/page";
 import { Skeleton } from "@zomlab/ui/components/skeleton";
-import { useEffect, useState } from "react";
 import { NoteForm } from "~/labs/core/crud/components/note-form";
 import { NotesList } from "~/labs/core/crud/components/notes-list";
 import { useNotes } from "~/labs/core/crud/hooks/use-notes";
+import { CoreDemoShell } from "~/labs/core/shared/core-demo-shell";
+import { CoreLoadingState } from "~/labs/core/shared/core-loading-state";
+import { useDebouncedQuery } from "~/labs/core/shared/use-debounced-query";
 import { NoteSearch } from "./note-search";
 import { SearchEmptyState } from "./search-empty-state";
 
@@ -17,31 +17,18 @@ interface SearchFilterDemoProps {
 }
 
 export function SearchFilterDemo({ query, onQueryChange }: SearchFilterDemoProps) {
-  const [queryDraft, setQueryDraft] = useState(query);
-  const [debouncedQuery] = useDebouncedValue(queryDraft, { wait: 300 });
+  const { queryDraft, setQueryDraft } = useDebouncedQuery({ onQueryChange, query });
   const { data, isLoading, error } = useNotes({
-    query: debouncedQuery || undefined,
+    query: query || undefined,
     page: 1,
     pageSize: 20,
   });
 
-  useEffect(() => {
-    setQueryDraft(query);
-  }, [query]);
-
-  useEffect(() => {
-    if (debouncedQuery !== query) {
-      onQueryChange(debouncedQuery);
-    }
-  }, [debouncedQuery, onQueryChange, query]);
-
   return (
-    <div className="mx-auto max-w-3xl">
-      <PageHeader>
-        <PageTitle>Search and Filtering</PageTitle>
-        <PageDescription>Search your private notes by title or content.</PageDescription>
-      </PageHeader>
-
+    <CoreDemoShell
+      description="Search your private notes by title or content."
+      title="Search and Filtering"
+    >
       <div className="mt-8">
         <NoteForm />
       </div>
@@ -50,10 +37,10 @@ export function SearchFilterDemo({ query, onQueryChange }: SearchFilterDemoProps
         <NoteSearch query={queryDraft} onQueryChange={setQueryDraft} />
 
         {isLoading && (
-          <div className="space-y-3" role="status" aria-label="Loading notes">
+          <CoreLoadingState className="space-y-3" label="Loading notes">
             <Skeleton className="h-24" />
             <Skeleton className="h-24" />
-          </div>
+          </CoreLoadingState>
         )}
 
         {error && (
@@ -65,20 +52,18 @@ export function SearchFilterDemo({ query, onQueryChange }: SearchFilterDemoProps
         {!isLoading && !error && data && (
           <p className="sr-only" role="status">
             {data.total} {data.total === 1 ? "note" : "notes"}
-            {debouncedQuery ? ` match “${debouncedQuery}”` : ""}.
+            {query ? ` match “${query}”` : ""}.
           </p>
         )}
 
-        {!isLoading && !error && data && data.items.length === 0 && debouncedQuery && (
-          <SearchEmptyState query={debouncedQuery} />
+        {!isLoading && !error && data && data.items.length === 0 && query && (
+          <SearchEmptyState query={query} />
         )}
 
-        {!isLoading && !error && data && data.items.length === 0 && !debouncedQuery && (
-          <SearchEmptyState />
-        )}
+        {!isLoading && !error && data && data.items.length === 0 && !query && <SearchEmptyState />}
 
         {!isLoading && !error && data && data.items.length > 0 && <NotesList notes={data.items} />}
       </div>
-    </div>
+    </CoreDemoShell>
   );
 }

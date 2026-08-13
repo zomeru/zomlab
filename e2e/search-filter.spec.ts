@@ -48,6 +48,17 @@ test("filters a user's notes in the dedicated search demo", async ({ baseURL, pa
   await expect(page.getByRole("link", { name: "Roadmap" })).not.toBeVisible();
   expect(searchRequests).toEqual(["checklist"]);
 
+  await page.goBack();
+  await expect(page).toHaveURL(`${baseURL}/core/search-filter-demo`);
+  await expect(searchInput).toHaveValue("");
+  await page.waitForTimeout(350);
+  await expect(page).toHaveURL(`${baseURL}/core/search-filter-demo`);
+  expect(searchRequests).toEqual(["checklist"]);
+
+  await page.goForward();
+  await expect(page).toHaveURL(`${baseURL}/core/search-filter-demo?query=checklist`);
+  await expect(searchInput).toHaveValue("checklist");
+
   const clearSearch = page.getByRole("button", { name: "Clear search" });
   await expect(clearSearch).toHaveCount(1);
   await clearSearch.click();

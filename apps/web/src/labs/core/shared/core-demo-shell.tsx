@@ -7,11 +7,24 @@ interface CoreDemoShellProps {
   className?: string;
   description: string;
   title: string;
+  width?: "standard" | "roomy" | "table";
 }
 
-export function CoreDemoShell({ children, className, description, title }: CoreDemoShellProps) {
+const widths = {
+  roomy: "max-w-4xl",
+  standard: "max-w-3xl",
+  table: "max-w-6xl",
+} as const;
+
+export function CoreDemoShell({
+  children,
+  className,
+  description,
+  title,
+  width = "standard",
+}: CoreDemoShellProps) {
   return (
-    <div className={cn("mx-auto max-w-3xl", className)}>
+    <div className={cn("mx-auto w-full", widths[width], className)}>
       <PageHeader>
         <PageTitle>{title}</PageTitle>
         <PageDescription>{description}</PageDescription>
