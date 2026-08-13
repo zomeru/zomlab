@@ -66,6 +66,7 @@ export function NoteForm() {
                       : "new-note-title-description"
                   }
                   aria-invalid={errors.title ? true : undefined}
+                  autoComplete="off"
                   id="new-note-title"
                   name="title"
                   onChange={(e) => {
@@ -94,6 +95,7 @@ export function NoteForm() {
                       : "new-note-content-description"
                   }
                   aria-invalid={errors.content ? true : undefined}
+                  autoComplete="off"
                   id="new-note-content"
                   name="content"
                   value={content}

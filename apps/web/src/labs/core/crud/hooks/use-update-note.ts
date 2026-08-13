@@ -15,9 +15,9 @@ export function useUpdateNote(id: string) {
       });
       return readJsonResponse(response, "The note could not be updated");
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.notes.detail(id) });
-      queryClient.invalidateQueries({ queryKey: queryKeys.notes.lists });
+    onSuccess: (note) => {
+      queryClient.setQueryData(queryKeys.notes.detail(id), note);
+      return queryClient.invalidateQueries({ queryKey: queryKeys.notes.lists });
     },
   });
 }

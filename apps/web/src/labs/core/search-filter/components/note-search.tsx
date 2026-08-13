@@ -24,9 +24,11 @@ export function NoteSearch({ query, onQueryChange }: NoteSearchProps) {
         </InputGroupAddon>
         <InputGroupInput
           aria-describedby="note-search-description"
+          autoComplete="off"
           className="pl-9 pr-10"
           id="note-search"
           maxLength={200}
+          name="note-search"
           onChange={(event) => onQueryChange(event.target.value)}
           placeholder="Search your notes"
           type="text"

@@ -151,6 +151,7 @@ export function NoteDetail({ id }: { id: string }) {
                             : "note-title-description"
                         }
                         aria-invalid={errors.title ? true : undefined}
+                        autoComplete="off"
                         id="note-title"
                         name="title"
                         onChange={(event) => {
@@ -179,6 +180,7 @@ export function NoteDetail({ id }: { id: string }) {
                             : "note-content-description"
                         }
                         aria-invalid={errors.content ? true : undefined}
+                        autoComplete="off"
                         id="note-content"
                         name="content"
                         value={content}
@@ -219,7 +221,7 @@ export function NoteDetail({ id }: { id: string }) {
             </Card>
           ) : (
             currentNote.content && (
-              <div className="text-prose mt-8 whitespace-pre-wrap leading-7">
+              <div className="text-prose mt-8 whitespace-pre-wrap leading-7 [overflow-wrap:anywhere]">
                 {currentNote.content}
               </div>
             )

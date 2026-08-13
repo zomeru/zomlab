@@ -133,6 +133,7 @@ export function FileUploadsDemo() {
             aria-invalid={selectionError ? true : undefined}
             className="sr-only"
             id="file-upload"
+            name="file"
             onChange={(event) => selectFile(event.target.files?.[0])}
             type="file"
           />

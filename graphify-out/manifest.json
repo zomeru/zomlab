@@ -145,13 +145,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/crud/components/note-detail.tsx": {
-    "mtime": 1786633877.020298,
-    "ast_hash": "268b3f3939fb06facb14d7682cb4deb5",
+    "mtime": 1786638290.5001202,
+    "ast_hash": "6b2dbfd7ad4c7b892691787e9d40c3b6",
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/crud/components/note-form.tsx": {
-    "mtime": 1786633826.4243865,
-    "ast_hash": "27224a8aad7180f81e9516133cfe4fb4",
+    "mtime": 1786638290.500649,
+    "ast_hash": "403fedf95228876b087af846b4d20d9b",
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/crud/components/notes-list.tsx": {
@@ -185,8 +185,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/crud/hooks/use-update-note.ts": {
-    "mtime": 1786626717.512012,
-    "ast_hash": "8dba990716a4550dfa8cd069b8f4b1cb",
+    "mtime": 1786638290.502181,
+    "ast_hash": "caf7a1c0c66a41348c6f966aae1b0a7e",
     "semantic_hash": ""
   },
   "apps/web/src/lib/api.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "apps/web/vitest.config.ts": {
-    "mtime": 1786625627.6572163,
-    "ast_hash": "8e5d526092bedf99625e1821555691d0",
+    "mtime": 1786638182.506578,
+    "ast_hash": "cb1d9ecf17fe4684db42c43c3c7fa916",
     "semantic_hash": ""
   },
   "commitlint.config.ts": {
@@ -910,8 +910,8 @@
     "semantic_hash": ""
   },
   "packages/ui/src/components/composites.stories.tsx": {
-    "mtime": 1786627728.9855442,
-    "ast_hash": "5cad4362e9592d982474e3b51967d993",
+    "mtime": 1786638290.4983983,
+    "ast_hash": "a7dd39b34380c01d66e34e78f1686116",
     "semantic_hash": ""
   },
   "packages/ui/src/design-system.mdx": {
@@ -950,8 +950,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/search-filter/components/note-search.tsx": {
-    "mtime": 1786625360.0116158,
-    "ast_hash": "d6556a46bb2c8fc55a424ab62f8be1b5",
+    "mtime": 1786638290.5011194,
+    "ast_hash": "61f80cf124293d3505e83e58c1b5df2e",
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/search-filter/components/search-empty-state.tsx": {
@@ -1065,8 +1065,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/file-uploads/components/file-uploads-demo.tsx": {
-    "mtime": 1786633869.1900396,
-    "ast_hash": "3bf28e039f4666ebf7318856ff6582bd",
+    "mtime": 1786638290.5016127,
+    "ast_hash": "bcbe40edf38f9367d47a46cebb8794a8",
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/file-uploads/hooks/use-files.ts": {
@@ -1160,8 +1160,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/shared/core-demo-shell.tsx": {
-    "mtime": 1786630701.5412328,
-    "ast_hash": "d403577048d488439592cea3e2177674",
+    "mtime": 1786638290.4994724,
+    "ast_hash": "9ceb5c2933c496af63604ab0a3c52a21",
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/shared/request-inspector.ts": {
@@ -1340,8 +1340,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/storage/core/files.repository.worker.test.ts": {
-    "mtime": 1786625906.6186583,
-    "ast_hash": "2174e2ea059aa69e7a50deed48a4ede7",
+    "mtime": 1786638290.5034466,
+    "ast_hash": "39624fa6e43ea0bcbca4f9ba76828b59",
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/shared/formatters.test.ts": {
@@ -1395,8 +1395,8 @@
     "semantic_hash": ""
   },
   "packages/ui/src/components/alert-dialog.tsx": {
-    "mtime": 1786628092.0614417,
-    "ast_hash": "ab911092b9614bc030146bda57f3480f",
+    "mtime": 1786638290.4974694,
+    "ast_hash": "1e1263b207e13118c8d6b3b2f516c0f4",
     "semantic_hash": ""
   },
   "packages/ui/src/components/checkbox.tsx": {
@@ -1432,6 +1432,26 @@
   "apps/web/src/labs/core/crud/components/note-form-validation.ts": {
     "mtime": 1786634674.302722,
     "ast_hash": "cda963da8e72fef3c3a76b4660a6c86b",
+    "semantic_hash": ""
+  },
+  "apps/web/src/integration/hono/storage/core/files.repository-isolation.worker.test.ts": {
+    "mtime": 1786638290.5036702,
+    "ast_hash": "0ec2df43e4201f5f11157fe9c3ad4e0f",
+    "semantic_hash": ""
+  },
+  "apps/web/src/integration/hono/storage/core/files.repository.worker-fixtures.ts": {
+    "mtime": 1786638290.5029724,
+    "ast_hash": "b45e456107dc57680a541beb229113cf",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/core/crud/hooks/use-update-note.test.tsx": {
+    "mtime": 1786638408.7208235,
+    "ast_hash": "a6ba2cbffc3cc74a3716ab1855ce5135",
+    "semantic_hash": ""
+  },
+  "packages/ui/src/components/alert-dialog.test.tsx": {
+    "mtime": 1786638387.7775464,
+    "ast_hash": "09497fd9a86c354c487080786855aebd",
     "semantic_hash": ""
   }
 }

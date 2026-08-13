@@ -26,7 +26,7 @@ export function CoreDemoShell({
   return (
     <div className={cn("mx-auto w-full", widths[width], className)}>
       <PageHeader>
-        <PageTitle>{title}</PageTitle>
+        <PageTitle className="[overflow-wrap:anywhere]">{title}</PageTitle>
         <PageDescription>{description}</PageDescription>
       </PageHeader>
       <div className="mt-8">{children}</div>
