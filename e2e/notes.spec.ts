@@ -23,6 +23,19 @@ test("sign up, create, edit, and delete a note", async ({ baseURL, page }) => {
   await expect(page).toHaveURL(`${baseURL}/core/crud-demo`, { timeout: 15_000 });
   await expect(page.getByLabel("Search notes")).toHaveCount(0);
 
+  const titleInput = page.getByLabel("Title");
+  const contentInput = page.getByLabel("Content");
+  await titleInput.fill("t".repeat(201));
+  await contentInput.fill("c".repeat(301));
+  await page.getByRole("button", { name: "Create note" }).click();
+  await expect(page.getByText("Use 200 characters or fewer for the title.")).toBeVisible();
+  await expect(page.getByText("Use 300 characters or fewer for the content.")).toBeVisible();
+  await expect(titleInput).toBeFocused();
+  await expect(titleInput).toHaveAttribute("aria-invalid", "true");
+  await expect(titleInput).toHaveAttribute("aria-describedby", /new-note-title-description/);
+  await expect(contentInput).toHaveAttribute("aria-invalid", "true");
+  await expect(contentInput).toHaveAttribute("aria-describedby", /new-note-content-description/);
+
   await page.getByLabel("Title").fill("My first note");
   await page.getByLabel("Content").fill("Hello from Playwright");
   await page.getByRole("button", { name: /create note/i }).click();
@@ -41,7 +54,15 @@ test("sign up, create, edit, and delete a note", async ({ baseURL, page }) => {
   await expect(page.getByText("Hello from Playwright")).toBeVisible();
 
   await page.getByRole("button", { name: /edit/i }).click();
-  await page.getByLabel("Title").fill("My edited note");
+  await titleInput.fill("t".repeat(201));
+  await contentInput.fill("c".repeat(301));
+  await page.getByRole("button", { name: "Save" }).click();
+  await expect(page.getByText("Use 200 characters or fewer for the title.")).toBeVisible();
+  await expect(page.getByText("Use 300 characters or fewer for the content.")).toBeVisible();
+  await expect(titleInput).toBeFocused();
+
+  await titleInput.fill("My edited note");
+  await contentInput.fill("Hello from Playwright");
   await page.getByRole("button", { name: /save/i }).click();
   await expect(page).toHaveURL(detailUrl);
   await expect(page.getByText("My edited note")).toBeVisible();
@@ -50,6 +71,11 @@ test("sign up, create, edit, and delete a note", async ({ baseURL, page }) => {
   const deleteDialog = page.getByRole("alertdialog", { name: "Delete note?" });
   await expect(deleteDialog).toBeVisible();
   await expect(page.getByText("My edited note")).toBeVisible();
+  await deleteDialog.getByRole("button", { name: "Cancel" }).click();
+  await expect(page.getByRole("button", { name: "Delete" })).toBeFocused();
+
+  await page.getByRole("button", { name: "Delete" }).click();
+  await expect(deleteDialog).toBeVisible();
   await deleteDialog.getByRole("button", { name: "Delete note" }).click();
   await expect(page).toHaveURL(`${baseURL}/core/crud-demo`);
   await expect(page.getByRole("link", { name: "My edited note" })).not.toBeVisible();

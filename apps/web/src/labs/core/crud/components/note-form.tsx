@@ -8,14 +8,16 @@ import { Input } from "@zomlab/ui/components/input";
 import { Textarea } from "@zomlab/ui/components/textarea";
 import { useEffect, useRef, useState } from "react";
 import { useCreateNote } from "../hooks/use-create-note";
+import { type NoteDraftErrors, validateNoteDraft } from "./note-form-validation";
 
 export function NoteForm() {
   const createNote = useCreateNote();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [hydrated, setHydrated] = useState(false);
-  const [titleError, setTitleError] = useState("");
+  const [errors, setErrors] = useState<NoteDraftErrors>({});
   const titleInputRef = useRef<HTMLInputElement>(null);
+  const contentInputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     setHydrated(true);
@@ -23,17 +25,22 @@ export function NoteForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title.trim()) {
-      setTitleError("Enter a title for your note.");
+    const nextErrors = validateNoteDraft({ content, title });
+    setErrors(nextErrors);
+
+    if (nextErrors.title) {
       titleInputRef.current?.focus();
       return;
     }
-
-    setTitleError("");
+    if (nextErrors.content) {
+      contentInputRef.current?.focus();
+      return;
+    }
 
     try {
       await createNote.mutateAsync({ title: title.trim(), content: content.trim() || undefined });
 
+      setErrors({});
       setTitle("");
       setContent("");
     } catch {
@@ -54,16 +61,16 @@ export function NoteForm() {
                 <FieldLabel htmlFor="new-note-title">Title</FieldLabel>
                 <Input
                   aria-describedby={
-                    titleError
+                    errors.title
                       ? "new-note-title-description new-note-title-error"
                       : "new-note-title-description"
                   }
-                  aria-invalid={titleError ? true : undefined}
+                  aria-invalid={errors.title ? true : undefined}
                   id="new-note-title"
                   name="title"
                   onChange={(e) => {
                     setTitle(e.target.value);
-                    if (titleError) setTitleError("");
+                    if (errors.title) setErrors((current) => ({ ...current, title: undefined }));
                   }}
                   placeholder="What's on your mind?"
                   ref={titleInputRef}
@@ -73,22 +80,39 @@ export function NoteForm() {
                 <p className="text-sm text-muted-foreground" id="new-note-title-description">
                   Give your note a concise, recognizable title.
                 </p>
-                {titleError ? (
-                  <FieldError id="new-note-title-error">{titleError}</FieldError>
+                {errors.title ? (
+                  <FieldError id="new-note-title-error">{errors.title}</FieldError>
                 ) : null}
               </Field>
 
               <Field>
                 <FieldLabel htmlFor="new-note-content">Content</FieldLabel>
                 <Textarea
+                  aria-describedby={
+                    errors.content
+                      ? "new-note-content-description new-note-content-error"
+                      : "new-note-content-description"
+                  }
+                  aria-invalid={errors.content ? true : undefined}
                   id="new-note-content"
                   name="content"
                   value={content}
-                  onChange={(e) => setContent(e.target.value)}
+                  onChange={(e) => {
+                    setContent(e.target.value);
+                    if (errors.content) {
+                      setErrors((current) => ({ ...current, content: undefined }));
+                    }
+                  }}
                   placeholder="Write something…"
+                  ref={contentInputRef}
                   rows={3}
                 />
-                <p className="text-sm text-muted-foreground">Optional details for your note.</p>
+                <p className="text-sm text-muted-foreground" id="new-note-content-description">
+                  Optional details for your note.
+                </p>
+                {errors.content ? (
+                  <FieldError id="new-note-content-error">{errors.content}</FieldError>
+                ) : null}
               </Field>
             </FieldGroup>
 

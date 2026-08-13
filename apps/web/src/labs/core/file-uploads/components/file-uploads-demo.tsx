@@ -42,6 +42,7 @@ import { useDeleteFile, useFiles, useUploadFile } from "../hooks/use-files";
 
 export function FileUploadsDemo() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const deleteTriggerRef = useRef<HTMLButtonElement>(null);
   const [selectedFile, setSelectedFile] = useState<File>();
   const [fileToDelete, setFileToDelete] = useState<UploadedFile>();
   const [selectionError, setSelectionError] = useState("");
@@ -250,8 +251,9 @@ export function FileUploadsDemo() {
                     <AttachmentAction
                       aria-label={`Delete ${file.name}`}
                       disabled={deleteFile.isPending && fileToDelete?.id === file.id}
-                      onClick={() => {
+                      onClick={(event) => {
                         deleteFile.reset();
+                        deleteTriggerRef.current = event.currentTarget;
                         setFileToDelete(file);
                       }}
                       type="button"
@@ -272,7 +274,17 @@ export function FileUploadsDemo() {
         }}
         open={Boolean(fileToDelete)}
       >
-        <AlertDialogContent>
+        <AlertDialogContent
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            if (deleteTriggerRef.current?.isConnected) {
+              deleteTriggerRef.current.focus();
+            } else {
+              inputRef.current?.focus();
+            }
+            deleteTriggerRef.current = null;
+          }}
+        >
           <AlertDialogHeader>
             <AlertDialogTitle>Delete file?</AlertDialogTitle>
             <AlertDialogDescription>
