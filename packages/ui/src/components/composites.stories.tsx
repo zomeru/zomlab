@@ -1,5 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Alert } from "./alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./alert-dialog";
 import { Button } from "./button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card";
 import { Callout, CodeContainer, DemoPanel, TableWrapper } from "./docs";
@@ -75,6 +88,27 @@ export const MenusAndOverlays: Story = {
           </nav>
         </SheetContent>
       </Sheet>
+
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="destructive">Delete workspace</Button>
+        </AlertDialogTrigger>
+        <AlertDialogPortal>
+          <AlertDialogOverlay />
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete this workspace?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action permanently removes the workspace and its notes.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction>Delete workspace</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogPortal>
+      </AlertDialog>
 
       <Button disabled>Saving…</Button>
     </div>

@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 import { Alert } from "./alert";
 import { Badge } from "./badge";
 import { Button } from "./button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card";
+import { Checkbox } from "./checkbox";
 import { EmptyState, EmptyStateDescription, EmptyStateTitle } from "./empty-state";
 import { Input } from "./input";
 import { Label } from "./label";
+import { Select } from "./select";
 import { Skeleton } from "./skeleton";
 import { Textarea } from "./textarea";
 
@@ -17,6 +20,26 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+function CheckboxExample() {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-center gap-2">
+        <Checkbox
+          id="story-notifications"
+          checked={checked}
+          onCheckedChange={(nextChecked) => setChecked(nextChecked === true)}
+        />
+        <Label htmlFor="story-notifications">Receive workspace notifications</Label>
+      </div>
+      <p className="text-sm text-muted-foreground">
+        Notifications are {checked ? "enabled" : "disabled"}.
+      </p>
+    </div>
+  );
+}
 
 export const Components: Story = {
   render: () => (
@@ -45,6 +68,15 @@ export const Components: Story = {
             <Label htmlFor="story-content">Content</Label>
             <Textarea id="story-content" placeholder="Capture the implementation detail…" />
           </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="story-visibility">Visibility</Label>
+            <Select id="story-visibility" defaultValue="team">
+              <option value="private">Private</option>
+              <option value="team">Team</option>
+              <option value="public">Public</option>
+            </Select>
+          </div>
+          <CheckboxExample />
         </CardContent>
       </Card>
 
