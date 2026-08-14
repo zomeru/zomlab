@@ -1,14 +1,9 @@
 import type { AuthSession, AuthUser } from "@zomlab/auth/server";
-import type { NoteService } from "~/integration/hono/service/core/notes.service";
 
 type AuthVariables = {
   session: AuthSession;
   user: AuthUser;
 };
-
-interface AppVariables extends AuthVariables {
-  noteService: NoteService;
-}
 
 type AppBindings = {
   DATABASE_URL: string;
@@ -19,9 +14,10 @@ type AppBindings = {
   BETTER_AUTH_GOOGLE_CLIENT_ID: string;
   BETTER_AUTH_GOOGLE_CLIENT_SECRET: string;
   MY_RATE_LIMITER: RateLimit;
+  FILE_UPLOADS: R2Bucket;
 };
 
 export interface HonoEnv {
-  Variables: AppVariables;
+  Variables: AuthVariables;
   Bindings: AppBindings;
 }

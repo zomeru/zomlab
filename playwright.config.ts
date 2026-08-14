@@ -16,7 +16,7 @@ export default defineConfig({
   },
   webServer: {
     command: "pnpm run with-env -- pnpm exec turbo run dev --filter=@zomlab/web --ui=stream",
-    url: baseURL,
+    url: `${baseURL}/api/health`,
     reuseExistingServer: !isCI,
     timeout: 120_000,
     env: {

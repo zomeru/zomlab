@@ -1,0 +1,59 @@
+# Error handling
+
+Error handling preserves useful information for expected failures and hides private details for unexpected failures. ZomLab exposes one stable envelope while its Hono boundary classifies domain, validation, HTTP, and infrastructure errors.
+
+## Classify failures before formatting them
+
+The error handler decides status and public detail from the error type. Unknown values never cross the boundary unchanged.
+
+<ArchitectureDiagram diagram="error-classification" />
+
+```ts
+// apps/web/src/integration/hono/errors/error-handler.ts
+if (error instanceof ZodError) {
+  const validationError = new ValidationError(
+    "Validation failed",
+    error,
+  );
+  return c.json(createErrorEnvelope(validationError), 422);
+}
+
+if (error instanceof HTTPException) {
+  const httpError = new ApiError(
+    error.status === 403 ? "FORBIDDEN" : "HTTP_ERROR",
+    error.message || "Request failed",
+    error.status,
+  );
+  return c.json(createErrorEnvelope(httpError), error.status as 400);
+}
+```
+
+The final branch logs an unknown error server-side and returns `InternalError`, whose message contains no stack, query, secret, or storage detail.
+
+## Use one public envelope
+
+Every unsuccessful API response uses `{ error: { code, message, detail? } }`. A stable shape lets clients render known messages without parsing framework-specific response bodies.
+
+[Inspect the complete public error contract](/core/error-handling/error-contract)
+
+| Failure | Status | Public detail |
+| --- | --- | --- |
+| Invalid request | 422 | Field-safe validation information |
+| Missing owned resource | 404 | Stable not-found message |
+| Missing session | 401 | Authentication requirement |
+| Forbidden request | 403 | Safe authorization message |
+| Unknown server failure | 500 | Masked internal message |
+
+## Preserve the semantic difference between 404 and 500
+
+A repository returns `null` only when an owned record is absent. The route converts that result to a not-found error. Repository exceptions escape to the shared handler and become 500 responses.
+
+Catching every storage error and returning 404 would hide outages as missing data. Exposing every exception would leak internals. The explicit result-versus-exception boundary avoids both failures.
+
+## The client validates error responses too
+
+`readJsonResponse` parses unsuccessful bodies with the shared error schema. Valid envelopes keep their status, code, message, and detail. Malformed bodies use endpoint-specific fallback copy.
+
+The UI uses `role="alert"` for urgent failures and keeps recovery close to the action. A failed destructive mutation leaves its confirmation dialog open, which lets the reader understand the error and retry.
+
+[Compare public failure types in the authenticated demo](/core/error-handling-demo)

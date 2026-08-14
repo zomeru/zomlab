@@ -1,0 +1,54 @@
+# Validation
+
+Validation converts unknown input into trusted data or actionable errors. This lab uses a strict Zod schema, maps failures to individual fields, and moves focus to the first invalid control.
+
+## Parse at the trust boundary
+
+TypeScript describes values after compilation, but it cannot validate browser input or network payloads. A runtime schema must decide whether the value can cross the boundary.
+
+<ArchitectureDiagram diagram="validation-flow" />
+
+The lab schema rejects extra keys, trims both fields, and owns the accepted lengths and public messages.
+
+```ts
+// apps/web/src/labs/core/validation/validation-schema.ts
+export const validationNoteSchema = z.strictObject({
+  content: z
+    .string()
+    .trim()
+    .min(10, "Write at least 10 characters.")
+    .max(300),
+  title: z.string().trim().min(1, "Enter a title.").max(200),
+});
+```
+
+## Expected failures should not throw
+
+Invalid form input is an expected branch, so the submit handler uses `safeParse`. Only the success branch receives validated, inferred data.
+
+```tsx
+const result = validationNoteSchema.safeParse({ content, title });
+
+if (!result.success) {
+  const fields = result.error.flatten().fieldErrors;
+  setErrors({ content: fields.content?.[0], title: fields.title?.[0] });
+  setSuccess(false);
+  if (fields.title?.[0]) {
+    titleRef.current?.focus();
+  } else if (fields.content?.[0]) {
+    contentRef.current?.focus();
+  }
+  return;
+}
+
+setErrors({});
+setSuccess(true);
+```
+
+## Error text must be connected to its field
+
+Visible text alone does not tell assistive technology which input failed. The component sets `aria-invalid` and points `aria-describedby` to the matching `FieldError` ID. It also keeps the draft intact, which lets the reader correct the value in place.
+
+Client validation improves feedback speed, but the server must repeat validation for every request. Clients can be outdated, modified, or bypassed. Shared contracts are appropriate when both boundaries accept the same shape; UI-only schemas are appropriate when a form draft differs from the API body.
+
+[Exercise the validation boundary in the authenticated demo](/core/validation-demo)

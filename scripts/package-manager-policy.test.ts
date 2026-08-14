@@ -252,12 +252,12 @@ describe("package-manager policy", () => {
     expect(violations).toEqual([]);
   });
 
-  it("runs the lockfile-pinned workflow linter from the CI workflow", () => {
+  it("runs the installed workflow security linter from the CI workflow", () => {
     const manifest = readJson<{ scripts?: Record<string, string> }>("package.json");
     const workflow = textFile(".github/workflows/ci.yml") ?? "";
 
     expect(manifest.scripts?.["lint:workflows"]).toBe(
-      "pnpm exec tsx scripts/actionlint.ts .github/workflows/ci.yml .github/workflows/migrate-db.yml .github/workflows/e2e-tests.yml",
+      "pnpm exec tsx scripts/zizmor.ts --strict-collection .github/workflows/ci.yml .github/workflows/migrate-db.yml .github/workflows/e2e-tests.yml",
     );
     expect(uncommentedYamlLines(workflow)).toContain("        run: pnpm run lint:workflows");
   });

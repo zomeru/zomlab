@@ -13,26 +13,108 @@ export const NAV: NavEntry[] = [
     type: "section",
     label: "Core",
     items: [
-      { label: "Routing" },
-      { label: "Forms" },
-      { label: "Validation" },
-      { label: "State Management" },
-      { label: "Data Fetching" },
+      {
+        label: "Routing",
+        children: [
+          { label: "Overview", href: "/core/routing" },
+          { label: "Demo", href: "/core/routing-demo" },
+        ],
+      },
+      {
+        label: "Forms",
+        children: [
+          { label: "Overview", href: "/core/forms" },
+          { label: "Demo", href: "/core/forms-demo" },
+        ],
+      },
+      {
+        label: "Validation",
+        children: [
+          { label: "Overview", href: "/core/validation" },
+          { label: "Demo", href: "/core/validation-demo" },
+        ],
+      },
+      {
+        label: "State Management",
+        children: [
+          { label: "Overview", href: "/core/state-management" },
+          { label: "Demo", href: "/core/state-management-demo" },
+        ],
+      },
+      {
+        label: "Data Fetching",
+        children: [
+          { label: "Overview", href: "/core/data-fetching" },
+          { label: "Demo", href: "/core/data-fetching-demo" },
+        ],
+      },
       {
         label: "CRUD",
         children: [
           { label: "Overview", href: "/core/crud" },
-          { label: "Demo", href: "/core/crud/demo" },
+          { label: "Data Boundaries", href: "/core/crud/data-boundaries" },
+          { label: "Demo", href: "/core/crud-demo" },
         ],
       },
-      { label: "Search & Filtering" },
-      { label: "Pagination" },
-      { label: "Tables" },
-      { label: "File Uploads" },
-      { label: "Error Handling" },
-      { label: "Caching" },
-      { label: "Middleware" },
-      { label: "Logging" },
+      {
+        label: "Search & Filtering",
+        children: [
+          { label: "Overview", href: "/core/search-filter" },
+          { label: "Demo", href: "/core/search-filter-demo" },
+        ],
+      },
+      {
+        label: "Pagination",
+        children: [
+          { label: "Overview", href: "/core/pagination" },
+          { label: "Demo", href: "/core/pagination-demo" },
+        ],
+      },
+      {
+        label: "Tables",
+        children: [
+          { label: "Overview", href: "/core/tables" },
+          { label: "Server Data", href: "/core/tables/server-data" },
+          { label: "Demo", href: "/core/tables-demo" },
+        ],
+      },
+      {
+        label: "File Uploads",
+        children: [
+          { label: "Overview", href: "/core/file-uploads" },
+          { label: "Storage & Security", href: "/core/file-uploads/storage-security" },
+          { label: "Demo", href: "/core/file-uploads-demo" },
+        ],
+      },
+      {
+        label: "Error Handling",
+        children: [
+          { label: "Overview", href: "/core/error-handling" },
+          { label: "Error Contract", href: "/core/error-handling/error-contract" },
+          { label: "Demo", href: "/core/error-handling-demo" },
+        ],
+      },
+      {
+        label: "Caching",
+        children: [
+          { label: "Overview", href: "/core/caching" },
+          { label: "Demo", href: "/core/caching-demo" },
+        ],
+      },
+      {
+        label: "Middleware",
+        children: [
+          { label: "Overview", href: "/core/middleware" },
+          { label: "Demo", href: "/core/middleware-demo" },
+        ],
+      },
+      {
+        label: "Logging",
+        children: [
+          { label: "Overview", href: "/core/logging" },
+          { label: "Demo", href: "/core/logging-demo" },
+        ],
+      },
     ],
   },
   {

@@ -1,0 +1,61 @@
+# Search and filtering
+
+Search coordinates a fast input, durable URL state, cache identity, validation, and tenant-scoped database filtering. This lab searches private note titles and content without loading the full collection into the browser.
+
+## Separate the draft from the committed query
+
+The input updates immediately, while a 300 ms debounce delays navigation and network work. The committed query lives in the URL, so refresh, history, and copied links preserve the current search.
+
+<ArchitectureDiagram diagram="search-filter-flow" />
+
+The route preserves unrelated search state through a functional update and removes an empty query from the URL.
+
+```tsx
+// apps/web/src/routes/_authenticated.core.search-filter-demo.tsx
+void navigate({
+  search: (previous) => ({
+    ...previous,
+    query: nextQuery || undefined,
+  }),
+});
+```
+
+## Validate at both URL and API boundaries
+
+The route limits `query` before the component reads it. The API applies the shared `noteListQuerySchema` again because direct callers can bypass the page. Both boundaries trim the value and cap it at 200 characters.
+
+The query hook includes the committed query in its key:
+
+```ts
+const { data, isLoading, error } = useNotes({
+  query: query || undefined,
+  page: 1,
+  pageSize: 20,
+});
+```
+
+Each distinct query receives a distinct cache entry. The input draft never becomes a cache key until the debounce commits it.
+
+## Filter inside the ownership predicate
+
+The repository combines the author condition with the title and content expression:
+
+```ts
+const where = and(
+  eq(notes.authorId, authorId),
+  or(
+    ilike(notes.title, `%${query}%`),
+    ilike(notes.content, `%${query}%`),
+  ),
+);
+```
+
+The same predicate drives the rows and total count. Search therefore cannot reveal another account's notes through either results or metadata.
+
+## Feedback distinguishes collection states
+
+The UI announces the result count with `role="status"`. An empty collection explains how to create the first note, while an empty search names the query and offers a clear action. Loading skeletons and errors do not replace one another with ambiguous copy.
+
+`ILIKE '%query%'` is appropriate for this bounded lab. Larger datasets may require PostgreSQL trigram indexes or full-text search, but the ownership and contract boundaries remain the same.
+
+[Search private notes in the authenticated demo](/core/search-filter-demo)

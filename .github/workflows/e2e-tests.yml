@@ -6,8 +6,7 @@ on:
   push:
     branches: [dev]
   pull_request:
-    branches: ["*"]
-  merge_group:
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -42,6 +41,9 @@ jobs:
               
   e2e:
     name: E2E Tests
+    needs: changes
+    if: needs.changes.outputs.e2e == 'true'
+    
     runs-on: ubuntu-latest
     environment: staging
     env:

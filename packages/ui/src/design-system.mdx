@@ -1,0 +1,24 @@
+import { Description, Meta, Stories, Subtitle, Title } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design system/Overview" />
+
+<Title>ZomLab design system</Title>
+
+<Subtitle>An engineering-workbench visual language for documentation and interactive labs.</Subtitle>
+
+<Description>
+  Shared tokens and components live in `@zomlab/ui`; routes and domain behavior remain in
+  `apps/web`. Components use semantic colors, compact technical typography, visible focus states,
+  and restrained motion. Use the theme and viewport toolbars to review every pattern in its real
+  responsive context.
+</Description>
+
+## Composition guidance
+
+- Prefer semantic variants such as primary, destructive, success, or planned.
+- Use borders for structure and reserve shadows for elevated surfaces and overlays.
+- Keep documentation prose narrow while allowing demos, diagrams, tables, and code to manage their
+  own overflow.
+- Keep product navigation data and route awareness outside the shared package.
+
+<Stories />

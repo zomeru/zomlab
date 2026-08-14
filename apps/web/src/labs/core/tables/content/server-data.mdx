@@ -1,0 +1,94 @@
+# Compose a server-backed table
+
+The notes table combines TanStack Router, Query, and Table without duplicating ownership. Each library receives the state it needs and delegates collection-wide work to the API.
+
+## Put server inputs in the URL and query key
+
+The route validates page, page size, search, sort field, and sort direction. Search or sort changes reset the page because the current offset belongs to the previous result set.
+
+```tsx
+void navigate({
+  replace: true,
+  search: (previous) => ({
+    ...previous,
+    page: 1,
+    sortBy: nextSortBy,
+    sortDirection: nextSortDirection,
+  }),
+});
+```
+
+`useNotes` places the complete options object in the cache key. Different table views cannot reuse the wrong page.
+
+```ts
+export function useNotes(options: NoteListQuery = { page: 1, pageSize: 20 }) {
+  return useQuery({
+    queryKey: queryKeys.notes.list(options),
+    queryFn: async () => {
+      const response = await client.api.notes.$get({
+        query: {
+          ...(options.query ? { query: options.query } : {}),
+          page: options.page,
+          pageSize: options.pageSize,
+          ...(options.sortBy ? { sortBy: options.sortBy } : {}),
+          ...(options.sortDirection ? { sortDirection: options.sortDirection } : {}),
+        },
+      });
+      return readJsonResponse(response, "Notes could not be loaded");
+    },
+    placeholderData: keepPreviousData,
+  });
+}
+```
+
+## Register only the table features in use
+
+TanStack Table v9 installs behavior through explicit features. The notes table registers visibility, pagination, and sorting.
+
+```tsx
+const features = tableFeatures({
+  columnVisibilityFeature,
+  rowPaginationFeature,
+  rowSortingFeature,
+});
+```
+
+Pagination and sorting are manual because the server owns them. Column visibility remains client-side because hiding a column does not change the requested dataset.
+
+## Translate table events into application state
+
+The table emits a sorting updater. The component resolves that updater against current state, validates the first entry against known column labels, and calls the route-owned callback.
+
+```tsx
+onSortingChange: (updater) => {
+  const nextSorting =
+    typeof updater === "function" ? updater(sorting) : updater;
+  const next = nextSorting[0];
+  if (next && next.id in columnLabels) {
+    onSortChange(
+      next.id as SortBy,
+      next.desc ? "desc" : "asc",
+    );
+  }
+},
+```
+
+This is the boundary where headless table state becomes product navigation state.
+
+## Render accessible controls, not clickable text
+
+Each sortable header contains a button. `aria-sort` reports the current order on the `<th>`, while the button label describes the next action. Non-sortable content and action columns do not receive sort handlers.
+
+The table also preserves these behaviors:
+
+- Column visibility uses checkbox menu items with current checked state
+- Row actions remain links to typed detail routes
+- Dates use semantic `<time>` elements and shared formatters
+- The result count and background update use status regions
+- Overflow keeps wide content reachable instead of removing columns
+
+## Keep server ordering deterministic
+
+The repository maps allowed sort fields to Drizzle columns and appends the note ID in the same direction. Equal titles or timestamps therefore keep a stable relative order across pages.
+
+[Return to the tables overview](/core/tables)

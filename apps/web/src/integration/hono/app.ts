@@ -5,15 +5,17 @@ import { contextStorage } from "hono/context-storage";
 import { csrf } from "hono/csrf";
 import { logger } from "hono/logger";
 import { requestId } from "hono/request-id";
+import { secureHeaders } from "hono/secure-headers";
 import { timing } from "hono/timing";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { rateLimiter } from "hono-rate-limiter";
 import { apiErrorHandler, notFoundHandler } from "~/integration/hono/errors/error-handler";
-import { noteServiceMiddleware } from "~/integration/hono/middleware/note-service.middleware";
 import { privateResponseMiddleware } from "~/integration/hono/middleware/private-response.middleware";
+import fileRoutes from "~/integration/hono/routes/core/files.route";
 import noteRoutes from "~/integration/hono/routes/core/notes.route";
 import systemRoutes from "~/integration/hono/routes/system/system.route";
 import type { HonoEnv } from "~/integration/hono/types";
+import { getRateLimitKey } from "~/integration/hono/utils/rate-limit";
 
 function getRateLimitBinding() {
   if (!env.MY_RATE_LIMITER) {
@@ -39,15 +41,14 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
 
   // Security
   .use(csrf())
+  .use(secureHeaders())
 
   // Traffic protection
   .use(
     rateLimiter({
       binding: getRateLimitBinding,
-      keyGenerator: (c) =>
-        c.req.header("cf-connecting-ip") ??
-        c.req.header("x-forwarded-for")?.split(",")[0]?.trim() ??
-        "anonymous",
+      keyGenerator: (c) => getRateLimitKey(c.req.raw.headers) ?? "local",
+      skip: (c) => getRateLimitKey(c.req.raw.headers) === undefined,
       message: {
         error: "Rate limit exceeded",
         retryAfter: "60s",
@@ -56,10 +57,9 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
   )
 
   // Core
-  .use("/notes", privateResponseMiddleware)
+  .use("/files/*", privateResponseMiddleware)
+  .route("/files", fileRoutes)
   .use("/notes/*", privateResponseMiddleware)
-  .use("/notes", noteServiceMiddleware)
-  .use("/notes/*", noteServiceMiddleware)
   .route("/notes", noteRoutes)
 
   // System

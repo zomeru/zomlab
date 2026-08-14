@@ -1,0 +1,64 @@
+# Middleware
+
+Middleware applies cross-cutting request behavior around focused route handlers. ZomLab uses ordered Hono middleware for normalization, observability, security, traffic protection, and private response policy.
+
+## Order changes behavior
+
+Hono runs middleware in registration order before `await next()`, then unwinds in reverse order. Response headers and timing can therefore be added after the route has produced a response.
+
+<ArchitectureDiagram diagram="middleware-onion" />
+
+The API chain makes its order visible in one composition root:
+
+```ts
+// apps/web/src/integration/hono/app.ts
+const apiApp = new OpenAPIHono<HonoEnv>()
+  .basePath("/api")
+  .onError(apiErrorHandler)
+  .notFound(notFoundHandler)
+  .use(trimTrailingSlash())
+  .use(requestId())
+  .use(contextStorage())
+  .use(logger())
+  .use(timing())
+  .use(csrf())
+  .use(secureHeaders());
+```
+
+Cloudflare rate limiting follows the security middleware. Feature-specific private response middleware runs only for `/files/*` and `/notes/*` before those route groups are mounted.
+
+## Middleware handles policy, routes handle domain work
+
+The notes handlers create, read, update, and delete notes. They do not generate correlation IDs, set security headers, or repeat cache policy. Central middleware keeps those rules consistent across endpoints.
+
+Private response middleware demonstrates the return path:
+
+```ts
+export const privateResponseMiddleware = createMiddleware(async (c, next) => {
+  await next();
+
+  c.header("Cache-Control", "private, no-store");
+  c.header("Pragma", "no-cache");
+
+  const vary = new Set(
+    (c.res.headers.get("Vary") ?? "")
+      .split(",")
+      .map((value) => value.trim())
+      .filter(Boolean),
+  );
+  vary.add("Cookie");
+  c.header("Vary", [...vary].join(", "));
+});
+```
+
+## Request and server-function middleware have different scopes
+
+`apps/web/src/start.ts` adds TanStack Start request middleware for HTML no-store headers and server-function Cross-Site Request Forgery (CSRF) protection. Hono middleware owns `/api/*`. Better Auth has a separate direct route adapter and applies its own response policy.
+
+These layers are intentionally separate because they wrap different entry points. A page guard does not authorize an API request, and Hono middleware does not wrap the direct Better Auth route.
+
+## The demo inspects response evidence
+
+The middleware demo sends a real `/api/version` request and reads `x-request-id`, `server-timing`, `x-content-type-options`, and `cache-control`. It verifies observable outcomes rather than simulating a middleware list in component state.
+
+[Inspect the live middleware response](/core/middleware-demo)

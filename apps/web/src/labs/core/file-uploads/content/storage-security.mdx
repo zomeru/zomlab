@@ -1,0 +1,75 @@
+# Secure file storage in R2
+
+The file repository treats Cloudflare R2 as private object storage. It hides raw keys from clients, preserves safe metadata, streams downloads, and supports the same interface in local and deployed environments.
+
+## Store identity separately from display metadata
+
+R2 keys use `<authenticated-user-id>/<random-uuid>`. The original name and media type live in custom metadata, so an uploaded name never controls object placement.
+
+```ts
+const object = await bucket.put(
+  getKey(userId, id),
+  await file.arrayBuffer(),
+  {
+    httpMetadata: { contentType: file.type },
+    customMetadata: {
+      name: file.name,
+      type: file.type,
+    },
+  },
+);
+```
+
+The generated UUID prevents collisions. The user prefix creates a storage-level namespace, while authentication remains the source of truth for that prefix.
+
+## List every object in the account namespace
+
+R2 list responses can be truncated. The repository follows cursors until it has the complete account-scoped result, then sorts objects by upload time.
+
+```ts
+while (truncated) {
+  const result = await bucket.list({
+    prefix: getPrefix(userId),
+    cursor,
+    include: ["customMetadata"],
+  });
+  objects.push(...result.objects);
+  truncated = result.truncated;
+  cursor = result.truncated ? result.cursor : undefined;
+}
+```
+
+Pagination here is storage pagination, not product pagination. The repository consumes every R2 page because the current public API returns one bounded personal list.
+
+## Stream downloads with private response policy
+
+The service returns the R2 body stream, entity tag, and public file metadata. The route sets download headers from validated metadata and never exposes the internal user-prefixed key.
+
+Private file responses retain these headers:
+
+- `Cache-Control: private, no-store`
+- `Pragma: no-cache`
+- `Vary: Cookie`
+
+These headers prevent shared caches from storing account-specific content. They complement authorization rather than replace it.
+
+## Delete only known objects
+
+The repository checks `head` before deletion. A missing object returns `false`, which the service converts to `null` and the route maps to a not-found error. R2 failures remain exceptions and become masked 500 responses.
+
+## Local and deployed environments use the same binding
+
+The Cloudflare Vite runtime simulates R2 locally. Files uploaded through `pnpm dev` stay under `apps/web/.wrangler/state/v3/r2` and do not appear in the Cloudflare dashboard.
+
+Deployed bindings use separate buckets:
+
+- Staging: `zomlab-uploads-staging`
+- Production: `zomlab-uploads`
+
+Keeping the binding interface constant lets the service and repository run unchanged across environments. Only Wrangler configuration selects the backing bucket.
+
+## Security boundaries remain explicit
+
+MIME type checks reduce accidental misuse but do not prove file contents. A product that serves active or untrusted formats may also need signature inspection, malware scanning, content-disposition controls, and a separate delivery domain. This lab limits accepted types and serves every object through an authenticated route.
+
+[Return to the file uploads overview](/core/file-uploads)

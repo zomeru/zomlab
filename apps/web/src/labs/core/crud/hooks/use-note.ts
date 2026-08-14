@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { client } from "~/lib/api";
+import { readJsonResponse } from "~/lib/api-response";
+import { queryKeys } from "~/lib/query-keys";
 
 export function useNote(id: string) {
   return useQuery({
-    queryKey: ["note", id],
+    queryKey: queryKeys.notes.detail(id),
     enabled: id.length > 0,
     queryFn: async () => {
       const response = await client.api.notes[":id"].$get({
@@ -11,8 +13,7 @@ export function useNote(id: string) {
           id,
         },
       });
-      const data = await response.json();
-      return data;
+      return readJsonResponse(response, "The note could not be loaded");
     },
   });
 }

@@ -1,0 +1,69 @@
+# Routing
+
+Routing turns a URL into typed application state, selects the matching UI, and applies navigation policy before rendering. This lab uses generated file routes, validated search parameters, typed links, and a pathless authentication layout.
+
+## A URL is public application state
+
+A route is more than a component switch. Its path identifies a resource or screen, while its search parameters preserve shareable view state. TanStack Router validates that state before a component reads it.
+
+<ArchitectureDiagram diagram="routing-flow" />
+
+The routing demo stores its selected lesson in `topic`. The route schema limits the URL to three supported values, so the component never handles an arbitrary string.
+
+```tsx
+// apps/web/src/routes/_authenticated.core.routing-demo.tsx
+export const Route = createFileRoute(
+  "/_authenticated/core/routing-demo",
+)({
+  validateSearch: z.object({
+    topic: z.enum(["guard", "route", "search"]).optional(),
+  }),
+  component: RoutingDemoRoute,
+});
+```
+
+Typed links write the same state. `includeSearch: true` makes the active state distinguish the base lesson from a lesson selected through `?topic=`.
+
+```tsx
+<Link
+  activeOptions={{ exact: true, includeSearch: true }}
+  search={value === "route" ? {} : { topic: value }}
+  to="/core/routing-demo"
+>
+  {item.label}
+</Link>
+```
+
+## File names define route relationships
+
+TanStack Router generates the route tree from `apps/web/src/routes`. Dots represent nested URL segments, `$id` represents a dynamic segment, and a leading underscore creates a pathless layout.
+
+The `_authenticated` layout adds policy without adding a URL segment. Every protected Core demo inherits its session check because its route file begins with `_authenticated.`.
+
+```tsx
+// apps/web/src/routes/_authenticated.tsx
+const session = await getSession();
+if (!session) {
+  throw redirect({
+    to: "/login",
+    search: { redirect: location.href },
+  });
+}
+return { user: session.user };
+```
+
+## Page guards and API authorization solve different problems
+
+The layout guard prevents an unauthenticated visitor from entering a protected page. It does not secure data by itself. A caller can bypass page navigation and request `/api/notes` directly, so protected API handlers also run `requireAuth` and scope repository queries to the session user.
+
+Use the two boundaries together:
+
+- **Route guard**: controls navigation and preserves the intended return URL
+- **API authentication**: rejects requests without a valid session
+- **Repository ownership filter**: prevents one authenticated account from reading another account's records
+
+## Design choices in this lab
+
+The URL owns state that should survive reloads, browser history, and sharing. Component state still owns temporary details that have no navigational meaning. Generated `routeTree.gen.ts` remains build output and must never be edited by hand.
+
+[Explore typed routing in the authenticated demo](/core/routing-demo)

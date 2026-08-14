@@ -1,0 +1,58 @@
+# Caching
+
+Caching is a freshness policy attached to an identity, not a copy of data with no rules. This lab exposes one TanStack Query entry as it moves through fresh, stale, fetching, and updated states.
+
+## Query keys define cache identity
+
+The health endpoint uses `["health"]`. Notes use prefix factories for all lists, parameterized list views, and individual details.
+
+```ts
+// apps/web/src/lib/query-keys.ts
+notes: {
+  all: ["notes"] as const,
+  lists: ["notes", "list"] as const,
+  list: (query: NoteListQuery) =>
+    ["notes", "list", query] as const,
+  details: ["notes", "detail"] as const,
+  detail: (id: string) =>
+    ["notes", "detail", id] as const,
+},
+```
+
+A key must include every input that can change the server response. Prefixes make related entries addressable as a group.
+
+## Freshness and fetching are independent
+
+<ArchitectureDiagram diagram="caching-lifecycle" />
+
+Fresh data can be served without a request. Stale data can remain visible while a background request runs. `isFetching` describes network activity, while `isStale` describes policy.
+
+The application defaults make data fresh for 60 seconds, retain unused entries for 5 minutes, retry twice, and disable focus refetching. The health query also polls every 30 seconds.
+
+## Invalidate the smallest correct scope
+
+The demo marks only the health entry stale. Because the query is active, TanStack Query refetches it in the background.
+
+```ts
+async function invalidateHealth() {
+  setMessage("Refreshing stale data…");
+  await queryClient.invalidateQueries({
+    queryKey: queryKeys.health.all,
+  });
+  setMessage("Cache refreshed with a new health response.");
+}
+```
+
+CRUD mutations invalidate notes list prefixes, update known detail data directly, or remove a deleted detail. They do not clear files or health data.
+
+## Client cache and HTTP cache are different layers
+
+TanStack Query stores data inside the application process and applies feature-level freshness rules. HTTP cache headers control browsers, proxies, and shared intermediaries.
+
+Private notes, files, authentication responses, and HTML use `Cache-Control: private, no-store`, `Pragma: no-cache`, and `Vary: Cookie`. TanStack Query can still retain private data in the current application session. The no-store policy prevents an external shared cache from persisting it.
+
+## Invalidation is not mutation recovery
+
+Invalidation refetches canonical server state. Optimistic updates require additional snapshot and rollback logic. This lab uses confirmed server responses because note and file mutations are small and correctness matters more than speculative latency.
+
+[Observe cache freshness in the authenticated demo](/core/caching-demo)

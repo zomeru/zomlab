@@ -17,7 +17,13 @@ test("homepage loads and shows ZomLab branding", async ({ page }) => {
     "href",
     "#main",
   );
-  await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Change theme" })).toBeVisible();
+  await page.getByRole("button", { name: "Change theme" }).click();
+  await expect(page.getByRole("menuitemradio", { name: "System" })).toHaveAttribute(
+    "aria-checked",
+    "true",
+  );
+  await page.keyboard.press("Escape");
   await expect(page.getByRole("link", { name: "ZomLab", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Getting Started" })).toBeVisible();
 
@@ -28,8 +34,17 @@ test("homepage loads and shows ZomLab branding", async ({ page }) => {
     "href",
     "https://github.com/zomeru/zomlab/blob/main/README.md",
   );
-  await expect(page.getByText(/only completed vertical slice/i)).toBeVisible();
+  await expect(page.getByText(/completed Core learning paths/i)).toBeVisible();
   const main = page.getByRole("main");
   await expect(main.getByText(/standalone Hono API/i)).toHaveCount(0);
   await expect(main.getByText(/microservices/i)).toHaveCount(0);
+});
+
+test("unknown routes show the branded not-found page", async ({ page }) => {
+  const response = await page.goto("/this-route-does-not-exist");
+
+  expect(response).not.toBeNull();
+  await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();
+  await expect(page.getByText("404")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Return home" })).toHaveAttribute("href", "/");
 });

@@ -1,0 +1,63 @@
+# File uploads
+
+File uploads cross browser, API, authorization, and object-storage boundaries. This lab validates multipart input, derives ownership from the session, stores private Cloudflare R2 objects, and preserves an accessible lifecycle from selection through deletion.
+
+## Treat every upload as untrusted input
+
+The browser's `accept` attribute guides selection but does not enforce security. The client checks early for feedback, and the Hono route repeats the authoritative rules before storage.
+
+```ts
+// apps/web/src/integration/hono/routes/core/files.route.ts
+const uploadFileBodySchema = z.strictObject({
+  file: z
+    .instanceof(File, { message: "Choose a file to upload" })
+    .refine((file: File) => file.name.length > 0 && file.name.length <= 180, {
+      message: "File names must be between 1 and 180 characters",
+    })
+    .refine((file: File) => file.size > 0, { message: "Files cannot be empty" })
+    .refine((file: File) => file.size <= FILE_UPLOAD_MAX_BYTES, {
+      message: "Files must be 500 KB or smaller",
+    })
+    .refine(
+      (file: File) => FILE_UPLOAD_ACCEPTED_TYPES.some((acceptedType) => acceptedType === file.type),
+      { message: "Only PDF, JPEG, PNG, and plain text files are supported" },
+    ),
+});
+```
+
+Shared constants keep the browser hint and server policy aligned.
+
+## Ownership never comes from the multipart body
+
+The route reads the user ID from the authenticated session. The service creates a random object ID, and the repository builds the R2 key from the session user.
+
+<ArchitectureDiagram diagram="file-upload-flow" />
+
+```ts
+function getPrefix(userId: string) {
+  return `${userId}/`;
+}
+
+function getKey(userId: string, id: string) {
+  return `${getPrefix(userId)}${id}`;
+}
+```
+
+Clients never submit an owner ID or object key. List, download, and delete operations rebuild the key with the current session user, so another account cannot address the object.
+
+[Read about R2 storage and file security](/core/file-uploads/storage-security)
+
+## The UI represents the complete lifecycle
+
+The demo separates selection errors, upload mutation errors, list loading, empty storage, download actions, and deletion errors. Upload and delete mutations invalidate only the file list cache.
+
+Deletion uses a controlled alert dialog. A failed request keeps the dialog open for retry. Closing the dialog returns focus to the triggering delete control, or to the file input if that control no longer exists.
+
+The supported policy is explicit:
+
+- PDF, JPEG, PNG, and plain text
+- Non-empty files up to 500 KB
+- File names from 1 to 180 characters
+- Private account ownership for every operation
+
+[Manage private files in the authenticated demo](/core/file-uploads-demo)

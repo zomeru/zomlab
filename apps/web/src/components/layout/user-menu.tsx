@@ -2,7 +2,16 @@
 
 import { useRouter } from "@tanstack/react-router";
 import { authClient } from "@zomlab/auth/client";
-import { useEffect, useRef, useState } from "react";
+import { Button } from "@zomlab/ui/components/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@zomlab/ui/components/dropdown-menu";
+import { LogOutIcon } from "lucide-react";
 
 type UserMenuProps = {
   name: string;
@@ -12,58 +21,45 @@ type UserMenuProps = {
 
 export function UserMenu({ name, email, initial }: UserMenuProps) {
   const router = useRouter();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    function onClickOutside(e: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
-  }, []);
 
   async function handleSignOut() {
-    setOpen(false);
     await authClient.signOut();
     await router.navigate({ to: "/", replace: true });
     await router.invalidate({ sync: true });
   }
 
   return (
-    <div ref={containerRef} className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-label="Account menu"
-        className="grid size-8 place-items-center rounded-full bg-primary text-sm font-semibold text-primary-foreground transition-transform hover:opacity-90 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-      >
-        {initial}
-      </button>
-
-      {open && (
-        <div
-          role="menu"
-          className="absolute right-0 top-full z-50 mt-2 w-56 rounded-md border border-border bg-card p-1 shadow-lg"
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          type="button"
+          variant="secondary"
+          size="icon-sm"
+          static
+          aria-label="Account menu"
+          className="rounded-full"
         >
-          <div className="border-b border-border px-3 py-2">
-            <p className="truncate text-sm font-medium text-foreground">{name}</p>
-            <p className="truncate text-xs text-muted-foreground">{email}</p>
-          </div>
-          <button
-            type="button"
-            role="menuitem"
-            onClick={handleSignOut}
-            className="mt-1 w-full rounded-md px-3 py-2 text-left text-sm text-destructive transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
-          >
-            Sign out
-          </button>
-        </div>
-      )}
-    </div>
+          <span className="font-mono text-xs font-bold" aria-hidden="true">
+            {initial}
+          </span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-60">
+        <DropdownMenuLabel>
+          <span className="block truncate">{name}</span>
+          <span className="mt-0.5 block truncate text-xs font-normal text-muted-foreground">
+            {email}
+          </span>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onSelect={handleSignOut}
+          className="text-destructive focus:text-destructive"
+        >
+          <LogOutIcon aria-hidden="true" />
+          Sign out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

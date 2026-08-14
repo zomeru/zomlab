@@ -1,0 +1,55 @@
+# Pagination
+
+Pagination turns one ordered collection into bounded, addressable pages. This lab keeps page state in the URL, validates it at the API boundary, and returns rows and metadata from the same user-scoped filter.
+
+## Define the page contract before rendering controls
+
+The route parses URL strings into integers and supplies safe fallbacks. The demo limits `pageSize` to 10, while the reusable API contract permits up to 100.
+
+```tsx
+// apps/web/src/routes/_authenticated.core.pagination-demo.tsx
+export const Route = createFileRoute(
+  "/_authenticated/core/pagination-demo",
+)({
+  validateSearch: z.object({
+    page: z.coerce.number().int().min(1).catch(1),
+    pageSize: z.coerce.number().int().min(1).max(10).catch(5),
+  }),
+  component: PaginationDemoRoute,
+});
+```
+
+Changing the page size resets `page` to 1. This prevents a valid page in the old range from becoming empty in the new range.
+
+## Rows and totals share one filter
+
+The repository batches two statements: one selects the page, and one counts all matching rows. Both use the same ownership and search predicate.
+
+<ArchitectureDiagram diagram="pagination-flow" />
+
+```ts
+const [rows, totalRows] = await db.batch([
+  db
+    .select()
+    .from(notes)
+    .where(where)
+    .orderBy(sort(sortColumn), sort(notes.id))
+    .limit(pageSize)
+    .offset((page - 1) * pageSize),
+  db.select({ value: count() }).from(notes).where(where),
+]);
+```
+
+The secondary `notes.id` ordering breaks ties. Without a deterministic order, rows with equal timestamps could move between pages.
+
+## Preserve data during page transitions
+
+`useNotes` uses `placeholderData: keepPreviousData`. The previous page remains visible while the next request runs, and an assistive status message announces the background transition.
+
+The response reports `page`, `pageSize`, `total`, and `pageCount`. The service calculates at least one page, which keeps navigation stable for an empty collection.
+
+## Offset pagination has explicit tradeoffs
+
+Offset pagination supports numbered pages and direct links. Its cost grows for deep offsets, and concurrent inserts can shift rows between requests. Cursor pagination is a better fit for unbounded feeds, but it does not naturally support “go to page 12.” This lab chooses offset pagination because the product behavior requires numbered navigation.
+
+[Page through private notes in the authenticated demo](/core/pagination-demo)

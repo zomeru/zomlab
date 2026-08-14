@@ -4,9 +4,9 @@ This file describes the repository as it exists. Treat source files, manifests, 
 
 ## Project scope
 
-ZomLab is a private TypeScript monorepo for executable software engineering labs. The current application combines an interactive documentation site with a working authenticated notes example.
+ZomLab is a private TypeScript monorepo for executable software engineering labs. The current application combines an interactive documentation site with working Core foundation, authenticated notes, and private file-upload examples.
 
-Only the Core CRUD notes lab is implemented end to end. Most labels in `apps/web/src/lib/nav.ts` are placeholders marked `planned`; do not infer corresponding modules or integrations from the navigation.
+The Core section is implemented end to end. Labels outside Core in `apps/web/src/lib/nav.ts` are mostly placeholders marked `planned`; do not infer corresponding modules or integrations from the navigation.
 
 ## Start every task with repository evidence
 
@@ -43,7 +43,7 @@ Important directories:
 
 - `src/routes/`: TanStack Router file routes, protected layout, and server route adapters
 - `src/integration/hono/`: Hono app composition, errors, middleware, feature routes, and services
-- `src/labs/core/crud/`: notes components, TanStack Query hooks, and MDX content
+- `src/labs/core/`: Core overview content, interactive demos, notes hooks, and upload hooks
 - `src/components/`: shared auth, layout, MDX, terminal, and theme components
 - `src/lib/`: typed API client, auth server function, navigation model, and helpers
 - `src/styles/`: Tailwind import, semantic theme tokens, and global rules
@@ -102,13 +102,13 @@ This package owns the Neon HTTP client, Drizzle schema, repositories, and genera
 
 Routes and React code must not import Drizzle. Add database access to a repository and call it from a service or auth adapter.
 
-The current `createNoteService()` constructs its repository internally. It throws a generic `Error` for missing notes; route handlers catch those failures and translate them to `NoteNotFoundError`. Preserve that behavior unless a task explicitly improves error boundaries and tests the change.
+`createNoteService(repository)` receives a `NoteRepository` from the notes route composition boundary. Reads, updates, and deletes return `null` only when an owned note is missing. Route handlers translate those null results to `NoteNotFoundError`. Repository failures must escape to `apiErrorHandler`, which logs the private failure and returns a masked 500 response.
 
 ### Supporting packages
 
 - `@zomlab/env`: lazy Zod validation of process and Cloudflare Worker variables
 - `@zomlab/tsconfig`: strict shared TypeScript presets
-- `@zomlab/ui`: 3 small Storybook components; the web app does not currently consume this package
+- `@zomlab/ui`: shared design-system primitives, composites, preferences, and Storybook stories consumed by the web app
 - `@zomlab/vitest-config`: shared Vitest timeouts and thread-pool defaults
 - `@zomlab/scripts`: workspace metadata for root TypeScript scripts
 
@@ -130,7 +130,9 @@ Never edit `apps/web/src/routeTree.gen.ts`. Run the normal TanStack Start develo
 - Components use PascalCase exports and kebab-case filenames
 - Hooks use `use-*.ts` filenames and `useSomething` exports
 - Client-interactive components generally declare `"use client"` and use React state or effects
-- TanStack Query owns server state; query keys currently include `['notes']`, `['note', id]`, and `['health']`
+- TanStack Query owns server state; use the stable factories in `src/lib/query-keys.ts` for health, files, note lists, and note details
+- Parse typed Hono responses with `readJsonResponse`; validated public error envelopes become `ApiResponseError`, while malformed failures use stable fallback copy
+- Require the shared alert dialog before destructive note or file mutations; preserve keyboard focus when a dialog closes
 - The typed Hono client includes cookies with `credentials: "include"`
 - Authenticated pages use the `_authenticated` route guard and `getSession()` server function
 - Forms are controlled React forms; API schemas enforce server-side constraints
@@ -151,7 +153,7 @@ Current public API behavior:
 - Notes OpenAPI document: `/api/notes/docs`
 - Auth routes: `/api/auth/*`
 
-Use stable error envelopes shaped as `{ error: { code, message, detail? } }`. `apiErrorHandler` converts `ApiError`, Zod, and Hono `HTTPException` instances and masks unknown server errors. Validation errors use status 422. Missing or non-owned notes return 404.
+Use stable error envelopes shaped as `{ error: { code, message, detail? } }`. `apiErrorHandler` converts `ApiError`, Zod, and Hono `HTTPException` instances and masks unknown server errors. Validation errors use status 422. Missing or non-owned notes return 404. Do not catch repository exceptions as not-found results: unexpected storage failures must remain masked 500 responses.
 
 Private HTML, auth, and notes responses must retain `Cache-Control: private, no-store`, `Pragma: no-cache`, and an appropriate `Vary` header.
 
@@ -197,11 +199,12 @@ Run:
 
 ```bash
 pnpm test
+pnpm test:workers
 pnpm test:watch
 pnpm test:e2e
 ```
 
-Unit and integration tests currently cover API error handling, safe redirects, authentication environment behavior, environment precedence, workflow linting, package-manager policy, setup behavior, and package generation.
+`pnpm test` runs the regular Vitest workspace and excludes `*.worker.test.ts`. `pnpm test:workers` runs those files through `@cloudflare/vitest-pool-workers` in workerd with the staging Wrangler configuration and local bindings. Unit and integration tests cover API error handling, note-service boundaries, query keys, R2 storage, safe redirects, authentication environment behavior, environment precedence, workflow linting, package-manager policy, setup behavior, and package generation.
 
 Playwright starts the web app through Turbo on `E2E_PORT`, which defaults to 3100 for the test runner. The suite covers browser authentication, notes CRUD, ownership and validation contracts, system endpoints, MDX rendering, cache headers, themes, and screenshots. Tests create real database records, so use an isolated database.
 
@@ -222,7 +225,8 @@ It runs these checks in order:
 3. syncpack dependency policy
 4. Knip unused-code checks
 5. Workspace TypeScript checks
-6. Vitest
+6. Regular Vitest workspace
+7. Worker-only Vitest suite in workerd
 
 Run `pnpm test:e2e` separately when the change affects routing, authentication, API contracts, database behavior, rendered documentation, or UI workflows. Run `pnpm build` for application or deployment changes. Run `pnpm cf:validate` for Worker configuration or binding changes.
 
@@ -269,16 +273,13 @@ Do not manually edit:
 
 Future agents must account for these verified inconsistencies:
 
-- Only the notes lab is implemented. Most navigation entries are plans without routes or modules.
-- `apps/web/src/routes/index.tsx` describes a standalone API and several development modes that do not exist as root scripts. The API is embedded in the web app.
-- The notes MDX has drifted from the implementation. It says the service accepts a repository interface and throws `NoteNotFoundError`; the current service constructs the repository and throws generic errors. It also shows a 200 create response, while the route returns 201.
-- `packages/ui` still contains create-turbo-style sample components. The web app does not depend on `@zomlab/ui`, and `SiteFooter` is separate from the footer currently rendered by `__root.tsx`.
+- Core labs are implemented. Most navigation entries outside Core are plans without routes or modules.
 - `scripts/setup.ts` still labels Drizzle migration generation as “Generating Prisma client”, and its test repeats that wording.
 - `packages/tsconfig/nextjs.json`, Prisma build allowances, Prisma editor settings, a legacy syncpack group, and standalone API debug tasks remain from earlier tooling. They are not evidence that Next.js, Prisma, or a standalone API is active.
 - Playwright visual test names include the word `legacy`; they still run against the current routes.
 - `apps/web/src/routes/status.tsx` contains a parenthesized `"use client"` expression after its route export, so it is not a module directive.
 - `apps/web/src/env.d.ts` declares `VITE_SITE_URL`, but the app does not use it and `.env.example` does not define it.
-- The generated Worker type and `HonoEnv` binding type omit `BETTER_AUTH_ALLOWED_HOSTS`, although `@zomlab/env` validates it and `.env.example` defines it.
+- The `HonoEnv` binding type omits `BETTER_AUTH_ALLOWED_HOSTS`, although the generated Worker type, `@zomlab/env`, and `.env.example` define it.
 - `test.md` is a historical migration-verification prompt. `test.sh` is a local editor-history recovery utility, not part of the automated test suite.
 
 Do not build new work on these leftovers. Verify whether a cleanup is in scope, then remove or update stale pieces with focused tests.

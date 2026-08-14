@@ -9,7 +9,21 @@ export const noteSchema = z.strictObject({
   updatedAt: z.iso.datetime(),
 });
 
-export const noteListResponseSchema = z.array(noteSchema);
+export const noteListQuerySchema = z.strictObject({
+  query: z.string().trim().max(200).optional(),
+  page: z.coerce.number().int().min(1).default(1),
+  pageSize: z.coerce.number().int().min(1).max(100).default(20),
+  sortBy: z.enum(["title", "createdAt", "updatedAt"]).optional(),
+  sortDirection: z.enum(["asc", "desc"]).optional(),
+});
+
+export const noteListResponseSchema = z.strictObject({
+  items: z.array(noteSchema),
+  total: z.number().int().min(0),
+  page: z.number().int().min(1),
+  pageSize: z.number().int().min(1),
+  pageCount: z.number().int().min(1),
+});
 
 export const createNoteBodySchema = z.strictObject({
   title: z.string().min(1).max(200),
@@ -31,6 +45,7 @@ export const deleteNoteResponseSchema = z.strictObject({
 
 export type Note = z.infer<typeof noteSchema>;
 export type NoteListResponse = z.infer<typeof noteListResponseSchema>;
+export type NoteListQuery = z.infer<typeof noteListQuerySchema>;
 export type CreateNoteBody = z.infer<typeof createNoteBodySchema>;
 export type UpdateNoteBody = z.infer<typeof updateNoteBodySchema>;
 export type NoteParams = z.infer<typeof noteParamsSchema>;

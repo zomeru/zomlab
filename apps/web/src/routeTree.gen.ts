@@ -15,10 +15,40 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as StatusRouteImport } from './routes/status'
 import { Route as ApiSplatRouteImport } from './routes/api/$'
+import { Route as AuthenticatedCoreCachingDemoRouteImport } from './routes/_authenticated.core.caching-demo'
+import { Route as AuthenticatedCoreDataFetchingDemoRouteImport } from './routes/_authenticated.core.data-fetching-demo'
+import { Route as AuthenticatedCoreErrorHandlingDemoRouteImport } from './routes/_authenticated.core.error-handling-demo'
+import { Route as AuthenticatedCoreFileUploadsDemoRouteImport } from './routes/_authenticated.core.file-uploads-demo'
+import { Route as AuthenticatedCoreFormsDemoRouteImport } from './routes/_authenticated.core.forms-demo'
+import { Route as AuthenticatedCoreLoggingDemoRouteImport } from './routes/_authenticated.core.logging-demo'
+import { Route as AuthenticatedCoreMiddlewareDemoRouteImport } from './routes/_authenticated.core.middleware-demo'
+import { Route as AuthenticatedCorePaginationDemoRouteImport } from './routes/_authenticated.core.pagination-demo'
+import { Route as AuthenticatedCoreRoutingDemoRouteImport } from './routes/_authenticated.core.routing-demo'
+import { Route as AuthenticatedCoreSearchFilterDemoRouteImport } from './routes/_authenticated.core.search-filter-demo'
+import { Route as AuthenticatedCoreStateManagementDemoRouteImport } from './routes/_authenticated.core.state-management-demo'
+import { Route as AuthenticatedCoreTablesDemoRouteImport } from './routes/_authenticated.core.tables-demo'
+import { Route as AuthenticatedCoreValidationDemoRouteImport } from './routes/_authenticated.core.validation-demo'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as CoreCachingIndexRouteImport } from './routes/core.caching.index'
 import { Route as CoreCrudIndexRouteImport } from './routes/core.crud.index'
-import { Route as AuthenticatedCoreCrudDemoIndexRouteImport } from './routes/_authenticated.core.crud.demo.index'
-import { Route as AuthenticatedCoreCrudDemoIdRouteImport } from './routes/_authenticated.core.crud.demo.$id'
+import { Route as CoreCrudDataBoundariesRouteImport } from './routes/core.crud.data-boundaries'
+import { Route as CoreDataFetchingIndexRouteImport } from './routes/core.data-fetching.index'
+import { Route as CoreErrorHandlingIndexRouteImport } from './routes/core.error-handling.index'
+import { Route as CoreErrorHandlingErrorContractRouteImport } from './routes/core.error-handling.error-contract'
+import { Route as CoreFileUploadsIndexRouteImport } from './routes/core.file-uploads.index'
+import { Route as CoreFileUploadsStorageSecurityRouteImport } from './routes/core.file-uploads.storage-security'
+import { Route as CoreFormsIndexRouteImport } from './routes/core.forms.index'
+import { Route as CoreLoggingIndexRouteImport } from './routes/core.logging.index'
+import { Route as CoreMiddlewareIndexRouteImport } from './routes/core.middleware.index'
+import { Route as CorePaginationIndexRouteImport } from './routes/core.pagination.index'
+import { Route as CoreRoutingIndexRouteImport } from './routes/core.routing.index'
+import { Route as CoreSearchFilterIndexRouteImport } from './routes/core.search-filter.index'
+import { Route as CoreStateManagementIndexRouteImport } from './routes/core.state-management.index'
+import { Route as CoreTablesIndexRouteImport } from './routes/core.tables.index'
+import { Route as CoreTablesServerDataRouteImport } from './routes/core.tables.server-data'
+import { Route as CoreValidationIndexRouteImport } from './routes/core.validation.index'
+import { Route as AuthenticatedCoreCrudDemoIndexRouteImport } from './routes/_authenticated.core.crud-demo.index'
+import { Route as AuthenticatedCoreCrudDemoIdRouteImport } from './routes/_authenticated.core.crud-demo.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -49,9 +79,92 @@ const ApiSplatRoute = ApiSplatRouteImport.update({
   path: '/api/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedCoreCachingDemoRoute =
+  AuthenticatedCoreCachingDemoRouteImport.update({
+    id: '/core/caching-demo',
+    path: '/core/caching-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreDataFetchingDemoRoute =
+  AuthenticatedCoreDataFetchingDemoRouteImport.update({
+    id: '/core/data-fetching-demo',
+    path: '/core/data-fetching-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreErrorHandlingDemoRoute =
+  AuthenticatedCoreErrorHandlingDemoRouteImport.update({
+    id: '/core/error-handling-demo',
+    path: '/core/error-handling-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreFileUploadsDemoRoute =
+  AuthenticatedCoreFileUploadsDemoRouteImport.update({
+    id: '/core/file-uploads-demo',
+    path: '/core/file-uploads-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreFormsDemoRoute =
+  AuthenticatedCoreFormsDemoRouteImport.update({
+    id: '/core/forms-demo',
+    path: '/core/forms-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreLoggingDemoRoute =
+  AuthenticatedCoreLoggingDemoRouteImport.update({
+    id: '/core/logging-demo',
+    path: '/core/logging-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreMiddlewareDemoRoute =
+  AuthenticatedCoreMiddlewareDemoRouteImport.update({
+    id: '/core/middleware-demo',
+    path: '/core/middleware-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCorePaginationDemoRoute =
+  AuthenticatedCorePaginationDemoRouteImport.update({
+    id: '/core/pagination-demo',
+    path: '/core/pagination-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreRoutingDemoRoute =
+  AuthenticatedCoreRoutingDemoRouteImport.update({
+    id: '/core/routing-demo',
+    path: '/core/routing-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreSearchFilterDemoRoute =
+  AuthenticatedCoreSearchFilterDemoRouteImport.update({
+    id: '/core/search-filter-demo',
+    path: '/core/search-filter-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreStateManagementDemoRoute =
+  AuthenticatedCoreStateManagementDemoRouteImport.update({
+    id: '/core/state-management-demo',
+    path: '/core/state-management-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreTablesDemoRoute =
+  AuthenticatedCoreTablesDemoRouteImport.update({
+    id: '/core/tables-demo',
+    path: '/core/tables-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCoreValidationDemoRoute =
+  AuthenticatedCoreValidationDemoRouteImport.update({
+    id: '/core/validation-demo',
+    path: '/core/validation-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreCachingIndexRoute = CoreCachingIndexRouteImport.update({
+  id: '/core/caching/',
+  path: '/core/caching/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoreCrudIndexRoute = CoreCrudIndexRouteImport.update({
@@ -59,16 +172,99 @@ const CoreCrudIndexRoute = CoreCrudIndexRouteImport.update({
   path: '/core/crud/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoreCrudDataBoundariesRoute = CoreCrudDataBoundariesRouteImport.update({
+  id: '/core/crud/data-boundaries',
+  path: '/core/crud/data-boundaries',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreDataFetchingIndexRoute = CoreDataFetchingIndexRouteImport.update({
+  id: '/core/data-fetching/',
+  path: '/core/data-fetching/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreErrorHandlingIndexRoute = CoreErrorHandlingIndexRouteImport.update({
+  id: '/core/error-handling/',
+  path: '/core/error-handling/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreErrorHandlingErrorContractRoute =
+  CoreErrorHandlingErrorContractRouteImport.update({
+    id: '/core/error-handling/error-contract',
+    path: '/core/error-handling/error-contract',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CoreFileUploadsIndexRoute = CoreFileUploadsIndexRouteImport.update({
+  id: '/core/file-uploads/',
+  path: '/core/file-uploads/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreFileUploadsStorageSecurityRoute =
+  CoreFileUploadsStorageSecurityRouteImport.update({
+    id: '/core/file-uploads/storage-security',
+    path: '/core/file-uploads/storage-security',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CoreFormsIndexRoute = CoreFormsIndexRouteImport.update({
+  id: '/core/forms/',
+  path: '/core/forms/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreLoggingIndexRoute = CoreLoggingIndexRouteImport.update({
+  id: '/core/logging/',
+  path: '/core/logging/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreMiddlewareIndexRoute = CoreMiddlewareIndexRouteImport.update({
+  id: '/core/middleware/',
+  path: '/core/middleware/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CorePaginationIndexRoute = CorePaginationIndexRouteImport.update({
+  id: '/core/pagination/',
+  path: '/core/pagination/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreRoutingIndexRoute = CoreRoutingIndexRouteImport.update({
+  id: '/core/routing/',
+  path: '/core/routing/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreSearchFilterIndexRoute = CoreSearchFilterIndexRouteImport.update({
+  id: '/core/search-filter/',
+  path: '/core/search-filter/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreStateManagementIndexRoute =
+  CoreStateManagementIndexRouteImport.update({
+    id: '/core/state-management/',
+    path: '/core/state-management/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CoreTablesIndexRoute = CoreTablesIndexRouteImport.update({
+  id: '/core/tables/',
+  path: '/core/tables/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreTablesServerDataRoute = CoreTablesServerDataRouteImport.update({
+  id: '/core/tables/server-data',
+  path: '/core/tables/server-data',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoreValidationIndexRoute = CoreValidationIndexRouteImport.update({
+  id: '/core/validation/',
+  path: '/core/validation/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedCoreCrudDemoIndexRoute =
   AuthenticatedCoreCrudDemoIndexRouteImport.update({
-    id: '/core/crud/demo/',
-    path: '/core/crud/demo/',
+    id: '/core/crud-demo/',
+    path: '/core/crud-demo/',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedCoreCrudDemoIdRoute =
   AuthenticatedCoreCrudDemoIdRouteImport.update({
-    id: '/core/crud/demo/$id',
-    path: '/core/crud/demo/$id',
+    id: '/core/crud-demo/$id',
+    path: '/core/crud-demo/$id',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 
@@ -78,10 +274,40 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/status': typeof StatusRoute
   '/api/$': typeof ApiSplatRoute
+  '/core/caching-demo': typeof AuthenticatedCoreCachingDemoRoute
+  '/core/data-fetching-demo': typeof AuthenticatedCoreDataFetchingDemoRoute
+  '/core/error-handling-demo': typeof AuthenticatedCoreErrorHandlingDemoRoute
+  '/core/file-uploads-demo': typeof AuthenticatedCoreFileUploadsDemoRoute
+  '/core/forms-demo': typeof AuthenticatedCoreFormsDemoRoute
+  '/core/logging-demo': typeof AuthenticatedCoreLoggingDemoRoute
+  '/core/middleware-demo': typeof AuthenticatedCoreMiddlewareDemoRoute
+  '/core/pagination-demo': typeof AuthenticatedCorePaginationDemoRoute
+  '/core/routing-demo': typeof AuthenticatedCoreRoutingDemoRoute
+  '/core/search-filter-demo': typeof AuthenticatedCoreSearchFilterDemoRoute
+  '/core/state-management-demo': typeof AuthenticatedCoreStateManagementDemoRoute
+  '/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
+  '/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
+  '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
+  '/core/file-uploads/storage-security': typeof CoreFileUploadsStorageSecurityRoute
+  '/core/tables/server-data': typeof CoreTablesServerDataRoute
+  '/core/caching/': typeof CoreCachingIndexRoute
   '/core/crud/': typeof CoreCrudIndexRoute
-  '/core/crud/demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
-  '/core/crud/demo/': typeof AuthenticatedCoreCrudDemoIndexRoute
+  '/core/data-fetching/': typeof CoreDataFetchingIndexRoute
+  '/core/error-handling/': typeof CoreErrorHandlingIndexRoute
+  '/core/file-uploads/': typeof CoreFileUploadsIndexRoute
+  '/core/forms/': typeof CoreFormsIndexRoute
+  '/core/logging/': typeof CoreLoggingIndexRoute
+  '/core/middleware/': typeof CoreMiddlewareIndexRoute
+  '/core/pagination/': typeof CorePaginationIndexRoute
+  '/core/routing/': typeof CoreRoutingIndexRoute
+  '/core/search-filter/': typeof CoreSearchFilterIndexRoute
+  '/core/state-management/': typeof CoreStateManagementIndexRoute
+  '/core/tables/': typeof CoreTablesIndexRoute
+  '/core/validation/': typeof CoreValidationIndexRoute
+  '/core/crud-demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
+  '/core/crud-demo/': typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -89,10 +315,40 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/status': typeof StatusRoute
   '/api/$': typeof ApiSplatRoute
+  '/core/caching-demo': typeof AuthenticatedCoreCachingDemoRoute
+  '/core/data-fetching-demo': typeof AuthenticatedCoreDataFetchingDemoRoute
+  '/core/error-handling-demo': typeof AuthenticatedCoreErrorHandlingDemoRoute
+  '/core/file-uploads-demo': typeof AuthenticatedCoreFileUploadsDemoRoute
+  '/core/forms-demo': typeof AuthenticatedCoreFormsDemoRoute
+  '/core/logging-demo': typeof AuthenticatedCoreLoggingDemoRoute
+  '/core/middleware-demo': typeof AuthenticatedCoreMiddlewareDemoRoute
+  '/core/pagination-demo': typeof AuthenticatedCorePaginationDemoRoute
+  '/core/routing-demo': typeof AuthenticatedCoreRoutingDemoRoute
+  '/core/search-filter-demo': typeof AuthenticatedCoreSearchFilterDemoRoute
+  '/core/state-management-demo': typeof AuthenticatedCoreStateManagementDemoRoute
+  '/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
+  '/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
+  '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
+  '/core/file-uploads/storage-security': typeof CoreFileUploadsStorageSecurityRoute
+  '/core/tables/server-data': typeof CoreTablesServerDataRoute
+  '/core/caching': typeof CoreCachingIndexRoute
   '/core/crud': typeof CoreCrudIndexRoute
-  '/core/crud/demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
-  '/core/crud/demo': typeof AuthenticatedCoreCrudDemoIndexRoute
+  '/core/data-fetching': typeof CoreDataFetchingIndexRoute
+  '/core/error-handling': typeof CoreErrorHandlingIndexRoute
+  '/core/file-uploads': typeof CoreFileUploadsIndexRoute
+  '/core/forms': typeof CoreFormsIndexRoute
+  '/core/logging': typeof CoreLoggingIndexRoute
+  '/core/middleware': typeof CoreMiddlewareIndexRoute
+  '/core/pagination': typeof CorePaginationIndexRoute
+  '/core/routing': typeof CoreRoutingIndexRoute
+  '/core/search-filter': typeof CoreSearchFilterIndexRoute
+  '/core/state-management': typeof CoreStateManagementIndexRoute
+  '/core/tables': typeof CoreTablesIndexRoute
+  '/core/validation': typeof CoreValidationIndexRoute
+  '/core/crud-demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
+  '/core/crud-demo': typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -102,10 +358,40 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/status': typeof StatusRoute
   '/api/$': typeof ApiSplatRoute
+  '/_authenticated/core/caching-demo': typeof AuthenticatedCoreCachingDemoRoute
+  '/_authenticated/core/data-fetching-demo': typeof AuthenticatedCoreDataFetchingDemoRoute
+  '/_authenticated/core/error-handling-demo': typeof AuthenticatedCoreErrorHandlingDemoRoute
+  '/_authenticated/core/file-uploads-demo': typeof AuthenticatedCoreFileUploadsDemoRoute
+  '/_authenticated/core/forms-demo': typeof AuthenticatedCoreFormsDemoRoute
+  '/_authenticated/core/logging-demo': typeof AuthenticatedCoreLoggingDemoRoute
+  '/_authenticated/core/middleware-demo': typeof AuthenticatedCoreMiddlewareDemoRoute
+  '/_authenticated/core/pagination-demo': typeof AuthenticatedCorePaginationDemoRoute
+  '/_authenticated/core/routing-demo': typeof AuthenticatedCoreRoutingDemoRoute
+  '/_authenticated/core/search-filter-demo': typeof AuthenticatedCoreSearchFilterDemoRoute
+  '/_authenticated/core/state-management-demo': typeof AuthenticatedCoreStateManagementDemoRoute
+  '/_authenticated/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
+  '/_authenticated/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
+  '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
+  '/core/file-uploads/storage-security': typeof CoreFileUploadsStorageSecurityRoute
+  '/core/tables/server-data': typeof CoreTablesServerDataRoute
+  '/core/caching/': typeof CoreCachingIndexRoute
   '/core/crud/': typeof CoreCrudIndexRoute
-  '/_authenticated/core/crud/demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
-  '/_authenticated/core/crud/demo/': typeof AuthenticatedCoreCrudDemoIndexRoute
+  '/core/data-fetching/': typeof CoreDataFetchingIndexRoute
+  '/core/error-handling/': typeof CoreErrorHandlingIndexRoute
+  '/core/file-uploads/': typeof CoreFileUploadsIndexRoute
+  '/core/forms/': typeof CoreFormsIndexRoute
+  '/core/logging/': typeof CoreLoggingIndexRoute
+  '/core/middleware/': typeof CoreMiddlewareIndexRoute
+  '/core/pagination/': typeof CorePaginationIndexRoute
+  '/core/routing/': typeof CoreRoutingIndexRoute
+  '/core/search-filter/': typeof CoreSearchFilterIndexRoute
+  '/core/state-management/': typeof CoreStateManagementIndexRoute
+  '/core/tables/': typeof CoreTablesIndexRoute
+  '/core/validation/': typeof CoreValidationIndexRoute
+  '/_authenticated/core/crud-demo/$id': typeof AuthenticatedCoreCrudDemoIdRoute
+  '/_authenticated/core/crud-demo/': typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -115,10 +401,40 @@ export interface FileRouteTypes {
     | '/signup'
     | '/status'
     | '/api/$'
+    | '/core/caching-demo'
+    | '/core/data-fetching-demo'
+    | '/core/error-handling-demo'
+    | '/core/file-uploads-demo'
+    | '/core/forms-demo'
+    | '/core/logging-demo'
+    | '/core/middleware-demo'
+    | '/core/pagination-demo'
+    | '/core/routing-demo'
+    | '/core/search-filter-demo'
+    | '/core/state-management-demo'
+    | '/core/tables-demo'
+    | '/core/validation-demo'
     | '/api/auth/$'
+    | '/core/crud/data-boundaries'
+    | '/core/error-handling/error-contract'
+    | '/core/file-uploads/storage-security'
+    | '/core/tables/server-data'
+    | '/core/caching/'
     | '/core/crud/'
-    | '/core/crud/demo/$id'
-    | '/core/crud/demo/'
+    | '/core/data-fetching/'
+    | '/core/error-handling/'
+    | '/core/file-uploads/'
+    | '/core/forms/'
+    | '/core/logging/'
+    | '/core/middleware/'
+    | '/core/pagination/'
+    | '/core/routing/'
+    | '/core/search-filter/'
+    | '/core/state-management/'
+    | '/core/tables/'
+    | '/core/validation/'
+    | '/core/crud-demo/$id'
+    | '/core/crud-demo/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -126,10 +442,40 @@ export interface FileRouteTypes {
     | '/signup'
     | '/status'
     | '/api/$'
+    | '/core/caching-demo'
+    | '/core/data-fetching-demo'
+    | '/core/error-handling-demo'
+    | '/core/file-uploads-demo'
+    | '/core/forms-demo'
+    | '/core/logging-demo'
+    | '/core/middleware-demo'
+    | '/core/pagination-demo'
+    | '/core/routing-demo'
+    | '/core/search-filter-demo'
+    | '/core/state-management-demo'
+    | '/core/tables-demo'
+    | '/core/validation-demo'
     | '/api/auth/$'
+    | '/core/crud/data-boundaries'
+    | '/core/error-handling/error-contract'
+    | '/core/file-uploads/storage-security'
+    | '/core/tables/server-data'
+    | '/core/caching'
     | '/core/crud'
-    | '/core/crud/demo/$id'
-    | '/core/crud/demo'
+    | '/core/data-fetching'
+    | '/core/error-handling'
+    | '/core/file-uploads'
+    | '/core/forms'
+    | '/core/logging'
+    | '/core/middleware'
+    | '/core/pagination'
+    | '/core/routing'
+    | '/core/search-filter'
+    | '/core/state-management'
+    | '/core/tables'
+    | '/core/validation'
+    | '/core/crud-demo/$id'
+    | '/core/crud-demo'
   id:
     | '__root__'
     | '/'
@@ -138,10 +484,40 @@ export interface FileRouteTypes {
     | '/signup'
     | '/status'
     | '/api/$'
+    | '/_authenticated/core/caching-demo'
+    | '/_authenticated/core/data-fetching-demo'
+    | '/_authenticated/core/error-handling-demo'
+    | '/_authenticated/core/file-uploads-demo'
+    | '/_authenticated/core/forms-demo'
+    | '/_authenticated/core/logging-demo'
+    | '/_authenticated/core/middleware-demo'
+    | '/_authenticated/core/pagination-demo'
+    | '/_authenticated/core/routing-demo'
+    | '/_authenticated/core/search-filter-demo'
+    | '/_authenticated/core/state-management-demo'
+    | '/_authenticated/core/tables-demo'
+    | '/_authenticated/core/validation-demo'
     | '/api/auth/$'
+    | '/core/crud/data-boundaries'
+    | '/core/error-handling/error-contract'
+    | '/core/file-uploads/storage-security'
+    | '/core/tables/server-data'
+    | '/core/caching/'
     | '/core/crud/'
-    | '/_authenticated/core/crud/demo/$id'
-    | '/_authenticated/core/crud/demo/'
+    | '/core/data-fetching/'
+    | '/core/error-handling/'
+    | '/core/file-uploads/'
+    | '/core/forms/'
+    | '/core/logging/'
+    | '/core/middleware/'
+    | '/core/pagination/'
+    | '/core/routing/'
+    | '/core/search-filter/'
+    | '/core/state-management/'
+    | '/core/tables/'
+    | '/core/validation/'
+    | '/_authenticated/core/crud-demo/$id'
+    | '/_authenticated/core/crud-demo/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -152,7 +528,24 @@ export interface RootRouteChildren {
   StatusRoute: typeof StatusRoute
   ApiSplatRoute: typeof ApiSplatRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  CoreCrudDataBoundariesRoute: typeof CoreCrudDataBoundariesRoute
+  CoreErrorHandlingErrorContractRoute: typeof CoreErrorHandlingErrorContractRoute
+  CoreFileUploadsStorageSecurityRoute: typeof CoreFileUploadsStorageSecurityRoute
+  CoreTablesServerDataRoute: typeof CoreTablesServerDataRoute
+  CoreCachingIndexRoute: typeof CoreCachingIndexRoute
   CoreCrudIndexRoute: typeof CoreCrudIndexRoute
+  CoreDataFetchingIndexRoute: typeof CoreDataFetchingIndexRoute
+  CoreErrorHandlingIndexRoute: typeof CoreErrorHandlingIndexRoute
+  CoreFileUploadsIndexRoute: typeof CoreFileUploadsIndexRoute
+  CoreFormsIndexRoute: typeof CoreFormsIndexRoute
+  CoreLoggingIndexRoute: typeof CoreLoggingIndexRoute
+  CoreMiddlewareIndexRoute: typeof CoreMiddlewareIndexRoute
+  CorePaginationIndexRoute: typeof CorePaginationIndexRoute
+  CoreRoutingIndexRoute: typeof CoreRoutingIndexRoute
+  CoreSearchFilterIndexRoute: typeof CoreSearchFilterIndexRoute
+  CoreStateManagementIndexRoute: typeof CoreStateManagementIndexRoute
+  CoreTablesIndexRoute: typeof CoreTablesIndexRoute
+  CoreValidationIndexRoute: typeof CoreValidationIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -199,11 +592,109 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/core/caching-demo': {
+      id: '/_authenticated/core/caching-demo'
+      path: '/core/caching-demo'
+      fullPath: '/core/caching-demo'
+      preLoaderRoute: typeof AuthenticatedCoreCachingDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/data-fetching-demo': {
+      id: '/_authenticated/core/data-fetching-demo'
+      path: '/core/data-fetching-demo'
+      fullPath: '/core/data-fetching-demo'
+      preLoaderRoute: typeof AuthenticatedCoreDataFetchingDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/error-handling-demo': {
+      id: '/_authenticated/core/error-handling-demo'
+      path: '/core/error-handling-demo'
+      fullPath: '/core/error-handling-demo'
+      preLoaderRoute: typeof AuthenticatedCoreErrorHandlingDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/file-uploads-demo': {
+      id: '/_authenticated/core/file-uploads-demo'
+      path: '/core/file-uploads-demo'
+      fullPath: '/core/file-uploads-demo'
+      preLoaderRoute: typeof AuthenticatedCoreFileUploadsDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/forms-demo': {
+      id: '/_authenticated/core/forms-demo'
+      path: '/core/forms-demo'
+      fullPath: '/core/forms-demo'
+      preLoaderRoute: typeof AuthenticatedCoreFormsDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/logging-demo': {
+      id: '/_authenticated/core/logging-demo'
+      path: '/core/logging-demo'
+      fullPath: '/core/logging-demo'
+      preLoaderRoute: typeof AuthenticatedCoreLoggingDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/middleware-demo': {
+      id: '/_authenticated/core/middleware-demo'
+      path: '/core/middleware-demo'
+      fullPath: '/core/middleware-demo'
+      preLoaderRoute: typeof AuthenticatedCoreMiddlewareDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/pagination-demo': {
+      id: '/_authenticated/core/pagination-demo'
+      path: '/core/pagination-demo'
+      fullPath: '/core/pagination-demo'
+      preLoaderRoute: typeof AuthenticatedCorePaginationDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/routing-demo': {
+      id: '/_authenticated/core/routing-demo'
+      path: '/core/routing-demo'
+      fullPath: '/core/routing-demo'
+      preLoaderRoute: typeof AuthenticatedCoreRoutingDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/search-filter-demo': {
+      id: '/_authenticated/core/search-filter-demo'
+      path: '/core/search-filter-demo'
+      fullPath: '/core/search-filter-demo'
+      preLoaderRoute: typeof AuthenticatedCoreSearchFilterDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/state-management-demo': {
+      id: '/_authenticated/core/state-management-demo'
+      path: '/core/state-management-demo'
+      fullPath: '/core/state-management-demo'
+      preLoaderRoute: typeof AuthenticatedCoreStateManagementDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/tables-demo': {
+      id: '/_authenticated/core/tables-demo'
+      path: '/core/tables-demo'
+      fullPath: '/core/tables-demo'
+      preLoaderRoute: typeof AuthenticatedCoreTablesDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/core/validation-demo': {
+      id: '/_authenticated/core/validation-demo'
+      path: '/core/validation-demo'
+      fullPath: '/core/validation-demo'
+      preLoaderRoute: typeof AuthenticatedCoreValidationDemoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/caching/': {
+      id: '/core/caching/'
+      path: '/core/caching'
+      fullPath: '/core/caching/'
+      preLoaderRoute: typeof CoreCachingIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/core/crud/': {
@@ -213,17 +704,129 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoreCrudIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/core/crud/demo/': {
-      id: '/_authenticated/core/crud/demo/'
-      path: '/core/crud/demo'
-      fullPath: '/core/crud/demo/'
+    '/core/crud/data-boundaries': {
+      id: '/core/crud/data-boundaries'
+      path: '/core/crud/data-boundaries'
+      fullPath: '/core/crud/data-boundaries'
+      preLoaderRoute: typeof CoreCrudDataBoundariesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/data-fetching/': {
+      id: '/core/data-fetching/'
+      path: '/core/data-fetching'
+      fullPath: '/core/data-fetching/'
+      preLoaderRoute: typeof CoreDataFetchingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/error-handling/': {
+      id: '/core/error-handling/'
+      path: '/core/error-handling'
+      fullPath: '/core/error-handling/'
+      preLoaderRoute: typeof CoreErrorHandlingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/error-handling/error-contract': {
+      id: '/core/error-handling/error-contract'
+      path: '/core/error-handling/error-contract'
+      fullPath: '/core/error-handling/error-contract'
+      preLoaderRoute: typeof CoreErrorHandlingErrorContractRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/file-uploads/': {
+      id: '/core/file-uploads/'
+      path: '/core/file-uploads'
+      fullPath: '/core/file-uploads/'
+      preLoaderRoute: typeof CoreFileUploadsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/file-uploads/storage-security': {
+      id: '/core/file-uploads/storage-security'
+      path: '/core/file-uploads/storage-security'
+      fullPath: '/core/file-uploads/storage-security'
+      preLoaderRoute: typeof CoreFileUploadsStorageSecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/forms/': {
+      id: '/core/forms/'
+      path: '/core/forms'
+      fullPath: '/core/forms/'
+      preLoaderRoute: typeof CoreFormsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/logging/': {
+      id: '/core/logging/'
+      path: '/core/logging'
+      fullPath: '/core/logging/'
+      preLoaderRoute: typeof CoreLoggingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/middleware/': {
+      id: '/core/middleware/'
+      path: '/core/middleware'
+      fullPath: '/core/middleware/'
+      preLoaderRoute: typeof CoreMiddlewareIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/pagination/': {
+      id: '/core/pagination/'
+      path: '/core/pagination'
+      fullPath: '/core/pagination/'
+      preLoaderRoute: typeof CorePaginationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/routing/': {
+      id: '/core/routing/'
+      path: '/core/routing'
+      fullPath: '/core/routing/'
+      preLoaderRoute: typeof CoreRoutingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/search-filter/': {
+      id: '/core/search-filter/'
+      path: '/core/search-filter'
+      fullPath: '/core/search-filter/'
+      preLoaderRoute: typeof CoreSearchFilterIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/state-management/': {
+      id: '/core/state-management/'
+      path: '/core/state-management'
+      fullPath: '/core/state-management/'
+      preLoaderRoute: typeof CoreStateManagementIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/tables/': {
+      id: '/core/tables/'
+      path: '/core/tables'
+      fullPath: '/core/tables/'
+      preLoaderRoute: typeof CoreTablesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/tables/server-data': {
+      id: '/core/tables/server-data'
+      path: '/core/tables/server-data'
+      fullPath: '/core/tables/server-data'
+      preLoaderRoute: typeof CoreTablesServerDataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/validation/': {
+      id: '/core/validation/'
+      path: '/core/validation'
+      fullPath: '/core/validation/'
+      preLoaderRoute: typeof CoreValidationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/core/crud-demo/': {
+      id: '/_authenticated/core/crud-demo/'
+      path: '/core/crud-demo'
+      fullPath: '/core/crud-demo/'
       preLoaderRoute: typeof AuthenticatedCoreCrudDemoIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/core/crud/demo/$id': {
-      id: '/_authenticated/core/crud/demo/$id'
-      path: '/core/crud/demo/$id'
-      fullPath: '/core/crud/demo/$id'
+    '/_authenticated/core/crud-demo/$id': {
+      id: '/_authenticated/core/crud-demo/$id'
+      path: '/core/crud-demo/$id'
+      fullPath: '/core/crud-demo/$id'
       preLoaderRoute: typeof AuthenticatedCoreCrudDemoIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
@@ -231,11 +834,41 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedCoreCachingDemoRoute: typeof AuthenticatedCoreCachingDemoRoute
+  AuthenticatedCoreDataFetchingDemoRoute: typeof AuthenticatedCoreDataFetchingDemoRoute
+  AuthenticatedCoreErrorHandlingDemoRoute: typeof AuthenticatedCoreErrorHandlingDemoRoute
+  AuthenticatedCoreFileUploadsDemoRoute: typeof AuthenticatedCoreFileUploadsDemoRoute
+  AuthenticatedCoreFormsDemoRoute: typeof AuthenticatedCoreFormsDemoRoute
+  AuthenticatedCoreLoggingDemoRoute: typeof AuthenticatedCoreLoggingDemoRoute
+  AuthenticatedCoreMiddlewareDemoRoute: typeof AuthenticatedCoreMiddlewareDemoRoute
+  AuthenticatedCorePaginationDemoRoute: typeof AuthenticatedCorePaginationDemoRoute
+  AuthenticatedCoreRoutingDemoRoute: typeof AuthenticatedCoreRoutingDemoRoute
+  AuthenticatedCoreSearchFilterDemoRoute: typeof AuthenticatedCoreSearchFilterDemoRoute
+  AuthenticatedCoreStateManagementDemoRoute: typeof AuthenticatedCoreStateManagementDemoRoute
+  AuthenticatedCoreTablesDemoRoute: typeof AuthenticatedCoreTablesDemoRoute
+  AuthenticatedCoreValidationDemoRoute: typeof AuthenticatedCoreValidationDemoRoute
   AuthenticatedCoreCrudDemoIdRoute: typeof AuthenticatedCoreCrudDemoIdRoute
   AuthenticatedCoreCrudDemoIndexRoute: typeof AuthenticatedCoreCrudDemoIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedCoreCachingDemoRoute: AuthenticatedCoreCachingDemoRoute,
+  AuthenticatedCoreDataFetchingDemoRoute:
+    AuthenticatedCoreDataFetchingDemoRoute,
+  AuthenticatedCoreErrorHandlingDemoRoute:
+    AuthenticatedCoreErrorHandlingDemoRoute,
+  AuthenticatedCoreFileUploadsDemoRoute: AuthenticatedCoreFileUploadsDemoRoute,
+  AuthenticatedCoreFormsDemoRoute: AuthenticatedCoreFormsDemoRoute,
+  AuthenticatedCoreLoggingDemoRoute: AuthenticatedCoreLoggingDemoRoute,
+  AuthenticatedCoreMiddlewareDemoRoute: AuthenticatedCoreMiddlewareDemoRoute,
+  AuthenticatedCorePaginationDemoRoute: AuthenticatedCorePaginationDemoRoute,
+  AuthenticatedCoreRoutingDemoRoute: AuthenticatedCoreRoutingDemoRoute,
+  AuthenticatedCoreSearchFilterDemoRoute:
+    AuthenticatedCoreSearchFilterDemoRoute,
+  AuthenticatedCoreStateManagementDemoRoute:
+    AuthenticatedCoreStateManagementDemoRoute,
+  AuthenticatedCoreTablesDemoRoute: AuthenticatedCoreTablesDemoRoute,
+  AuthenticatedCoreValidationDemoRoute: AuthenticatedCoreValidationDemoRoute,
   AuthenticatedCoreCrudDemoIdRoute: AuthenticatedCoreCrudDemoIdRoute,
   AuthenticatedCoreCrudDemoIndexRoute: AuthenticatedCoreCrudDemoIndexRoute,
 }
@@ -252,7 +885,24 @@ const rootRouteChildren: RootRouteChildren = {
   StatusRoute: StatusRoute,
   ApiSplatRoute: ApiSplatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  CoreCrudDataBoundariesRoute: CoreCrudDataBoundariesRoute,
+  CoreErrorHandlingErrorContractRoute: CoreErrorHandlingErrorContractRoute,
+  CoreFileUploadsStorageSecurityRoute: CoreFileUploadsStorageSecurityRoute,
+  CoreTablesServerDataRoute: CoreTablesServerDataRoute,
+  CoreCachingIndexRoute: CoreCachingIndexRoute,
   CoreCrudIndexRoute: CoreCrudIndexRoute,
+  CoreDataFetchingIndexRoute: CoreDataFetchingIndexRoute,
+  CoreErrorHandlingIndexRoute: CoreErrorHandlingIndexRoute,
+  CoreFileUploadsIndexRoute: CoreFileUploadsIndexRoute,
+  CoreFormsIndexRoute: CoreFormsIndexRoute,
+  CoreLoggingIndexRoute: CoreLoggingIndexRoute,
+  CoreMiddlewareIndexRoute: CoreMiddlewareIndexRoute,
+  CorePaginationIndexRoute: CorePaginationIndexRoute,
+  CoreRoutingIndexRoute: CoreRoutingIndexRoute,
+  CoreSearchFilterIndexRoute: CoreSearchFilterIndexRoute,
+  CoreStateManagementIndexRoute: CoreStateManagementIndexRoute,
+  CoreTablesIndexRoute: CoreTablesIndexRoute,
+  CoreValidationIndexRoute: CoreValidationIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,0 +1,89 @@
+# Design CRUD data boundaries
+
+The notes feature separates public contracts, transport, use cases, and persistence so each boundary can change or fail without leaking responsibilities into the others.
+
+## Contracts define the public language
+
+`@zomlab/contracts` owns strict Zod schemas and inferred TypeScript types. Both API routes and clients import those definitions, so a request field cannot drift independently on either side.
+
+```ts
+// packages/contracts/src/core/crud/notes.ts
+export const noteListQuerySchema = z.strictObject({
+  query: z.string().trim().max(200).optional(),
+  page: z.coerce.number().int().min(1).default(1),
+  pageSize: z.coerce.number().int().min(1).max(100).default(20),
+  sortBy: z
+    .enum(["title", "createdAt", "updatedAt"])
+    .optional(),
+  sortDirection: z.enum(["asc", "desc"]).optional(),
+});
+```
+
+The schema accepts URL strings through coercion, applies limits, and produces typed values for the handler. `z.strictObject` also rejects fields that the API did not declare.
+
+## Routes translate HTTP into use cases
+
+The route layer owns status codes, request parsing, authentication middleware, and public error types. It does not import Drizzle or construct SQL predicates.
+
+The service boundary receives plain typed values:
+
+```ts
+// apps/web/src/integration/hono/service/core/notes.service.ts
+async update(userId: string, id: string, data: UpdateNoteBody) {
+  return (
+    (await repository.update(id, userId, {
+      title: data.title,
+      content: data.content ?? null,
+    })) ?? null
+  );
+},
+```
+
+The route decides that `null` means a public 404. The service remains reusable because it does not know about Hono contexts or response objects.
+
+## Repository injection keeps persistence replaceable
+
+`createNoteService(repository)` receives its dependency at the route composition boundary. Unit tests can provide a repository double, while production provides `createNoteRepository()`.
+
+<ArchitectureDiagram diagram="crud-boundaries" />
+
+The repository owns date serialization because database timestamps must become the ISO strings promised by the response schema.
+
+## Read and write predicates enforce tenancy
+
+Every owned operation includes `authorId`. List queries create one reusable `where` predicate, then apply it to both the item query and total-count query. Search, pagination, and sorting cannot widen the tenant boundary.
+
+```ts
+const where = query
+  ? and(
+      eq(notes.authorId, authorId),
+      or(
+        ilike(notes.title, `%${query}%`),
+        ilike(notes.content, `%${query}%`),
+      ),
+    )
+  : eq(notes.authorId, authorId);
+```
+
+The API returns 404 for both a missing note and another account's note. That response avoids revealing whether an inaccessible identifier exists.
+
+## Query keys encode every server-owned input
+
+List caches include search, pagination, and sorting options. Detail caches use the note ID. Prefix keys let mutations invalidate related entries without touching health or file data.
+
+```ts
+notes: {
+  all: ["notes"] as const,
+  lists: ["notes", "list"] as const,
+  list: (query: NoteListQuery) =>
+    ["notes", "list", query] as const,
+  details: ["notes", "detail"] as const,
+  detail: (id: string) => ["notes", "detail", id] as const,
+},
+```
+
+## Tests protect observable contracts
+
+Unit tests cover services and response parsing. Playwright contract tests exercise real authentication, validation, ownership, status codes, cache headers, and CRUD behavior against the running application. Browser workflow tests then verify forms, confirmation dialogs, focus restoration, and navigation.
+
+[Return to the CRUD overview](/core/crud)

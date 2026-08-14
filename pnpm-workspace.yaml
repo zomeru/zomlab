@@ -27,6 +27,7 @@ overrides:
   postcss: ^8.5.24
   sharp: ^0.35.3
   uuid: ^14.0.1
+  nanoid@<3.3.18: ^3.3.18
 
 minimumReleaseAgeExclude:
   - hono@4.13.0
@@ -41,3 +42,6 @@ minimumReleaseAgeExclude:
   - '@storybook/react-vite@10.5.6'
   - '@storybook/react@10.5.6'
   - storybook@10.5.6
+  - '@cloudflare/vitest-pool-workers@0.21.2'
+  - miniflare@5.20260811.0-alpha
+  - wrangler@4.122.0

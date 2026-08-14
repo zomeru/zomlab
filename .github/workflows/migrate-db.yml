@@ -18,9 +18,11 @@ permissions:
 
 jobs:
   deploy:
-    name: Migrate Database ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    name: Migrate Database (${{ github.ref_name == 'main' && 'production' || 'staging' }})
+    
     runs-on: ubuntu-latest
     timeout-minutes: 10
+
     environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}

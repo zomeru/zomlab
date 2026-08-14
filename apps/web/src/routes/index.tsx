@@ -1,4 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Badge } from "@zomlab/ui/components/badge";
+import { Card } from "@zomlab/ui/components/card";
+import { PageDescription, PageEyebrow, PageHeader, PageTitle } from "@zomlab/ui/components/page";
 import { TerminalBlock } from "../components/terminal-block";
 
 export const Route = createFileRoute("/")({
@@ -53,21 +56,18 @@ const HERO_META = {
 function GettingStarted() {
   return (
     <div className="mx-auto max-w-3xl">
-      <header>
-        <p className="font-mono text-sm text-muted-foreground">docs / getting-started</p>
-        <h1 className="mt-2 text-4xl font-semibold tracking-tight text-balance">Getting started</h1>
-        <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
+      <PageHeader>
+        <PageEyebrow>docs / getting-started</PageEyebrow>
+        <PageTitle>Getting started</PageTitle>
+        <PageDescription>
           ZomLab is a personal software engineering lab where working features and their
           documentation live together in one TypeScript monorepo.
-        </p>
+        </PageDescription>
 
         <ul className="mt-5 flex flex-wrap gap-2" aria-label="Technology badges">
           {BADGES.map((badge) => (
-            <li
-              key={badge}
-              className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-xs text-foreground"
-            >
-              {badge}
+            <li key={badge}>
+              <Badge variant="outline">{badge}</Badge>
             </li>
           ))}
         </ul>
@@ -79,7 +79,7 @@ function GettingStarted() {
           <span aria-hidden="true">·</span>
           <span>Reading time: {HERO_META.readingTime}</span>
         </p>
-      </header>
+      </PageHeader>
 
       <hr className="my-10 border-border" />
 
@@ -95,8 +95,10 @@ function GettingStarted() {
           tooling.
         </p>
         <p className="mt-3 leading-7 text-muted-foreground">
-          Authenticated notes CRUD is the only completed vertical slice. The other topics shown in
-          the navigation are planned labs, not implemented integrations.
+          The completed Core learning paths cover routing, forms, validation, state, data fetching,
+          CRUD, search, pagination, tables, uploads, errors, caching, middleware, and logging.
+          Topics outside Core remain planned until they have both documentation and working
+          software.
         </p>
         <p className="mt-4">
           <a
@@ -122,12 +124,11 @@ function GettingStarted() {
       </section>
 
       <section className="mt-12">
-        <h2 className="text-2xl font-semibold tracking-tight">Explore the implemented lab</h2>
+        <h2 className="text-2xl font-semibold tracking-tight">Explore the implemented labs</h2>
         <p className="mt-3 leading-7 text-muted-foreground">
-          The Core CRUD lab demonstrates authenticated notes from the React form through TanStack
+          Start with the Core foundation demos, then follow authenticated notes through TanStack
           Query, the typed Hono client, OpenAPI routes, a service and repository, Drizzle, and Neon
-          PostgreSQL. Its documentation includes the architecture, request flow, and implementation
-          pitfalls.
+          PostgreSQL. Each learning path pairs a concise overview with executable behavior.
         </p>
       </section>
 
@@ -155,12 +156,12 @@ function GettingStarted() {
         <h2 className="text-2xl font-semibold tracking-tight">Review the current stack</h2>
         <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {TECH_STACK.map(({ label, value }) => (
-            <div key={label} className="rounded-xl border border-border bg-card p-4">
+            <Card key={label} className="p-4">
               <dt className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 {label}
               </dt>
               <dd className="mt-1.5 font-medium text-foreground">{value}</dd>
-            </div>
+            </Card>
           ))}
         </dl>
       </section>

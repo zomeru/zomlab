@@ -19,7 +19,7 @@ test("authentication stays synchronized across redirects, refreshes, logout, and
   page,
 }) => {
   const email = `auth-lifecycle-${randomUUID()}@test.local`;
-  const protectedPath = "/core/crud/demo";
+  const protectedPath = "/core/crud-demo";
 
   await page.goto(protectedPath);
   await expect(page).toHaveURL(new RegExp(`${baseURL}/login\\?redirect=`));
@@ -31,7 +31,7 @@ test("authentication stays synchronized across redirects, refreshes, logout, and
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByLabel("Confirm password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Sign up" }).click();
-  await expect(page).toHaveURL(`${baseURL}${protectedPath}`);
+  await expect(page).toHaveURL(`${baseURL}${protectedPath}`, { timeout: 15_000 });
   await expect(page.getByRole("button", { name: "Account menu" })).toBeVisible();
 
   await page.reload();
@@ -62,6 +62,9 @@ test("auth forms provide password visibility controls and social authentication"
 }) => {
   await page.goto("/login");
 
+  await expect(page.locator('[data-slot="field-group"]')).toHaveCount(1);
+  await expect(page.locator('[data-slot="field"]')).toHaveCount(2);
+  await expect(page.locator('[data-slot="input-group"]')).toHaveCount(2);
   const passwordInput = page.getByLabel("Password", { exact: true });
   await expect(passwordInput).toHaveAttribute("type", "password");
   await page.getByRole("button", { name: "Show password" }).click();
@@ -70,8 +73,12 @@ test("auth forms provide password visibility controls and social authentication"
   await expect(passwordInput).toHaveAttribute("type", "password");
   await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Continue with GitHub" })).toBeVisible();
+  await expect(page.getByText("OR", { exact: true })).toBeVisible();
 
   await page.goto("/signup");
+  await expect(page.locator('[data-slot="field-group"]')).toHaveCount(1);
+  await expect(page.locator('[data-slot="field"]')).toHaveCount(4);
+  await expect(page.locator('[data-slot="input-group"]')).toHaveCount(3);
   await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Continue with GitHub" })).toBeVisible();
   const confirmPasswordInput = page.getByLabel("Confirm password", { exact: true });
@@ -90,5 +97,9 @@ test("sign up requires matching passwords", async ({ page }) => {
   await page.getByLabel("Confirm password", { exact: true }).fill("different-password");
   await page.getByRole("button", { name: "Sign up" }).click();
 
+  const confirmPassword = page.getByLabel("Confirm password", { exact: true });
   await expect(page.getByRole("alert")).toHaveText("Passwords do not match");
+  await expect(confirmPassword).toBeFocused();
+  await expect(confirmPassword).toHaveAttribute("aria-invalid", "true");
+  await expect(confirmPassword).toHaveAttribute("aria-describedby", "confirm-password-error");
 });

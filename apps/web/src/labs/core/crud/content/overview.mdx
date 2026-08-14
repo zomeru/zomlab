@@ -1,35 +1,71 @@
-# Notes Overview
+# CRUD notes
 
-Notes is a full vertical slice of the architecture: UI → Hooks → API → Service →
-Repository → Database — end to end.
+Create, read, update, and delete (CRUD) operations become production behavior only when contracts, authorization, persistence, cache updates, and failure semantics agree. This lab implements an authenticated notes feature from React to PostgreSQL.
 
-## Why Notes
+## One feature crosses several boundaries
 
-It is small enough to finish, yet touches every layer of the stack:
+Each layer has one responsibility and depends inward through explicit types.
 
-- A real Drizzle model with a relation to `User`
-- Authenticated routes behind a reusable `requireAuth` guard
-- A service layer that enforces ownership
-- A repository layer that isolates Drizzle
-- TanStack Query hooks feeding typed React components
-- MDX + Mermaid documentation, like this page
+<ArchitectureDiagram diagram="crud-request-flow" />
 
-Notes is private by default: every note belongs to exactly one user, and the service
-layer returns `404` for notes that do not belong to the caller.
+- `@zomlab/contracts` defines request and response shapes
+- Hono routes validate transport data and translate domain outcomes into HTTP responses
+- `NoteService` coordinates use cases without importing HTTP concepts
+- `NoteRepository` owns Drizzle queries and user-scoped persistence
+- TanStack Query hooks own cache identity and mutation reconciliation
 
-## Feature folders
+[Read how the CRUD data boundaries fit together](/core/crud/data-boundaries)
 
-The feature is split across the monorepo following the project convention, mirroring
-the sidebar structure (`Core → CRUD`):
+## Ownership is part of every operation
 
+The authenticated user ID is not accepted from the request body. The route reads it from the server-validated session and passes it through the service. Repository updates and deletes include both the note ID and author ID in the same database predicate.
+
+```ts
+// packages/database/src/repositories/core/crud.ts
+async delete(id: string, authorId: string): Promise<boolean> {
+  const rows = await db
+    .delete(notes)
+    .where(
+      and(eq(notes.id, id), eq(notes.authorId, authorId)),
+    )
+    .returning({ id: notes.id });
+
+  return rows.length > 0;
+}
 ```
-apps/web/src/integration/hono/  # routes → services
-apps/web/src/labs/core/crud/    # hooks → components → content
-packages/database/              # schema → repositories
-packages/contracts/             # shared Zod schemas
+
+This shape prevents a time-of-check to time-of-use gap. The database performs the ownership check and mutation as one operation.
+
+## Missing data is not an infrastructure failure
+
+Owned reads, updates, and deletes return `null` when no matching note exists. The route translates that result to `NoteNotFoundError` and status 404. Database failures remain exceptions and reach the shared error handler, which returns a masked 500 response.
+
+That distinction protects both API meaning and operations:
+
+| Outcome | Public response | Operational meaning |
+| --- | --- | --- |
+| Invalid body | 422 validation envelope | Caller can correct the request |
+| Missing or non-owned note | 404 not-found envelope | Resource is unavailable to this principal |
+| Repository exception | Masked 500 envelope | Infrastructure requires investigation |
+| Successful create | 201 with the note | A new resource was persisted |
+
+## Mutations reconcile the cache by scope
+
+An update writes the returned note into its detail cache and invalidates every notes list. A delete removes the detail entry and invalidates lists. This is narrower than clearing the entire query cache.
+
+```ts
+// apps/web/src/labs/core/crud/hooks/use-update-note.ts
+onSuccess: (note) => {
+  queryClient.setQueryData(
+    queryKeys.notes.detail(id),
+    note,
+  );
+  return queryClient.invalidateQueries({
+    queryKey: queryKeys.notes.lists,
+  });
+},
 ```
 
-Types flow from the contracts package to both the API and the UI, so a schema change
-surfaces as a type error in every layer that uses it.
+The UI requires confirmation before destructive mutations and restores keyboard focus when the dialog closes.
 
-<br />
+[Create and manage private notes in the authenticated demo](/core/crud-demo)

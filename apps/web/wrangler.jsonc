@@ -3,6 +3,9 @@
   "main": "@tanstack/react-start/server-entry",
   "compatibility_date": "2026-08-08",
   "compatibility_flags": ["nodejs_compat"],
+  "placement": {
+    "region": "aws:ap-southeast-1"
+  },
   "preview_urls": true,
   "observability": {
     "enabled": true,
@@ -38,6 +41,12 @@
             "period": 60
           }
         }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "FILE_UPLOADS",
+          "bucket_name": "zomlab-uploads-staging"
+        }
       ]
     },
     "production": {
@@ -58,6 +67,12 @@
             "limit": 100,
             "period": 60
           }
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "FILE_UPLOADS",
+          "bucket_name": "zomlab-uploads"
         }
       ]
     }

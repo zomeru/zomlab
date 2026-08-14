@@ -1,16 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Alert } from "@zomlab/ui/components/alert";
+import { Button } from "@zomlab/ui/components/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@zomlab/ui/components/card";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@zomlab/ui/components/field";
+import { Input } from "@zomlab/ui/components/input";
+import { Textarea } from "@zomlab/ui/components/textarea";
+import { useEffect, useRef, useState } from "react";
 import { useCreateNote } from "../hooks/use-create-note";
-
-const INPUT_CLASSES =
-  "mt-1.5 h-10 w-full rounded-md border border-input bg-background px-3 text-base text-foreground placeholder:text-muted-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:text-sm";
+import { type NoteDraftErrors, validateNoteDraft } from "./note-form-validation";
 
 export function NoteForm() {
   const createNote = useCreateNote();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [hydrated, setHydrated] = useState(false);
+  const [errors, setErrors] = useState<NoteDraftErrors>({});
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const contentInputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     setHydrated(true);
@@ -18,62 +25,111 @@ export function NoteForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title.trim()) return;
+    const nextErrors = validateNoteDraft({ content, title });
+    setErrors(nextErrors);
 
-    await createNote.mutateAsync({ title: title.trim(), content: content.trim() || undefined });
+    if (nextErrors.title) {
+      titleInputRef.current?.focus();
+      return;
+    }
+    if (nextErrors.content) {
+      contentInputRef.current?.focus();
+      return;
+    }
 
-    setTitle("");
-    setContent("");
+    try {
+      await createNote.mutateAsync({ title: title.trim(), content: content.trim() || undefined });
+
+      setErrors({});
+      setTitle("");
+      setContent("");
+    } catch {
+      // The mutation error remains rendered next to the form.
+    }
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="rounded-xl border border-border bg-card p-5 sm:p-6"
-      aria-busy={createNote.isPending}
-    >
-      <fieldset disabled={!hydrated || createNote.isPending} className="contents">
-        <div className="space-y-4">
-          <label className="block">
-            <span className="text-sm font-medium text-foreground">Title</span>
-            <input
-              type="text"
-              required
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="What's on your mind?"
-              className={INPUT_CLASSES}
-            />
-          </label>
+    <Card>
+      <CardHeader className="pb-4">
+        <CardTitle className="text-base">New note</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} aria-busy={createNote.isPending}>
+          <fieldset disabled={!hydrated || createNote.isPending} className="contents">
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="new-note-title">Title</FieldLabel>
+                <Input
+                  aria-describedby={
+                    errors.title
+                      ? "new-note-title-description new-note-title-error"
+                      : "new-note-title-description"
+                  }
+                  aria-invalid={errors.title ? true : undefined}
+                  autoComplete="off"
+                  id="new-note-title"
+                  name="title"
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                    if (errors.title) setErrors((current) => ({ ...current, title: undefined }));
+                  }}
+                  placeholder="What's on your mind?"
+                  ref={titleInputRef}
+                  type="text"
+                  value={title}
+                />
+                <p className="text-sm text-muted-foreground" id="new-note-title-description">
+                  Give your note a concise, recognizable title.
+                </p>
+                {errors.title ? (
+                  <FieldError id="new-note-title-error">{errors.title}</FieldError>
+                ) : null}
+              </Field>
 
-          <label className="block">
-            <span className="text-sm font-medium text-foreground">Content</span>
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Write something…"
-              rows={3}
-              className="mt-1.5 w-full resize-y rounded-md border border-input bg-background px-3 py-2 text-base text-foreground placeholder:text-muted-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:text-sm"
-            />
-          </label>
-        </div>
+              <Field>
+                <FieldLabel htmlFor="new-note-content">Content</FieldLabel>
+                <Textarea
+                  aria-describedby={
+                    errors.content
+                      ? "new-note-content-description new-note-content-error"
+                      : "new-note-content-description"
+                  }
+                  aria-invalid={errors.content ? true : undefined}
+                  autoComplete="off"
+                  id="new-note-content"
+                  name="content"
+                  value={content}
+                  onChange={(e) => {
+                    setContent(e.target.value);
+                    if (errors.content) {
+                      setErrors((current) => ({ ...current, content: undefined }));
+                    }
+                  }}
+                  placeholder="Write something…"
+                  ref={contentInputRef}
+                  rows={3}
+                />
+                <p className="text-sm text-muted-foreground" id="new-note-content-description">
+                  Optional details for your note.
+                </p>
+                {errors.content ? (
+                  <FieldError id="new-note-content-error">{errors.content}</FieldError>
+                ) : null}
+              </Field>
+            </FieldGroup>
 
-        {createNote.error && (
-          <p
-            className="mt-4 rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
-            role="alert"
-          >
-            {createNote.error.message}
-          </p>
-        )}
+            {createNote.error && (
+              <Alert className="mt-4" variant="destructive" role="alert">
+                {createNote.error.message}
+              </Alert>
+            )}
 
-        <button
-          type="submit"
-          className="mt-5 h-10 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-[background-color,transform] hover:bg-primary/90 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {createNote.isPending ? "Creating…" : "Create note"}
-        </button>
-      </fieldset>
-    </form>
+            <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+              <Button type="submit">{createNote.isPending ? "Creating…" : "Create note"}</Button>
+            </div>
+          </fieldset>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
