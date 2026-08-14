@@ -1,4 +1,5 @@
 import { Callout, CodeContainer, TableWrapper } from "@zomlab/ui/components/docs";
+import { cn } from "@zomlab/ui/lib/utils";
 import type { MDXComponents } from "mdx/types";
 import { Mermaid } from "./components/mdx/mermaid";
 
@@ -29,15 +30,21 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
-    code: (props) => (
+    code: ({ className, ...props }) => (
       <code
-        className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground"
+        className={cn(
+          "rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em] text-foreground",
+          className,
+        )}
         {...props}
       />
     ),
-    pre: (props) => (
+    pre: ({ className, ...props }) => (
       <CodeContainer>
-        <pre className="m-0 overflow-x-auto p-4 font-mono text-sm leading-6" {...props} />
+        <pre
+          className={cn("m-0 overflow-x-auto p-4 font-mono text-sm leading-6", className)}
+          {...props}
+        />
       </CodeContainer>
     ),
     ul: (props) => (

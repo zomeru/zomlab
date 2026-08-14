@@ -32,6 +32,10 @@ test("shows CRUD as an overview and demo group", async ({ page }) => {
     "href",
     "/core/crud",
   );
+  await expect(crudGroup.getByRole("link", { name: "Data Boundaries" })).toHaveAttribute(
+    "href",
+    "/core/crud/data-boundaries",
+  );
   await expect(crudGroup.getByRole("link", { name: "Demo" })).toHaveAttribute(
     "href",
     "/core/crud-demo",
@@ -70,6 +74,10 @@ test("shows Tables as an overview and demo group", async ({ page }) => {
     "href",
     "/core/tables",
   );
+  await expect(tablesGroup.getByRole("link", { name: "Server Data" })).toHaveAttribute(
+    "href",
+    "/core/tables/server-data",
+  );
   await expect(tablesGroup.getByRole("link", { name: "Demo" })).toHaveAttribute(
     "href",
     "/core/tables-demo",
@@ -89,9 +97,36 @@ test("shows File Uploads as an overview and demo group", async ({ page }) => {
     "href",
     "/core/file-uploads",
   );
+  await expect(uploadsGroup.getByRole("link", { name: "Storage & Security" })).toHaveAttribute(
+    "href",
+    "/core/file-uploads/storage-security",
+  );
   await expect(uploadsGroup.getByRole("link", { name: "Demo" })).toHaveAttribute(
     "href",
     "/core/file-uploads-demo",
+  );
+});
+
+test("shows Error Handling as an overview, contract, and demo group", async ({ page }) => {
+  await page.goto("/");
+
+  const sidebar = page.getByRole("navigation", { name: "Sidebar" });
+  await sidebar.locator("details").filter({ hasText: "Core" }).locator(":scope > summary").click();
+  const errorSummary = sidebar.locator("summary", { hasText: /^Error Handling$/ });
+  const errorGroup = errorSummary.locator("..");
+  await errorSummary.click();
+
+  await expect(errorGroup.getByRole("link", { name: "Overview" })).toHaveAttribute(
+    "href",
+    "/core/error-handling",
+  );
+  await expect(errorGroup.getByRole("link", { name: "Error Contract" })).toHaveAttribute(
+    "href",
+    "/core/error-handling/error-contract",
+  );
+  await expect(errorGroup.getByRole("link", { name: "Demo" })).toHaveAttribute(
+    "href",
+    "/core/error-handling-demo",
   );
 });
 

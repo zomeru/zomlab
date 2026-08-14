@@ -1,25 +1,71 @@
-# State Management
+# State management
 
-State management is choosing an owner for each value. This lab uses component state for one input,
-a reducer for task transitions, and derived state for progress.
+State management starts by assigning one owner to each value. This lab uses local state for a draft, a reducer for related task transitions, and a calculation for derived progress.
 
-## What the lab demonstrates
+## Choose state by ownership
 
-- Local state for transient form input
-- Reducer actions for related transitions
-- Immutable add, toggle, and remove updates
-- Derived progress instead of duplicated counters
-- The boundary between client state and server state
+Different values need different owners:
 
-## State flow
+| Value | Owner | Reason |
+| --- | --- | --- |
+| Task name draft | `useState` | One component edits a transient string |
+| Task collection | `useReducer` | Add, toggle, and remove share transition rules |
+| Completed count | Derived during render | The task array already contains the source data |
+| Notes from the API | TanStack Query | Remote data has freshness and synchronization rules |
 
-```text
-User action → reducer action → next task array → derived completion count → UI
+The last distinction prevents a common architecture mistake: copying server data into component state and creating two sources of truth.
+
+## Reducers make transitions explicit
+
+The reducer accepts a discriminated action and returns a new array for every transition.
+
+```tsx
+// apps/web/src/labs/core/state-management/components/
+// state-management-demo.tsx
+function taskReducer(tasks: Task[], action: Action): Task[] {
+  switch (action.type) {
+    case "add":
+      return [
+        ...tasks,
+        {
+          complete: false,
+          id: crypto.randomUUID(),
+          name: action.name,
+        },
+      ];
+    case "remove":
+      return tasks.filter((task) => task.id !== action.id);
+    case "toggle":
+      return tasks.map((task) =>
+        task.id === action.id
+          ? { ...task, complete: !task.complete }
+          : task,
+      );
+  }
+}
 ```
 
-## Routes
+<Mermaid chart={`
+stateDiagram-v2
+  [*] --> Empty
+  Empty --> Active: add
+  Active --> Active: add, toggle, or remove
+  Active --> Empty: remove final task
+`} />
 
-- Overview: `/core/state-management`
-- Demo: `/core/state-management-demo`
+The reducer stays pure: it does not render, fetch, focus controls, or write storage. That boundary makes every transition testable with an input array and an action.
 
-[Open the authenticated state management demo](/core/state-management-demo)
+## Derive values instead of synchronizing them
+
+The completed count is calculated from `tasks` during render:
+
+```tsx
+const [tasks, dispatch] = useReducer(taskReducer, []);
+const completed = tasks.filter((task) => task.complete).length;
+```
+
+Storing `completed` separately would require every reducer branch to update two values correctly. Derivation removes that synchronization path.
+
+Use a reducer when transitions form one domain and benefit from explicit action names. Keep independent, transient inputs in local state. Move state into the URL when it should survive navigation, and use TanStack Query when the server owns the canonical value.
+
+[Run the reducer transitions in the authenticated demo](/core/state-management-demo)

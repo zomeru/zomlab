@@ -17,10 +17,7 @@ test("publishes every Core foundation overview", async ({ page }) => {
   for (const [path, heading] of corePaths) {
     await page.goto(`/core/${path}`);
     await expect(page.getByRole("heading", { level: 1, name: heading })).toBeVisible();
-    await expect(page.getByRole("link", { name: /open the authenticated/i })).toHaveAttribute(
-      "href",
-      `/core/${path}-demo`,
-    );
+    await expect(page.locator(`article a[href="/core/${path}-demo"]`)).toBeVisible();
   }
 });
 

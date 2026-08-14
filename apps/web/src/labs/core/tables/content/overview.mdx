@@ -1,30 +1,61 @@
 # Tables
 
-Tables make structured collections easier to scan, compare, and act on. This lab combines notes
-CRUD with server-side search, sorting, and pagination in one responsive view.
+A production table coordinates semantic markup, headless interaction state, URL state, server queries, and responsive layout. This lab combines private notes with server-side search, sorting, pagination, and client-side column visibility.
 
-## What the lab demonstrates
+## Assign each state slice to one owner
 
-- Headless table state and rendering with TanStack Table
-- Semantic `@zomlab/ui` table markup with accessible sort controls
-- User-controlled column visibility
-- Validated sort fields and directions shared by the API and client
-- Stable server-side ordering with a deterministic tie-breaker
-- URL-backed search, sorting, page, and page-size state
-- Responsive overflow without hiding row actions
+TanStack Table owns grid behavior, TanStack Router owns shareable controls, and TanStack Query owns remote data. The server performs every operation that depends on the complete collection.
 
-## Request flow
+<Mermaid chart={`
+flowchart LR
+  Controls["Search, sort, and page controls"] --> URL["Router search state"]
+  URL --> Query["TanStack Query key"]
+  Query --> API["Server filtering, sorting, pagination"]
+  API --> Table["TanStack Table receives processed rows"]
+  Visibility["Column visibility"] --> Table
+  Table --> Markup["Semantic table markup"]
+`} />
 
-```text
-Table controls → URL state → TanStack Query → Hono → NoteService → Drizzle order + limit
+| Concern | Owner |
+| --- | --- |
+| Query, sort, page, and page size | URL search parameters |
+| Fetching, cache, and background updates | TanStack Query |
+| Filtering, ordering, and page boundaries | Notes API and repository |
+| Header, row, cell, and visibility behavior | TanStack Table |
+| Table semantics and overflow | `@zomlab/ui` and the renderer |
+
+[Read how server-owned table data is composed](/core/tables/server-data)
+
+## Manual mode marks a processing boundary
+
+The table receives an already filtered, sorted, and paginated page. `manualSorting` and `manualPagination` prevent the table from processing that partial dataset again.
+
+```tsx
+// apps/web/src/labs/core/tables/components/notes-table.tsx
+const table = useTable({
+  columns,
+  data: notes,
+  features,
+  manualPagination: true,
+  manualSorting: true,
+  rowCount: total,
+  state: {
+    pagination: { pageIndex: page - 1, pageSize },
+    sorting,
+  },
+});
 ```
 
-Every table query remains scoped to the authenticated author before search, sorting, or pagination
-is applied.
+Manual mode does not fetch data. The surrounding `useNotes` query performs the request and passes `data.items` and `data.total` into the table.
 
-## Routes
+## Headless behavior still needs semantic rendering
 
-- Overview: `/core/tables`
-- Demo: `/core/tables-demo`
+TanStack Table calculates models and handlers but does not choose markup. The renderer uses `<table>`, column-scoped headers, and visible cells. Sortable headers expose `aria-sort` and a button label that names the next direction.
 
-[Open the authenticated tables demo](/core/tables-demo)
+Horizontal overflow preserves all columns and row actions on narrow screens. Column visibility stays local because it is a personal display preference in this lab, not server query state.
+
+## Stable ordering protects page integrity
+
+The API accepts only `title`, `createdAt`, or `updatedAt` and only `asc` or `desc`. The repository maps those values to known columns and adds the note ID as a deterministic tie-breaker. No request value becomes an unchecked SQL identifier.
+
+[Work with the server-backed notes table](/core/tables-demo)

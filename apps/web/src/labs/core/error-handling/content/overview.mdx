@@ -1,27 +1,70 @@
 # Error handling
 
-Error handling keeps expected failures useful and unexpected failures private. ZomLab exposes one stable error envelope while its Hono error boundary translates validation, domain, HTTP, and unknown errors.
+Error handling preserves useful information for expected failures and hides private details for unexpected failures. ZomLab exposes one stable envelope while its Hono boundary classifies domain, validation, HTTP, and infrastructure errors.
 
-## What the lab demonstrates
+## Classify failures before formatting them
 
-- Stable `error.code`, `error.message`, and optional detail
-- Status 422 for invalid input and 404 for missing owned resources
-- Domain errors translated at the route boundary
-- Unknown server errors masked from clients
-- Public API messages propagated through `ApiResponseError`
-- Urgent feedback announced with an alert
+The error handler decides status and public detail from the error type. Unknown values never cross the boundary unchanged.
 
-## Error flow
+<Mermaid chart={`
+flowchart TD
+  Failure["Thrown failure"] --> Type{"Known error type?"}
+  Type -->|"ApiError"| Domain["Preserve public code and status"]
+  Type -->|"ZodError"| Validation["Return validation detail with 422"]
+  Type -->|"HTTPException"| HTTP["Map safe HTTP error"]
+  Type -->|"unknown"| Internal["Log privately and return masked 500"]
+  Domain --> Envelope["Stable error envelope"]
+  Validation --> Envelope
+  HTTP --> Envelope
+  Internal --> Envelope
+`} />
 
-```text
-Thrown failure → API error handler → public envelope + status → client alert
+```ts
+// apps/web/src/integration/hono/errors/error-handler.ts
+if (error instanceof ZodError) {
+  const validationError = new ValidationError(
+    "Validation failed",
+    error,
+  );
+  return c.json(createErrorEnvelope(validationError), 422);
+}
+
+if (error instanceof HTTPException) {
+  const httpError = new ApiError(
+    error.status === 403 ? "FORBIDDEN" : "HTTP_ERROR",
+    error.message || "Request failed",
+    error.status,
+  );
+  return c.json(createErrorEnvelope(httpError), error.status as 400);
+}
 ```
 
-The client parses unsuccessful responses against the shared error schema. Valid envelopes retain their public message, status, code, and optional detail. Invalid or unreadable responses use stable fallback copy instead of exposing response internals.
+The final branch logs an unknown error server-side and returns `InternalError`, whose message contains no stack, query, secret, or storage detail.
 
-## Routes
+## Use one public envelope
 
-- Overview: `/core/error-handling`
-- Demo: `/core/error-handling-demo`
+Every unsuccessful API response uses `{ error: { code, message, detail? } }`. A stable shape lets clients render known messages without parsing framework-specific response bodies.
 
-[Open the authenticated error handling demo](/core/error-handling-demo)
+[Inspect the complete public error contract](/core/error-handling/error-contract)
+
+| Failure | Status | Public detail |
+| --- | --- | --- |
+| Invalid request | 422 | Field-safe validation information |
+| Missing owned resource | 404 | Stable not-found message |
+| Missing session | 401 | Authentication requirement |
+| Forbidden request | 403 | Safe authorization message |
+| Unknown server failure | 500 | Masked internal message |
+
+## Preserve the semantic difference between 404 and 500
+
+A repository returns `null` only when an owned record is absent. The route converts that result to a not-found error. Repository exceptions escape to the shared handler and become 500 responses.
+
+Catching every storage error and returning 404 would hide outages as missing data. Exposing every exception would leak internals. The explicit result-versus-exception boundary avoids both failures.
+
+## The client validates error responses too
+
+`readJsonResponse` parses unsuccessful bodies with the shared error schema. Valid envelopes keep their status, code, message, and detail. Malformed bodies use endpoint-specific fallback copy.
+
+The UI uses `role="alert"` for urgent failures and keeps recovery close to the action. A failed destructive mutation leaves its confirmation dialog open, which lets the reader understand the error and retry.
+
+[Compare public failure types in the authenticated demo](/core/error-handling-demo)

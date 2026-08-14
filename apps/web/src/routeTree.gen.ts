@@ -31,9 +31,12 @@ import { Route as AuthenticatedCoreValidationDemoRouteImport } from './routes/_a
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as CoreCachingIndexRouteImport } from './routes/core.caching.index'
 import { Route as CoreCrudIndexRouteImport } from './routes/core.crud.index'
+import { Route as CoreCrudDataBoundariesRouteImport } from './routes/core.crud.data-boundaries'
 import { Route as CoreDataFetchingIndexRouteImport } from './routes/core.data-fetching.index'
 import { Route as CoreErrorHandlingIndexRouteImport } from './routes/core.error-handling.index'
+import { Route as CoreErrorHandlingErrorContractRouteImport } from './routes/core.error-handling.error-contract'
 import { Route as CoreFileUploadsIndexRouteImport } from './routes/core.file-uploads.index'
+import { Route as CoreFileUploadsStorageSecurityRouteImport } from './routes/core.file-uploads.storage-security'
 import { Route as CoreFormsIndexRouteImport } from './routes/core.forms.index'
 import { Route as CoreLoggingIndexRouteImport } from './routes/core.logging.index'
 import { Route as CoreMiddlewareIndexRouteImport } from './routes/core.middleware.index'
@@ -42,6 +45,7 @@ import { Route as CoreRoutingIndexRouteImport } from './routes/core.routing.inde
 import { Route as CoreSearchFilterIndexRouteImport } from './routes/core.search-filter.index'
 import { Route as CoreStateManagementIndexRouteImport } from './routes/core.state-management.index'
 import { Route as CoreTablesIndexRouteImport } from './routes/core.tables.index'
+import { Route as CoreTablesServerDataRouteImport } from './routes/core.tables.server-data'
 import { Route as CoreValidationIndexRouteImport } from './routes/core.validation.index'
 import { Route as AuthenticatedCoreCrudDemoIndexRouteImport } from './routes/_authenticated.core.crud-demo.index'
 import { Route as AuthenticatedCoreCrudDemoIdRouteImport } from './routes/_authenticated.core.crud-demo.$id'
@@ -168,6 +172,11 @@ const CoreCrudIndexRoute = CoreCrudIndexRouteImport.update({
   path: '/core/crud/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoreCrudDataBoundariesRoute = CoreCrudDataBoundariesRouteImport.update({
+  id: '/core/crud/data-boundaries',
+  path: '/core/crud/data-boundaries',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CoreDataFetchingIndexRoute = CoreDataFetchingIndexRouteImport.update({
   id: '/core/data-fetching/',
   path: '/core/data-fetching/',
@@ -178,11 +187,23 @@ const CoreErrorHandlingIndexRoute = CoreErrorHandlingIndexRouteImport.update({
   path: '/core/error-handling/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoreErrorHandlingErrorContractRoute =
+  CoreErrorHandlingErrorContractRouteImport.update({
+    id: '/core/error-handling/error-contract',
+    path: '/core/error-handling/error-contract',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CoreFileUploadsIndexRoute = CoreFileUploadsIndexRouteImport.update({
   id: '/core/file-uploads/',
   path: '/core/file-uploads/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoreFileUploadsStorageSecurityRoute =
+  CoreFileUploadsStorageSecurityRouteImport.update({
+    id: '/core/file-uploads/storage-security',
+    path: '/core/file-uploads/storage-security',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CoreFormsIndexRoute = CoreFormsIndexRouteImport.update({
   id: '/core/forms/',
   path: '/core/forms/',
@@ -224,6 +245,11 @@ const CoreTablesIndexRoute = CoreTablesIndexRouteImport.update({
   path: '/core/tables/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoreTablesServerDataRoute = CoreTablesServerDataRouteImport.update({
+  id: '/core/tables/server-data',
+  path: '/core/tables/server-data',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CoreValidationIndexRoute = CoreValidationIndexRouteImport.update({
   id: '/core/validation/',
   path: '/core/validation/',
@@ -262,6 +288,10 @@ export interface FileRoutesByFullPath {
   '/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
+  '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
+  '/core/file-uploads/storage-security': typeof CoreFileUploadsStorageSecurityRoute
+  '/core/tables/server-data': typeof CoreTablesServerDataRoute
   '/core/caching/': typeof CoreCachingIndexRoute
   '/core/crud/': typeof CoreCrudIndexRoute
   '/core/data-fetching/': typeof CoreDataFetchingIndexRoute
@@ -299,6 +329,10 @@ export interface FileRoutesByTo {
   '/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
+  '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
+  '/core/file-uploads/storage-security': typeof CoreFileUploadsStorageSecurityRoute
+  '/core/tables/server-data': typeof CoreTablesServerDataRoute
   '/core/caching': typeof CoreCachingIndexRoute
   '/core/crud': typeof CoreCrudIndexRoute
   '/core/data-fetching': typeof CoreDataFetchingIndexRoute
@@ -338,6 +372,10 @@ export interface FileRoutesById {
   '/_authenticated/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/_authenticated/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
+  '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
+  '/core/file-uploads/storage-security': typeof CoreFileUploadsStorageSecurityRoute
+  '/core/tables/server-data': typeof CoreTablesServerDataRoute
   '/core/caching/': typeof CoreCachingIndexRoute
   '/core/crud/': typeof CoreCrudIndexRoute
   '/core/data-fetching/': typeof CoreDataFetchingIndexRoute
@@ -377,6 +415,10 @@ export interface FileRouteTypes {
     | '/core/tables-demo'
     | '/core/validation-demo'
     | '/api/auth/$'
+    | '/core/crud/data-boundaries'
+    | '/core/error-handling/error-contract'
+    | '/core/file-uploads/storage-security'
+    | '/core/tables/server-data'
     | '/core/caching/'
     | '/core/crud/'
     | '/core/data-fetching/'
@@ -414,6 +456,10 @@ export interface FileRouteTypes {
     | '/core/tables-demo'
     | '/core/validation-demo'
     | '/api/auth/$'
+    | '/core/crud/data-boundaries'
+    | '/core/error-handling/error-contract'
+    | '/core/file-uploads/storage-security'
+    | '/core/tables/server-data'
     | '/core/caching'
     | '/core/crud'
     | '/core/data-fetching'
@@ -452,6 +498,10 @@ export interface FileRouteTypes {
     | '/_authenticated/core/tables-demo'
     | '/_authenticated/core/validation-demo'
     | '/api/auth/$'
+    | '/core/crud/data-boundaries'
+    | '/core/error-handling/error-contract'
+    | '/core/file-uploads/storage-security'
+    | '/core/tables/server-data'
     | '/core/caching/'
     | '/core/crud/'
     | '/core/data-fetching/'
@@ -478,6 +528,10 @@ export interface RootRouteChildren {
   StatusRoute: typeof StatusRoute
   ApiSplatRoute: typeof ApiSplatRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  CoreCrudDataBoundariesRoute: typeof CoreCrudDataBoundariesRoute
+  CoreErrorHandlingErrorContractRoute: typeof CoreErrorHandlingErrorContractRoute
+  CoreFileUploadsStorageSecurityRoute: typeof CoreFileUploadsStorageSecurityRoute
+  CoreTablesServerDataRoute: typeof CoreTablesServerDataRoute
   CoreCachingIndexRoute: typeof CoreCachingIndexRoute
   CoreCrudIndexRoute: typeof CoreCrudIndexRoute
   CoreDataFetchingIndexRoute: typeof CoreDataFetchingIndexRoute
@@ -650,6 +704,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoreCrudIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/core/crud/data-boundaries': {
+      id: '/core/crud/data-boundaries'
+      path: '/core/crud/data-boundaries'
+      fullPath: '/core/crud/data-boundaries'
+      preLoaderRoute: typeof CoreCrudDataBoundariesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/core/data-fetching/': {
       id: '/core/data-fetching/'
       path: '/core/data-fetching'
@@ -664,11 +725,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoreErrorHandlingIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/core/error-handling/error-contract': {
+      id: '/core/error-handling/error-contract'
+      path: '/core/error-handling/error-contract'
+      fullPath: '/core/error-handling/error-contract'
+      preLoaderRoute: typeof CoreErrorHandlingErrorContractRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/core/file-uploads/': {
       id: '/core/file-uploads/'
       path: '/core/file-uploads'
       fullPath: '/core/file-uploads/'
       preLoaderRoute: typeof CoreFileUploadsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/file-uploads/storage-security': {
+      id: '/core/file-uploads/storage-security'
+      path: '/core/file-uploads/storage-security'
+      fullPath: '/core/file-uploads/storage-security'
+      preLoaderRoute: typeof CoreFileUploadsStorageSecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/core/forms/': {
@@ -725,6 +800,13 @@ declare module '@tanstack/react-router' {
       path: '/core/tables'
       fullPath: '/core/tables/'
       preLoaderRoute: typeof CoreTablesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/core/tables/server-data': {
+      id: '/core/tables/server-data'
+      path: '/core/tables/server-data'
+      fullPath: '/core/tables/server-data'
+      preLoaderRoute: typeof CoreTablesServerDataRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/core/validation/': {
@@ -803,6 +885,10 @@ const rootRouteChildren: RootRouteChildren = {
   StatusRoute: StatusRoute,
   ApiSplatRoute: ApiSplatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  CoreCrudDataBoundariesRoute: CoreCrudDataBoundariesRoute,
+  CoreErrorHandlingErrorContractRoute: CoreErrorHandlingErrorContractRoute,
+  CoreFileUploadsStorageSecurityRoute: CoreFileUploadsStorageSecurityRoute,
+  CoreTablesServerDataRoute: CoreTablesServerDataRoute,
   CoreCachingIndexRoute: CoreCachingIndexRoute,
   CoreCrudIndexRoute: CoreCrudIndexRoute,
   CoreDataFetchingIndexRoute: CoreDataFetchingIndexRoute,

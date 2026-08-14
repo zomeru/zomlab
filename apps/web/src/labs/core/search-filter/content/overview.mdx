@@ -1,29 +1,74 @@
-# Search and Filtering
+# Search and filtering
 
-Search and filtering turns a growing collection into something people can navigate quickly.
-This lab extends the authenticated notes API with a case-insensitive query across note titles
-and content.
+Search coordinates a fast input, durable URL state, cache identity, validation, and tenant-scoped database filtering. This lab searches private note titles and content without loading the full collection into the browser.
 
-## What the lab demonstrates
+## Separate the draft from the committed query
 
-- A validated `query` parameter shared by the API and client
-- User-scoped filtering in the Drizzle repository
-- URL-backed search state with TanStack Router
-- Query-specific TanStack Query cache keys
-- Accessible result counts, clear controls, and empty states
+The input updates immediately, while a 300 ms debounce delays navigation and network work. The committed query lives in the URL, so refresh, history, and copied links preserve the current search.
 
-## Request flow
+<Mermaid chart={`
+sequenceDiagram
+  participant Reader
+  participant Draft as Input draft
+  participant URL as Router search
+  participant Cache as Query cache
+  participant API
+  Reader->>Draft: type text
+  Draft->>URL: commit after 300 ms
+  URL->>Cache: select key with query
+  Cache->>API: request filtered page
+  API-->>Cache: owned matches and total
+  Cache-->>Reader: render results
+`} />
 
-```text
-Search field → URL query → TanStack Query → Hono → NoteService → Drizzle ILIKE
+The route preserves unrelated search state through a functional update and removes an empty query from the URL.
+
+```tsx
+// apps/web/src/routes/_authenticated.core.search-filter-demo.tsx
+void navigate({
+  search: (previous) => ({
+    ...previous,
+    query: nextQuery || undefined,
+  }),
+});
 ```
 
-The repository always combines the search expression with the authenticated author's ID, so a
-search can never return another user's notes.
+## Validate at both URL and API boundaries
 
-## Routes
+The route limits `query` before the component reads it. The API applies the shared `noteListQuerySchema` again because direct callers can bypass the page. Both boundaries trim the value and cap it at 200 characters.
 
-- Overview: `/core/search-filter`
-- Demo: `/core/search-filter-demo`
+The query hook includes the committed query in its key:
 
-[Open the authenticated search demo](/core/search-filter-demo)
+```ts
+const { data, isLoading, error } = useNotes({
+  query: query || undefined,
+  page: 1,
+  pageSize: 20,
+});
+```
+
+Each distinct query receives a distinct cache entry. The input draft never becomes a cache key until the debounce commits it.
+
+## Filter inside the ownership predicate
+
+The repository combines the author condition with the title and content expression:
+
+```ts
+const where = and(
+  eq(notes.authorId, authorId),
+  or(
+    ilike(notes.title, `%${query}%`),
+    ilike(notes.content, `%${query}%`),
+  ),
+);
+```
+
+The same predicate drives the rows and total count. Search therefore cannot reveal another account's notes through either results or metadata.
+
+## Feedback distinguishes collection states
+
+The UI announces the result count with `role="status"`. An empty collection explains how to create the first note, while an empty search names the query and offers a clear action. Loading skeletons and errors do not replace one another with ambiguous copy.
+
+`ILIKE '%query%'` is appropriate for this bounded lab. Larger datasets may require PostgreSQL trigram indexes or full-text search, but the ownership and contract boundaries remain the same.
+
+[Search private notes in the authenticated demo](/core/search-filter-demo)

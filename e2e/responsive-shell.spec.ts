@@ -36,12 +36,9 @@ for (const viewport of VIEWPORTS) {
 
       await page.goto("/core/crud");
       await expect(page.getByRole("heading", { name: "CRUD notes", exact: true })).toBeVisible();
-      await expect(
-        page.getByText(
-          "Notes UI → TanStack Query → Hono → NoteService → NoteRepository → Drizzle",
-          { exact: true },
-        ),
-      ).toBeVisible();
+      await expect(page.getByLabel("Architecture diagram").first()).toBeVisible();
+      await expect(page.getByText("Diagram could not be rendered.")).toHaveCount(0);
+      await expect(page.locator("article pre").first()).toBeVisible();
       await expect
         .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
         .toBe(true);

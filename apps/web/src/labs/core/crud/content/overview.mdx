@@ -1,30 +1,80 @@
 # CRUD notes
 
-CRUD covers the core operations for creating, reading, updating, and deleting data. This lab implements those operations as an authenticated notes feature from the UI to PostgreSQL.
+Create, read, update, and delete (CRUD) operations become production behavior only when contracts, authorization, persistence, cache updates, and failure semantics agree. This lab implements an authenticated notes feature from React to PostgreSQL.
 
-## What the lab demonstrates
+## One feature crosses several boundaries
 
-- Shared Zod contracts for API inputs and responses
-- Protected Hono routes for each CRUD operation
-- User-scoped data access that keeps notes private
-- Repository injection at the route composition boundary
-- Stable query-key factories for lists and details
-- Typed TanStack Query hooks that propagate public API errors
-- Validated forms and confirmation-based deletion
+Each layer has one responsibility and depends inward through explicit types.
 
-## Request flow
+<Mermaid chart={`
+flowchart LR
+  UI["React notes UI"] --> Query["TanStack Query hooks"]
+  Query --> Client["Typed Hono client"]
+  Client --> Route["OpenAPI route"]
+  Route --> Auth["Session authorization"]
+  Auth --> Service["Note service"]
+  Service --> Repo["Note repository"]
+  Repo --> DB["Drizzle and PostgreSQL"]
+`} />
 
-```text
-Notes UI → TanStack Query → Hono → NoteService → NoteRepository → Drizzle
+- `@zomlab/contracts` defines request and response shapes
+- Hono routes validate transport data and translate domain outcomes into HTTP responses
+- `NoteService` coordinates use cases without importing HTTP concepts
+- `NoteRepository` owns Drizzle queries and user-scoped persistence
+- TanStack Query hooks own cache identity and mutation reconciliation
+
+[Read how the CRUD data boundaries fit together](/core/crud/data-boundaries)
+
+## Ownership is part of every operation
+
+The authenticated user ID is not accepted from the request body. The route reads it from the server-validated session and passes it through the service. Repository updates and deletes include both the note ID and author ID in the same database predicate.
+
+```ts
+// packages/database/src/repositories/core/crud.ts
+async delete(id: string, authorId: string): Promise<boolean> {
+  const rows = await db
+    .delete(notes)
+    .where(
+      and(eq(notes.id, id), eq(notes.authorId, authorId)),
+    )
+    .returning({ id: notes.id });
+
+  return rows.length > 0;
+}
 ```
 
-The notes route passes a `NoteRepository` to `createNoteService(repository)`. Every operation carries the authenticated user's ID through the stack. A missing or non-owned note produces `null`, which the route translates to `NoteNotFoundError` and a 404 response.
+This shape prevents a time-of-check to time-of-use gap. The database performs the ownership check and mutation as one operation.
 
-Repository failures remain exceptions. The shared error handler logs those private failures and returns a masked 500 response, so infrastructure errors never appear as missing notes. Successful creates return 201.
+## Missing data is not an infrastructure failure
 
-## Routes
+Owned reads, updates, and deletes return `null` when no matching note exists. The route translates that result to `NoteNotFoundError` and status 404. Database failures remain exceptions and reach the shared error handler, which returns a masked 500 response.
 
-- Overview: `/core/crud`
-- Demo: `/core/crud-demo`
+That distinction protects both API meaning and operations:
 
-[Open the authenticated CRUD demo](/core/crud-demo)
+| Outcome | Public response | Operational meaning |
+| --- | --- | --- |
+| Invalid body | 422 validation envelope | Caller can correct the request |
+| Missing or non-owned note | 404 not-found envelope | Resource is unavailable to this principal |
+| Repository exception | Masked 500 envelope | Infrastructure requires investigation |
+| Successful create | 201 with the note | A new resource was persisted |
+
+## Mutations reconcile the cache by scope
+
+An update writes the returned note into its detail cache and invalidates every notes list. A delete removes the detail entry and invalidates lists. This is narrower than clearing the entire query cache.
+
+```ts
+// apps/web/src/labs/core/crud/hooks/use-update-note.ts
+onSuccess: (note) => {
+  queryClient.setQueryData(
+    queryKeys.notes.detail(id),
+    note,
+  );
+  return queryClient.invalidateQueries({
+    queryKey: queryKeys.notes.lists,
+  });
+},
+```
+
+The UI requires confirmation before destructive mutations and restores keyboard focus when the dialog closes.
+
+[Create and manage private notes in the authenticated demo](/core/crud-demo)

@@ -1,40 +1,71 @@
 # File uploads
 
-File uploads cross browser, API, authorization, and object-storage boundaries. This lab keeps that flow explicit with validated multipart requests and private Cloudflare R2 objects.
+File uploads cross browser, API, authorization, and object-storage boundaries. This lab validates multipart input, derives ownership from the session, stores private Cloudflare R2 objects, and preserves an accessible lifecycle from selection through deletion.
 
-## What the lab demonstrates
+## Treat every upload as untrusted input
 
-- Accessible file selection with clear type and size constraints
-- Shared client and server validation for files up to 500 KB
-- Authenticated multipart uploads through the typed Hono client
-- User-prefixed R2 object keys for private ownership
-- Streamed downloads and confirmation-based deletion
-- Attachment lifecycle states and actions built from the composable `@zomlab/ui` attachment
-- Loading, empty, upload, and error feedback that stays visible to assistive technology
-- Keyboard focus restored after the deletion dialog closes
+The browser's `accept` attribute guides selection but does not enforce security. The client checks early for feedback, and the Hono route repeats the authoritative rules before storage.
 
-## Request flow
-
-```text
-File input → TanStack Query mutation → Hono → FileService → private R2 object
+```ts
+// apps/web/src/integration/hono/routes/core/files.route.ts
+const uploadFileBodySchema = z.strictObject({
+  file: z
+    .instanceof(File, { message: "Choose a file to upload" })
+    .refine((file: File) => file.name.length > 0 && file.name.length <= 180, {
+      message: "File names must be between 1 and 180 characters",
+    })
+    .refine((file: File) => file.size > 0, { message: "Files cannot be empty" })
+    .refine((file: File) => file.size <= FILE_UPLOAD_MAX_BYTES, {
+      message: "Files must be 500 KB or smaller",
+    })
+    .refine(
+      (file: File) => FILE_UPLOAD_ACCEPTED_TYPES.some((acceptedType) => acceptedType === file.type),
+      { message: "Only PDF, JPEG, PNG, and plain text files are supported" },
+    ),
+});
 ```
 
-The server derives the object prefix from the authenticated session. Clients provide only the file, never an owner ID or storage key.
+Shared constants keep the browser hint and server policy aligned.
 
-## Local and deployed storage
+## Ownership never comes from the multipart body
 
-The Cloudflare Vite development runtime simulates R2 locally by default. Files uploaded through `pnpm dev` are stored below `apps/web/.wrangler/state/v3/r2` and do not appear in the Cloudflare dashboard.
+The route reads the user ID from the authenticated session. The service creates a random object ID, and the repository builds the R2 key from the session user.
 
-Deployed environments use the bindings in `apps/web/wrangler.jsonc`:
+<Mermaid chart={`
+flowchart LR
+  Input["Browser file input"] --> Client["Client checks"]
+  Client --> Form["Typed multipart request"]
+  Form --> Auth["Server session"]
+  Auth --> Validate["Authoritative Zod validation"]
+  Validate --> Service["File service creates UUID"]
+  Service --> R2["Private user-prefixed R2 object"]
+`} />
 
-- Staging writes to `zomlab-uploads-staging`
-- Production writes to `zomlab-uploads`
+```ts
+function getPrefix(userId: string) {
+  return `${userId}/`;
+}
 
-Objects use `<authenticated-user-id>/<random-uuid>` keys. The original filename and media type live in custom metadata, so the dashboard object name differs from the uploaded file name. Local development should keep the simulated binding unless a task needs remote R2 data.
+function getKey(userId: string, id: string) {
+  return `${getPrefix(userId)}${id}`;
+}
+```
 
-## Routes
+Clients never submit an owner ID or object key. List, download, and delete operations rebuild the key with the current session user, so another account cannot address the object.
 
-- Overview: `/core/file-uploads`
-- Demo: `/core/file-uploads-demo`
+[Read about R2 storage and file security](/core/file-uploads/storage-security)
 
-[Open the authenticated file uploads demo](/core/file-uploads-demo)
+## The UI represents the complete lifecycle
+
+The demo separates selection errors, upload mutation errors, list loading, empty storage, download actions, and deletion errors. Upload and delete mutations invalidate only the file list cache.
+
+Deletion uses a controlled alert dialog. A failed request keeps the dialog open for retry. Closing the dialog returns focus to the triggering delete control, or to the file input if that control no longer exists.
+
+The supported policy is explicit:
+
+- PDF, JPEG, PNG, and plain text
+- Non-empty files up to 500 KB
+- File names from 1 to 180 characters
+- Private account ownership for every operation
+
+[Manage private files in the authenticated demo](/core/file-uploads-demo)

@@ -1,25 +1,63 @@
 # Data fetching
 
-Data fetching is more than awaiting JSON. This lab uses the typed Hono client and TanStack Query to model loading, failure, success, freshness, retry, and background refetching.
+Data fetching coordinates transport, parsing, cache identity, freshness, retries, and visible UI states. This lab requests the real health endpoint through the typed Hono client and lets TanStack Query own the server-state lifecycle.
 
-## What the lab demonstrates
+## Model the lifecycle, not one promise
 
-- Typed calls to the existing health endpoint
-- A shared query-key factory for server-state identity
-- Public API errors preserved by the shared response reader
-- Separate initial loading and background fetching states
-- Explicit manual refetching
-- Last-success timestamps and accessible feedback
+An initial request has no cached data, while a background refresh can keep the last successful value visible. The UI treats those states differently.
 
-## Request flow
+<Mermaid chart={`
+stateDiagram-v2
+  [*] --> Loading
+  Loading --> Success: response
+  Loading --> Error: failure
+  Success --> Fetching: interval or refetch
+  Fetching --> Success: fresh response
+  Fetching --> Success: failure with cached data
+  Error --> Loading: retry
+`} />
 
-```text
-Component → TanStack Query → typed Hono client → /api/health → cached result
+`isLoading` controls the initial skeleton. `isFetching` labels a refresh without replacing the successful card. `dataUpdatedAt` records when the cache last accepted data.
+
+## Keep transport details inside the query function
+
+The shared hook uses the typed Hono client, validates unsuccessful responses through `readJsonResponse`, and polls every 30 seconds.
+
+```ts
+// apps/web/src/hooks/use-health.ts
+export function useHealth() {
+  return useQuery({
+    queryKey: queryKeys.health.all,
+    queryFn: async (): Promise<HealthData> => {
+      const response = await client.api.health.$get();
+      return readJsonResponse(
+        response,
+        "Health data is unavailable",
+      );
+    },
+    refetchInterval: 30_000,
+  });
+}
 ```
 
-## Routes
+Components consume a query result instead of repeating endpoint paths, parsing rules, or cache keys.
 
-- Overview: `/core/data-fetching`
-- Demo: `/core/data-fetching-demo`
+## Query keys identify remote values
 
-[Open the authenticated data fetching demo](/core/data-fetching-demo)
+`["health"]` names one cache entry. Parameterized resources include every server-owned input in the key, as the notes hooks do with page, page size, search, and sort options. Omitting an input can reuse data from a different request.
+
+The router creates one `QueryClient` with production defaults:
+
+- Data remains fresh for 60 seconds
+- Unused cache entries remain for 5 minutes
+- Failed queries retry twice
+- Window focus does not trigger a refetch
+- Router and Query share server-side rendering integration
+
+The health query overrides none of those policies except its polling interval. This keeps global defaults visible and feature overrides intentional.
+
+## Failures keep a public boundary
+
+The response reader preserves a valid public error envelope and replaces malformed failures with stable fallback copy. The component renders initial loading, failure, success, and background activity as separate states, with `role="alert"` for urgent failures and `role="status"` for refresh feedback.
+
+[Inspect the server-state lifecycle in the authenticated demo](/core/data-fetching-demo)

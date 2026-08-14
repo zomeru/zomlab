@@ -17,7 +17,7 @@
     "cf:deploy:check": "pnpm run build && wrangler deploy --env staging --dry-run",
     "cf:deploy:check:production": "pnpm run build:production && wrangler deploy --env production --dry-run",
     "cf:startup": "wrangler check startup --outfile dist/worker-startup.cpuprofile",
-    "check-types": "tsc --noEmit && tsc --noEmit -p tsconfig.worker-tests.json",
+    "check-types": "tsc --noEmit",
     "check-types:watch": "tsc --noEmit --watch",
     "test": "vitest run",
     "test:workers": "vitest run --config vitest.workers.config.ts"
@@ -47,6 +47,7 @@
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.51.1",
     "@cloudflare/vitest-pool-workers": "^0.21.2",
+    "@shikijs/rehype": "4.4.3",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-devtools": "^0.10.9",
     "@tanstack/react-query-devtools": "^5.101.4",

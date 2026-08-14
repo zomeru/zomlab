@@ -1,0 +1,90 @@
+# Define a public error contract
+
+A public error contract lets every endpoint communicate failures consistently without exposing framework or infrastructure details. ZomLab shares the envelope schema between Hono and the typed client.
+
+## Keep the envelope stable
+
+The public shape has a required machine code and human-readable message. `detail` is optional because only selected failures can expose structured context safely.
+
+```ts
+{
+  error: {
+    code: "VALIDATION_ERROR",
+    message: "Validation failed",
+    detail: {
+      fieldErrors: {
+        title: ["Enter a title."],
+      },
+    },
+  },
+}
+```
+
+Callers branch on `code` or status. They display `message` when it is already safe and useful. They do not parse text to infer the failure type.
+
+## Domain errors own safe public meaning
+
+`ApiError` carries a code, public message, status, and optional detail. Specialized errors such as `NoteNotFoundError`, `UnauthorizedError`, and `ValidationError` centralize those combinations.
+
+The shared handler serializes known errors and masks unknown ones:
+
+```ts
+if (error instanceof ApiError) {
+  console.error(`[${error.code}] ${error.message}`, {
+    status: error.status,
+    ...(error.status >= 500
+      ? { error: error.message }
+      : {}),
+  });
+
+  return c.json(
+    createErrorEnvelope(error),
+    error.status as 400,
+  );
+}
+```
+
+Known 4xx messages are part of the API contract. Internal failures may be logged with private context, but their response uses a fixed 500 message.
+
+## Validate unsuccessful responses on the client
+
+Network intermediaries and deployment failures can return HTML, empty bodies, or unrelated JSON. The client does not assume that every non-2xx body matches the application schema.
+
+```ts
+const parsed = apiErrorSchema.safeParse(body);
+
+if (!parsed.success) {
+  throw new ApiResponseError(
+    fallbackMessage,
+    response.status,
+  );
+}
+
+throw new ApiResponseError(
+  parsed.data.error.message,
+  response.status,
+  parsed.data.error.code,
+  parsed.data.error.detail,
+);
+```
+
+This produces a stable `ApiResponseError` for both valid application failures and malformed upstream responses.
+
+## Map errors at the boundary that owns the decision
+
+The route knows that `null` from `NoteService.getById` means a missing owned note, so it creates `NoteNotFoundError`. The repository does not know HTTP status codes, and the client does not infer domain meaning from database behavior.
+
+<Mermaid chart={`
+flowchart LR
+  Repository["Repository result or exception"] --> Service["Service use case"]
+  Service --> Route["Route translates domain outcome"]
+  Route --> Handler["Shared handler serializes failure"]
+  Handler --> Client["Client validates envelope"]
+  Client --> UI["UI renders recovery"]
+`} />
+
+## Contract tests verify more than types
+
+Type checking cannot prove runtime status codes, response bodies, or cache headers. Playwright contract tests create authenticated sessions and assert validation, ownership, missing-resource behavior, masked failures, and no-store policy against the running application.
+
+[Return to the error handling overview](/core/error-handling)

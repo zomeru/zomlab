@@ -1,25 +1,60 @@
 # Forms
 
-Forms turn browser input into an intentional submission. This lab keeps fields controlled while
-retaining native form semantics, labels, keyboard submission, and a visible result.
+Forms coordinate editable input, native browser submission, and a stable result. This lab uses controlled React fields without discarding the semantics that make a form work with keyboards and assistive technology.
 
-## What the lab demonstrates
+## Keep draft and submitted values separate
 
-- Controlled React fields with one draft object
-- Native submit behavior through a real `<form>`
-- Stable names, labels, limits, and required constraints
-- A submitted snapshot separate from the editable draft
-- Feedback exposed through a status region
+The editable draft changes on every input event. A submission creates a snapshot, so later edits do not rewrite the result that was already submitted.
 
-## Request flow
+```tsx
+// apps/web/src/labs/core/forms/components/forms-demo.tsx
+const [draft, setDraft] = useState<ProjectDraft>({
+  name: "",
+  summary: "",
+});
+const [submitted, setSubmitted] = useState<ProjectDraft>();
 
-```text
-Input event → controlled draft → form submit → submitted snapshot → status
+function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  event.preventDefault();
+  setSubmitted({ ...draft });
+}
 ```
 
-## Routes
+This split is deliberate. `draft` belongs to the current editing session, while `submitted` records the last completed action.
 
-- Overview: `/core/forms`
-- Demo: `/core/forms-demo`
+## Preserve native form behavior
 
-[Open the authenticated forms demo](/core/forms-demo)
+The demo attaches one `onSubmit` handler to a real `<form>`. Pressing Enter follows the same path as selecting the submit button. Each control keeps a stable `name`, a visible label, and browser-level constraints.
+
+```tsx
+<form className="space-y-5" onSubmit={handleSubmit}>
+  <FieldLabel htmlFor="project-name">Project name</FieldLabel>
+  <Input
+    id="project-name"
+    maxLength={80}
+    name="name"
+    onChange={(event) =>
+      setDraft((value) => ({
+        ...value,
+        name: event.target.value,
+      }))
+    }
+    required
+    value={draft.name}
+  />
+</form>
+```
+
+The field is controlled because React owns `value`. The form remains semantic because the input still participates in the browser's form model.
+
+## Hydration is an interaction boundary
+
+Server-rendered HTML appears before client event handlers are active. The demo disables its fieldset until hydration, which prevents a submission from appearing to work before React can process it.
+
+This lab stops at a local snapshot to isolate form mechanics. A production mutation adds three more responsibilities: validate unknown input, represent pending and failure states, and reconcile the server response with cached data. The CRUD lab demonstrates those boundaries.
+
+## Accessibility is part of the form contract
+
+Labels, keyboard submission, disabled state, and status feedback are functional behavior. The submitted message uses `role="status"`, so assistive technology can announce the result without moving focus.
+
+[Submit the project brief in the authenticated demo](/core/forms-demo)

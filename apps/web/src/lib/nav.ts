@@ -52,6 +52,7 @@ export const NAV: NavEntry[] = [
         label: "CRUD",
         children: [
           { label: "Overview", href: "/core/crud" },
+          { label: "Data Boundaries", href: "/core/crud/data-boundaries" },
           { label: "Demo", href: "/core/crud-demo" },
         ],
       },
@@ -73,6 +74,7 @@ export const NAV: NavEntry[] = [
         label: "Tables",
         children: [
           { label: "Overview", href: "/core/tables" },
+          { label: "Server Data", href: "/core/tables/server-data" },
           { label: "Demo", href: "/core/tables-demo" },
         ],
       },
@@ -80,6 +82,7 @@ export const NAV: NavEntry[] = [
         label: "File Uploads",
         children: [
           { label: "Overview", href: "/core/file-uploads" },
+          { label: "Storage & Security", href: "/core/file-uploads/storage-security" },
           { label: "Demo", href: "/core/file-uploads-demo" },
         ],
       },
@@ -87,6 +90,7 @@ export const NAV: NavEntry[] = [
         label: "Error Handling",
         children: [
           { label: "Overview", href: "/core/error-handling" },
+          { label: "Error Contract", href: "/core/error-handling/error-contract" },
           { label: "Demo", href: "/core/error-handling-demo" },
         ],
       },

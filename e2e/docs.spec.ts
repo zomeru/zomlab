@@ -1,45 +1,85 @@
 import { expect, test } from "@playwright/test";
 
-test("CRUD has a concise overview page", async ({ page }) => {
-  await page.goto("/core/crud");
+const overviewPages = [
+  { path: "/core/routing", title: "Routing", diagram: true },
+  { path: "/core/forms", title: "Forms", diagram: false },
+  { path: "/core/validation", title: "Validation", diagram: true },
+  { path: "/core/state-management", title: "State management", diagram: true },
+  { path: "/core/data-fetching", title: "Data fetching", diagram: true },
+  { path: "/core/crud", title: "CRUD notes", diagram: true },
+  { path: "/core/search-filter", title: "Search and filtering", diagram: true },
+  { path: "/core/pagination", title: "Pagination", diagram: true },
+  { path: "/core/tables", title: "Tables", diagram: true },
+  { path: "/core/file-uploads", title: "File uploads", diagram: true },
+  { path: "/core/error-handling", title: "Error handling", diagram: true },
+  { path: "/core/caching", title: "Caching", diagram: true },
+  { path: "/core/middleware", title: "Middleware", diagram: true },
+  { path: "/core/logging", title: "Logging", diagram: false },
+] as const;
 
-  await expect(page.getByRole("heading", { name: "CRUD notes", exact: true })).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "Open the authenticated CRUD demo" }),
-  ).toHaveAttribute("href", "/core/crud-demo");
-});
+for (const overview of overviewPages) {
+  test(`${overview.title} has an implementation-backed overview`, async ({ page }) => {
+    await page.goto(overview.path);
 
-test("search and filtering has a dedicated overview page", async ({ page }) => {
-  await page.goto("/core/search-filter");
+    const article = page.locator("article");
+    await expect(article.getByRole("heading", { name: overview.title, exact: true })).toBeVisible();
+    await expect(article.locator("pre").first()).toBeVisible();
+    await expect(article.getByRole("heading", { name: "Routes", exact: true })).toHaveCount(0);
 
-  await expect(
-    page.getByRole("heading", { name: "Search and Filtering", exact: true }),
-  ).toBeVisible();
-});
+    if (overview.diagram) {
+      await expect(article.getByLabel("Architecture diagram").first()).toBeVisible();
+    }
+    await expect(article.getByText("Diagram could not be rendered.")).toHaveCount(0);
+  });
+}
 
-test("pagination has a dedicated overview page", async ({ page }) => {
-  await page.goto("/core/pagination");
+const chapterPages = [
+  { path: "/core/crud/data-boundaries", title: "Design CRUD data boundaries" },
+  { path: "/core/tables/server-data", title: "Compose a server-backed table" },
+  { path: "/core/file-uploads/storage-security", title: "Secure file storage in R2" },
+  { path: "/core/error-handling/error-contract", title: "Define a public error contract" },
+] as const;
 
-  await expect(page.getByRole("heading", { name: "Pagination", exact: true })).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "Open the authenticated pagination demo" }),
-  ).toHaveAttribute("href", "/core/pagination-demo");
-});
+for (const chapter of chapterPages) {
+  test(`${chapter.title} renders as a focused Core chapter`, async ({ page }) => {
+    await page.goto(chapter.path);
 
-test("tables has a dedicated overview page", async ({ page }) => {
-  await page.goto("/core/tables");
+    const article = page.locator("article");
+    await expect(article.getByRole("heading", { name: chapter.title, exact: true })).toBeVisible();
+    await expect(article.locator("pre").first()).toBeVisible();
+  });
+}
 
-  await expect(page.getByRole("heading", { name: "Tables", exact: true })).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "Open the authenticated tables demo" }),
-  ).toHaveAttribute("href", "/core/tables-demo");
-});
+test("code examples use theme-aware syntax highlighting", async ({ page }) => {
+  await page.goto("/core/routing");
 
-test("file uploads has a dedicated overview page", async ({ page }) => {
-  await page.goto("/core/file-uploads");
+  const codeBlock = page.locator("article pre.shiki").first();
+  const highlightedTokens = codeBlock.locator('span[style*="light-dark("]');
 
-  await expect(page.getByRole("heading", { name: "File uploads", exact: true })).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "Open the authenticated file uploads demo" }),
-  ).toHaveAttribute("href", "/core/file-uploads-demo");
+  await expect(codeBlock).toBeVisible();
+  await expect(highlightedTokens.first()).toBeVisible();
+
+  await page.locator("html").evaluate((element) => {
+    element.classList.remove("dark");
+    element.classList.add("light");
+    element.style.colorScheme = "light";
+  });
+  const lightColors = await highlightedTokens.evaluateAll((elements) =>
+    elements.map((element) => getComputedStyle(element).color),
+  );
+
+  await page.locator("html").evaluate((element) => {
+    element.classList.remove("light");
+    element.classList.add("dark");
+    element.style.colorScheme = "dark";
+  });
+  await expect
+    .poll(async () => {
+      const darkColors = await highlightedTokens.evaluateAll((elements) =>
+        elements.map((element) => getComputedStyle(element).color),
+      );
+
+      return darkColors.some((color, index) => color !== lightColors[index]);
+    })
+    .toBe(true);
 });

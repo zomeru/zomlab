@@ -1,25 +1,69 @@
 # Logging
 
-Useful logs are structured request facts rather than prose. This lab records method, path, status,
-duration, timestamp, and request ID from real API calls.
+Operational logs record consistent request facts that can be searched, grouped, and correlated. This lab derives a structured event from a real API response and shows which fields belong in a request record.
 
-## What the lab demonstrates
+## Prefer fields over prose
 
-- One event per completed request
-- Stable fields that can be filtered and aggregated
-- Duration and status for operational diagnosis
-- Request IDs that correlate client evidence with Worker logs
-- No secrets, request bodies, or personal data in routine logs
+A request event needs stable names and machine-readable values:
 
-## Event flow
+| Field | Purpose |
+| --- | --- |
+| `method` and `path` | Identify the operation |
+| `status` | Separate successful and failed responses |
+| `durationMs` | Find slow operations |
+| `requestId` | Correlate client evidence with server processing |
+| `timestamp` | Place the event in a timeline |
 
-```text
-API request → middleware correlation ID → response → structured event record
+The demo records these facts after calling the real version endpoint:
+
+```tsx
+// apps/web/src/labs/core/logging/components/logging-demo.tsx
+const result = await inspectVersionRequest();
+setEvents((current) => [
+  {
+    durationMs: result.durationMs,
+    id: crypto.randomUUID(),
+    requestId: result.requestId,
+    status: result.status,
+    timestamp: new Date().toISOString(),
+  },
+  ...current,
+]);
 ```
 
-## Routes
+The event ID is a React list identity. The request ID comes from Hono middleware and identifies the actual API request.
 
-- Overview: `/core/logging`
-- Demo: `/core/logging-demo`
+## Correlation starts at the request boundary
 
-[Open the authenticated logging demo](/core/logging-demo)
+`requestId()` accepts a valid incoming identifier or creates one, stores it in Hono context, and exposes it as `x-request-id`. Timing middleware adds `server-timing` after the handler completes.
+
+```ts
+const response = await client.api.version.$get();
+
+return {
+  requestId:
+    response.headers.get("x-request-id") ??
+    "Not exposed locally",
+  serverTiming:
+    response.headers.get("server-timing") ??
+    "Not exposed locally",
+  status: response.status,
+};
+```
+
+The demo measures browser-observed duration separately from server timing. Network, scheduling, and client work can make those values differ.
+
+## Production logging needs a deliberate sink
+
+The Hono application currently uses its standard request logger for method, path, status, and duration. The demo shows the structured record a production JSON logger should emit. Cloudflare logs and traces provide the transport, but field names and redaction remain application decisions.
+
+Do not record routine secrets or high-risk payloads:
+
+- Session cookies, authorization headers, and OAuth tokens
+- Passwords, reset links, or authentication request bodies
+- Note content and uploaded file bodies
+- Raw database errors in public responses
+
+Log enough context to diagnose the operation, then keep private failure detail on the server side. Error codes and request IDs connect public symptoms to private diagnostics without exposing internals.
+
+[Record and inspect request events](/core/logging-demo)
