@@ -23,16 +23,7 @@ A key must include every input that can change the server response. Prefixes mak
 
 ## Freshness and fetching are independent
 
-<Mermaid chart={`
-stateDiagram-v2
-  [*] --> Missing
-  Missing --> Fetching: mount
-  Fetching --> Fresh: success
-  Fresh --> Stale: staleTime expires
-  Stale --> Fetching: active refetch
-  Fresh --> Fetching: explicit invalidation
-  Fetching --> Fresh: cache updated
-`} />
+<ArchitectureDiagram diagram="caching-lifecycle" />
 
 Fresh data can be served without a request. Stale data can remain visible while a background request runs. `isFetching` describes network activity, while `isStale` describes policy.
 

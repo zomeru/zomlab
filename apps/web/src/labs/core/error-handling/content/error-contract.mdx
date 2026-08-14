@@ -74,14 +74,7 @@ This produces a stable `ApiResponseError` for both valid application failures an
 
 The route knows that `null` from `NoteService.getById` means a missing owned note, so it creates `NoteNotFoundError`. The repository does not know HTTP status codes, and the client does not infer domain meaning from database behavior.
 
-<Mermaid chart={`
-flowchart LR
-  Repository["Repository result or exception"] --> Service["Service use case"]
-  Service --> Route["Route translates domain outcome"]
-  Route --> Handler["Shared handler serializes failure"]
-  Handler --> Client["Client validates envelope"]
-  Client --> UI["UI renders recovery"]
-`} />
+<ArchitectureDiagram diagram="error-contract" />
 
 ## Contract tests verify more than types
 

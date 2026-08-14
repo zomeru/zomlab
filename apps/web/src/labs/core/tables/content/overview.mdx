@@ -6,15 +6,7 @@ A production table coordinates semantic markup, headless interaction state, URL 
 
 TanStack Table owns grid behavior, TanStack Router owns shareable controls, and TanStack Query owns remote data. The server performs every operation that depends on the complete collection.
 
-<Mermaid chart={`
-flowchart LR
-  Controls["Search, sort, and page controls"] --> URL["Router search state"]
-  URL --> Query["TanStack Query key"]
-  Query --> API["Server filtering, sorting, pagination"]
-  API --> Table["TanStack Table receives processed rows"]
-  Visibility["Column visibility"] --> Table
-  Table --> Markup["Semantic table markup"]
-`} />
+<ArchitectureDiagram diagram="table-data-flow" />
 
 | Concern | Owner |
 | --- | --- |

@@ -6,22 +6,7 @@ Middleware applies cross-cutting request behavior around focused route handlers.
 
 Hono runs middleware in registration order before `await next()`, then unwinds in reverse order. Response headers and timing can therefore be added after the route has produced a response.
 
-<Mermaid chart={`
-sequenceDiagram
-  participant Request
-  participant ID as Request ID
-  participant Timing
-  participant Security
-  participant Route
-  Request->>ID: enter
-  ID->>Timing: enter
-  Timing->>Security: enter
-  Security->>Route: handle
-  Route-->>Security: response
-  Security-->>Timing: response headers
-  Timing-->>ID: server timing
-  ID-->>Request: completed response
-`} />
+<ArchitectureDiagram diagram="middleware-onion" />
 
 The API chain makes its order visible in one composition root:
 

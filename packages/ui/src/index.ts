@@ -19,6 +19,5 @@ export * from "./components/sidebar";
 export * from "./components/skeleton";
 export * from "./components/table";
 export * from "./components/textarea";
-export * from "./lib/mermaid-theme";
 export * from "./lib/preferences";
 export * from "./lib/utils";

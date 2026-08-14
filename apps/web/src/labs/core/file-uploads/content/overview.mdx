@@ -31,15 +31,7 @@ Shared constants keep the browser hint and server policy aligned.
 
 The route reads the user ID from the authenticated session. The service creates a random object ID, and the repository builds the R2 key from the session user.
 
-<Mermaid chart={`
-flowchart LR
-  Input["Browser file input"] --> Client["Client checks"]
-  Client --> Form["Typed multipart request"]
-  Form --> Auth["Server session"]
-  Auth --> Validate["Authoritative Zod validation"]
-  Validate --> Service["File service creates UUID"]
-  Service --> R2["Private user-prefixed R2 object"]
-`} />
+<ArchitectureDiagram diagram="file-upload-flow" />
 
 ```ts
 function getPrefix(userId: string) {

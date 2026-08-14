@@ -6,20 +6,7 @@ Search coordinates a fast input, durable URL state, cache identity, validation, 
 
 The input updates immediately, while a 300 ms debounce delays navigation and network work. The committed query lives in the URL, so refresh, history, and copied links preserve the current search.
 
-<Mermaid chart={`
-sequenceDiagram
-  participant Reader
-  participant Draft as Input draft
-  participant URL as Router search
-  participant Cache as Query cache
-  participant API
-  Reader->>Draft: type text
-  Draft->>URL: commit after 300 ms
-  URL->>Cache: select key with query
-  Cache->>API: request filtered page
-  API-->>Cache: owned matches and total
-  Cache-->>Reader: render results
-`} />
+<ArchitectureDiagram diagram="search-filter-flow" />
 
 The route preserves unrelated search state through a functional update and removes an empty query from the URL.
 

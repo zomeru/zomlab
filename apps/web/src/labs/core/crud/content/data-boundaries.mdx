@@ -45,13 +45,7 @@ The route decides that `null` means a public 404. The service remains reusable b
 
 `createNoteService(repository)` receives its dependency at the route composition boundary. Unit tests can provide a repository double, while production provides `createNoteRepository()`.
 
-<Mermaid chart={`
-flowchart TD
-  Route["Route composition"] -->|"inject"| Service["NoteService"]
-  Repository["NoteRepository"] -->|"implements data access"| Service
-  TestDouble["Repository test double"] -.->|"same interface"| Service
-  Repository --> Drizzle["Drizzle"]
-`} />
+<ArchitectureDiagram diagram="crud-boundaries" />
 
 The repository owns date serialization because database timestamps must become the ISO strings promised by the response schema.
 

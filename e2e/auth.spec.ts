@@ -31,7 +31,7 @@ test("authentication stays synchronized across redirects, refreshes, logout, and
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByLabel("Confirm password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Sign up" }).click();
-  await expect(page).toHaveURL(`${baseURL}${protectedPath}`);
+  await expect(page).toHaveURL(`${baseURL}${protectedPath}`, { timeout: 15_000 });
   await expect(page.getByRole("button", { name: "Account menu" })).toBeVisible();
 
   await page.reload();

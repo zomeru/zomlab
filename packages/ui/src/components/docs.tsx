@@ -53,7 +53,7 @@ export function DiagramContainer({ className, ...props }: React.ComponentProps<"
     <figure
       data-slot="diagram-container"
       className={cn(
-        "my-6 overflow-x-auto overscroll-contain rounded-xl bg-card p-4 shadow-[var(--surface-shadow)] sm:p-6",
+        "my-6 overflow-hidden rounded-xl bg-card shadow-[var(--surface-shadow)]",
         className,
       )}
       {...props}

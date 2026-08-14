@@ -27,9 +27,10 @@ for (const overview of overviewPages) {
     await expect(article.getByRole("heading", { name: "Routes", exact: true })).toHaveCount(0);
 
     if (overview.diagram) {
-      await expect(article.getByLabel("Architecture diagram").first()).toBeVisible();
+      const diagram = article.locator('[data-slot="architecture-diagram"]').first();
+      await expect(diagram).toBeVisible();
+      await expect(diagram.locator(".react-flow__node").first()).toBeVisible();
     }
-    await expect(article.getByText("Diagram could not be rendered.")).toHaveCount(0);
   });
 }
 
@@ -49,6 +50,29 @@ for (const chapter of chapterPages) {
     await expect(article.locator("pre").first()).toBeVisible();
   });
 }
+
+test("architecture diagrams support zooming and fitted viewing", async ({ page }) => {
+  await page.goto("/core/crud");
+
+  const diagram = page.locator('[data-slot="architecture-diagram"]').first();
+  const canvas = diagram.getByLabel("CRUD request flow interactive architecture diagram");
+  const viewport = canvas.locator(".react-flow__viewport");
+  const zoomIn = diagram.getByRole("button", { name: "Zoom in" });
+  const fit = diagram.getByRole("button", { name: "Fit diagram" });
+
+  await expect(canvas).toBeVisible();
+  await expect(canvas.locator(".react-flow__node")).toHaveCount(8);
+  await expect(zoomIn).toBeVisible();
+  await expect(fit).toBeVisible();
+
+  const fittedTransform = await viewport.getAttribute("style");
+  await zoomIn.click();
+  await expect.poll(() => viewport.getAttribute("style")).not.toBe(fittedTransform);
+
+  const zoomedTransform = await viewport.getAttribute("style");
+  await fit.click();
+  await expect.poll(() => viewport.getAttribute("style")).not.toBe(zoomedTransform);
+});
 
 test("code examples use theme-aware syntax highlighting", async ({ page }) => {
   await page.goto("/core/routing");

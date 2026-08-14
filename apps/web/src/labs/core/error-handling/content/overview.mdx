@@ -6,18 +6,7 @@ Error handling preserves useful information for expected failures and hides priv
 
 The error handler decides status and public detail from the error type. Unknown values never cross the boundary unchanged.
 
-<Mermaid chart={`
-flowchart TD
-  Failure["Thrown failure"] --> Type{"Known error type?"}
-  Type -->|"ApiError"| Domain["Preserve public code and status"]
-  Type -->|"ZodError"| Validation["Return validation detail with 422"]
-  Type -->|"HTTPException"| HTTP["Map safe HTTP error"]
-  Type -->|"unknown"| Internal["Log privately and return masked 500"]
-  Domain --> Envelope["Stable error envelope"]
-  Validation --> Envelope
-  HTTP --> Envelope
-  Internal --> Envelope
-`} />
+<ArchitectureDiagram diagram="error-classification" />
 
 ```ts
 // apps/web/src/integration/hono/errors/error-handler.ts

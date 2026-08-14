@@ -6,14 +6,7 @@ Validation converts unknown input into trusted data or actionable errors. This l
 
 TypeScript describes values after compilation, but it cannot validate browser input or network payloads. A runtime schema must decide whether the value can cross the boundary.
 
-<Mermaid chart={`
-flowchart TD
-  Draft["Unknown draft"] --> Parse["Zod safeParse"]
-  Parse -->|"success"| Typed["Typed note value"]
-  Parse -->|"failure"| Errors["Field error map"]
-  Errors --> Focus["Focus the first invalid field"]
-  Errors --> ARIA["Connect error text with ARIA"]
-`} />
+<ArchitectureDiagram diagram="validation-flow" />
 
 The lab schema rejects extra keys, trims both fields, and owns the accepted lengths and public messages.
 

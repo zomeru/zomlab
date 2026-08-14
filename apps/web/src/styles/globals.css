@@ -33,6 +33,56 @@
   }
 }
 
+@layer components {
+  .architecture-flow {
+    --xy-background-color: var(--diagram-background);
+    --xy-background-pattern-color: var(--border-subtle);
+    --xy-controls-box-shadow: var(--overlay-shadow);
+    --xy-controls-button-background-color: var(--surface-elevated);
+    --xy-controls-button-background-color-hover: var(--muted);
+    --xy-controls-button-border-color: var(--border-subtle);
+    --xy-controls-button-color: var(--foreground);
+    --xy-controls-button-color-hover: var(--foreground);
+    --xy-edge-label-background-color: var(--diagram-background);
+    --xy-edge-label-color: var(--diagram-foreground);
+    --xy-edge-stroke: var(--diagram-border);
+    --xy-minimap-background-color: var(--surface-elevated);
+    --xy-minimap-mask-background-color: color-mix(
+      in oklch,
+      var(--diagram-background) 72%,
+      transparent
+    );
+    --xy-minimap-node-background-color: var(--diagram-muted);
+    --xy-minimap-node-stroke-color: var(--diagram-border);
+  }
+
+  .architecture-flow .react-flow__controls,
+  .architecture-flow .react-flow__minimap {
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+  }
+
+  .architecture-flow .react-flow__controls-button {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .architecture-flow .react-flow__controls-button:focus-visible {
+    z-index: 1;
+    outline: 2px solid var(--ring);
+    outline-offset: -2px;
+  }
+
+  .architecture-flow .react-flow__pane {
+    cursor: grab;
+  }
+
+  .architecture-flow .react-flow__pane.dragging {
+    cursor: grabbing;
+  }
+}
+
 @layer utilities {
   .text-prose {
     max-width: 72ch;

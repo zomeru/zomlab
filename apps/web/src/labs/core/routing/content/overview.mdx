@@ -6,14 +6,7 @@ Routing turns a URL into typed application state, selects the matching UI, and a
 
 A route is more than a component switch. Its path identifies a resource or screen, while its search parameters preserve shareable view state. TanStack Router validates that state before a component reads it.
 
-<Mermaid chart={`
-flowchart LR
-  URL["URL"] --> Match["Generated route match"]
-  Match --> Search["Validate search parameters"]
-  Search --> Guard["Run authentication layout"]
-  Guard --> Render["Render the matched component"]
-  Search -->|"invalid value"| Fallback["Use the schema fallback"]
-`} />
+<ArchitectureDiagram diagram="routing-flow" />
 
 The routing demo stores its selected lesson in `topic`. The route schema limits the URL to three supported values, so the component never handles an arbitrary string.
 

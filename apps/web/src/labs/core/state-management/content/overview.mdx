@@ -45,13 +45,7 @@ function taskReducer(tasks: Task[], action: Action): Task[] {
 }
 ```
 
-<Mermaid chart={`
-stateDiagram-v2
-  [*] --> Empty
-  Empty --> Active: add
-  Active --> Active: add, toggle, or remove
-  Active --> Empty: remove final task
-`} />
+<ArchitectureDiagram diagram="task-state" />
 
 The reducer stays pure: it does not render, fetch, focus controls, or write storage. That boundary makes every transition testable with an input array and an action.
 

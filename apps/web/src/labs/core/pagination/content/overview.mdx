@@ -25,16 +25,7 @@ Changing the page size resets `page` to 1. This prevents a valid page in the old
 
 The repository batches two statements: one selects the page, and one counts all matching rows. Both use the same ownership and search predicate.
 
-<Mermaid chart={`
-flowchart LR
-  Controls["Page controls"] --> URL["Validated URL state"]
-  URL --> Key["Query key with page inputs"]
-  Key --> API["Notes API"]
-  API --> Rows["Ordered rows with limit and offset"]
-  API --> Count["Total count with the same filter"]
-  Rows --> Response["Items and page metadata"]
-  Count --> Response
-`} />
+<ArchitectureDiagram diagram="pagination-flow" />
 
 ```ts
 const [rows, totalRows] = await db.batch([

@@ -6,16 +6,7 @@ Create, read, update, and delete (CRUD) operations become production behavior on
 
 Each layer has one responsibility and depends inward through explicit types.
 
-<Mermaid chart={`
-flowchart LR
-  UI["React notes UI"] --> Query["TanStack Query hooks"]
-  Query --> Client["Typed Hono client"]
-  Client --> Route["OpenAPI route"]
-  Route --> Auth["Session authorization"]
-  Auth --> Service["Note service"]
-  Service --> Repo["Note repository"]
-  Repo --> DB["Drizzle and PostgreSQL"]
-`} />
+<ArchitectureDiagram diagram="crud-request-flow" />
 
 - `@zomlab/contracts` defines request and response shapes
 - Hono routes validate transport data and translate domain outcomes into HTTP responses

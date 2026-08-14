@@ -1,11 +1,11 @@
 import { Callout, CodeContainer, TableWrapper } from "@zomlab/ui/components/docs";
 import { cn } from "@zomlab/ui/lib/utils";
 import type { MDXComponents } from "mdx/types";
-import { Mermaid } from "./components/mdx/mermaid";
+import { ArchitectureDiagram } from "./components/mdx/architecture-diagram";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
-    Mermaid,
+    ArchitectureDiagram,
     Callout,
     h1: (props) => (
       <h1

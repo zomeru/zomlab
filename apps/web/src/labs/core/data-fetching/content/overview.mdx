@@ -6,16 +6,7 @@ Data fetching coordinates transport, parsing, cache identity, freshness, retries
 
 An initial request has no cached data, while a background refresh can keep the last successful value visible. The UI treats those states differently.
 
-<Mermaid chart={`
-stateDiagram-v2
-  [*] --> Loading
-  Loading --> Success: response
-  Loading --> Error: failure
-  Success --> Fetching: interval or refetch
-  Fetching --> Success: fresh response
-  Fetching --> Success: failure with cached data
-  Error --> Loading: retry
-`} />
+<ArchitectureDiagram diagram="data-fetching-lifecycle" />
 
 `isLoading` controls the initial skeleton. `isFetching` labels a refresh without replacing the successful card. `dataUpdatedAt` records when the cache last accepted data.
 

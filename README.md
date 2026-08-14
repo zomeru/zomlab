@@ -15,7 +15,7 @@ The completed Core curriculum includes routing, forms, validation, state managem
 | API | Hono with OpenAPI route definitions and Zod 4 contracts |
 | Authentication | Better Auth with email and password, optional GitHub and Google OAuth, and a development-only magic-link plugin |
 | Database | PostgreSQL on Neon, Drizzle ORM, and Drizzle Kit migrations |
-| Styling and content | Tailwind CSS 4, MDX, GitHub Flavored Markdown, and Mermaid |
+| Styling and content | Tailwind CSS 4, MDX, GitHub Flavored Markdown, Shiki, and React Flow |
 | Deployment | Cloudflare Workers through the Cloudflare Vite plugin and Wrangler |
 | Tests and component docs | Vitest 4, Playwright, and Storybook 10 |
 | Quality tooling | Biome, zizmor, syncpack, Knip, TypeScript, Husky, lint-staged, and Changesets |
@@ -245,7 +245,7 @@ Playwright starts `@zomlab/web` on `E2E_PORT`, then exercises:
 - Authentication redirects, session persistence, logout, and relogin
 - Notes creation, editing, deletion, ownership, validation, and API contracts
 - System API contracts
-- MDX and Mermaid rendering
+- MDX, syntax highlighting, and interactive React Flow diagrams
 - Page structure, cache headers, theme behavior, and visual captures
 
 The end-to-end suite creates real users and notes in the configured database. Use an isolated development or staging database.

@@ -36,8 +36,24 @@ for (const viewport of VIEWPORTS) {
 
       await page.goto("/core/crud");
       await expect(page.getByRole("heading", { name: "CRUD notes", exact: true })).toBeVisible();
-      await expect(page.getByLabel("Architecture diagram").first()).toBeVisible();
-      await expect(page.getByText("Diagram could not be rendered.")).toHaveCount(0);
+      const diagram = page.locator('[data-slot="architecture-diagram"]').first();
+      const canvas = diagram.getByRole("application", {
+        name: "CRUD request flow interactive architecture diagram",
+      });
+      await expect(diagram).toBeVisible();
+      await expect(canvas).toBeVisible();
+      await expect(canvas.locator(".react-flow__node")).toHaveCount(8);
+      await expect
+        .poll(() =>
+          canvas.evaluate(
+            (element) =>
+              getComputedStyle(element).getPropertyValue("--diagram-background").trim() ===
+              getComputedStyle(document.documentElement)
+                .getPropertyValue("--diagram-background")
+                .trim(),
+          ),
+        )
+        .toBe(true);
       await expect(page.locator("article pre").first()).toBeVisible();
       await expect
         .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
