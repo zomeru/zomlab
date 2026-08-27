@@ -25,7 +25,7 @@ After code changes, run `graphify update .` to refresh the generated knowledge g
 ## Runtime and workspace
 
 - Node.js: `>=24.18.1`, pinned in `.node-version`
-- Package manager: pnpm `11.20.0`, pinned in `package.json` and the lockfile
+- Package manager: pnpm `11.24.0`, pinned in `package.json` and the lockfile
 - Language: TypeScript 6 with strict checking
 - Workspace globs: `apps/*`, `packages/*`, and `scripts`
 - Task runner: Turborepo

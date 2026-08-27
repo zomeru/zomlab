@@ -8,7 +8,7 @@ The completed Core curriculum includes routing, forms, validation, state managem
 
 | Area | Implementation |
 | --- | --- |
-| Runtime | Node.js 24.18.1 or newer, pnpm 11.20.0 |
+| Runtime | Node.js 24.18.1 or newer, pnpm 11.24.0 |
 | Monorepo | pnpm workspaces and Turborepo 2 |
 | Web application | React 19, TanStack Start, TanStack Router, Vite 8 |
 | Client data | TanStack Query and the typed Hono client |
@@ -27,7 +27,7 @@ Dependency ranges live in the workspace manifests. Resolved versions live in `pn
 Install these tools and services before running the app:
 
 - Node.js 24.18.1 or newer
-- pnpm 11.20.0
+- pnpm 11.24.0
 - A PostgreSQL database reachable through a URL accepted by the Neon serverless driver
 - A 32-character or longer Better Auth secret
 

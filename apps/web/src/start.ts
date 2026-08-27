@@ -1,4 +1,17 @@
+import { env } from "cloudflare:workers";
 import { createCsrfMiddleware, createMiddleware, createStart } from "@tanstack/react-start";
+
+const canonicalHostRedirect = createMiddleware().server(async ({ request, next }) => {
+  const url = new URL(request.url);
+
+  if (url.hostname === "zomlab.zomer.workers.dev") {
+    const canonicalUrl = new URL(env.BETTER_AUTH_URL);
+
+    return Response.redirect(`${canonicalUrl.origin}${url.pathname}${url.search}`, 301);
+  }
+
+  return next();
+});
 
 const csrfMiddleware = createCsrfMiddleware({
   filter: (context) => context.handlerType === "serverFn",
@@ -26,5 +39,5 @@ const privateHtmlResponses = createMiddleware().server(async ({ next }) => {
 });
 
 export const startInstance = createStart(() => ({
-  requestMiddleware: [csrfMiddleware, privateHtmlResponses],
+  requestMiddleware: [canonicalHostRedirect, csrfMiddleware, privateHtmlResponses],
 }));
