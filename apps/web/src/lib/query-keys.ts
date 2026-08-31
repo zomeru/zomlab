@@ -20,4 +20,8 @@ export const queryKeys = {
     webhook: (id: string) => ["payments", "webhooks", id] as const,
     idempotency: ["payments", "idempotency"] as const,
   },
+  realtime: {
+    chat: (roomId: string) => ["realtime", "chat", roomId] as const,
+    notifications: ["realtime", "notifications"] as const,
+  },
 } as const;

@@ -99,3 +99,10 @@ export class InvalidWebhookSignatureError extends ApiError {
     this.name = "InvalidWebhookSignatureError";
   }
 }
+
+export class RealtimeNotificationNotFoundError extends ApiError {
+  constructor() {
+    super("REALTIME_NOTIFICATION_NOT_FOUND", "Notification not found", 404);
+    this.name = "RealtimeNotificationNotFoundError";
+  }
+}

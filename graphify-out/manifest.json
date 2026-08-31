@@ -85,13 +85,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/app.ts": {
-    "mtime": 1788081584.9185107,
-    "ast_hash": "76b1df8d7816d91f216e6d264354d43d",
+    "mtime": 1788168939.161067,
+    "ast_hash": "35a6962be34db6743b99153a4ec461e0",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/errors/api-error.ts": {
-    "mtime": 1788081061.576789,
-    "ast_hash": "be1cd92cfecf987287db495078373ded",
+    "mtime": 1788165852.4837945,
+    "ast_hash": "95eaf068eec3e372f5ba958efcd0802e",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/errors/error-handler.ts": {
@@ -190,8 +190,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/lib/nav.ts": {
-    "mtime": 1788081962.1504931,
-    "ast_hash": "928f1f30b2bc6f6d7ea414e50e71ddaa",
+    "mtime": 1788166784.6141875,
+    "ast_hash": "221c135b2592a8d2bab31b1d4df18257",
     "semantic_hash": ""
   },
   "apps/web/src/lib/safe-redirect.ts": {
@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/routeTree.gen.ts": {
-    "mtime": 1788081962.4275815,
-    "ast_hash": "be8e6b69444ccc1b841d450b8469548e",
+    "mtime": 1788166785.011073,
+    "ast_hash": "f193ac1061e38076b0e620361634b333",
     "semantic_hash": ""
   },
   "apps/web/src/router.tsx": {
@@ -275,8 +275,8 @@
     "semantic_hash": ""
   },
   "apps/web/tsconfig.json": {
-    "mtime": 1786667635.102809,
-    "ast_hash": "5d806e361db11040b7ec3429ec885749",
+    "mtime": 1788167337.6435456,
+    "ast_hash": "314edfe730ce3652b22f75060732dbe6",
     "semantic_hash": ""
   },
   "apps/web/vite.config.ts": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "packages/contracts/src/index.ts": {
-    "mtime": 1788080865.8659194,
-    "ast_hash": "3826a4f0851db116cba3bd4b440a9cb8",
+    "mtime": 1788165360.1098206,
+    "ast_hash": "88acd665e49df8e5bc73abc3197af1f0",
     "semantic_hash": ""
   },
   "packages/contracts/src/system/index.ts": {
@@ -435,8 +435,8 @@
     "semantic_hash": ""
   },
   "packages/database/drizzle/meta/_journal.json": {
-    "mtime": 1788082002.905678,
-    "ast_hash": "de70eb9be1772b0968cdf4201723f187",
+    "mtime": 1788165925.447218,
+    "ast_hash": "a7e1800c84912b4d47ea5cfad4f7aa95",
     "semantic_hash": ""
   },
   "packages/database/package.json": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "packages/database/src/db/schema/index.ts": {
-    "mtime": 1788080942.9099674,
-    "ast_hash": "5246f95cfe3e0b5ddc39effbbdb47f3e",
+    "mtime": 1788165463.649304,
+    "ast_hash": "76bf9592d792d1eb0abac4687258152d",
     "semantic_hash": ""
   },
   "packages/database/src/index.ts": {
@@ -480,8 +480,8 @@
     "semantic_hash": ""
   },
   "packages/database/src/repositories/index.ts": {
-    "mtime": 1788081015.4483676,
-    "ast_hash": "ac2037563b43f0ab266e1c15ab67f71d",
+    "mtime": 1788165463.650927,
+    "ast_hash": "bfc06427c11d4b072ce0e3ea883aa5f6",
     "semantic_hash": ""
   },
   "packages/database/src/repositories/util.ts": {
@@ -700,8 +700,8 @@
     "semantic_hash": ""
   },
   "apps/web/worker-configuration.d.ts": {
-    "mtime": 1788082858.434593,
-    "ast_hash": "77f0931a7743f9c283e88ae80502e2ab",
+    "mtime": 1788165911.8982105,
+    "ast_hash": "4d01b68f86ae69d4d7349d8e8f1a549f",
     "semantic_hash": ""
   },
   "packages/database/drizzle/0000_lethal_maddog.sql": {
@@ -710,8 +710,8 @@
     "semantic_hash": ""
   },
   "e2e/sidebar-navigation.spec.ts": {
-    "mtime": 1786685947.5866914,
-    "ast_hash": "8018cbae0d64afa0efc9f1947ffb9f69",
+    "mtime": 1788167508.909961,
+    "ast_hash": "bc0c0b7c082ad8259f4142b11b15f63c",
     "semantic_hash": ""
   },
   "packages/auth/src/package-exports.test.ts": {
@@ -1310,13 +1310,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/lib/query-keys.ts": {
-    "mtime": 1788081625.7988813,
-    "ast_hash": "d5ea88dd239717451caf64ff6f8d3abf",
+    "mtime": 1788166145.498118,
+    "ast_hash": "dad6b37b25cc0d3a491579829ecfb6aa",
     "semantic_hash": ""
   },
   "apps/web/vitest.workers.config.ts": {
-    "mtime": 1786685947.5805213,
-    "ast_hash": "87ffd672baf406d89fb2683229974dc6",
+    "mtime": 1788167400.2492676,
+    "ast_hash": "03228ddba870da25f2ccb70274659231",
     "semantic_hash": ""
   },
   "packages/ui/src/components/alert-dialog.tsx": {
@@ -1410,8 +1410,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/__tests__/lib/query-keys.test.ts": {
-    "mtime": 1786685947.5536475,
-    "ast_hash": "cce72dc9bfd43c0cc7569c38e5e557cc",
+    "mtime": 1788166875.9790213,
+    "ast_hash": "558786ede2e2746b30a4a9c950fdd83b",
     "semantic_hash": ""
   },
   "apps/web/src/__tests__/lib/safe-redirect.test.ts": {
@@ -1684,11 +1684,6 @@
     "ast_hash": "23d101d7363565ebd3df9c385feff0a1",
     "semantic_hash": ""
   },
-  "prompts/implement-payment-modules.md": {
-    "mtime": 1788080206.6812284,
-    "ast_hash": "88498931d46b0cd621d63a516a44e513",
-    "semantic_hash": ""
-  },
   "apps/web/src/__tests__/routes/api-route-bindings.test.ts": {
     "mtime": 1788160509.0777395,
     "ast_hash": "167557af228817e72107c0e5ea9e3cb0",
@@ -1697,6 +1692,186 @@
   "apps/web/src/__tests__/integration/hono/providers/payments/stripe.provider.test.ts": {
     "mtime": 1788162703.0337927,
     "ast_hash": "e54230eea4ce3a3d3dca9ce5e9a19cfc",
+    "semantic_hash": ""
+  },
+  "apps/web/src/__tests__/integration/hono/service/realtime/realtime.service.test.ts": {
+    "mtime": 1788166875.978288,
+    "ast_hash": "4c60769e50953afa34e30dc324f5974c",
+    "semantic_hash": ""
+  },
+  "apps/web/src/__tests__/realtime/realtime-hub.worker.test.ts": {
+    "mtime": 1788168979.3821619,
+    "ast_hash": "0992ff2cf0a45025990c0b4685589d69",
+    "semantic_hash": ""
+  },
+  "apps/web/src/__tests__/realtime/realtime-test-worker.ts": {
+    "mtime": 1788167400.2487018,
+    "ast_hash": "b6d4828a6ed7e100969c8ef365b7f3fb",
+    "semantic_hash": ""
+  },
+  "apps/web/src/__tests__/realtime/runtime.test.ts": {
+    "mtime": 1788166896.7030165,
+    "ast_hash": "f98f1beccd023901947e85768876b152",
+    "semantic_hash": ""
+  },
+  "apps/web/src/integration/hono/routes/realtime/realtime.route.ts": {
+    "mtime": 1788167121.4174514,
+    "ast_hash": "a9459d87465f8b1784b3296ea9ef1b37",
+    "semantic_hash": ""
+  },
+  "apps/web/src/integration/hono/service/realtime/realtime.service.ts": {
+    "mtime": 1788165865.355853,
+    "ast_hash": "852fd28335b24c3ff63309663588c7fb",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/live-chat/live-chat-demo.tsx": {
+    "mtime": 1788166941.9059262,
+    "ast_hash": "dd081b394a90eb3f6c2f7a4191d78e9d",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/notifications/notifications-demo.tsx": {
+    "mtime": 1788166956.2739463,
+    "ast_hash": "85dfd4571e8429c3b8e6d36fa481985d",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/presence/presence-demo.tsx": {
+    "mtime": 1788167108.0733397,
+    "ast_hash": "552ad996f63743cfb33f9aaa15f201ca",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/shared/client-utils.test.ts": {
+    "mtime": 1788168979.3809953,
+    "ast_hash": "a610f7a0793213d90b79b5558774fcfd",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/shared/client-utils.ts": {
+    "mtime": 1788168939.160106,
+    "ast_hash": "de685e069c1e9168c1b24e34259c5589",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/shared/connection-panel.tsx": {
+    "mtime": 1788166896.708702,
+    "ast_hash": "379e52912592dd50ff5878c47f2013e0",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/shared/event-log.tsx": {
+    "mtime": 1788166956.2688103,
+    "ast_hash": "1f9a2f0e56390b40b97316da355266ec",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/shared/realtime-demo-shell.tsx": {
+    "mtime": 1788166248.7657683,
+    "ast_hash": "2b885d7f645f9675c1ac90c5d63bff6a",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/shared/use-realtime-connection.ts": {
+    "mtime": 1788178864.2592301,
+    "ast_hash": "4bfdb6b250c9c6e57b1d1ccd3a703070",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/shared/use-realtime-data.ts": {
+    "mtime": 1788166145.4973037,
+    "ast_hash": "961235a63a426213e96950160279f195",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/sse/sse-demo.tsx": {
+    "mtime": 1788167108.0753465,
+    "ast_hash": "373b3b43e4624c56ad4c756ae6831dc8",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/websockets/websockets-demo.tsx": {
+    "mtime": 1788166896.7176375,
+    "ast_hash": "afbfdcf65a45cea7933841cb9b622e37",
+    "semantic_hash": ""
+  },
+  "apps/web/src/realtime/realtime-hub.ts": {
+    "mtime": 1788168939.1587396,
+    "ast_hash": "f1e08fb1be47e81cd19813b6e134a2c3",
+    "semantic_hash": ""
+  },
+  "apps/web/src/realtime/runtime.ts": {
+    "mtime": 1788167878.6072917,
+    "ast_hash": "0ccdbc76a93e16034305e1181e329849",
+    "semantic_hash": ""
+  },
+  "apps/web/src/routes/_authenticated.realtime.live-chat.tsx": {
+    "mtime": 1788166784.6126227,
+    "ast_hash": "cf3e0a724146e6c4794a0a11552ba6ff",
+    "semantic_hash": ""
+  },
+  "apps/web/src/routes/_authenticated.realtime.notifications.tsx": {
+    "mtime": 1788166784.613375,
+    "ast_hash": "ffa89825104962b7440cf79f5a843b33",
+    "semantic_hash": ""
+  },
+  "apps/web/src/routes/_authenticated.realtime.presence.tsx": {
+    "mtime": 1788166784.613018,
+    "ast_hash": "6ea3a7e6d43276f5188a6fc49aa8c9ed",
+    "semantic_hash": ""
+  },
+  "apps/web/src/routes/_authenticated.realtime.sse.tsx": {
+    "mtime": 1788166784.6122243,
+    "ast_hash": "6f10b58c0528945d3d607504a7467f7f",
+    "semantic_hash": ""
+  },
+  "apps/web/src/routes/_authenticated.realtime.websockets.tsx": {
+    "mtime": 1788166784.611783,
+    "ast_hash": "b6b9583608ecd26e33ad7e1feb242c16",
+    "semantic_hash": ""
+  },
+  "apps/web/src/server.ts": {
+    "mtime": 1788167108.0778844,
+    "ast_hash": "165e49cbc7ce33d38d85f27c89aad3c7",
+    "semantic_hash": ""
+  },
+  "e2e/realtime.spec.ts": {
+    "mtime": 1788179109.590452,
+    "ast_hash": "80922bb4749fae19d74601334c1b710d",
+    "semantic_hash": ""
+  },
+  "packages/contracts/src/realtime/realtime.test.ts": {
+    "mtime": 1788165360.1103523,
+    "ast_hash": "e5edeab8f29f36e9eb9785f2b9be869b",
+    "semantic_hash": ""
+  },
+  "packages/contracts/src/realtime/realtime.ts": {
+    "mtime": 1788166290.6959124,
+    "ast_hash": "7d7631ce697563331ee3f835b302e276",
+    "semantic_hash": ""
+  },
+  "packages/database/drizzle/0002_panoramic_rocket_raccoon.sql": {
+    "mtime": 1788165925.4473977,
+    "ast_hash": "f62879a88f8a73a1b26dcd4ae065fdef",
+    "semantic_hash": ""
+  },
+  "packages/database/drizzle/meta/0002_snapshot.json": {
+    "mtime": 1788165925.4469135,
+    "ast_hash": "5d1c759da8c9c9bc7f1fdf92073410c7",
+    "semantic_hash": ""
+  },
+  "packages/database/src/db/schema/realtime/index.ts": {
+    "mtime": 1788166896.7128334,
+    "ast_hash": "66162e3b76da6263935acd6e3cb1f103",
+    "semantic_hash": ""
+  },
+  "packages/database/src/repositories/realtime/index.ts": {
+    "mtime": 1788165463.6501925,
+    "ast_hash": "0d394224de3a78cf840a8876ddd77650",
+    "semantic_hash": ""
+  },
+  "packages/database/src/repositories/realtime/realtime.test.ts": {
+    "mtime": 1788165463.649991,
+    "ast_hash": "b04754acdd45175594cc9e63c3fd6b9a",
+    "semantic_hash": ""
+  },
+  "packages/database/src/repositories/realtime/realtime.ts": {
+    "mtime": 1788166896.7031097,
+    "ast_hash": "0b522794ec0436a961d6a50059e580a0",
+    "semantic_hash": ""
+  },
+  "apps/web/src/labs/realtime/README.md": {
+    "mtime": 1788167508.9109979,
+    "ast_hash": "ac1e6573db40accc0a6991db744aaf3b",
     "semantic_hash": ""
   }
 }

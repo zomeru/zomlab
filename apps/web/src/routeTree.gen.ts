@@ -34,6 +34,11 @@ import { Route as AuthenticatedPaymentsPaypalRouteImport } from './routes/_authe
 import { Route as AuthenticatedPaymentsSignatureValidationRouteImport } from './routes/_authenticated.payments.signature-validation'
 import { Route as AuthenticatedPaymentsStripeRouteImport } from './routes/_authenticated.payments.stripe'
 import { Route as AuthenticatedPaymentsWebhooksRouteImport } from './routes/_authenticated.payments.webhooks'
+import { Route as AuthenticatedRealtimeLiveChatRouteImport } from './routes/_authenticated.realtime.live-chat'
+import { Route as AuthenticatedRealtimeNotificationsRouteImport } from './routes/_authenticated.realtime.notifications'
+import { Route as AuthenticatedRealtimePresenceRouteImport } from './routes/_authenticated.realtime.presence'
+import { Route as AuthenticatedRealtimeSseRouteImport } from './routes/_authenticated.realtime.sse'
+import { Route as AuthenticatedRealtimeWebsocketsRouteImport } from './routes/_authenticated.realtime.websockets'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as CoreCachingIndexRouteImport } from './routes/core.caching.index'
 import { Route as CoreCrudIndexRouteImport } from './routes/core.crud.index'
@@ -199,6 +204,36 @@ const AuthenticatedPaymentsWebhooksRoute =
     path: '/payments/webhooks',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedRealtimeLiveChatRoute =
+  AuthenticatedRealtimeLiveChatRouteImport.update({
+    id: '/realtime/live-chat',
+    path: '/realtime/live-chat',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedRealtimeNotificationsRoute =
+  AuthenticatedRealtimeNotificationsRouteImport.update({
+    id: '/realtime/notifications',
+    path: '/realtime/notifications',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedRealtimePresenceRoute =
+  AuthenticatedRealtimePresenceRouteImport.update({
+    id: '/realtime/presence',
+    path: '/realtime/presence',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedRealtimeSseRoute =
+  AuthenticatedRealtimeSseRouteImport.update({
+    id: '/realtime/sse',
+    path: '/realtime/sse',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedRealtimeWebsocketsRoute =
+  AuthenticatedRealtimeWebsocketsRouteImport.update({
+    id: '/realtime/websockets',
+    path: '/realtime/websockets',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -335,6 +370,11 @@ export interface FileRoutesByFullPath {
   '/payments/signature-validation': typeof AuthenticatedPaymentsSignatureValidationRoute
   '/payments/stripe': typeof AuthenticatedPaymentsStripeRoute
   '/payments/webhooks': typeof AuthenticatedPaymentsWebhooksRoute
+  '/realtime/live-chat': typeof AuthenticatedRealtimeLiveChatRoute
+  '/realtime/notifications': typeof AuthenticatedRealtimeNotificationsRoute
+  '/realtime/presence': typeof AuthenticatedRealtimePresenceRoute
+  '/realtime/sse': typeof AuthenticatedRealtimeSseRoute
+  '/realtime/websockets': typeof AuthenticatedRealtimeWebsocketsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
   '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
@@ -382,6 +422,11 @@ export interface FileRoutesByTo {
   '/payments/signature-validation': typeof AuthenticatedPaymentsSignatureValidationRoute
   '/payments/stripe': typeof AuthenticatedPaymentsStripeRoute
   '/payments/webhooks': typeof AuthenticatedPaymentsWebhooksRoute
+  '/realtime/live-chat': typeof AuthenticatedRealtimeLiveChatRoute
+  '/realtime/notifications': typeof AuthenticatedRealtimeNotificationsRoute
+  '/realtime/presence': typeof AuthenticatedRealtimePresenceRoute
+  '/realtime/sse': typeof AuthenticatedRealtimeSseRoute
+  '/realtime/websockets': typeof AuthenticatedRealtimeWebsocketsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
   '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
@@ -431,6 +476,11 @@ export interface FileRoutesById {
   '/_authenticated/payments/signature-validation': typeof AuthenticatedPaymentsSignatureValidationRoute
   '/_authenticated/payments/stripe': typeof AuthenticatedPaymentsStripeRoute
   '/_authenticated/payments/webhooks': typeof AuthenticatedPaymentsWebhooksRoute
+  '/_authenticated/realtime/live-chat': typeof AuthenticatedRealtimeLiveChatRoute
+  '/_authenticated/realtime/notifications': typeof AuthenticatedRealtimeNotificationsRoute
+  '/_authenticated/realtime/presence': typeof AuthenticatedRealtimePresenceRoute
+  '/_authenticated/realtime/sse': typeof AuthenticatedRealtimeSseRoute
+  '/_authenticated/realtime/websockets': typeof AuthenticatedRealtimeWebsocketsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
   '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
@@ -480,6 +530,11 @@ export interface FileRouteTypes {
     | '/payments/signature-validation'
     | '/payments/stripe'
     | '/payments/webhooks'
+    | '/realtime/live-chat'
+    | '/realtime/notifications'
+    | '/realtime/presence'
+    | '/realtime/sse'
+    | '/realtime/websockets'
     | '/api/auth/$'
     | '/core/crud/data-boundaries'
     | '/core/error-handling/error-contract'
@@ -527,6 +582,11 @@ export interface FileRouteTypes {
     | '/payments/signature-validation'
     | '/payments/stripe'
     | '/payments/webhooks'
+    | '/realtime/live-chat'
+    | '/realtime/notifications'
+    | '/realtime/presence'
+    | '/realtime/sse'
+    | '/realtime/websockets'
     | '/api/auth/$'
     | '/core/crud/data-boundaries'
     | '/core/error-handling/error-contract'
@@ -575,6 +635,11 @@ export interface FileRouteTypes {
     | '/_authenticated/payments/signature-validation'
     | '/_authenticated/payments/stripe'
     | '/_authenticated/payments/webhooks'
+    | '/_authenticated/realtime/live-chat'
+    | '/_authenticated/realtime/notifications'
+    | '/_authenticated/realtime/presence'
+    | '/_authenticated/realtime/sse'
+    | '/_authenticated/realtime/websockets'
     | '/api/auth/$'
     | '/core/crud/data-boundaries'
     | '/core/error-handling/error-contract'
@@ -803,6 +868,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPaymentsWebhooksRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/realtime/live-chat': {
+      id: '/_authenticated/realtime/live-chat'
+      path: '/realtime/live-chat'
+      fullPath: '/realtime/live-chat'
+      preLoaderRoute: typeof AuthenticatedRealtimeLiveChatRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/realtime/notifications': {
+      id: '/_authenticated/realtime/notifications'
+      path: '/realtime/notifications'
+      fullPath: '/realtime/notifications'
+      preLoaderRoute: typeof AuthenticatedRealtimeNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/realtime/presence': {
+      id: '/_authenticated/realtime/presence'
+      path: '/realtime/presence'
+      fullPath: '/realtime/presence'
+      preLoaderRoute: typeof AuthenticatedRealtimePresenceRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/realtime/sse': {
+      id: '/_authenticated/realtime/sse'
+      path: '/realtime/sse'
+      fullPath: '/realtime/sse'
+      preLoaderRoute: typeof AuthenticatedRealtimeSseRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/realtime/websockets': {
+      id: '/_authenticated/realtime/websockets'
+      path: '/realtime/websockets'
+      fullPath: '/realtime/websockets'
+      preLoaderRoute: typeof AuthenticatedRealtimeWebsocketsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -973,6 +1073,11 @@ interface AuthenticatedRouteChildren {
   AuthenticatedPaymentsSignatureValidationRoute: typeof AuthenticatedPaymentsSignatureValidationRoute
   AuthenticatedPaymentsStripeRoute: typeof AuthenticatedPaymentsStripeRoute
   AuthenticatedPaymentsWebhooksRoute: typeof AuthenticatedPaymentsWebhooksRoute
+  AuthenticatedRealtimeLiveChatRoute: typeof AuthenticatedRealtimeLiveChatRoute
+  AuthenticatedRealtimeNotificationsRoute: typeof AuthenticatedRealtimeNotificationsRoute
+  AuthenticatedRealtimePresenceRoute: typeof AuthenticatedRealtimePresenceRoute
+  AuthenticatedRealtimeSseRoute: typeof AuthenticatedRealtimeSseRoute
+  AuthenticatedRealtimeWebsocketsRoute: typeof AuthenticatedRealtimeWebsocketsRoute
   AuthenticatedCoreCrudDemoIdRoute: typeof AuthenticatedCoreCrudDemoIdRoute
   AuthenticatedCoreCrudDemoIndexRoute: typeof AuthenticatedCoreCrudDemoIndexRoute
 }
@@ -1002,6 +1107,12 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
     AuthenticatedPaymentsSignatureValidationRoute,
   AuthenticatedPaymentsStripeRoute: AuthenticatedPaymentsStripeRoute,
   AuthenticatedPaymentsWebhooksRoute: AuthenticatedPaymentsWebhooksRoute,
+  AuthenticatedRealtimeLiveChatRoute: AuthenticatedRealtimeLiveChatRoute,
+  AuthenticatedRealtimeNotificationsRoute:
+    AuthenticatedRealtimeNotificationsRoute,
+  AuthenticatedRealtimePresenceRoute: AuthenticatedRealtimePresenceRoute,
+  AuthenticatedRealtimeSseRoute: AuthenticatedRealtimeSseRoute,
+  AuthenticatedRealtimeWebsocketsRoute: AuthenticatedRealtimeWebsocketsRoute,
   AuthenticatedCoreCrudDemoIdRoute: AuthenticatedCoreCrudDemoIdRoute,
   AuthenticatedCoreCrudDemoIndexRoute: AuthenticatedCoreCrudDemoIndexRoute,
 }

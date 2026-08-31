@@ -1,12 +1,26 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "main": "@tanstack/react-start/server-entry",
+  "main": "src/server.ts",
   "compatibility_date": "2026-08-08",
   "compatibility_flags": ["nodejs_compat"],
   "placement": {
     "region": "aws:ap-southeast-1"
   },
   "preview_urls": true,
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "REALTIME_HUB",
+        "class_name": "RealtimeHub"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["RealtimeHub"]
+    }
+  ],
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1,
@@ -42,6 +56,14 @@
           }
         }
       ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "REALTIME_HUB",
+            "class_name": "RealtimeHub"
+          }
+        ]
+      },
       "r2_buckets": [
         {
           "binding": "FILE_UPLOADS",
@@ -75,6 +97,14 @@
           }
         }
       ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "REALTIME_HUB",
+            "class_name": "RealtimeHub"
+          }
+        ]
+      },
       "r2_buckets": [
         {
           "binding": "FILE_UPLOADS",

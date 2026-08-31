@@ -14,6 +14,7 @@ import { privateResponseMiddleware } from "~/integration/hono/middleware/private
 import fileRoutes from "~/integration/hono/routes/core/files.route";
 import noteRoutes from "~/integration/hono/routes/core/notes.route";
 import paymentRoutes from "~/integration/hono/routes/payments/payments.route";
+import realtimeRoutes from "~/integration/hono/routes/realtime/realtime.route";
 import systemRoutes from "~/integration/hono/routes/system/system.route";
 import type { HonoEnv } from "~/integration/hono/types";
 import { getRateLimitKey } from "~/integration/hono/utils/rate-limit";
@@ -25,6 +26,12 @@ function getRateLimitBinding() {
 
   return env.MY_RATE_LIMITER;
 }
+
+function isWebSocketUpgrade(c: { req: { header(name: string): string | undefined } }): boolean {
+  return c.req.header("Upgrade")?.toLowerCase() === "websocket";
+}
+
+const secureResponseHeaders = secureHeaders();
 
 export const apiApp = new OpenAPIHono<HonoEnv>()
   .basePath("/api")
@@ -38,11 +45,12 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
 
   // Observability
   .use(logger())
-  .use(timing())
+  .use(timing({ enabled: (c) => !isWebSocketUpgrade(c) }))
 
   // Security
   .use(csrf())
-  .use(secureHeaders())
+  // A 101 response has immutable headers; security headers continue to apply to every HTTP route.
+  .use((c, next) => (isWebSocketUpgrade(c) ? next() : secureResponseHeaders(c, next)))
 
   // Traffic protection
   .use(
@@ -66,6 +74,12 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
   // Payments
   .use("/payments/*", privateResponseMiddleware)
   .route("/payments", paymentRoutes)
+
+  // Realtime
+  .use("/realtime/sse", privateResponseMiddleware)
+  .use("/realtime/chat/*", privateResponseMiddleware)
+  .use("/realtime/notifications/*", privateResponseMiddleware)
+  .route("/realtime", realtimeRoutes)
 
   // System
   .route("/", systemRoutes);

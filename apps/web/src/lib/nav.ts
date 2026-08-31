@@ -173,11 +173,11 @@ export const NAV: NavEntry[] = [
     type: "section",
     label: "Realtime",
     items: [
-      { label: "WebSockets" },
-      { label: "SSE" },
-      { label: "Live Chat" },
-      { label: "Presence" },
-      { label: "Notifications" },
+      { label: "WebSockets", href: "/realtime/websockets" },
+      { label: "SSE", href: "/realtime/sse" },
+      { label: "Live Chat", href: "/realtime/live-chat" },
+      { label: "Presence", href: "/realtime/presence" },
+      { label: "Notifications", href: "/realtime/notifications" },
     ],
   },
   {
