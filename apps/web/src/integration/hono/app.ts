@@ -13,6 +13,7 @@ import { apiErrorHandler, notFoundHandler } from "~/integration/hono/errors/erro
 import { privateResponseMiddleware } from "~/integration/hono/middleware/private-response.middleware";
 import fileRoutes from "~/integration/hono/routes/core/files.route";
 import noteRoutes from "~/integration/hono/routes/core/notes.route";
+import paymentRoutes from "~/integration/hono/routes/payments/payments.route";
 import systemRoutes from "~/integration/hono/routes/system/system.route";
 import type { HonoEnv } from "~/integration/hono/types";
 import { getRateLimitKey } from "~/integration/hono/utils/rate-limit";
@@ -61,6 +62,10 @@ export const apiApp = new OpenAPIHono<HonoEnv>()
   .route("/files", fileRoutes)
   .use("/notes/*", privateResponseMiddleware)
   .route("/notes", noteRoutes)
+
+  // Payments
+  .use("/payments/*", privateResponseMiddleware)
+  .route("/payments", paymentRoutes)
 
   // System
   .route("/", systemRoutes);

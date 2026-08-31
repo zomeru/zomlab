@@ -28,6 +28,12 @@ import { Route as AuthenticatedCoreSearchFilterDemoRouteImport } from './routes/
 import { Route as AuthenticatedCoreStateManagementDemoRouteImport } from './routes/_authenticated.core.state-management-demo'
 import { Route as AuthenticatedCoreTablesDemoRouteImport } from './routes/_authenticated.core.tables-demo'
 import { Route as AuthenticatedCoreValidationDemoRouteImport } from './routes/_authenticated.core.validation-demo'
+import { Route as AuthenticatedPaymentsIdempotencyRouteImport } from './routes/_authenticated.payments.idempotency'
+import { Route as AuthenticatedPaymentsPaymongoRouteImport } from './routes/_authenticated.payments.paymongo'
+import { Route as AuthenticatedPaymentsPaypalRouteImport } from './routes/_authenticated.payments.paypal'
+import { Route as AuthenticatedPaymentsSignatureValidationRouteImport } from './routes/_authenticated.payments.signature-validation'
+import { Route as AuthenticatedPaymentsStripeRouteImport } from './routes/_authenticated.payments.stripe'
+import { Route as AuthenticatedPaymentsWebhooksRouteImport } from './routes/_authenticated.payments.webhooks'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as CoreCachingIndexRouteImport } from './routes/core.caching.index'
 import { Route as CoreCrudIndexRouteImport } from './routes/core.crud.index'
@@ -155,6 +161,42 @@ const AuthenticatedCoreValidationDemoRoute =
   AuthenticatedCoreValidationDemoRouteImport.update({
     id: '/core/validation-demo',
     path: '/core/validation-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsIdempotencyRoute =
+  AuthenticatedPaymentsIdempotencyRouteImport.update({
+    id: '/payments/idempotency',
+    path: '/payments/idempotency',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsPaymongoRoute =
+  AuthenticatedPaymentsPaymongoRouteImport.update({
+    id: '/payments/paymongo',
+    path: '/payments/paymongo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsPaypalRoute =
+  AuthenticatedPaymentsPaypalRouteImport.update({
+    id: '/payments/paypal',
+    path: '/payments/paypal',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsSignatureValidationRoute =
+  AuthenticatedPaymentsSignatureValidationRouteImport.update({
+    id: '/payments/signature-validation',
+    path: '/payments/signature-validation',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsStripeRoute =
+  AuthenticatedPaymentsStripeRouteImport.update({
+    id: '/payments/stripe',
+    path: '/payments/stripe',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsWebhooksRoute =
+  AuthenticatedPaymentsWebhooksRouteImport.update({
+    id: '/payments/webhooks',
+    path: '/payments/webhooks',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -287,6 +329,12 @@ export interface FileRoutesByFullPath {
   '/core/state-management-demo': typeof AuthenticatedCoreStateManagementDemoRoute
   '/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
+  '/payments/idempotency': typeof AuthenticatedPaymentsIdempotencyRoute
+  '/payments/paymongo': typeof AuthenticatedPaymentsPaymongoRoute
+  '/payments/paypal': typeof AuthenticatedPaymentsPaypalRoute
+  '/payments/signature-validation': typeof AuthenticatedPaymentsSignatureValidationRoute
+  '/payments/stripe': typeof AuthenticatedPaymentsStripeRoute
+  '/payments/webhooks': typeof AuthenticatedPaymentsWebhooksRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
   '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
@@ -328,6 +376,12 @@ export interface FileRoutesByTo {
   '/core/state-management-demo': typeof AuthenticatedCoreStateManagementDemoRoute
   '/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
+  '/payments/idempotency': typeof AuthenticatedPaymentsIdempotencyRoute
+  '/payments/paymongo': typeof AuthenticatedPaymentsPaymongoRoute
+  '/payments/paypal': typeof AuthenticatedPaymentsPaypalRoute
+  '/payments/signature-validation': typeof AuthenticatedPaymentsSignatureValidationRoute
+  '/payments/stripe': typeof AuthenticatedPaymentsStripeRoute
+  '/payments/webhooks': typeof AuthenticatedPaymentsWebhooksRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
   '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
@@ -371,6 +425,12 @@ export interface FileRoutesById {
   '/_authenticated/core/state-management-demo': typeof AuthenticatedCoreStateManagementDemoRoute
   '/_authenticated/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/_authenticated/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
+  '/_authenticated/payments/idempotency': typeof AuthenticatedPaymentsIdempotencyRoute
+  '/_authenticated/payments/paymongo': typeof AuthenticatedPaymentsPaymongoRoute
+  '/_authenticated/payments/paypal': typeof AuthenticatedPaymentsPaypalRoute
+  '/_authenticated/payments/signature-validation': typeof AuthenticatedPaymentsSignatureValidationRoute
+  '/_authenticated/payments/stripe': typeof AuthenticatedPaymentsStripeRoute
+  '/_authenticated/payments/webhooks': typeof AuthenticatedPaymentsWebhooksRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
   '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
@@ -414,6 +474,12 @@ export interface FileRouteTypes {
     | '/core/state-management-demo'
     | '/core/tables-demo'
     | '/core/validation-demo'
+    | '/payments/idempotency'
+    | '/payments/paymongo'
+    | '/payments/paypal'
+    | '/payments/signature-validation'
+    | '/payments/stripe'
+    | '/payments/webhooks'
     | '/api/auth/$'
     | '/core/crud/data-boundaries'
     | '/core/error-handling/error-contract'
@@ -455,6 +521,12 @@ export interface FileRouteTypes {
     | '/core/state-management-demo'
     | '/core/tables-demo'
     | '/core/validation-demo'
+    | '/payments/idempotency'
+    | '/payments/paymongo'
+    | '/payments/paypal'
+    | '/payments/signature-validation'
+    | '/payments/stripe'
+    | '/payments/webhooks'
     | '/api/auth/$'
     | '/core/crud/data-boundaries'
     | '/core/error-handling/error-contract'
@@ -497,6 +569,12 @@ export interface FileRouteTypes {
     | '/_authenticated/core/state-management-demo'
     | '/_authenticated/core/tables-demo'
     | '/_authenticated/core/validation-demo'
+    | '/_authenticated/payments/idempotency'
+    | '/_authenticated/payments/paymongo'
+    | '/_authenticated/payments/paypal'
+    | '/_authenticated/payments/signature-validation'
+    | '/_authenticated/payments/stripe'
+    | '/_authenticated/payments/webhooks'
     | '/api/auth/$'
     | '/core/crud/data-boundaries'
     | '/core/error-handling/error-contract'
@@ -683,6 +761,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCoreValidationDemoRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/payments/idempotency': {
+      id: '/_authenticated/payments/idempotency'
+      path: '/payments/idempotency'
+      fullPath: '/payments/idempotency'
+      preLoaderRoute: typeof AuthenticatedPaymentsIdempotencyRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payments/paymongo': {
+      id: '/_authenticated/payments/paymongo'
+      path: '/payments/paymongo'
+      fullPath: '/payments/paymongo'
+      preLoaderRoute: typeof AuthenticatedPaymentsPaymongoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payments/paypal': {
+      id: '/_authenticated/payments/paypal'
+      path: '/payments/paypal'
+      fullPath: '/payments/paypal'
+      preLoaderRoute: typeof AuthenticatedPaymentsPaypalRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payments/signature-validation': {
+      id: '/_authenticated/payments/signature-validation'
+      path: '/payments/signature-validation'
+      fullPath: '/payments/signature-validation'
+      preLoaderRoute: typeof AuthenticatedPaymentsSignatureValidationRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payments/stripe': {
+      id: '/_authenticated/payments/stripe'
+      path: '/payments/stripe'
+      fullPath: '/payments/stripe'
+      preLoaderRoute: typeof AuthenticatedPaymentsStripeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payments/webhooks': {
+      id: '/_authenticated/payments/webhooks'
+      path: '/payments/webhooks'
+      fullPath: '/payments/webhooks'
+      preLoaderRoute: typeof AuthenticatedPaymentsWebhooksRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -847,6 +967,12 @@ interface AuthenticatedRouteChildren {
   AuthenticatedCoreStateManagementDemoRoute: typeof AuthenticatedCoreStateManagementDemoRoute
   AuthenticatedCoreTablesDemoRoute: typeof AuthenticatedCoreTablesDemoRoute
   AuthenticatedCoreValidationDemoRoute: typeof AuthenticatedCoreValidationDemoRoute
+  AuthenticatedPaymentsIdempotencyRoute: typeof AuthenticatedPaymentsIdempotencyRoute
+  AuthenticatedPaymentsPaymongoRoute: typeof AuthenticatedPaymentsPaymongoRoute
+  AuthenticatedPaymentsPaypalRoute: typeof AuthenticatedPaymentsPaypalRoute
+  AuthenticatedPaymentsSignatureValidationRoute: typeof AuthenticatedPaymentsSignatureValidationRoute
+  AuthenticatedPaymentsStripeRoute: typeof AuthenticatedPaymentsStripeRoute
+  AuthenticatedPaymentsWebhooksRoute: typeof AuthenticatedPaymentsWebhooksRoute
   AuthenticatedCoreCrudDemoIdRoute: typeof AuthenticatedCoreCrudDemoIdRoute
   AuthenticatedCoreCrudDemoIndexRoute: typeof AuthenticatedCoreCrudDemoIndexRoute
 }
@@ -869,6 +995,13 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
     AuthenticatedCoreStateManagementDemoRoute,
   AuthenticatedCoreTablesDemoRoute: AuthenticatedCoreTablesDemoRoute,
   AuthenticatedCoreValidationDemoRoute: AuthenticatedCoreValidationDemoRoute,
+  AuthenticatedPaymentsIdempotencyRoute: AuthenticatedPaymentsIdempotencyRoute,
+  AuthenticatedPaymentsPaymongoRoute: AuthenticatedPaymentsPaymongoRoute,
+  AuthenticatedPaymentsPaypalRoute: AuthenticatedPaymentsPaypalRoute,
+  AuthenticatedPaymentsSignatureValidationRoute:
+    AuthenticatedPaymentsSignatureValidationRoute,
+  AuthenticatedPaymentsStripeRoute: AuthenticatedPaymentsStripeRoute,
+  AuthenticatedPaymentsWebhooksRoute: AuthenticatedPaymentsWebhooksRoute,
   AuthenticatedCoreCrudDemoIdRoute: AuthenticatedCoreCrudDemoIdRoute,
   AuthenticatedCoreCrudDemoIndexRoute: AuthenticatedCoreCrudDemoIndexRoute,
 }

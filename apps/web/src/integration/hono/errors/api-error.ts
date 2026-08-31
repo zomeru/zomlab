@@ -53,3 +53,49 @@ export class InternalError extends ApiError {
     this.name = "InternalError";
   }
 }
+
+export class PaymentNotFoundError extends ApiError {
+  constructor() {
+    super("PAYMENT_NOT_FOUND", "Payment transaction not found", 404);
+    this.name = "PaymentNotFoundError";
+  }
+}
+
+export class PaymentConfigurationError extends ApiError {
+  constructor(provider: string) {
+    super(
+      "PAYMENT_PROVIDER_NOT_CONFIGURED",
+      `${provider} sandbox credentials are not configured`,
+      503,
+    );
+    this.name = "PaymentConfigurationError";
+  }
+}
+
+export class PaymentProviderError extends ApiError {
+  constructor(message = "The payment provider could not complete the request") {
+    super("PAYMENT_PROVIDER_ERROR", message, 502);
+    this.name = "PaymentProviderError";
+  }
+}
+
+export class PaymentStateError extends ApiError {
+  constructor(message: string) {
+    super("PAYMENT_STATE_CONFLICT", message, 409);
+    this.name = "PaymentStateError";
+  }
+}
+
+export class IdempotencyConflictError extends ApiError {
+  constructor(message: string) {
+    super("IDEMPOTENCY_CONFLICT", message, 409);
+    this.name = "IdempotencyConflictError";
+  }
+}
+
+export class InvalidWebhookSignatureError extends ApiError {
+  constructor() {
+    super("INVALID_WEBHOOK_SIGNATURE", "Webhook signature verification failed", 400);
+    this.name = "InvalidWebhookSignatureError";
+  }
+}

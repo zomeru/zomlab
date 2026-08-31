@@ -14,9 +14,11 @@
   "devDependencies": {
     "@types/node": "^26.2.0",
     "@zomlab/tsconfig": "workspace:*",
+    "@zomlab/vitest-config": "workspace:*",
     "typescript": "^6.0.3"
   },
   "scripts": {
+    "test": "vitest run",
     "check-types": "tsc --noEmit",
     "check-types:watch": "tsc --noEmit --watch"
   }

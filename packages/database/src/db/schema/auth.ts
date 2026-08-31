@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 import { bigint, boolean, index, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { notes } from ".";
+import { notes, paymentIdempotencyKeys, paymentTransactions, paymentWebhookEvents } from ".";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -85,6 +85,9 @@ export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
   accounts: many(accounts),
   notes: many(notes),
+  paymentTransactions: many(paymentTransactions),
+  paymentWebhookEvents: many(paymentWebhookEvents),
+  paymentIdempotencyKeys: many(paymentIdempotencyKeys),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({

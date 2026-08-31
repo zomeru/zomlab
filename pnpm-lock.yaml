@@ -304,6 +304,9 @@ importers:
       '@zomlab/database':
         specifier: workspace:*
         version: link:../../packages/database
+      '@zomlab/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       '@zomlab/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -325,6 +328,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1(supports-color@10.2.2)
+      stripe:
+        specifier: ^22.6.0
+        version: 22.6.0(@types/node@26.2.0)
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -427,6 +433,9 @@ importers:
       '@zomlab/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+      '@zomlab/vitest-config':
+        specifier: workspace:*
+        version: link:../vitest-config
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -436,6 +445,9 @@ importers:
       '@neondatabase/serverless':
         specifier: ^1.1.0
         version: 1.1.0
+      '@zomlab/contracts':
+        specifier: workspace:*
+        version: link:../contracts
       '@zomlab/env':
         specifier: workspace:*
         version: link:../env
@@ -5632,6 +5644,15 @@ packages:
   strip-json-comments@5.0.3:
     resolution: {integrity: sha512-1tB5mhVo7U+ETBKNf92xT4hrQa3pm0MZ0PQvuDnWgAAGHDsfp4lPSpiS6psrSiet87wyGPh9ft6wmhOMQ0hDiw==}
     engines: {node: '>=14.16'}
+
+  stripe@22.6.0:
+    resolution: {integrity: sha512-Ezk+WYEEwX2DLxFrKfb6coznlCMZvCaCYMNPXNHFSZkBIEzF5Hgm7RLb38q/0h9Ol5jsUJGJRorvhzAvckgfhw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@types/node': '>=18'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
 
   style-to-js@1.1.21:
     resolution: {integrity: sha512-RjQetxJrrUJLQPHbLku6U/ocGtzyjbJMP9lCNK7Ag0CNh690nSH8woqWH9u16nMjYBAok+i7JO1NP2pOy8IsPQ==}
@@ -11341,6 +11362,10 @@ snapshots:
   strip-indent@4.1.1: {}
 
   strip-json-comments@5.0.3: {}
+
+  stripe@22.6.0(@types/node@26.2.0):
+    optionalDependencies:
+      '@types/node': 26.2.0
 
   style-to-js@1.1.21:
     dependencies:

@@ -161,12 +161,12 @@ export const NAV: NavEntry[] = [
     type: "section",
     label: "Payments",
     items: [
-      { label: "Stripe" },
-      { label: "PayMongo" },
-      { label: "PayPal" },
-      { label: "Webhooks" },
-      { label: "Idempotency" },
-      { label: "Signature Validation" },
+      { label: "Stripe", href: "/payments/stripe" },
+      { label: "PayMongo", href: "/payments/paymongo" },
+      { label: "PayPal", href: "/payments/paypal" },
+      { label: "Webhooks", href: "/payments/webhooks" },
+      { label: "Idempotency", href: "/payments/idempotency" },
+      { label: "Signature Validation", href: "/payments/signature-validation" },
     ],
   },
   {
