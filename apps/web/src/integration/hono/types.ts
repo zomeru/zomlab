@@ -1,4 +1,5 @@
 import type { AuthSession, AuthUser } from "@zomlab/auth/server";
+import type { TimingVariables } from "hono/timing";
 
 type AuthVariables = {
   session: AuthSession;
@@ -28,6 +29,6 @@ type AppBindings = {
 };
 
 export interface HonoEnv {
-  Variables: AuthVariables;
+  Variables: AuthVariables & TimingVariables;
   Bindings: AppBindings;
 }
