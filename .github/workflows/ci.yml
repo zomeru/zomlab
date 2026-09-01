@@ -4,9 +4,8 @@ permissions:
 
 on:
   push:
-    branches: [dev, main]
+    branches: [main]
   pull_request:
-    branches: ["*"]
   merge_group:
 
 concurrency:
