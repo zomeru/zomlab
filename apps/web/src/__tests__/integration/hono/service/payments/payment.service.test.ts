@@ -1,6 +1,7 @@
 import type {
   PaymentRepository,
   SerializedPaymentIdempotencyKeyRow,
+  SerializedPaymentTransactionRow,
   SerializedPaymentWebhookEventRow,
 } from "@zomlab/database";
 import { describe, expect, test } from "vitest";
@@ -74,16 +75,26 @@ function createIdempotencyRepository() {
 
 function createWebhookRepository() {
   let event: SerializedPaymentWebhookEventRow | undefined;
+  let transaction: SerializedPaymentTransactionRow | undefined;
   let completedEvents = 0;
 
   const repository = {
     createTransaction: async () => unused(),
     findTransactionById: async () => undefined,
     findTransactionByUserAndId: async () => unused(),
-    findTransactionByProviderReference: async () => undefined,
+    async findTransactionByProviderReference(provider, providerReferenceId) {
+      return transaction?.provider === provider &&
+        transaction.providerReferenceId === providerReferenceId
+        ? transaction
+        : undefined;
+    },
     findTransactionByProviderPayment: async () => undefined,
     listTransactionsByUser: async () => unused(),
-    updateTransaction: async () => unused(),
+    async updateTransaction(id, data) {
+      if (!transaction || transaction.id !== id) return undefined;
+      transaction = { ...transaction, ...data, updatedAt: new Date().toISOString() };
+      return transaction;
+    },
     async claimWebhook(data) {
       if (event) {
         event = { ...event, duplicateCount: event.duplicateCount + 1 };
@@ -126,7 +137,13 @@ function createWebhookRepository() {
     listIdempotencyByUser: async () => unused(),
   } satisfies PaymentRepository;
 
-  return { repository, getCompletedEvents: () => completedEvents };
+  return {
+    repository,
+    getCompletedEvents: () => completedEvents,
+    setTransaction(value: SerializedPaymentTransactionRow) {
+      transaction = value;
+    },
+  };
 }
 
 describe("payment idempotency service", () => {
@@ -177,7 +194,7 @@ describe("payment idempotency service", () => {
       service.runIdempotencyDemo("user-1", request),
     ]);
 
-    expect(new Set(results.map((result) => result.operationId))).toHaveLength(1);
+    expect(new Set(results.map((result) => result.operationId)).size).toBe(1);
     expect(fake.getCreatedOperations()).toBe(1);
   });
 });
@@ -201,5 +218,44 @@ describe("payment webhook service", () => {
     expect(first.duplicate).toBe(false);
     expect(duplicate.duplicate).toBe(true);
     expect(fake.getCompletedEvents()).toBe(1);
+  });
+
+  test("reconciles a repeated event that arrived before its transaction was linked", async () => {
+    const fake = createWebhookRepository();
+    const service = createPaymentService(fake.repository);
+    const webhook = {
+      eventId: "evt_early",
+      eventType: "checkout.session.completed",
+      provider: "stripe" as const,
+      providerReferenceId: "cs_early",
+      rawPayload: { id: "evt_early" },
+      signatureHeaders: { names: ["stripe-signature"], algorithm: "HMAC-SHA256" },
+      status: "succeeded" as const,
+    };
+
+    expect(await service.processWebhook(webhook)).toEqual({
+      duplicate: false,
+      eventId: "evt_early",
+    });
+    fake.setTransaction({
+      id: "10000000-0000-4000-8000-000000000000",
+      userId: "user-1",
+      provider: "stripe",
+      providerReferenceId: "cs_early",
+      providerPaymentId: null,
+      amount: 10_000,
+      currency: "PHP",
+      status: "pending",
+      description: "Early webhook test",
+      metadata: { checkoutKind: "hosted" },
+      createdAt: "2026-09-01T00:00:00.000Z",
+      updatedAt: "2026-09-01T00:00:00.000Z",
+    });
+
+    expect(await service.processWebhook(webhook)).toEqual({
+      duplicate: true,
+      eventId: "evt_early",
+    });
+    expect(fake.getCompletedEvents()).toBe(2);
   });
 });

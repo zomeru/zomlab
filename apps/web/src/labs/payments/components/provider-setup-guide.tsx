@@ -4,7 +4,7 @@ import { CodeContainer } from "@zomlab/ui/components/docs";
 
 const setup = {
   stripe: {
-    variables: ['STRIPE_SECRET_KEY=""', 'STRIPE_PUBLISHABLE_KEY=""', 'STRIPE_WEBHOOK_SECRET=""'],
+    variables: ['STRIPE_SECRET_KEY=""', 'STRIPE_WEBHOOK_SECRET=""'],
     endpoint: "/api/payments/webhooks/stripe",
     local: "stripe listen --forward-to localhost:3000/api/payments/webhooks/stripe",
     dashboard:
@@ -15,7 +15,7 @@ const setup = {
     docsLabel: "Read Stripe test-mode documentation",
   },
   paymongo: {
-    variables: ['PAYMONGO_PUBLIC_KEY=""', 'PAYMONGO_SECRET_KEY=""', 'PAYMONGO_WEBHOOK_SECRET=""'],
+    variables: ['PAYMONGO_SECRET_KEY=""', 'PAYMONGO_WEBHOOK_SECRET=""'],
     endpoint: "/api/payments/webhooks/paymongo",
     local: "cloudflared tunnel --url http://localhost:3000",
     dashboard:
@@ -26,12 +26,7 @@ const setup = {
     docsLabel: "Read PayMongo test-mode documentation",
   },
   paypal: {
-    variables: [
-      'PAYPAL_CLIENT_ID=""',
-      'PAYPAL_CLIENT_SECRET=""',
-      'PAYPAL_WEBHOOK_ID=""',
-      'PAYPAL_ENVIRONMENT="sandbox"',
-    ],
+    variables: ['PAYPAL_CLIENT_ID=""', 'PAYPAL_CLIENT_SECRET=""', 'PAYPAL_WEBHOOK_ID=""'],
     endpoint: "/api/payments/webhooks/paypal",
     local: "cloudflared tunnel --url http://localhost:3000",
     dashboard:

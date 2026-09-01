@@ -143,7 +143,6 @@ export function createPaymentService(repository: PaymentRepository) {
             configs.paymongo.secretKey.startsWith("sk_test_") &&
             configs.paymongo.webhookSecret.startsWith("whsk_"),
           paypal:
-            configs.paypal.environment === "sandbox" &&
             configs.paypal.clientId.length > 0 &&
             configs.paypal.clientSecret.length > 0 &&
             configs.paypal.webhookId.length > 0,
@@ -377,7 +376,12 @@ export function createPaymentService(repository: PaymentRepository) {
         signatureHeaders: webhook.signatureHeaders,
       });
 
-      if (!claim.claimed && claim.event.status !== "failed") {
+      const completedWithTransaction = claim.event.result?.transactionId !== undefined;
+      if (
+        !claim.claimed &&
+        claim.event.status !== "failed" &&
+        (!transaction || completedWithTransaction)
+      ) {
         return { duplicate: true, eventId: webhook.eventId };
       }
 

@@ -27,7 +27,10 @@ describe("realtime runtime policies", () => {
 
   test("shards rooms and user notification channels independently", () => {
     expect(getRealtimeHubName({ channel: "chat", roomId: "general" }, "user-1")).toBe(
-      "chat:general",
+      "chat:user-1:general",
+    );
+    expect(getRealtimeHubName({ channel: "chat", roomId: "general" }, "user-2")).toBe(
+      "chat:user-2:general",
     );
     expect(getRealtimeHubName({ channel: "presence", roomId: "demo" }, "user-1")).toBe(
       "presence:demo",

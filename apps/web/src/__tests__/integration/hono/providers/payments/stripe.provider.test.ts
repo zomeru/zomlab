@@ -20,6 +20,7 @@ vi.mock("stripe", () => {
   return { default: StripeMock };
 });
 
+import { PaymentConfigurationError } from "~/integration/hono/errors/api-error";
 import { createStripeProvider } from "~/integration/hono/providers/payments/stripe.provider";
 
 describe("Stripe payment provider", () => {
@@ -50,5 +51,18 @@ describe("Stripe payment provider", () => {
       expect.objectContaining({ managed_payments: { enabled: false } }),
       { idempotencyKey: "provider-idempotency-key" },
     );
+  });
+
+  test("rejects live credentials for the sandbox-only lab", async () => {
+    await expect(
+      createStripeProvider({ secretKey: "sk_live_example", webhookSecret: "" }).createCheckout({
+        amount: 50_000,
+        currency: "PHP",
+        description: "ZomLab Stripe sandbox payment",
+        idempotencyKey: "provider-idempotency-key",
+        origin: "http://localhost:3000",
+        transactionId: "667a4f68-2f1d-41af-9d68-caeec25fbed6",
+      }),
+    ).rejects.toBeInstanceOf(PaymentConfigurationError);
   });
 });

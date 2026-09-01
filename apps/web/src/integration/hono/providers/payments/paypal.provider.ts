@@ -26,7 +26,6 @@ const PAYPAL_WEBHOOK_TOLERANCE_MS = 5 * 60 * 1_000;
 
 function assertPaypalConfig(config: PaypalPaymentConfig, webhook = false): void {
   if (
-    config.environment !== "sandbox" ||
     config.clientId.length === 0 ||
     config.clientSecret.length === 0 ||
     (webhook && config.webhookId.length === 0)

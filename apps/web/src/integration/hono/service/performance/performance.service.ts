@@ -13,8 +13,8 @@ interface CacheEntry {
   createdAt: number;
 }
 
-const cache = new Map<string, CacheEntry>();
-let computationCount = 0;
+const DEFAULT_CACHE_MAX_ENTRIES = 200;
+const DEFAULT_CACHE_TTL_MS = 5 * 60 * 1_000;
 
 function computeChecksum(key: string) {
   const startedAt = performance.now();
@@ -22,7 +22,6 @@ function computeChecksum(key: string) {
   for (let index = 0; index < 240_000; index += 1) {
     checksum = (checksum + key.charCodeAt(index % key.length) * (index + 1)) % 2_147_483_647;
   }
-  computationCount += 1;
   return { checksum, computationDurationMs: performance.now() - startedAt };
 }
 
@@ -30,7 +29,35 @@ function responseBytes(value: unknown): number {
   return new TextEncoder().encode(JSON.stringify(value)).byteLength;
 }
 
-export function createPerformanceService(repository: PerformanceRepository) {
+export function createPerformanceService(
+  repository: PerformanceRepository,
+  options: {
+    cacheMaxEntries?: number;
+    cacheTtlMs?: number;
+    now?: () => number;
+  } = {},
+) {
+  const cache = new Map<string, CacheEntry>();
+  const cacheMaxEntries = options.cacheMaxEntries ?? DEFAULT_CACHE_MAX_ENTRIES;
+  const cacheTtlMs = options.cacheTtlMs ?? DEFAULT_CACHE_TTL_MS;
+  const now = options.now ?? (() => performance.now());
+  let computationCount = 0;
+
+  function compute(key: string) {
+    const result = computeChecksum(key);
+    computationCount += 1;
+    return result;
+  }
+
+  function storeCacheEntry(key: string, entry: CacheEntry): void {
+    if (!cache.has(key) && cache.size >= cacheMaxEntries) {
+      const oldestKey = cache.keys().next().value;
+      if (oldestKey !== undefined) cache.delete(oldestKey);
+    }
+    cache.delete(key);
+    cache.set(key, entry);
+  }
+
   return {
     runCacheBenchmark(
       ownerId: string,
@@ -41,7 +68,7 @@ export function createPerformanceService(repository: PerformanceRepository) {
       const cacheKey = `${ownerId}:${key}`;
 
       if (mode === "before") {
-        const computed = computeChecksum(key);
+        const computed = compute(key);
         return {
           cacheAgeMs: null,
           cacheStatus: "bypass",
@@ -54,9 +81,12 @@ export function createPerformanceService(repository: PerformanceRepository) {
       }
 
       const cached = cache.get(cacheKey);
-      if (cached) {
+      const cacheAgeMs = cached ? now() - cached.createdAt : undefined;
+      if (cached && cacheAgeMs !== undefined && cacheAgeMs <= cacheTtlMs) {
+        cache.delete(cacheKey);
+        cache.set(cacheKey, cached);
         return {
-          cacheAgeMs: performance.now() - cached.createdAt,
+          cacheAgeMs,
           cacheStatus: "hit",
           checksum: cached.checksum,
           computationCount: cached.computationCount,
@@ -65,12 +95,13 @@ export function createPerformanceService(repository: PerformanceRepository) {
           serverDurationMs: performance.now() - startedAt,
         };
       }
+      if (cached) cache.delete(cacheKey);
 
-      const computed = computeChecksum(key);
-      cache.set(cacheKey, {
+      const computed = compute(key);
+      storeCacheEntry(cacheKey, {
         checksum: computed.checksum,
         computationCount,
-        createdAt: performance.now(),
+        createdAt: now(),
       });
       return {
         cacheAgeMs: 0,

@@ -138,7 +138,10 @@ const app = new OpenAPIHono<HonoEnv>({
     }),
     async (c) => {
       const { roomId } = c.req.valid("query");
-      return c.json({ roomId, items: await realtimeService.listChatMessages(roomId) });
+      return c.json({
+        roomId,
+        items: await realtimeService.listChatMessages(c.var.user.id, roomId),
+      });
     },
   )
   .openapi(

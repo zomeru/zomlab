@@ -22,15 +22,12 @@ declare global {
       readonly BETTER_AUTH_GOOGLE_CLIENT_ID: string | undefined;
       readonly BETTER_AUTH_GOOGLE_CLIENT_SECRET: string | undefined;
       readonly STRIPE_SECRET_KEY: string | undefined;
-      readonly STRIPE_PUBLISHABLE_KEY: string | undefined;
       readonly STRIPE_WEBHOOK_SECRET: string | undefined;
-      readonly PAYMONGO_PUBLIC_KEY: string | undefined;
       readonly PAYMONGO_SECRET_KEY: string | undefined;
       readonly PAYMONGO_WEBHOOK_SECRET: string | undefined;
       readonly PAYPAL_CLIENT_ID: string | undefined;
       readonly PAYPAL_CLIENT_SECRET: string | undefined;
       readonly PAYPAL_WEBHOOK_ID: string | undefined;
-      readonly PAYPAL_ENVIRONMENT: "sandbox" | undefined;
       readonly APP_ENV: "staging" | "production";
     }
   }

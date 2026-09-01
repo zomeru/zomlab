@@ -50,7 +50,6 @@ function providerConfigs(): PaymentProviderConfigs {
     paypal: {
       clientId: env.PAYPAL_CLIENT_ID,
       clientSecret: env.PAYPAL_CLIENT_SECRET,
-      environment: env.PAYPAL_ENVIRONMENT,
       webhookId: env.PAYPAL_WEBHOOK_ID,
     },
   };

@@ -16,6 +16,14 @@ import { serializeDates } from "../util";
 
 const HISTORY_LIMIT = 50;
 
+export async function realtimeRoomScopeKey(ownerId: string, roomId: string): Promise<string> {
+  const input = new TextEncoder().encode(`${ownerId}\0${roomId}`);
+  const digest = await crypto.subtle.digest("SHA-256", input);
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0"))
+    .join("")
+    .slice(0, 48);
+}
+
 export function toChronologicalMessages(
   rows: readonly RealtimeChatMessage[],
 ): RealtimeChatMessage[] {
@@ -26,24 +34,33 @@ export function createRealtimeRepository() {
   return {
     async createChatMessage(data: {
       id: string;
+      ownerId: string;
       roomId: string;
       senderId: string;
       senderName: string;
       content: string;
     }): Promise<RealtimeChatMessage> {
-      const [row] = await db.insert(realtimeChatMessages).values(data).returning();
+      const { ownerId, roomId, ...message } = data;
+      const scopedRoomId = await realtimeRoomScopeKey(ownerId, roomId);
+      const [row] = await db
+        .insert(realtimeChatMessages)
+        .values({ ...message, roomId: scopedRoomId })
+        .returning();
       if (!row) throw new Error("Realtime chat message insert did not return a row");
-      return serializeDates<RealtimeChatMessageRow>(row);
+      return { ...serializeDates<RealtimeChatMessageRow>(row), roomId };
     },
 
-    async listChatMessages(roomId: string): Promise<RealtimeChatMessage[]> {
+    async listChatMessages(ownerId: string, roomId: string): Promise<RealtimeChatMessage[]> {
+      const scopedRoomId = await realtimeRoomScopeKey(ownerId, roomId);
       const rows = await db
         .select()
         .from(realtimeChatMessages)
-        .where(eq(realtimeChatMessages.roomId, roomId))
+        .where(eq(realtimeChatMessages.roomId, scopedRoomId))
         .orderBy(desc(realtimeChatMessages.createdAt), desc(realtimeChatMessages.id))
         .limit(HISTORY_LIMIT);
-      return toChronologicalMessages(serializeDates<RealtimeChatMessageRow[]>(rows));
+      return toChronologicalMessages(
+        serializeDates<RealtimeChatMessageRow[]>(rows).map((row) => ({ ...row, roomId })),
+      );
     },
 
     async createNotification(data: {

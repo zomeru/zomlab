@@ -24,6 +24,12 @@ import type {
 } from "./types";
 
 const PAYMONGO_API = "https://api.paymongo.com";
+const PAYMONGO_CREATE_CHECKOUT_PATH = "/v2/checkout_sessions";
+
+function paymongoCheckoutStatusPath(referenceId: string): string {
+  // PayMongo recommends v2 for creation, while retrieval remains on the documented v1 endpoint.
+  return `/v1/checkout_sessions/${encodeURIComponent(referenceId)}`;
+}
 
 function assertPaymongoConfig(secretKey: string): void {
   if (!secretKey.startsWith("sk_test_")) throw new PaymentConfigurationError("PayMongo");
@@ -140,7 +146,7 @@ export function createPaymongoProvider(config: PaymongoPaymentConfig) {
   return {
     async createCheckout(input: ProviderCheckoutInput): Promise<ProviderCheckoutResult> {
       try {
-        const payload = await paymongoRequest(config.secretKey, "/v2/checkout_sessions", {
+        const payload = await paymongoRequest(config.secretKey, PAYMONGO_CREATE_CHECKOUT_PATH, {
           method: "POST",
           headers: { "Idempotency-Key": input.idempotencyKey },
           body: JSON.stringify({
@@ -195,10 +201,7 @@ export function createPaymongoProvider(config: PaymongoPaymentConfig) {
     async getStatus(referenceId: string): Promise<ProviderStatusResult> {
       try {
         return parseCheckoutStatus(
-          await paymongoRequest(
-            config.secretKey,
-            `/v1/checkout_sessions/${encodeURIComponent(referenceId)}`,
-          ),
+          await paymongoRequest(config.secretKey, paymongoCheckoutStatusPath(referenceId)),
         );
       } catch (error) {
         if (error instanceof ApiError) throw error;

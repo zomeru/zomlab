@@ -31,6 +31,7 @@ export function isPresenceStale(lastSeenAt: string, now: number): boolean {
 
 export function getRealtimeHubName(query: RealtimeWebSocketQuery, userId: string): string {
   if (query.channel === "notifications") return `notifications:${userId}`;
+  if (query.channel === "chat") return `chat:${userId}:${query.roomId}`;
   if (query.channel === "demo") return "demo:websockets";
   return `${query.channel}:${query.roomId}`;
 }

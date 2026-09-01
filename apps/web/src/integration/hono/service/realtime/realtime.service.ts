@@ -13,7 +13,10 @@ export interface RealtimePublisher {
 }
 
 export interface RealtimeService {
-  listChatMessages(roomId: string): ReturnType<DatabaseRealtimeRepository["listChatMessages"]>;
+  listChatMessages(
+    userId: string,
+    roomId: string,
+  ): ReturnType<DatabaseRealtimeRepository["listChatMessages"]>;
   listNotifications(userId: string): Promise<RealtimeNotificationListResponse>;
   generateNotification(
     userId: string,
@@ -43,8 +46,8 @@ export function createRealtimeService(
   publisher: RealtimePublisher,
 ): RealtimeService {
   return {
-    async listChatMessages(roomId) {
-      return repository.listChatMessages(roomId);
+    async listChatMessages(userId, roomId) {
+      return repository.listChatMessages(userId, roomId);
     },
 
     async listNotifications(userId) {

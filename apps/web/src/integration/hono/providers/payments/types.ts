@@ -49,6 +49,5 @@ export interface PaymongoPaymentConfig {
 export interface PaypalPaymentConfig {
   clientId: string;
   clientSecret: string;
-  environment: "sandbox";
   webhookId: string;
 }

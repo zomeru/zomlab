@@ -115,7 +115,7 @@ export function LiveChatDemo() {
   return (
     <RealtimeDemoShell
       title="Live Chat"
-      description="An application feature built on the shared WebSocket hub: authenticated identity, PostgreSQL history, server-side validation, room-scoped broadcasts, reconnect recovery, and deduplication."
+      description="An authenticated, user-scoped chat lab with PostgreSQL history, server-side validation, room broadcasts across your tabs, reconnect recovery, and deduplication."
     >
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(20rem,0.65fr)]">
         <Card>
@@ -123,7 +123,7 @@ export function LiveChatDemo() {
             <div>
               <CardTitle>Room: {ROOM_ID}</CardTitle>
               <p className="mt-1 text-sm text-muted-foreground">
-                Open this route in another tab to chat immediately.
+                Open this route in another tab while signed in to test synchronized chat safely.
               </p>
             </div>
             <Badge variant="success">

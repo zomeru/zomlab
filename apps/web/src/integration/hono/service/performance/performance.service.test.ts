@@ -35,4 +35,22 @@ describe("performance service cache", () => {
       service.runCacheBenchmark("cache-bypass-user", "report", "before").cacheAgeMs,
     ).toBeNull();
   });
+
+  test("expires stale entries and evicts the least recently used entry at the bound", () => {
+    let now = 0;
+    const service = createPerformanceService(repositoryStub(), {
+      cacheMaxEntries: 2,
+      cacheTtlMs: 100,
+      now: () => now,
+    });
+
+    expect(service.runCacheBenchmark("user", "first", "after").cacheStatus).toBe("miss");
+    expect(service.runCacheBenchmark("user", "second", "after").cacheStatus).toBe("miss");
+    expect(service.runCacheBenchmark("user", "first", "after").cacheStatus).toBe("hit");
+    expect(service.runCacheBenchmark("user", "third", "after").cacheStatus).toBe("miss");
+    expect(service.runCacheBenchmark("user", "second", "after").cacheStatus).toBe("miss");
+
+    now = 101;
+    expect(service.runCacheBenchmark("user", "second", "after").cacheStatus).toBe("miss");
+  });
 });

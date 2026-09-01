@@ -242,6 +242,7 @@ export class RealtimeHub extends DurableObject<Cloudflare.Env> {
       try {
         const message = await createRealtimeRepository().createChatMessage({
           id: crypto.randomUUID(),
+          ownerId: attachment.user.id,
           roomId: attachment.roomId,
           senderId: attachment.user.id,
           senderName: attachment.user.name,

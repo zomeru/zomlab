@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/components/layout/user-menu.tsx": {
-    "mtime": 1786685947.5560446,
-    "ast_hash": "ca778d946fa089800891504289f4e27d",
+    "mtime": 1788239356.183981,
+    "ast_hash": "662ecc45f6369d852bd60507d187bac6",
     "semantic_hash": ""
   },
   "apps/web/src/components/terminal-block.tsx": {
@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/env.d.ts": {
-    "mtime": 1788081048.8987243,
-    "ast_hash": "2425e26602f13a165504895ffe1b0e44",
+    "mtime": 1788239249.0792043,
+    "ast_hash": "18906faccadf0114b5285c9de98d0484",
     "semantic_hash": ""
   },
   "apps/web/src/hooks/use-health.ts": {
@@ -125,8 +125,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/types.ts": {
-    "mtime": 1788189677.1707473,
-    "ast_hash": "9047e44c58d63174ffce5f85d5d49303",
+    "mtime": 1788239249.0798824,
+    "ast_hash": "9120942e20c4a2e13bfb5808e996edfc",
     "semantic_hash": ""
   },
   "apps/web/src/labs/core/crud/components/note-card.tsx": {
@@ -360,8 +360,8 @@
     "semantic_hash": ""
   },
   "packages/auth/src/auth-environment.test.ts": {
-    "mtime": 1788082058.1675363,
-    "ast_hash": "269e5d256981457cf65c00ef9877fc6b",
+    "mtime": 1788239460.8461375,
+    "ast_hash": "88ac6a8bede9cfe2928ce942ff188ebe",
     "semantic_hash": ""
   },
   "packages/auth/src/auth-environment.ts": {
@@ -510,8 +510,8 @@
     "semantic_hash": ""
   },
   "packages/env/src/index.ts": {
-    "mtime": 1788082018.7266371,
-    "ast_hash": "e5129afbddaedf639ae1b25aaac92b46",
+    "mtime": 1788239249.0785708,
+    "ast_hash": "63b98919713f78ffe12a9e8b5667d7c1",
     "semantic_hash": ""
   },
   "packages/env/tsconfig.json": {
@@ -700,7 +700,7 @@
     "semantic_hash": ""
   },
   "apps/web/worker-configuration.d.ts": {
-    "mtime": 1788165911.8982105,
+    "mtime": 1788239534.1861472,
     "ast_hash": "4d01b68f86ae69d4d7349d8e8f1a549f",
     "semantic_hash": ""
   },
@@ -1500,8 +1500,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/__tests__/integration/hono/service/payments/payment.service.test.ts": {
-    "mtime": 1788082504.2113662,
-    "ast_hash": "43cfa035cdf45e69a012b41dad4def07",
+    "mtime": 1788239281.7976358,
+    "ast_hash": "645dd6fbffac87ebb86a5288ad05c33b",
     "semantic_hash": ""
   },
   "apps/web/src/__tests__/integration/hono/utils/payment-crypto.test.ts": {
@@ -1520,13 +1520,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/providers/payments/paymongo.provider.ts": {
-    "mtime": 1788082228.8602474,
-    "ast_hash": "34b7d8a21c00dc7c85724541c21880e9",
+    "mtime": 1788239261.4666224,
+    "ast_hash": "737fef25b876729f8ca771e74432f29e",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/providers/payments/paypal.provider.ts": {
-    "mtime": 1788082228.861072,
-    "ast_hash": "2829ebc870eaf49dab5e31d23ad9f0e3",
+    "mtime": 1788239249.0812278,
+    "ast_hash": "1b9b770d1187a776e623b2611645dd18",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/providers/payments/provider-errors.ts": {
@@ -1545,18 +1545,18 @@
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/providers/payments/types.ts": {
-    "mtime": 1788082018.7592964,
-    "ast_hash": "a2bcc21193c5329fc8cb734c12a85713",
+    "mtime": 1788239249.0803778,
+    "ast_hash": "a773a1f77aaf6d1125322c62c78cd072",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/routes/payments/payments.route.ts": {
-    "mtime": 1788160496.4536707,
-    "ast_hash": "665ed8a97fbcb6800eb4ff082de004f7",
+    "mtime": 1788239249.0824888,
+    "ast_hash": "2994dac2b1d8a1694b31f4a44d1ea0bd",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/service/payments/payment.service.ts": {
-    "mtime": 1788082583.1123188,
-    "ast_hash": "6e0762929e5982f5ee0262fc02b9016d",
+    "mtime": 1788239261.4676068,
+    "ast_hash": "8b2874254dc240ffda196d3ce73036ee",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/utils/payment-crypto.ts": {
@@ -1590,8 +1590,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/labs/payments/components/provider-setup-guide.tsx": {
-    "mtime": 1788082018.8249702,
-    "ast_hash": "dd232731d99fd564ac8affe5e094d7dd",
+    "mtime": 1788239492.1897624,
+    "ast_hash": "5037e963142376ce8bb487dc99d3b294",
     "semantic_hash": ""
   },
   "apps/web/src/labs/payments/components/signature-validation-demo.tsx": {
@@ -1690,8 +1690,8 @@
     "semantic_hash": ""
   },
   "apps/web/src/__tests__/integration/hono/providers/payments/stripe.provider.test.ts": {
-    "mtime": 1788162703.0337927,
-    "ast_hash": "e54230eea4ce3a3d3dca9ce5e9a19cfc",
+    "mtime": 1788239492.1292236,
+    "ast_hash": "8d09e645e1b983cf122913929b35f9d7",
     "semantic_hash": ""
   },
   "apps/web/src/__tests__/integration/hono/service/realtime/realtime.service.test.ts": {
@@ -1710,23 +1710,23 @@
     "semantic_hash": ""
   },
   "apps/web/src/__tests__/realtime/runtime.test.ts": {
-    "mtime": 1788166896.7030165,
-    "ast_hash": "f98f1beccd023901947e85768876b152",
+    "mtime": 1788239356.1816888,
+    "ast_hash": "f9ceec5aa8e4b437e679dbb922aac045",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/routes/realtime/realtime.route.ts": {
-    "mtime": 1788167121.4174514,
-    "ast_hash": "a9459d87465f8b1784b3296ea9ef1b37",
+    "mtime": 1788239356.1803532,
+    "ast_hash": "e2ca478f30023bcd4f763405c3d60449",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/service/realtime/realtime.service.ts": {
-    "mtime": 1788165865.355853,
-    "ast_hash": "852fd28335b24c3ff63309663588c7fb",
+    "mtime": 1788239356.179841,
+    "ast_hash": "1841d359c4b1432510d31e049cd4fbd4",
     "semantic_hash": ""
   },
   "apps/web/src/labs/realtime/live-chat/live-chat-demo.tsx": {
-    "mtime": 1788166941.9059262,
-    "ast_hash": "dd081b394a90eb3f6c2f7a4191d78e9d",
+    "mtime": 1788239356.1830113,
+    "ast_hash": "abaf7f8a047fd8ebc819ad1ea99866fb",
     "semantic_hash": ""
   },
   "apps/web/src/labs/realtime/notifications/notifications-demo.tsx": {
@@ -1785,13 +1785,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/realtime/realtime-hub.ts": {
-    "mtime": 1788168939.1587396,
-    "ast_hash": "f1e08fb1be47e81cd19813b6e134a2c3",
+    "mtime": 1788239356.18096,
+    "ast_hash": "28546f12bc52e6e04c5fad65b0ea4b7d",
     "semantic_hash": ""
   },
   "apps/web/src/realtime/runtime.ts": {
-    "mtime": 1788167878.6072917,
-    "ast_hash": "0ccdbc76a93e16034305e1181e329849",
+    "mtime": 1788239356.1783075,
+    "ast_hash": "cd07998492f011cc8899120fa8263791",
     "semantic_hash": ""
   },
   "apps/web/src/routes/_authenticated.realtime.live-chat.tsx": {
@@ -1860,13 +1860,13 @@
     "semantic_hash": ""
   },
   "packages/database/src/repositories/realtime/realtime.test.ts": {
-    "mtime": 1788165463.649991,
-    "ast_hash": "b04754acdd45175594cc9e63c3fd6b9a",
+    "mtime": 1788239356.1823301,
+    "ast_hash": "ac8284e9ae2b7902f6b349a1a9643b69",
     "semantic_hash": ""
   },
   "packages/database/src/repositories/realtime/realtime.ts": {
-    "mtime": 1788166896.7031097,
-    "ast_hash": "0b522794ec0436a961d6a50059e580a0",
+    "mtime": 1788239356.1791947,
+    "ast_hash": "b36c8904710634b97eb0f61b32866673",
     "semantic_hash": ""
   },
   "apps/web/src/labs/realtime/README.md": {
@@ -1880,13 +1880,13 @@
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/service/performance/performance.service.test.ts": {
-    "mtime": 1788190296.6314862,
-    "ast_hash": "6e3b3397425950e67a4e8362cf388908",
+    "mtime": 1788239398.4610937,
+    "ast_hash": "b3347d5b57f159c04bd81c533d0cda29",
     "semantic_hash": ""
   },
   "apps/web/src/integration/hono/service/performance/performance.service.ts": {
-    "mtime": 1788190509.7556334,
-    "ast_hash": "d971e3a54b66481846ca630f8655146c",
+    "mtime": 1788239391.1495812,
+    "ast_hash": "50d98483236ef6c16dda4fd74db2c918",
     "semantic_hash": ""
   },
   "apps/web/src/labs/performance/api/api-performance-lab.tsx": {
@@ -2122,6 +2122,16 @@
   "apps/web/src/vite-plugins/performance-bundle-report.ts": {
     "mtime": 1788237756.4355218,
     "ast_hash": "dcabaf95383855da984306d719c57f0e",
+    "semantic_hash": ""
+  },
+  "apps/web/src/__tests__/integration/hono/providers/payments/paymongo.provider.test.ts": {
+    "mtime": 1788239586.004182,
+    "ast_hash": "e7902b186f2e44c16c0017a052c8108b",
+    "semantic_hash": ""
+  },
+  "apps/web/src/__tests__/integration/hono/providers/payments/paypal.provider.test.ts": {
+    "mtime": 1788239492.1292236,
+    "ast_hash": "90cb61ffaf676ca492ac2d3e56e570f6",
     "semantic_hash": ""
   }
 }
