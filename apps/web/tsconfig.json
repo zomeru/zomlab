@@ -1,6 +1,7 @@
 {
   "extends": "@zomlab/tsconfig/react-library.json",
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,

@@ -275,13 +275,13 @@
     "semantic_hash": ""
   },
   "apps/web/tsconfig.json": {
-    "mtime": 1788167337.6435456,
-    "ast_hash": "314edfe730ce3652b22f75060732dbe6",
+    "mtime": 1788237783.6430166,
+    "ast_hash": "c066644712d325f5317fcb384ec5bee5",
     "semantic_hash": ""
   },
   "apps/web/vite.config.ts": {
-    "mtime": 1788191367.3298714,
-    "ast_hash": "fe7d19c4b9bd33d147887cc30e24a2de",
+    "mtime": 1788237756.4344928,
+    "ast_hash": "2e8d1cb079b58f26a4cdc13e1b65edf2",
     "semantic_hash": ""
   },
   "apps/web/vitest.config.ts": {
@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1788079703.0297685,
-    "ast_hash": "4d352078c9cfa92aaf4cc8148991f830",
+    "mtime": 1788236836.2445598,
+    "ast_hash": "81e1d0adccf53dc160d6699636777c04",
     "semantic_hash": ""
   },
   "AGENTS.md": {
@@ -730,12 +730,12 @@
     "semantic_hash": ""
   },
   ".github/workflows/e2e-tests.yml": {
-    "mtime": 1788079703.0300248,
-    "ast_hash": "ef179de53015552bb4f78749bbd98d8b",
+    "mtime": 1788236876.849757,
+    "ast_hash": "6698d3497949a7b33ff4f9fe62c73db3",
     "semantic_hash": ""
   },
   ".github/workflows/migrate-db.yml": {
-    "mtime": 1788079703.0302956,
+    "mtime": 1788236886.65546,
     "ast_hash": "f947547de8a4312c752ad9800d3904d8",
     "semantic_hash": ""
   },
@@ -2117,6 +2117,11 @@
   "apps/web/src/labs/performance/shared/comparison-run-button.tsx": {
     "mtime": 1788230262.5095258,
     "ast_hash": "571faf8a3a926a18eb3a8c0d056b5d74",
+    "semantic_hash": ""
+  },
+  "apps/web/src/vite-plugins/performance-bundle-report.ts": {
+    "mtime": 1788237756.4355218,
+    "ast_hash": "dcabaf95383855da984306d719c57f0e",
     "semantic_hash": ""
   }
 }

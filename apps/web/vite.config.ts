@@ -10,7 +10,7 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import remarkGfm from "remark-gfm";
 import { defineConfig } from "vite";
-import { performanceBundleReport } from "./src/build/performance-bundle-report";
+import { performanceBundleReport } from "./src/vite-plugins/performance-bundle-report.ts";
 
 const syntaxHighlightingOptions = {
   defaultColor: "light-dark()",
