@@ -130,6 +130,55 @@ test("shows Error Handling as an overview, contract, and demo group", async ({ p
   );
 });
 
+test("publishes every Realtime module as a navigable route", async ({ page }) => {
+  await page.goto("/");
+
+  const sidebar = page.getByRole("navigation", { name: "Sidebar" });
+  const realtimeSection = sidebar.locator("details").filter({ hasText: "Realtime" });
+  await realtimeSection.locator(":scope > summary").click();
+
+  const expectedLinks = [
+    ["WebSockets", "/realtime/websockets"],
+    ["SSE", "/realtime/sse"],
+    ["Live Chat", "/realtime/live-chat"],
+    ["Presence", "/realtime/presence"],
+    ["Notifications", "/realtime/notifications"],
+  ] as const;
+  for (const [name, href] of expectedLinks) {
+    await expect(realtimeSection.getByRole("link", { name })).toHaveAttribute("href", href);
+  }
+});
+
+test("publishes the full-stack Performance section as navigable routes", async ({ page }) => {
+  await page.goto("/");
+
+  const sidebar = page.getByRole("navigation", { name: "Sidebar" });
+  const performanceSection = sidebar.locator("details").filter({ hasText: "Performance" });
+  await performanceSection.locator(":scope > summary").click();
+
+  const expectedLinks = [
+    ["React Rendering", "/performance/react-rendering"],
+    ["Memoization", "/performance/memoization"],
+    ["Virtualization", "/performance/virtualization"],
+    ["Lazy Loading", "/performance/lazy-loading"],
+    ["Code Splitting", "/performance/code-splitting"],
+    ["Caching", "/performance/caching"],
+    ["Bundle Analysis", "/performance/bundle-analysis"],
+    ["JavaScript", "/performance/javascript"],
+    ["API", "/performance/api"],
+    ["Database", "/performance/database"],
+    ["Network", "/performance/network"],
+    ["Concurrency", "/performance/concurrency"],
+    ["Profiling", "/performance/profiling"],
+  ] as const;
+  for (const [name, href] of expectedLinks) {
+    await expect(performanceSection.getByRole("link", { name, exact: true })).toHaveAttribute(
+      "href",
+      href,
+    );
+  }
+});
+
 test("keeps the Core sidebar section open after an unauthenticated demo redirect", async ({
   page,
 }) => {

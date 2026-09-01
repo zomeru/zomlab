@@ -50,6 +50,7 @@ playwright-report/
 test-results/
 generated/
 .serena
+prompts/
 
 graphify-out/cost.json 
 graphify-out/cache/

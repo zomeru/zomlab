@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
+    "@zomlab/contracts": "workspace:*",
     "@zomlab/env": "workspace:*",
     "drizzle-orm": "^0.45.2"
   },

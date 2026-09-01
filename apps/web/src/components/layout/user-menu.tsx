@@ -1,5 +1,6 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { authClient } from "@zomlab/auth/client";
 import { Button } from "@zomlab/ui/components/button";
@@ -20,10 +21,12 @@ type UserMenuProps = {
 };
 
 export function UserMenu({ name, email, initial }: UserMenuProps) {
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   async function handleSignOut() {
     await authClient.signOut();
+    queryClient.clear();
     await router.navigate({ to: "/", replace: true });
     await router.invalidate({ sync: true });
   }

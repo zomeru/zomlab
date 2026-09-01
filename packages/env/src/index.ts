@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+const sandboxKey = (prefix: string) =>
+  z
+    .string()
+    .default("")
+    .refine((value) => value === "" || value.startsWith(prefix), {
+      message: `must be empty or start with ${prefix}`,
+    });
+
 const envSchema = z.object({
   APP_ENV: z.enum(["staging", "production"]).default("staging"),
   DATABASE_URL: z.url(),
@@ -11,6 +19,13 @@ const envSchema = z.object({
   BETTER_AUTH_GITHUB_CLIENT_SECRET: z.string().default(""),
   BETTER_AUTH_GOOGLE_CLIENT_ID: z.string().default(""),
   BETTER_AUTH_GOOGLE_CLIENT_SECRET: z.string().default(""),
+  STRIPE_SECRET_KEY: sandboxKey("sk_test_"),
+  STRIPE_WEBHOOK_SECRET: sandboxKey("whsec_"),
+  PAYMONGO_SECRET_KEY: sandboxKey("sk_test_"),
+  PAYMONGO_WEBHOOK_SECRET: sandboxKey("whsk_"),
+  PAYPAL_CLIENT_ID: z.string().default(""),
+  PAYPAL_CLIENT_SECRET: z.string().default(""),
+  PAYPAL_WEBHOOK_ID: z.string().default(""),
 });
 
 type ServerEnv = z.infer<typeof envSchema>;

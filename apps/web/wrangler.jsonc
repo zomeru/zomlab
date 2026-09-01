@@ -1,12 +1,26 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "main": "@tanstack/react-start/server-entry",
+  "main": "src/server.ts",
   "compatibility_date": "2026-08-08",
   "compatibility_flags": ["nodejs_compat"],
   "placement": {
     "region": "aws:ap-southeast-1"
   },
   "preview_urls": true,
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "REALTIME_HUB",
+        "class_name": "RealtimeHub"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["RealtimeHub"]
+    }
+  ],
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1,
@@ -30,7 +44,9 @@
         "BETTER_AUTH_URL": "https://zomlab-staging.zomer.workers.dev",
         "BETTER_AUTH_ALLOWED_HOSTS": "zomlab-staging.zomer.workers.dev",
         "BETTER_AUTH_GITHUB_CLIENT_ID": "Ov23lieSOSh0vW0h5GkW",
-        "BETTER_AUTH_GOOGLE_CLIENT_ID": "613252713855-3gi0bub6162bqgmk0rs3b3ojia3e3a98.apps.googleusercontent.com"
+        "BETTER_AUTH_GOOGLE_CLIENT_ID": "613252713855-3gi0bub6162bqgmk0rs3b3ojia3e3a98.apps.googleusercontent.com",
+        "PAYPAL_CLIENT_ID": "BAAt8StKXto6FEDwn3_ZTzBtyUuX_MuuL6H-ZyGyfQR9N6389jazHZvEAehfl8AIxjnylxn_JCJLvYaj7I",
+        "PAYPAL_WEBHOOK_ID": "2R314379AX163601V"
       },
       "ratelimits": [
         {
@@ -42,6 +58,14 @@
           }
         }
       ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "REALTIME_HUB",
+            "class_name": "RealtimeHub"
+          }
+        ]
+      },
       "r2_buckets": [
         {
           "binding": "FILE_UPLOADS",
@@ -56,7 +80,9 @@
         "BETTER_AUTH_URL": "https://lab.zomeru.dev",
         "BETTER_AUTH_ALLOWED_HOSTS": "lab.zomeru.dev",
         "BETTER_AUTH_GITHUB_CLIENT_ID": "Ov23li2eRKovhCAzWZ2r",
-        "BETTER_AUTH_GOOGLE_CLIENT_ID": "613252713855-3gi0bub6162bqgmk0rs3b3ojia3e3a98.apps.googleusercontent.com"
+        "BETTER_AUTH_GOOGLE_CLIENT_ID": "613252713855-3gi0bub6162bqgmk0rs3b3ojia3e3a98.apps.googleusercontent.com",
+        "PAYPAL_CLIENT_ID": "BAAt8StKXto6FEDwn3_ZTzBtyUuX_MuuL6H-ZyGyfQR9N6389jazHZvEAehfl8AIxjnylxn_JCJLvYaj7I",
+        "PAYPAL_WEBHOOK_ID": "2R314379AX163601V"
       },
       "routes": [
         {
@@ -75,6 +101,14 @@
           }
         }
       ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "REALTIME_HUB",
+            "class_name": "RealtimeHub"
+          }
+        ]
+      },
       "r2_buckets": [
         {
           "binding": "FILE_UPLOADS",

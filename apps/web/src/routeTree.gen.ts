@@ -28,6 +28,30 @@ import { Route as AuthenticatedCoreSearchFilterDemoRouteImport } from './routes/
 import { Route as AuthenticatedCoreStateManagementDemoRouteImport } from './routes/_authenticated.core.state-management-demo'
 import { Route as AuthenticatedCoreTablesDemoRouteImport } from './routes/_authenticated.core.tables-demo'
 import { Route as AuthenticatedCoreValidationDemoRouteImport } from './routes/_authenticated.core.validation-demo'
+import { Route as AuthenticatedPaymentsIdempotencyRouteImport } from './routes/_authenticated.payments.idempotency'
+import { Route as AuthenticatedPaymentsPaymongoRouteImport } from './routes/_authenticated.payments.paymongo'
+import { Route as AuthenticatedPaymentsPaypalRouteImport } from './routes/_authenticated.payments.paypal'
+import { Route as AuthenticatedPaymentsSignatureValidationRouteImport } from './routes/_authenticated.payments.signature-validation'
+import { Route as AuthenticatedPaymentsStripeRouteImport } from './routes/_authenticated.payments.stripe'
+import { Route as AuthenticatedPaymentsWebhooksRouteImport } from './routes/_authenticated.payments.webhooks'
+import { Route as AuthenticatedPerformanceApiRouteImport } from './routes/_authenticated.performance.api'
+import { Route as AuthenticatedPerformanceBundleAnalysisRouteImport } from './routes/_authenticated.performance.bundle-analysis'
+import { Route as AuthenticatedPerformanceCachingRouteImport } from './routes/_authenticated.performance.caching'
+import { Route as AuthenticatedPerformanceCodeSplittingRouteImport } from './routes/_authenticated.performance.code-splitting'
+import { Route as AuthenticatedPerformanceConcurrencyRouteImport } from './routes/_authenticated.performance.concurrency'
+import { Route as AuthenticatedPerformanceDatabaseRouteImport } from './routes/_authenticated.performance.database'
+import { Route as AuthenticatedPerformanceJavascriptRouteImport } from './routes/_authenticated.performance.javascript'
+import { Route as AuthenticatedPerformanceLazyLoadingRouteImport } from './routes/_authenticated.performance.lazy-loading'
+import { Route as AuthenticatedPerformanceMemoizationRouteImport } from './routes/_authenticated.performance.memoization'
+import { Route as AuthenticatedPerformanceNetworkRouteImport } from './routes/_authenticated.performance.network'
+import { Route as AuthenticatedPerformanceProfilingRouteImport } from './routes/_authenticated.performance.profiling'
+import { Route as AuthenticatedPerformanceReactRenderingRouteImport } from './routes/_authenticated.performance.react-rendering'
+import { Route as AuthenticatedPerformanceVirtualizationRouteImport } from './routes/_authenticated.performance.virtualization'
+import { Route as AuthenticatedRealtimeLiveChatRouteImport } from './routes/_authenticated.realtime.live-chat'
+import { Route as AuthenticatedRealtimeNotificationsRouteImport } from './routes/_authenticated.realtime.notifications'
+import { Route as AuthenticatedRealtimePresenceRouteImport } from './routes/_authenticated.realtime.presence'
+import { Route as AuthenticatedRealtimeSseRouteImport } from './routes/_authenticated.realtime.sse'
+import { Route as AuthenticatedRealtimeWebsocketsRouteImport } from './routes/_authenticated.realtime.websockets'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as CoreCachingIndexRouteImport } from './routes/core.caching.index'
 import { Route as CoreCrudIndexRouteImport } from './routes/core.crud.index'
@@ -155,6 +179,150 @@ const AuthenticatedCoreValidationDemoRoute =
   AuthenticatedCoreValidationDemoRouteImport.update({
     id: '/core/validation-demo',
     path: '/core/validation-demo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsIdempotencyRoute =
+  AuthenticatedPaymentsIdempotencyRouteImport.update({
+    id: '/payments/idempotency',
+    path: '/payments/idempotency',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsPaymongoRoute =
+  AuthenticatedPaymentsPaymongoRouteImport.update({
+    id: '/payments/paymongo',
+    path: '/payments/paymongo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsPaypalRoute =
+  AuthenticatedPaymentsPaypalRouteImport.update({
+    id: '/payments/paypal',
+    path: '/payments/paypal',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsSignatureValidationRoute =
+  AuthenticatedPaymentsSignatureValidationRouteImport.update({
+    id: '/payments/signature-validation',
+    path: '/payments/signature-validation',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsStripeRoute =
+  AuthenticatedPaymentsStripeRouteImport.update({
+    id: '/payments/stripe',
+    path: '/payments/stripe',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPaymentsWebhooksRoute =
+  AuthenticatedPaymentsWebhooksRouteImport.update({
+    id: '/payments/webhooks',
+    path: '/payments/webhooks',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceApiRoute =
+  AuthenticatedPerformanceApiRouteImport.update({
+    id: '/performance/api',
+    path: '/performance/api',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceBundleAnalysisRoute =
+  AuthenticatedPerformanceBundleAnalysisRouteImport.update({
+    id: '/performance/bundle-analysis',
+    path: '/performance/bundle-analysis',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceCachingRoute =
+  AuthenticatedPerformanceCachingRouteImport.update({
+    id: '/performance/caching',
+    path: '/performance/caching',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceCodeSplittingRoute =
+  AuthenticatedPerformanceCodeSplittingRouteImport.update({
+    id: '/performance/code-splitting',
+    path: '/performance/code-splitting',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceConcurrencyRoute =
+  AuthenticatedPerformanceConcurrencyRouteImport.update({
+    id: '/performance/concurrency',
+    path: '/performance/concurrency',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceDatabaseRoute =
+  AuthenticatedPerformanceDatabaseRouteImport.update({
+    id: '/performance/database',
+    path: '/performance/database',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceJavascriptRoute =
+  AuthenticatedPerformanceJavascriptRouteImport.update({
+    id: '/performance/javascript',
+    path: '/performance/javascript',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceLazyLoadingRoute =
+  AuthenticatedPerformanceLazyLoadingRouteImport.update({
+    id: '/performance/lazy-loading',
+    path: '/performance/lazy-loading',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceMemoizationRoute =
+  AuthenticatedPerformanceMemoizationRouteImport.update({
+    id: '/performance/memoization',
+    path: '/performance/memoization',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceNetworkRoute =
+  AuthenticatedPerformanceNetworkRouteImport.update({
+    id: '/performance/network',
+    path: '/performance/network',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceProfilingRoute =
+  AuthenticatedPerformanceProfilingRouteImport.update({
+    id: '/performance/profiling',
+    path: '/performance/profiling',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceReactRenderingRoute =
+  AuthenticatedPerformanceReactRenderingRouteImport.update({
+    id: '/performance/react-rendering',
+    path: '/performance/react-rendering',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPerformanceVirtualizationRoute =
+  AuthenticatedPerformanceVirtualizationRouteImport.update({
+    id: '/performance/virtualization',
+    path: '/performance/virtualization',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedRealtimeLiveChatRoute =
+  AuthenticatedRealtimeLiveChatRouteImport.update({
+    id: '/realtime/live-chat',
+    path: '/realtime/live-chat',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedRealtimeNotificationsRoute =
+  AuthenticatedRealtimeNotificationsRouteImport.update({
+    id: '/realtime/notifications',
+    path: '/realtime/notifications',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedRealtimePresenceRoute =
+  AuthenticatedRealtimePresenceRouteImport.update({
+    id: '/realtime/presence',
+    path: '/realtime/presence',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedRealtimeSseRoute =
+  AuthenticatedRealtimeSseRouteImport.update({
+    id: '/realtime/sse',
+    path: '/realtime/sse',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedRealtimeWebsocketsRoute =
+  AuthenticatedRealtimeWebsocketsRouteImport.update({
+    id: '/realtime/websockets',
+    path: '/realtime/websockets',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -287,6 +455,30 @@ export interface FileRoutesByFullPath {
   '/core/state-management-demo': typeof AuthenticatedCoreStateManagementDemoRoute
   '/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
+  '/payments/idempotency': typeof AuthenticatedPaymentsIdempotencyRoute
+  '/payments/paymongo': typeof AuthenticatedPaymentsPaymongoRoute
+  '/payments/paypal': typeof AuthenticatedPaymentsPaypalRoute
+  '/payments/signature-validation': typeof AuthenticatedPaymentsSignatureValidationRoute
+  '/payments/stripe': typeof AuthenticatedPaymentsStripeRoute
+  '/payments/webhooks': typeof AuthenticatedPaymentsWebhooksRoute
+  '/performance/api': typeof AuthenticatedPerformanceApiRoute
+  '/performance/bundle-analysis': typeof AuthenticatedPerformanceBundleAnalysisRoute
+  '/performance/caching': typeof AuthenticatedPerformanceCachingRoute
+  '/performance/code-splitting': typeof AuthenticatedPerformanceCodeSplittingRoute
+  '/performance/concurrency': typeof AuthenticatedPerformanceConcurrencyRoute
+  '/performance/database': typeof AuthenticatedPerformanceDatabaseRoute
+  '/performance/javascript': typeof AuthenticatedPerformanceJavascriptRoute
+  '/performance/lazy-loading': typeof AuthenticatedPerformanceLazyLoadingRoute
+  '/performance/memoization': typeof AuthenticatedPerformanceMemoizationRoute
+  '/performance/network': typeof AuthenticatedPerformanceNetworkRoute
+  '/performance/profiling': typeof AuthenticatedPerformanceProfilingRoute
+  '/performance/react-rendering': typeof AuthenticatedPerformanceReactRenderingRoute
+  '/performance/virtualization': typeof AuthenticatedPerformanceVirtualizationRoute
+  '/realtime/live-chat': typeof AuthenticatedRealtimeLiveChatRoute
+  '/realtime/notifications': typeof AuthenticatedRealtimeNotificationsRoute
+  '/realtime/presence': typeof AuthenticatedRealtimePresenceRoute
+  '/realtime/sse': typeof AuthenticatedRealtimeSseRoute
+  '/realtime/websockets': typeof AuthenticatedRealtimeWebsocketsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
   '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
@@ -328,6 +520,30 @@ export interface FileRoutesByTo {
   '/core/state-management-demo': typeof AuthenticatedCoreStateManagementDemoRoute
   '/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
+  '/payments/idempotency': typeof AuthenticatedPaymentsIdempotencyRoute
+  '/payments/paymongo': typeof AuthenticatedPaymentsPaymongoRoute
+  '/payments/paypal': typeof AuthenticatedPaymentsPaypalRoute
+  '/payments/signature-validation': typeof AuthenticatedPaymentsSignatureValidationRoute
+  '/payments/stripe': typeof AuthenticatedPaymentsStripeRoute
+  '/payments/webhooks': typeof AuthenticatedPaymentsWebhooksRoute
+  '/performance/api': typeof AuthenticatedPerformanceApiRoute
+  '/performance/bundle-analysis': typeof AuthenticatedPerformanceBundleAnalysisRoute
+  '/performance/caching': typeof AuthenticatedPerformanceCachingRoute
+  '/performance/code-splitting': typeof AuthenticatedPerformanceCodeSplittingRoute
+  '/performance/concurrency': typeof AuthenticatedPerformanceConcurrencyRoute
+  '/performance/database': typeof AuthenticatedPerformanceDatabaseRoute
+  '/performance/javascript': typeof AuthenticatedPerformanceJavascriptRoute
+  '/performance/lazy-loading': typeof AuthenticatedPerformanceLazyLoadingRoute
+  '/performance/memoization': typeof AuthenticatedPerformanceMemoizationRoute
+  '/performance/network': typeof AuthenticatedPerformanceNetworkRoute
+  '/performance/profiling': typeof AuthenticatedPerformanceProfilingRoute
+  '/performance/react-rendering': typeof AuthenticatedPerformanceReactRenderingRoute
+  '/performance/virtualization': typeof AuthenticatedPerformanceVirtualizationRoute
+  '/realtime/live-chat': typeof AuthenticatedRealtimeLiveChatRoute
+  '/realtime/notifications': typeof AuthenticatedRealtimeNotificationsRoute
+  '/realtime/presence': typeof AuthenticatedRealtimePresenceRoute
+  '/realtime/sse': typeof AuthenticatedRealtimeSseRoute
+  '/realtime/websockets': typeof AuthenticatedRealtimeWebsocketsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
   '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
@@ -371,6 +587,30 @@ export interface FileRoutesById {
   '/_authenticated/core/state-management-demo': typeof AuthenticatedCoreStateManagementDemoRoute
   '/_authenticated/core/tables-demo': typeof AuthenticatedCoreTablesDemoRoute
   '/_authenticated/core/validation-demo': typeof AuthenticatedCoreValidationDemoRoute
+  '/_authenticated/payments/idempotency': typeof AuthenticatedPaymentsIdempotencyRoute
+  '/_authenticated/payments/paymongo': typeof AuthenticatedPaymentsPaymongoRoute
+  '/_authenticated/payments/paypal': typeof AuthenticatedPaymentsPaypalRoute
+  '/_authenticated/payments/signature-validation': typeof AuthenticatedPaymentsSignatureValidationRoute
+  '/_authenticated/payments/stripe': typeof AuthenticatedPaymentsStripeRoute
+  '/_authenticated/payments/webhooks': typeof AuthenticatedPaymentsWebhooksRoute
+  '/_authenticated/performance/api': typeof AuthenticatedPerformanceApiRoute
+  '/_authenticated/performance/bundle-analysis': typeof AuthenticatedPerformanceBundleAnalysisRoute
+  '/_authenticated/performance/caching': typeof AuthenticatedPerformanceCachingRoute
+  '/_authenticated/performance/code-splitting': typeof AuthenticatedPerformanceCodeSplittingRoute
+  '/_authenticated/performance/concurrency': typeof AuthenticatedPerformanceConcurrencyRoute
+  '/_authenticated/performance/database': typeof AuthenticatedPerformanceDatabaseRoute
+  '/_authenticated/performance/javascript': typeof AuthenticatedPerformanceJavascriptRoute
+  '/_authenticated/performance/lazy-loading': typeof AuthenticatedPerformanceLazyLoadingRoute
+  '/_authenticated/performance/memoization': typeof AuthenticatedPerformanceMemoizationRoute
+  '/_authenticated/performance/network': typeof AuthenticatedPerformanceNetworkRoute
+  '/_authenticated/performance/profiling': typeof AuthenticatedPerformanceProfilingRoute
+  '/_authenticated/performance/react-rendering': typeof AuthenticatedPerformanceReactRenderingRoute
+  '/_authenticated/performance/virtualization': typeof AuthenticatedPerformanceVirtualizationRoute
+  '/_authenticated/realtime/live-chat': typeof AuthenticatedRealtimeLiveChatRoute
+  '/_authenticated/realtime/notifications': typeof AuthenticatedRealtimeNotificationsRoute
+  '/_authenticated/realtime/presence': typeof AuthenticatedRealtimePresenceRoute
+  '/_authenticated/realtime/sse': typeof AuthenticatedRealtimeSseRoute
+  '/_authenticated/realtime/websockets': typeof AuthenticatedRealtimeWebsocketsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/core/crud/data-boundaries': typeof CoreCrudDataBoundariesRoute
   '/core/error-handling/error-contract': typeof CoreErrorHandlingErrorContractRoute
@@ -414,6 +654,30 @@ export interface FileRouteTypes {
     | '/core/state-management-demo'
     | '/core/tables-demo'
     | '/core/validation-demo'
+    | '/payments/idempotency'
+    | '/payments/paymongo'
+    | '/payments/paypal'
+    | '/payments/signature-validation'
+    | '/payments/stripe'
+    | '/payments/webhooks'
+    | '/performance/api'
+    | '/performance/bundle-analysis'
+    | '/performance/caching'
+    | '/performance/code-splitting'
+    | '/performance/concurrency'
+    | '/performance/database'
+    | '/performance/javascript'
+    | '/performance/lazy-loading'
+    | '/performance/memoization'
+    | '/performance/network'
+    | '/performance/profiling'
+    | '/performance/react-rendering'
+    | '/performance/virtualization'
+    | '/realtime/live-chat'
+    | '/realtime/notifications'
+    | '/realtime/presence'
+    | '/realtime/sse'
+    | '/realtime/websockets'
     | '/api/auth/$'
     | '/core/crud/data-boundaries'
     | '/core/error-handling/error-contract'
@@ -455,6 +719,30 @@ export interface FileRouteTypes {
     | '/core/state-management-demo'
     | '/core/tables-demo'
     | '/core/validation-demo'
+    | '/payments/idempotency'
+    | '/payments/paymongo'
+    | '/payments/paypal'
+    | '/payments/signature-validation'
+    | '/payments/stripe'
+    | '/payments/webhooks'
+    | '/performance/api'
+    | '/performance/bundle-analysis'
+    | '/performance/caching'
+    | '/performance/code-splitting'
+    | '/performance/concurrency'
+    | '/performance/database'
+    | '/performance/javascript'
+    | '/performance/lazy-loading'
+    | '/performance/memoization'
+    | '/performance/network'
+    | '/performance/profiling'
+    | '/performance/react-rendering'
+    | '/performance/virtualization'
+    | '/realtime/live-chat'
+    | '/realtime/notifications'
+    | '/realtime/presence'
+    | '/realtime/sse'
+    | '/realtime/websockets'
     | '/api/auth/$'
     | '/core/crud/data-boundaries'
     | '/core/error-handling/error-contract'
@@ -497,6 +785,30 @@ export interface FileRouteTypes {
     | '/_authenticated/core/state-management-demo'
     | '/_authenticated/core/tables-demo'
     | '/_authenticated/core/validation-demo'
+    | '/_authenticated/payments/idempotency'
+    | '/_authenticated/payments/paymongo'
+    | '/_authenticated/payments/paypal'
+    | '/_authenticated/payments/signature-validation'
+    | '/_authenticated/payments/stripe'
+    | '/_authenticated/payments/webhooks'
+    | '/_authenticated/performance/api'
+    | '/_authenticated/performance/bundle-analysis'
+    | '/_authenticated/performance/caching'
+    | '/_authenticated/performance/code-splitting'
+    | '/_authenticated/performance/concurrency'
+    | '/_authenticated/performance/database'
+    | '/_authenticated/performance/javascript'
+    | '/_authenticated/performance/lazy-loading'
+    | '/_authenticated/performance/memoization'
+    | '/_authenticated/performance/network'
+    | '/_authenticated/performance/profiling'
+    | '/_authenticated/performance/react-rendering'
+    | '/_authenticated/performance/virtualization'
+    | '/_authenticated/realtime/live-chat'
+    | '/_authenticated/realtime/notifications'
+    | '/_authenticated/realtime/presence'
+    | '/_authenticated/realtime/sse'
+    | '/_authenticated/realtime/websockets'
     | '/api/auth/$'
     | '/core/crud/data-boundaries'
     | '/core/error-handling/error-contract'
@@ -683,6 +995,174 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCoreValidationDemoRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/payments/idempotency': {
+      id: '/_authenticated/payments/idempotency'
+      path: '/payments/idempotency'
+      fullPath: '/payments/idempotency'
+      preLoaderRoute: typeof AuthenticatedPaymentsIdempotencyRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payments/paymongo': {
+      id: '/_authenticated/payments/paymongo'
+      path: '/payments/paymongo'
+      fullPath: '/payments/paymongo'
+      preLoaderRoute: typeof AuthenticatedPaymentsPaymongoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payments/paypal': {
+      id: '/_authenticated/payments/paypal'
+      path: '/payments/paypal'
+      fullPath: '/payments/paypal'
+      preLoaderRoute: typeof AuthenticatedPaymentsPaypalRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payments/signature-validation': {
+      id: '/_authenticated/payments/signature-validation'
+      path: '/payments/signature-validation'
+      fullPath: '/payments/signature-validation'
+      preLoaderRoute: typeof AuthenticatedPaymentsSignatureValidationRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payments/stripe': {
+      id: '/_authenticated/payments/stripe'
+      path: '/payments/stripe'
+      fullPath: '/payments/stripe'
+      preLoaderRoute: typeof AuthenticatedPaymentsStripeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payments/webhooks': {
+      id: '/_authenticated/payments/webhooks'
+      path: '/payments/webhooks'
+      fullPath: '/payments/webhooks'
+      preLoaderRoute: typeof AuthenticatedPaymentsWebhooksRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/api': {
+      id: '/_authenticated/performance/api'
+      path: '/performance/api'
+      fullPath: '/performance/api'
+      preLoaderRoute: typeof AuthenticatedPerformanceApiRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/bundle-analysis': {
+      id: '/_authenticated/performance/bundle-analysis'
+      path: '/performance/bundle-analysis'
+      fullPath: '/performance/bundle-analysis'
+      preLoaderRoute: typeof AuthenticatedPerformanceBundleAnalysisRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/caching': {
+      id: '/_authenticated/performance/caching'
+      path: '/performance/caching'
+      fullPath: '/performance/caching'
+      preLoaderRoute: typeof AuthenticatedPerformanceCachingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/code-splitting': {
+      id: '/_authenticated/performance/code-splitting'
+      path: '/performance/code-splitting'
+      fullPath: '/performance/code-splitting'
+      preLoaderRoute: typeof AuthenticatedPerformanceCodeSplittingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/concurrency': {
+      id: '/_authenticated/performance/concurrency'
+      path: '/performance/concurrency'
+      fullPath: '/performance/concurrency'
+      preLoaderRoute: typeof AuthenticatedPerformanceConcurrencyRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/database': {
+      id: '/_authenticated/performance/database'
+      path: '/performance/database'
+      fullPath: '/performance/database'
+      preLoaderRoute: typeof AuthenticatedPerformanceDatabaseRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/javascript': {
+      id: '/_authenticated/performance/javascript'
+      path: '/performance/javascript'
+      fullPath: '/performance/javascript'
+      preLoaderRoute: typeof AuthenticatedPerformanceJavascriptRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/lazy-loading': {
+      id: '/_authenticated/performance/lazy-loading'
+      path: '/performance/lazy-loading'
+      fullPath: '/performance/lazy-loading'
+      preLoaderRoute: typeof AuthenticatedPerformanceLazyLoadingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/memoization': {
+      id: '/_authenticated/performance/memoization'
+      path: '/performance/memoization'
+      fullPath: '/performance/memoization'
+      preLoaderRoute: typeof AuthenticatedPerformanceMemoizationRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/network': {
+      id: '/_authenticated/performance/network'
+      path: '/performance/network'
+      fullPath: '/performance/network'
+      preLoaderRoute: typeof AuthenticatedPerformanceNetworkRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/profiling': {
+      id: '/_authenticated/performance/profiling'
+      path: '/performance/profiling'
+      fullPath: '/performance/profiling'
+      preLoaderRoute: typeof AuthenticatedPerformanceProfilingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/react-rendering': {
+      id: '/_authenticated/performance/react-rendering'
+      path: '/performance/react-rendering'
+      fullPath: '/performance/react-rendering'
+      preLoaderRoute: typeof AuthenticatedPerformanceReactRenderingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/performance/virtualization': {
+      id: '/_authenticated/performance/virtualization'
+      path: '/performance/virtualization'
+      fullPath: '/performance/virtualization'
+      preLoaderRoute: typeof AuthenticatedPerformanceVirtualizationRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/realtime/live-chat': {
+      id: '/_authenticated/realtime/live-chat'
+      path: '/realtime/live-chat'
+      fullPath: '/realtime/live-chat'
+      preLoaderRoute: typeof AuthenticatedRealtimeLiveChatRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/realtime/notifications': {
+      id: '/_authenticated/realtime/notifications'
+      path: '/realtime/notifications'
+      fullPath: '/realtime/notifications'
+      preLoaderRoute: typeof AuthenticatedRealtimeNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/realtime/presence': {
+      id: '/_authenticated/realtime/presence'
+      path: '/realtime/presence'
+      fullPath: '/realtime/presence'
+      preLoaderRoute: typeof AuthenticatedRealtimePresenceRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/realtime/sse': {
+      id: '/_authenticated/realtime/sse'
+      path: '/realtime/sse'
+      fullPath: '/realtime/sse'
+      preLoaderRoute: typeof AuthenticatedRealtimeSseRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/realtime/websockets': {
+      id: '/_authenticated/realtime/websockets'
+      path: '/realtime/websockets'
+      fullPath: '/realtime/websockets'
+      preLoaderRoute: typeof AuthenticatedRealtimeWebsocketsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -847,6 +1327,30 @@ interface AuthenticatedRouteChildren {
   AuthenticatedCoreStateManagementDemoRoute: typeof AuthenticatedCoreStateManagementDemoRoute
   AuthenticatedCoreTablesDemoRoute: typeof AuthenticatedCoreTablesDemoRoute
   AuthenticatedCoreValidationDemoRoute: typeof AuthenticatedCoreValidationDemoRoute
+  AuthenticatedPaymentsIdempotencyRoute: typeof AuthenticatedPaymentsIdempotencyRoute
+  AuthenticatedPaymentsPaymongoRoute: typeof AuthenticatedPaymentsPaymongoRoute
+  AuthenticatedPaymentsPaypalRoute: typeof AuthenticatedPaymentsPaypalRoute
+  AuthenticatedPaymentsSignatureValidationRoute: typeof AuthenticatedPaymentsSignatureValidationRoute
+  AuthenticatedPaymentsStripeRoute: typeof AuthenticatedPaymentsStripeRoute
+  AuthenticatedPaymentsWebhooksRoute: typeof AuthenticatedPaymentsWebhooksRoute
+  AuthenticatedPerformanceApiRoute: typeof AuthenticatedPerformanceApiRoute
+  AuthenticatedPerformanceBundleAnalysisRoute: typeof AuthenticatedPerformanceBundleAnalysisRoute
+  AuthenticatedPerformanceCachingRoute: typeof AuthenticatedPerformanceCachingRoute
+  AuthenticatedPerformanceCodeSplittingRoute: typeof AuthenticatedPerformanceCodeSplittingRoute
+  AuthenticatedPerformanceConcurrencyRoute: typeof AuthenticatedPerformanceConcurrencyRoute
+  AuthenticatedPerformanceDatabaseRoute: typeof AuthenticatedPerformanceDatabaseRoute
+  AuthenticatedPerformanceJavascriptRoute: typeof AuthenticatedPerformanceJavascriptRoute
+  AuthenticatedPerformanceLazyLoadingRoute: typeof AuthenticatedPerformanceLazyLoadingRoute
+  AuthenticatedPerformanceMemoizationRoute: typeof AuthenticatedPerformanceMemoizationRoute
+  AuthenticatedPerformanceNetworkRoute: typeof AuthenticatedPerformanceNetworkRoute
+  AuthenticatedPerformanceProfilingRoute: typeof AuthenticatedPerformanceProfilingRoute
+  AuthenticatedPerformanceReactRenderingRoute: typeof AuthenticatedPerformanceReactRenderingRoute
+  AuthenticatedPerformanceVirtualizationRoute: typeof AuthenticatedPerformanceVirtualizationRoute
+  AuthenticatedRealtimeLiveChatRoute: typeof AuthenticatedRealtimeLiveChatRoute
+  AuthenticatedRealtimeNotificationsRoute: typeof AuthenticatedRealtimeNotificationsRoute
+  AuthenticatedRealtimePresenceRoute: typeof AuthenticatedRealtimePresenceRoute
+  AuthenticatedRealtimeSseRoute: typeof AuthenticatedRealtimeSseRoute
+  AuthenticatedRealtimeWebsocketsRoute: typeof AuthenticatedRealtimeWebsocketsRoute
   AuthenticatedCoreCrudDemoIdRoute: typeof AuthenticatedCoreCrudDemoIdRoute
   AuthenticatedCoreCrudDemoIndexRoute: typeof AuthenticatedCoreCrudDemoIndexRoute
 }
@@ -869,6 +1373,41 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
     AuthenticatedCoreStateManagementDemoRoute,
   AuthenticatedCoreTablesDemoRoute: AuthenticatedCoreTablesDemoRoute,
   AuthenticatedCoreValidationDemoRoute: AuthenticatedCoreValidationDemoRoute,
+  AuthenticatedPaymentsIdempotencyRoute: AuthenticatedPaymentsIdempotencyRoute,
+  AuthenticatedPaymentsPaymongoRoute: AuthenticatedPaymentsPaymongoRoute,
+  AuthenticatedPaymentsPaypalRoute: AuthenticatedPaymentsPaypalRoute,
+  AuthenticatedPaymentsSignatureValidationRoute:
+    AuthenticatedPaymentsSignatureValidationRoute,
+  AuthenticatedPaymentsStripeRoute: AuthenticatedPaymentsStripeRoute,
+  AuthenticatedPaymentsWebhooksRoute: AuthenticatedPaymentsWebhooksRoute,
+  AuthenticatedPerformanceApiRoute: AuthenticatedPerformanceApiRoute,
+  AuthenticatedPerformanceBundleAnalysisRoute:
+    AuthenticatedPerformanceBundleAnalysisRoute,
+  AuthenticatedPerformanceCachingRoute: AuthenticatedPerformanceCachingRoute,
+  AuthenticatedPerformanceCodeSplittingRoute:
+    AuthenticatedPerformanceCodeSplittingRoute,
+  AuthenticatedPerformanceConcurrencyRoute:
+    AuthenticatedPerformanceConcurrencyRoute,
+  AuthenticatedPerformanceDatabaseRoute: AuthenticatedPerformanceDatabaseRoute,
+  AuthenticatedPerformanceJavascriptRoute:
+    AuthenticatedPerformanceJavascriptRoute,
+  AuthenticatedPerformanceLazyLoadingRoute:
+    AuthenticatedPerformanceLazyLoadingRoute,
+  AuthenticatedPerformanceMemoizationRoute:
+    AuthenticatedPerformanceMemoizationRoute,
+  AuthenticatedPerformanceNetworkRoute: AuthenticatedPerformanceNetworkRoute,
+  AuthenticatedPerformanceProfilingRoute:
+    AuthenticatedPerformanceProfilingRoute,
+  AuthenticatedPerformanceReactRenderingRoute:
+    AuthenticatedPerformanceReactRenderingRoute,
+  AuthenticatedPerformanceVirtualizationRoute:
+    AuthenticatedPerformanceVirtualizationRoute,
+  AuthenticatedRealtimeLiveChatRoute: AuthenticatedRealtimeLiveChatRoute,
+  AuthenticatedRealtimeNotificationsRoute:
+    AuthenticatedRealtimeNotificationsRoute,
+  AuthenticatedRealtimePresenceRoute: AuthenticatedRealtimePresenceRoute,
+  AuthenticatedRealtimeSseRoute: AuthenticatedRealtimeSseRoute,
+  AuthenticatedRealtimeWebsocketsRoute: AuthenticatedRealtimeWebsocketsRoute,
   AuthenticatedCoreCrudDemoIdRoute: AuthenticatedCoreCrudDemoIdRoute,
   AuthenticatedCoreCrudDemoIndexRoute: AuthenticatedCoreCrudDemoIndexRoute,
 }

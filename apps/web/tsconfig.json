@@ -1,11 +1,12 @@
 {
   "extends": "@zomlab/tsconfig/react-library.json",
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
     "target": "ESNext",
-    "types": ["./worker-configuration.d.ts"],
+    "types": ["./worker-configuration.d.ts", "@cloudflare/vitest-pool-workers/types"],
     "paths": {
       "~/*": ["src/*"]
     },

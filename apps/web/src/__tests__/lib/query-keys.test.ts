@@ -9,5 +9,7 @@ describe("queryKeys", () => {
     expect(queryKeys.notes.detail("note-1")).toEqual(["notes", "detail", "note-1"]);
     expect(queryKeys.files.all).toEqual(["files"]);
     expect(queryKeys.health.all).toEqual(["health"]);
+    expect(queryKeys.realtime.chat("general")).toEqual(["realtime", "chat", "general"]);
+    expect(queryKeys.realtime.notifications).toEqual(["realtime", "notifications"]);
   });
 });
